@@ -13,9 +13,12 @@
 
 package frc.robot.subsystems.indexer;
 
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.subsystems.indexer.IndexerIO;
@@ -59,5 +62,59 @@ public class Indexer extends RBSISubsystem {
                 (state) -> Logger.recordOutput("Indexer/SysIdState", state.toString())),
             new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Volts)), null, this));
   }
+
+
+@Override
+  public void periodic() {
+    io.updateInputs(inputs);
+    Logger.processInputs("Indexer", inputs);
+  }
+
+  /** Run open loop at the specified voltage. */
+  public void runVolts(double volts) {
+    io.setVoltage(volts);
+  }
+
+  /** Run closed loop at the specified velocity. */
+  public void runVelocity(double velocityRPM) {
+    var velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(velocityRPM);
+    io.setVelocity(velocityRadPerSec, ffModel.calculate(velocityRadPerSec));
+
+    // Log Indexer setpoint
+    Logger.recordOutput("Indexer/SetpointRPM", velocityRPM);
+  }
+
+  /** Stops the Indexer. */
+  public void stop() {
+    io.stop();
+  }
+
+
+/** Returns a command to run a quasistatic test in the specified direction. */
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return sysId.quasistatic(direction);
+  }
+
+  /** Returns a command to run a dynamic test in the specified direction. */
+  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return sysId.dynamic(direction);
+  }
+
+  /** Returns the current velocity in RPM. */
+  @AutoLogOutput(key = "Mechanism/Indexer")
+  public double getVelocityRPM() {
+    return Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
+  }
+
+  /** Returns the current velocity in radians per second. */
+  public double getCharacterizationVelocity() {
+    return inputs.velocityRadPerSec;
+  }
+
+  @Override
+  public int[] getPowerPorts() {
+    return io.powerPorts;
+  }
+
 
 }

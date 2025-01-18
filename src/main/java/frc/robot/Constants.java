@@ -182,40 +182,40 @@ public final class Constants {
   /** elevator subsystem constants ***************************************** */
   public static final class elevatorConstants {
 
-    // idle mode
-    public static final MotorIdleMode elevatorIdle = MotorIdleMode.BRAKE;
+    // idle mode //6
+    public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE;
 
     // gear ratio
-    public static final double elevatorGearRatio = 0.1;
+    public static final double kElevatorGearRatio = 0.1;
 
     // mode real/replay
     public static final double kStaticGainReal = 0.1;
     public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kgreal = 0;
-    public static final double ksreal = 0;
-    public static final double kvreal = 0;
-    public static final double kareal = 0;
-    public static final double kpreal = 0;
-    public static final double kireal = 0;
-    public static final double kdreal = 0;
+    public static final double kGReal = 0;
+    public static final double kSReal = 0;
+    public static final double kVReal = 0;
+    public static final double kAReal = 0;
+    public static final double kPReal = 0;
+    public static final double kIReal = 0;
+    public static final double kDReal = 0;
 
     // mode sim
     public static final double kStaticGainSim = 0.1;
     public static final double kVelocityGainSim = 0.05;
     // motor configs
-    public static final double kgSim = 0;
-    public static final double ksSim = 0;
-    public static final double kvSim = 0;
-    public static final double kaSim = 0;
-    public static final double kpSim = 0;
-    public static final double kiSim = 0;
-    public static final double kdSim = 0;
+    public static final double kGSim = 0;
+    public static final double kSSim = 0;
+    public static final double kVSim = 0;
+    public static final double kASim = 0;
+    public static final double kPSim = 0;
+    public static final double kISim = 0;
+    public static final double kDSim = 0;
 
     // Magic motion constants
-    public static final double velocity = 1.4;
-    public static final double acceleration = 2.8;
-    public static final double jerk = 0;
+    public static final double kVelocity = 1.4;
+    public static final double kAcceleration = 2.8;
+    public static final double kJerk = 0;
   }
 
   /** Accelerometer Constants ********************************************** */
@@ -374,7 +374,7 @@ public final class Constants {
     public static final RobotDeviceId FLYWHEEL_LEADER = new RobotDeviceId(3, "", 8);
     public static final RobotDeviceId FLYWHEEL_FOLLOWER = new RobotDeviceId(4, "", 9);
 
-    public static final RobotDeviceId ELEVATOR_MOTOR = new RobotDeviceId(10, "", 12);
+    public static final RobotDeviceId ELEVATOR_MOTOR = new RobotDeviceId(11, "", 6);
 
     /* BEAM BREAK and/or LIMIT SWITCH DIO CHANNELS */
     // This is where digital I/O feedback devices are defined

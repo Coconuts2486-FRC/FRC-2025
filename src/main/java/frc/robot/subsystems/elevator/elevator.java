@@ -13,6 +13,7 @@ import org.littletonrobotics.junction.Logger;
 public class elevator extends RBSISubsystem {
   private final SimpleMotorFeedforward ffModel;
   private final elevatorIO io;
+  private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
   private final SysIdRoutine sysId;
 
   public elevator(elevatorIO io) {
@@ -23,11 +24,21 @@ public class elevator extends RBSISubsystem {
       case REPLAY:
         ffModel = new SimpleMotorFeedforward(kStaticGainReal, kVelocityGainReal);
         io.configure(
-            kgreal, ksreal, kvreal, kareal, kpreal, kireal, kdreal, velocity, acceleration, jerk);
+            kGReal,
+            kSReal,
+            kVReal,
+            kAReal,
+            kPReal,
+            kIReal,
+            kDReal,
+            kVelocity,
+            kAcceleration,
+            kJerk);
         break;
       case SIM:
         ffModel = new SimpleMotorFeedforward(kStaticGainSim, kVelocityGainSim);
-        io.configure(kgSim, ksSim, kvSim, kaSim, kpSim, kiSim, kdSim, velocity, acceleration, jerk);
+        io.configure(
+            kGSim, kSSim, kVSim, kASim, kPSim, kISim, kDSim, kVelocity, kAcceleration, kJerk);
         break;
       default:
         ffModel = new SimpleMotorFeedforward(0.0, 0.0);
@@ -44,6 +55,12 @@ public class elevator extends RBSISubsystem {
                 null,
                 (state) -> Logger.recordOutput("Elevator/SysIdState", state.toString())),
             new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Volts)), null, this));
+  }
+
+  @Override
+  public void periodic() {
+    io.updateInputs(inputs);
+    Logger.processInputs("Elevator", inputs);
   }
 
   public void setPosistion(double posistion) {
@@ -79,5 +96,13 @@ public class elevator extends RBSISubsystem {
   /** Run open loop at the specified voltage. */
   public void runVolts(double volts) {
     io.setVoltage(volts);
+  }
+
+  public void setCoast() {
+    io.setCoast();
+  }
+
+  public void setBrake() {
+    io.setBrake();
   }
 }

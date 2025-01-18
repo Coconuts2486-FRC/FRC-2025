@@ -160,7 +160,7 @@ public class RobotContainer {
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
-    m_power = new PowerMonitoring(batteryCapacity, m_flywheel);
+    m_power = new PowerMonitoring(batteryCapacity, m_elevator);
 
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
@@ -270,13 +270,26 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     // Press RIGHT BUMPER --> Run the example flywheel
+    // driverController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         Commands.startEnd(
+    //             () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
+    //             m_flywheel::stop,
+    //             m_flywheel));
+
+    driverController
+        .leftBumper()
+        .whileTrue(Commands.startEnd(() -> m_elevator.runVolts(-1), m_elevator::stop, m_elevator));
     driverController
         .rightBumper()
+        .whileTrue(Commands.startEnd(() -> m_elevator.runVolts(1), m_elevator::stop, m_elevator));
+
+    driverController
+        .rightStick()
         .whileTrue(
-            Commands.startEnd(
-                () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
-                m_flywheel::stop,
-                m_flywheel));
+            Commands.startEnd(() -> m_elevator.setCoast(), m_elevator::setBrake, m_elevator)
+                .ignoringDisable(true));
   }
 
   /**

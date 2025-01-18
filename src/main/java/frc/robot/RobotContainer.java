@@ -235,7 +235,9 @@ public class RobotContainer {
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
-    driverController.rightBumper().onTrue(new LEDCommand(led).ignoringDisable(true));
+    driverController
+        .rightBumper()
+        .onTrue(new LEDCommand(led).ignoringDisable(true).until(driverController.leftBumper()));
     driverController
         .b()
         .onTrue(

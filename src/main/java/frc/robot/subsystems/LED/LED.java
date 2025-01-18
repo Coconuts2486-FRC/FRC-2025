@@ -9,7 +9,19 @@ public class LED extends RBSISubsystem {
     this.io = io;
   }
 
-  public void m_led() {
-    io.m_animate();
+  public void rainbowTwinkle() {
+    io.rainbowTwinkle();
+  }
+
+  public void off() {
+    io.off();
+  }
+
+  public void larson() {
+    io.larson();
+  }
+
+  public void police() {
+    io.police();
   }
 }

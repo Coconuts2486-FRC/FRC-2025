@@ -15,9 +15,13 @@ public class LEDCommand extends Command {
 
   @Override
   public void execute() {
-    led.m_led();
+    led.rainbowTwinkle();
+    // led.larson();
+    // led.police();
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    led.off();
+  }
 }

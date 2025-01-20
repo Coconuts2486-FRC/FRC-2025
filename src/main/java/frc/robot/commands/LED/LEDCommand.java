@@ -2,12 +2,15 @@ package frc.robot.commands.LED;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LED.LED;
+import java.util.function.BooleanSupplier;
 
 public class LEDCommand extends Command {
   LED led;
+  BooleanSupplier lightstop;
 
-  public LEDCommand(LED led) {
+  public LEDCommand(LED led, BooleanSupplier lightStop) {
     this.led = led;
+    this.lightstop = lightStop;
   }
 
   @Override
@@ -15,7 +18,8 @@ public class LEDCommand extends Command {
 
   @Override
   public void execute() {
-    led.rainbowTwinkle();
+    led.scoreReady(lightstop.getAsBoolean());
+    // led.rainbowTwinkle();
     // led.larson();
     // led.police();
   }

@@ -17,11 +17,11 @@ public class LED extends RBSISubsystem {
     io.off();
   }
 
-  public void larson() {
-    io.larson();
-  }
-
-  public void police() {
-    io.police();
+  public void scoreReady(boolean lightstop) {
+    if (lightstop) {
+      io.scoreReady();
+    } else {
+      io.rainbowTwinkle();
+    }
   }
 }

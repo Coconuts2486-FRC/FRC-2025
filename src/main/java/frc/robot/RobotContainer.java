@@ -29,6 +29,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -82,6 +83,7 @@ public class RobotContainer {
   private final Vision m_vision;
   private final PowerMonitoring m_power;
   private final LED led = new LED(new LEDIOCandle());
+  private final DigitalInput lightStop = new DigitalInput(1);
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -237,7 +239,10 @@ public class RobotContainer {
     // Press B button while driving --> ROBOT-CENTRIC
     driverController
         .rightBumper()
-        .onTrue(new LEDCommand(led).ignoringDisable(true).until(driverController.leftBumper()));
+        .onTrue(
+            new LEDCommand(led, lightStop::get)
+                .ignoringDisable(true)
+                .until(driverController.leftBumper()));
     driverController
         .b()
         .onTrue(

@@ -287,6 +287,10 @@ public class RobotContainer {
                     m_drivebase)
                 .ignoringDisable(true));
 
+    driverController
+        .leftBumper()
+        .onTrue(Commands.runOnce(() -> new Pose2d(10.0, 10.0, new Rotation2d())));
+
     // Press RIGHT BUMPER --> Run the example flywheel
     driverController
         .rightBumper()

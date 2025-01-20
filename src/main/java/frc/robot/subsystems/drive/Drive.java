@@ -170,7 +170,6 @@ public class Drive extends SubsystemBase {
             this::runVelocity,
             new PPHolonomicDriveController(
                 // Drive
-                // 5, 0, 0
                 new PIDConstants(3, 0.0, 0),
                 // Rotate
                 new PIDConstants(2.5, 0.0, 0.1)),
@@ -401,6 +400,11 @@ public class Drive extends SubsystemBase {
   /** Resets the current odometry pose. */
   public void setPose(Pose2d pose) {
     m_PoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+  }
+
+  /** Sets the current odometry pose to a specific spot. */
+  public void setNewPose(Pose2d pose) {
+    new Pose2d(10.0, 10.0, new Rotation2d());
   }
 
   /** Adds a new timestamped vision measurement. */

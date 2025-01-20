@@ -41,9 +41,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.elevator.elevator;
-import frc.robot.subsystems.elevator.elevatorIO;
-import frc.robot.subsystems.elevator.elevatorIOTalonFX;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.flywheel_example.Flywheel;
 import frc.robot.subsystems.flywheel_example.FlywheelIO;
 import frc.robot.subsystems.flywheel_example.FlywheelIOSim;
@@ -76,7 +76,7 @@ public class RobotContainer {
   private final Drive m_drivebase;
 
   private final Flywheel m_flywheel;
-  private final elevator m_elevator;
+  private final Elevator m_elevator;
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
   private final Vision m_vision;
@@ -111,7 +111,7 @@ public class RobotContainer {
         // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
         m_flywheel = new Flywheel(new FlywheelIOSim()); // new Flywheel(new FlywheelIOTalonFX());
-        m_elevator = new elevator(new elevatorIOTalonFX());
+        m_elevator = new Elevator(new ElevatorIOTalonFX());
         m_vision =
             switch (Constants.getVisionType()) {
               case PHOTON ->
@@ -136,7 +136,7 @@ public class RobotContainer {
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
         m_flywheel = new Flywheel(new FlywheelIOSim() {});
-        m_elevator = new elevator(new elevatorIO() {}); // make elevator Io sim
+        m_elevator = new Elevator(new ElevatorIO() {}); // make elevator Io sim
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
@@ -149,7 +149,7 @@ public class RobotContainer {
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
         m_flywheel = new Flywheel(new FlywheelIO() {});
-        m_elevator = new elevator(new elevatorIO() {});
+        m_elevator = new Elevator(new ElevatorIO() {});
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());

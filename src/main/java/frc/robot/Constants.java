@@ -180,7 +180,7 @@ public final class Constants {
   }
 
   /** elevator subsystem constants ***************************************** */
-  public static final class elevatorConstants {
+  public static final class ElevatorConstants {
 
     // idle mode //6
     public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE;

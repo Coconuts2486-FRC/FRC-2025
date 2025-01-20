@@ -1,7 +1,7 @@
 package frc.robot.subsystems.elevator;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.robot.Constants.elevatorConstants.*;
+import static frc.robot.Constants.ElevatorConstants.*;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,13 +10,13 @@ import frc.robot.Constants;
 import frc.robot.util.RBSISubsystem;
 import org.littletonrobotics.junction.Logger;
 
-public class elevator extends RBSISubsystem {
+public class Elevator extends RBSISubsystem {
   private final SimpleMotorFeedforward ffModel;
-  private final elevatorIO io;
+  private final ElevatorIO io;
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
   private final SysIdRoutine sysId;
 
-  public elevator(elevatorIO io) {
+  public Elevator(ElevatorIO io) {
     this.io = io;
 
     switch (Constants.getMode()) {

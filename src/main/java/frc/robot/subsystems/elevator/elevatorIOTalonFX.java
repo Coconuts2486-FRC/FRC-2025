@@ -1,6 +1,6 @@
 package frc.robot.subsystems.elevator;
 
-import static frc.robot.Constants.elevatorConstants.*;
+import static frc.robot.Constants.ElevatorConstants.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -17,24 +17,24 @@ import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants.CANandPowerPorts;
 import java.util.function.BooleanSupplier;
 
-public class elevatorIOTalonFX implements elevatorIO {
+public class ElevatorIOTalonFX implements ElevatorIO {
 
   // motor called in
-  private final TalonFX elevator =
+  private final TalonFX elevatorMotor =
       new TalonFX(
           CANandPowerPorts.ELEVATOR_MOTOR.getDeviceNumber(),
           CANandPowerPorts.ELEVATOR_MOTOR.getBus());
 
-  private final StatusSignal<AngularVelocity> velocity = elevator.getVelocity();
+  private final StatusSignal<AngularVelocity> velocity = elevatorMotor.getVelocity();
 
   public final int[] powerPorts = {CANandPowerPorts.ELEVATOR_MOTOR.getPowerPort()};
 
-  private final StatusSignal<Angle> elevatorPosition = elevator.getPosition();
-  private final StatusSignal<AngularVelocity> elevatorVelocity = elevator.getVelocity();
-  private final StatusSignal<Voltage> elevatorAppliedVolts = elevator.getMotorVoltage();
-  private final StatusSignal<Current> elevatorCurrent = elevator.getSupplyCurrent();
+  private final StatusSignal<Angle> elevatorPosition = elevatorMotor.getPosition();
+  private final StatusSignal<AngularVelocity> elevatorVelocity = elevatorMotor.getVelocity();
+  private final StatusSignal<Voltage> elevatorAppliedVolts = elevatorMotor.getMotorVoltage();
+  private final StatusSignal<Current> elevatorCurrent = elevatorMotor.getSupplyCurrent();
 
-  public elevatorIOTalonFX() {}
+  public ElevatorIOTalonFX() {}
 
   @Override
   public void updateInputs(ElevatorIOInputs inputs) {
@@ -52,12 +52,12 @@ public class elevatorIOTalonFX implements elevatorIO {
   public void setPosistion(double posistion) {
     final MotionMagicVoltage motionMagic = new MotionMagicVoltage(0);
 
-    elevator.setControl(motionMagic.withPosition(posistion));
+    elevatorMotor.setControl(motionMagic.withPosition(posistion));
   }
 
   @Override
   public void stop() {
-    elevator.stopMotor();
+    elevatorMotor.stopMotor();
   }
 
   @Override
@@ -88,12 +88,12 @@ public class elevatorIOTalonFX implements elevatorIO {
     motionMagicConfigs.MotionMagicAcceleration = aceleration;
     motionMagicConfigs.MotionMagicJerk = jerk;
 
-    elevator.getConfigurator().apply(talonFXConfigs);
+    elevatorMotor.getConfigurator().apply(talonFXConfigs);
   }
 
   @Override
   public void setVoltage(double volts) {
-    elevator.setControl(new VoltageOut(volts));
+    elevatorMotor.setControl(new VoltageOut(volts));
   }
 
   @Override
@@ -103,11 +103,11 @@ public class elevatorIOTalonFX implements elevatorIO {
 
   @Override
   public void setCoast() {
-    elevator.setNeutralMode(NeutralModeValue.Coast);
+    elevatorMotor.setNeutralMode(NeutralModeValue.Coast);
   }
 
   @Override
   public void setBrake() {
-    elevator.setNeutralMode(NeutralModeValue.Brake);
+    elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 }

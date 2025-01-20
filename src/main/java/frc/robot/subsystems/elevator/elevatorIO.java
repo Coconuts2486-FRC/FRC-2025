@@ -3,7 +3,7 @@ package frc.robot.subsystems.elevator;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLog;
 
-public interface elevatorIO {
+public interface ElevatorIO {
 
   public final int[] powerPorts = {};
 

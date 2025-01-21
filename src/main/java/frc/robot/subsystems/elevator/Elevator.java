@@ -53,8 +53,8 @@ public class Elevator extends RBSISubsystem {
         new SysIdRoutine(
             new SysIdRoutine.Config(
                 Volts.of(1.0).div(Seconds.of(1.5)), // QuasiStatis
-                Volts.of(0.75), // Dynamic
-                Seconds.of(4.0),
+                Volts.of(1.5), // Dynamic
+                Seconds.of(2.0),
                 (state) -> Logger.recordOutput("Elevator/SysIdState", state.toString())),
             new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Units.Volts)), null, this));
   }

@@ -192,8 +192,8 @@ public final class Constants {
     public static final double kStaticGainReal = 0.1;
     public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0;
-    public static final double kSReal = 0;
+    public static final double kGReal = 0.3375;
+    public static final double kSReal = 0.075;
     public static final double kVReal = 0;
     public static final double kAReal = 0;
     public static final double kPReal = 0;

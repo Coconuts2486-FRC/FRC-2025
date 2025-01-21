@@ -288,7 +288,7 @@ public class RobotContainer {
 
     m_elevator.setDefaultCommand(
         Commands.run(
-            () -> m_elevator.runVolts(driverController.getRightTriggerAxis() * 4), m_elevator));
+            () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
 
     driverController
         .rightStick()

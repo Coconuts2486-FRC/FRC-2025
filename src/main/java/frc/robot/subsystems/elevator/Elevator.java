@@ -87,6 +87,9 @@ public class Elevator extends RBSISubsystem {
     io.configure(Kg, Ks, Kv, Ka, Kp, Ki, Kd, velocity, aceleration, jerk);
   }
 
+  // NOTE: This is how to measure the SysId for elevators that cannot hold
+  //       themselves up under the force of gravity:
+  // https://www.chiefdelphi.com/t/running-backwards-sysid-for-elevator-that-can-t-hold-itself-up/427876/2
   public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
     return sysId.quasistatic(direction);
   }

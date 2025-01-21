@@ -6,6 +6,6 @@ package frc.robot.subsystems.intake;
 
     
     }
-    
+    public default void setVelocity(double velocityRadPerSec, double ffVolts) {}
   }
 

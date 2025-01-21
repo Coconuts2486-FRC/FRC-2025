@@ -286,6 +286,10 @@ public class RobotContainer {
         .rightBumper()
         .whileTrue(Commands.startEnd(() -> m_elevator.runVolts(1), m_elevator::stop, m_elevator));
 
+    m_elevator.setDefaultCommand(
+        Commands.run(
+            () -> m_elevator.runVolts(driverController.getRightTriggerAxis() * 4), m_elevator));
+
     driverController
         .rightStick()
         .whileTrue(

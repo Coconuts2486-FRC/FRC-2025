@@ -1,9 +1,11 @@
 package frc.robot.subsystems.elevator;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Volts;
 import static frc.robot.Constants.ElevatorConstants.*;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
@@ -11,7 +13,7 @@ import frc.robot.util.RBSISubsystem;
 import org.littletonrobotics.junction.Logger;
 
 public class Elevator extends RBSISubsystem {
-  private final SimpleMotorFeedforward ffModel;
+  private final ElevatorFeedforward ffModel;
   private final ElevatorIO io;
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
   private final SysIdRoutine sysId;
@@ -22,7 +24,7 @@ public class Elevator extends RBSISubsystem {
     switch (Constants.getMode()) {
       case REAL:
       case REPLAY:
-        ffModel = new SimpleMotorFeedforward(kStaticGainReal, kVelocityGainReal);
+        ffModel = new ElevatorFeedforward(kSReal, kGReal, kVReal, kAReal);
         io.configure(
             kGReal,
             kSReal,
@@ -36,12 +38,12 @@ public class Elevator extends RBSISubsystem {
             kJerk);
         break;
       case SIM:
-        ffModel = new SimpleMotorFeedforward(kStaticGainSim, kVelocityGainSim);
+        ffModel = new ElevatorFeedforward(kSSim, kGSim, kVSim, kASim);
         io.configure(
             kGSim, kSSim, kVSim, kASim, kPSim, kISim, kDSim, kVelocity, kAcceleration, kJerk);
         break;
       default:
-        ffModel = new SimpleMotorFeedforward(0.0, 0.0);
+        ffModel = new ElevatorFeedforward(0.0, 0.0, 0.0, 0.0);
         io.configure(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         break;
     }
@@ -50,11 +52,11 @@ public class Elevator extends RBSISubsystem {
     sysId =
         new SysIdRoutine(
             new SysIdRoutine.Config(
-                null,
-                null,
-                null,
+                Volts.of(1.0).div(Seconds.of(1.5)), // QuasiStatis
+                Volts.of(0.75), // Dynamic
+                Seconds.of(4.0),
                 (state) -> Logger.recordOutput("Elevator/SysIdState", state.toString())),
-            new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Volts)), null, this));
+            new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Units.Volts)), null, this));
   }
 
   @Override

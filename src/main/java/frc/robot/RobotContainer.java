@@ -379,14 +379,8 @@ public class RobotContainer {
           "Elevator SysId (Quasistatic Forward)",
           m_elevator.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
       autoChooserPathPlanner.addOption(
-          "Elevator SysId (Quasistatic Reverse)",
-          m_elevator.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      autoChooserPathPlanner.addOption(
           "Elevator SysId (Dynamic Forward)",
           m_elevator.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Elevator SysId (Dynamic Reverse)",
-          m_elevator.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     }
   }
 

@@ -28,6 +28,7 @@ import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,10 +36,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.ElevatorCommand;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.elevator.Elevator;
@@ -63,6 +66,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
+
+  private final DigitalInput elevatorStop = new DigitalInput(0);
+  private final Trigger elevatorTrigger = new Trigger(elevatorStop::get);
 
   /** Define the Driver and, optionally, the Operator/Co-Driver Controllers */
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
@@ -252,9 +258,9 @@ public class RobotContainer {
                 m_drivebase));
 
     // Press A button -> BRAKE
-    driverController
-        .a()
-        .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
+    // driverController
+    //     .a()
+    //     .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
 
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
@@ -286,9 +292,14 @@ public class RobotContainer {
         .rightBumper()
         .whileTrue(Commands.startEnd(() -> m_elevator.runVolts(1), m_elevator::stop, m_elevator));
 
-    m_elevator.setDefaultCommand(
-        Commands.run(
-            () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
+    // m_elevator.setDefaultCommand(
+    //     Commands.run(
+    //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
+
+    driverController.a().whileTrue(new ElevatorCommand(72, 40, 40, m_elevator));
+    driverController
+        .a()
+        .whileFalse(new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
 
     driverController
         .rightStick()

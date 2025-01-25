@@ -194,9 +194,10 @@ public final class Constants {
     // motor configs
     public static final double kGReal = 0.3375;
     public static final double kSReal = 0.075;
-    public static final double kVReal = 0;
-    public static final double kAReal = 0;
-    public static final double kPReal = 0;
+    public static final double kVReal = 0.0018629;
+    public static final double kAReal = 0; // 0.000070378;
+    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
+    public static final double kPReal = 17.983;
     public static final double kIReal = 0;
     public static final double kDReal = 0;
 

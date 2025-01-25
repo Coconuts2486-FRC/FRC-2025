@@ -6,9 +6,11 @@ import frc.robot.subsystems.Intake.Intake;
 public class IntakeCommand extends Command {
 
   private final Intake intake;
+  private final double direction;
 
-  public IntakeCommand(Intake intake) {
+  public IntakeCommand(Intake intake, double direction) {
     this.intake = intake;
+    this.direction = direction;
   }
 
   @Override
@@ -16,12 +18,11 @@ public class IntakeCommand extends Command {
 
   @Override
   public void execute() {
-
-    double encodervalue = intake.getEncoder();
-
-    System.out.println(encodervalue);
+    intake.setRollerVolts(-direction);
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intake.stop();
+  }
 }

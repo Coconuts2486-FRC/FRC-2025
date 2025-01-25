@@ -80,7 +80,7 @@ public class RobotContainer {
   private final Accelerometer m_accel;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final Intake intake = new Intake(new IntakeIOSpark());
+  private final Intake m_intake = new Intake(new IntakeIOSpark());
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -256,7 +256,18 @@ public class RobotContainer {
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
 
-    driverController.a().whileTrue(new IntakeCommand(intake));
+    // driverController.a().whileTrue(new IntakeCommand(m_intake, 0));
+
+    m_intake.setDefaultCommand(
+        Commands.run(
+            () ->
+                m_intake.runPivotVolts(
+                    driverController.getRightTriggerAxis()
+                        - driverController.getLeftTriggerAxis() * 5),
+            m_intake));
+
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 1));
+    driverController.leftBumper().whileTrue(new IntakeCommand(m_intake, -1));
 
     // Press Y button --> Manually Re-Zero the Gyro
     driverController

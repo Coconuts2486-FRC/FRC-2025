@@ -14,6 +14,10 @@ public interface IntakeIO {
   // Stop in open loop.
   public default void stop() {}
 
+  public default void setPivotVolts(double volts) {}
+
+  public default void setRollerVolts(double volts) {}
+
   // Set velocity PID constants.
   public default void configurePID(double kP, double kI, double kD) {}
 

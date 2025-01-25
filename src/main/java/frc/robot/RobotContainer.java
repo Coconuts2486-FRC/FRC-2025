@@ -169,7 +169,7 @@ public class RobotContainer {
     m_power = new PowerMonitoring(batteryCapacity, m_elevator);
 
     // Idk where this is suppose to go. but I think this works, just setting up auto commands
-    NamedCommands.registerCommand("L4", new ElevatorCommand(70, 40, 40, m_elevator));
+    NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
 
     NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
 

@@ -329,7 +329,7 @@ public final class Constants {
   /** Vision Camera Posses ************************************************* */
   public static class Cameras {
     // Camera names, must match names configured on coprocessor
-    public static String camera0Name = "camera_0";
+    public static String camera0Name = "Arducam_OV9281_USB_Camera";
     public static String camera1Name = "camera_1";
     // ... And more, if needed
 

@@ -171,6 +171,8 @@ public class RobotContainer {
     // Idk where this is suppose to go. but I think this works, just setting up auto commands
     NamedCommands.registerCommand("L4", new ElevatorCommand(70, 40, 40, m_elevator));
 
+    NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
+
     NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
 
     NamedCommands.registerCommand(

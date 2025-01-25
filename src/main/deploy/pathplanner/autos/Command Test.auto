@@ -19,13 +19,13 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "L2"
+                              "name": "L4"
                             }
                           },
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 2.0
+                              "waitTime": 2.5
                             }
                           }
                         ]

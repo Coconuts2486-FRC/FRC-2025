@@ -79,8 +79,7 @@ public class RobotContainer {
   private final Accelerometer m_accel;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final CoralScorer m_CoralScorer = new CoralScorer(new CoralScorerIO(){});
-
+  private final CoralScorer m_CoralScorer = new CoralScorer(new CoralScorerIO() {});
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -234,7 +233,12 @@ public class RobotContainer {
             () -> -driveStickX.value(),
             () -> -turnStickX.value()));
 
-    //m_CoralScorer.setDefaultCommand(Command.m_CoralScore);  
+    m_CoralScorer.setDefaultCommand(
+        Commands.run(
+            () ->
+                m_CoralScorer.runVolts(
+                    driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
+            m_CoralScorer));
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC

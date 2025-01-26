@@ -12,6 +12,10 @@ public class CoralScorer extends RBSISubsystem {
 
 
   public void runVolts(double volts){
+
+  }
+
+  public void stop(){
     
   }
   

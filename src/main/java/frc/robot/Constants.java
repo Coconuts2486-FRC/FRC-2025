@@ -243,8 +243,8 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(5.0, 0.0, 0.0);
-    public static final PIDConstants kPPsteerPID = new PIDConstants(5.0, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(0.0, 0.0, 0.0);
+    public static final PIDConstants kPPsteerPID = new PIDConstants(0.0, 0.0, 0.0);
 
     // PathPlanner Config constants
     public static final RobotConfig kPathPlannerConfig =

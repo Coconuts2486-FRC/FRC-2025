@@ -44,6 +44,7 @@ import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.flywheel_example.Flywheel;
 import frc.robot.subsystems.flywheel_example.FlywheelIO;
 import frc.robot.subsystems.flywheel_example.FlywheelIOSim;
+import frc.robot.subsystems.intake.intake;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -73,6 +74,8 @@ public class RobotContainer {
   private final Drive m_drivebase;
 
   private final Flywheel m_flywheel;
+
+  private final intake m_intake;
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
   private final Vision m_vision;
@@ -106,6 +109,7 @@ public class RobotContainer {
         // Real robot, instantiate hardware IO implementations
         // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
+        m_intake = new intake();
         m_flywheel = new Flywheel(new FlywheelIOSim()); // new Flywheel(new FlywheelIOTalonFX());
         m_vision =
             switch (Constants.getVisionType()) {
@@ -229,7 +233,12 @@ public class RobotContainer {
             () -> -driveStickY.value(),
             () -> -driveStickX.value(),
             () -> -turnStickX.value()));
-
+    
+    m_intake.setDefaultCommand(
+      Commands.intake(
+        () ->
+            m_intake.setPivotVolts()
+        m_intake));
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
     driverController

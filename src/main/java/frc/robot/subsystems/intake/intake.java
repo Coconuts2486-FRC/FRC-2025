@@ -1,21 +1,30 @@
 package frc.robot.subsystems.intake;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.util.Units;
 
 public class intake {
   private final intakeIO io;
 
-    public intake (intakeIO io){
-      this.io = io;
-    }
+  public intake(intakeIO io) {
+    this.io = io;
+  }
 
-  public void stop() {
-    io.stopIntake();
+  public void stopRollers() {
+    io.stopRollers();
   }
-  public void runVolts(double volts) {
-    io.setIntakeVolts(volts);
+  
+  public void stopPivot() {
+    io.stopPivot();
   }
+  
+  public void runRollerVolts(double volts) {
+    io.setRollerVolts(volts);
+  } 
+
+  public void runPivotVolts(double volts) {
+    io.setPivotVolts(volts);
+  }
+
   public void runVelocity(double velocityRPM) {
     var velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(velocityRPM);
     io.setIntakeVelocity(velocityRadPerSec);

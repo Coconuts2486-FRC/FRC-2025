@@ -40,7 +40,7 @@ import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.CoralScorer.CoralScorer;
-import frc.robot.subsystems.CoralScorer.CoralScorerIO;
+import frc.robot.subsystems.CoralScorer.CoralScorerIOSpark;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.flywheel_example.Flywheel;
@@ -79,7 +79,7 @@ public class RobotContainer {
   private final Accelerometer m_accel;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final CoralScorer m_CoralScorer = new CoralScorer(new CoralScorerIO() {});
+  private final CoralScorer m_CoralScorer = new CoralScorer(new CoralScorerIOSpark());
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types

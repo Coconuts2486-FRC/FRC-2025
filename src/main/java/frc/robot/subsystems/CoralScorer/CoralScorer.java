@@ -9,7 +9,12 @@ public class CoralScorer extends RBSISubsystem {
   public CoralScorer(CoralScorerIO io) {
     this.io = io;
   }
+
+
+  public void runVolts(double volts){
+    
+  }
   
 
-  
+
 }

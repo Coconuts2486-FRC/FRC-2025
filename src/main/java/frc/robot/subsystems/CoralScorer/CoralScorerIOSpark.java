@@ -5,6 +5,8 @@ import com.revrobotics.spark.SparkMax;
 
 public class CoralScorerIOSpark implements CoralScorerIO {
 
+  public CoralScorerIOSpark() {}
+
   private final SparkMax coralMotor = new SparkMax(16, MotorType.kBrushless);
 
   @Override

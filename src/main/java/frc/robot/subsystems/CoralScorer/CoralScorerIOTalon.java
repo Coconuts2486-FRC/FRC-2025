@@ -1,15 +1,13 @@
 package frc.robot.subsystems.CoralScorer;
 
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
+import com.ctre.phoenix6.hardware.TalonFX;
 import frc.robot.Constants.CANandPowerPorts;
 
-public class CoralScorerIOSpark implements CoralScorerIO {
+public class CoralScorerIOTalon implements CoralScorerIO {
 
-  public CoralScorerIOSpark() {}
+  public CoralScorerIOTalon() {}
 
-  private final SparkMax coralMotor =
-      new SparkMax(CANandPowerPorts.Coral_Scorer.getDeviceNumber(), MotorType.kBrushless);
+  private final TalonFX coralMotor = new TalonFX(CANandPowerPorts.Coral_Scorer.getDeviceNumber());
 
   public final int[] powerPorts = {
     CANandPowerPorts.Coral_Scorer.getPowerPort(), CANandPowerPorts.Coral_Scorer.getPowerPort()

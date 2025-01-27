@@ -7,6 +7,8 @@ public interface CoralScorerIO {
   @AutoLog
   public static class IntakeIOInputs {}
 
+  public final int[] powerPorts = {};
+
   public default void setVolts(double volts) {}
 
   public default void stop() {}

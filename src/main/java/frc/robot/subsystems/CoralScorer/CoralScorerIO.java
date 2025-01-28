@@ -12,4 +12,6 @@ public interface CoralScorerIO {
   public default void setVolts(double volts) {}
 
   public default void stop() {}
+
+  public default void setVelocity(double velocity) {}
 }

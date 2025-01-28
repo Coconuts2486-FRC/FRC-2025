@@ -13,6 +13,10 @@ public class CoralScorer extends RBSISubsystem {
     io.setVolts(volts);
   }
 
+  public void setVelocity(double velocity){
+    io.setVelocity(velocity);
+  }
+
   public void stop() {
     io.stop();
   }

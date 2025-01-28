@@ -24,4 +24,9 @@ public class CoralScorerIOSpark implements CoralScorerIO {
   public void stop() {
     coralMotor.stopMotor();
   }
+
+  @Override
+  public void setVelocity(double velocity) {
+    coralMotor.set(velocity);
+  }
 }

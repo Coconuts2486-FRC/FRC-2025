@@ -38,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.CoralScorerCommand;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.CoralScorer.CoralScorer;
 import frc.robot.subsystems.CoralScorer.CoralScorerIOSpark;
@@ -272,6 +273,10 @@ public class RobotContainer {
                             new Pose2d(m_drivebase.getPose().getTranslation(), new Rotation2d())),
                     m_drivebase)
                 .ignoringDisable(true));
+    
+              
+
+    driverController.rightBumper().whileTrue()
 
     // Press RIGHT BUMPER --> Run the example flywheel
     driverController
@@ -282,6 +287,8 @@ public class RobotContainer {
                 m_flywheel::stop,
                 m_flywheel));
   }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

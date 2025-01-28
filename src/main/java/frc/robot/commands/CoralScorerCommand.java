@@ -5,16 +5,21 @@ import frc.robot.subsystems.CoralScorer.CoralScorer;
 
 public class CoralScorerCommand extends Command {
   private final CoralScorer coralScorer;
+  private final double velocity;
 
-  public CoralScorerCommand(CoralScorer coralScorer) {
+  public CoralScorerCommand(CoralScorer coralScorer, double velocity) {
     this.coralScorer = coralScorer;
+    this.velocity = velocity;
   }
 
   @Override
   public void initialize() {}
 
   @Override
-  public void execute() {}
+  public void execute() {
+    coralScorer.setVelocity(velocity);
+
+  }
 
   @Override
   public void end(boolean interrupted) {

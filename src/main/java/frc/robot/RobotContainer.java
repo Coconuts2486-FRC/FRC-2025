@@ -234,12 +234,13 @@ public class RobotContainer {
             () -> -driveStickX.value(),
             () -> -turnStickX.value()));
 
-    m_CoralScorer.setDefaultCommand(
-        Commands.run(
-            () ->
-                m_CoralScorer.runVolts(
-                    driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
-            m_CoralScorer));
+    // m_CoralScorer.setDefaultCommand(
+    //     Commands.run(
+    //         () ->
+    //             m_CoralScorer.runVolts(
+    //                 driverController.getRightTriggerAxis() -
+    // driverController.getLeftTriggerAxis()),
+    //         m_CoralScorer));
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
@@ -273,10 +274,9 @@ public class RobotContainer {
                             new Pose2d(m_drivebase.getPose().getTranslation(), new Rotation2d())),
                     m_drivebase)
                 .ignoringDisable(true));
-    
-              
 
-    driverController.rightBumper().whileTrue()
+    driverController.rightBumper().whileTrue(new CoralScorerCommand(m_CoralScorer, 0.5));
+    driverController.leftBumper().whileTrue(new CoralScorerCommand(m_CoralScorer, -0.5));
 
     // Press RIGHT BUMPER --> Run the example flywheel
     driverController
@@ -287,8 +287,6 @@ public class RobotContainer {
                 m_flywheel::stop,
                 m_flywheel));
   }
-
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

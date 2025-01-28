@@ -24,7 +24,8 @@ public class CoralScorerIOTalon implements CoralScorerIO {
   }
 
   @Override
-  public void setVelocity(double velocity){
+  public void setVelocity(double velocity) {
+    velocity = velocity * -1;
     coralMotor.set(velocity);
   }
 }

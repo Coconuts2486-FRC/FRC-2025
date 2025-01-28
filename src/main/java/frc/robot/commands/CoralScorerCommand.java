@@ -18,7 +18,6 @@ public class CoralScorerCommand extends Command {
   @Override
   public void execute() {
     coralScorer.setVelocity(velocity);
-
   }
 
   @Override

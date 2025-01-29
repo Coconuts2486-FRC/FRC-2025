@@ -1,11 +1,19 @@
 package frc.robot.subsystems.Intake;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import frc.robot.Constants.CANandPowerPorts;
 
 public class IntakeIOKraken implements IntakeIO {
-  private final TalonFX intakeRoller = new TalonFX(21);
+  private final TalonFX intakeRoller =
+      new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
 
-  private final TalonFX intakePivot = new TalonFX(22);
+  private final TalonFX intakePivot = new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
+
+  public final int[] powerPorts = {
+    CANandPowerPorts.INTAKE_PIVOT.getPowerPort(), CANandPowerPorts.INTAKE_ROLLER.getPowerPort()
+  };
 
   public IntakeIOKraken() {}
 
@@ -23,6 +31,13 @@ public class IntakeIOKraken implements IntakeIO {
   public void stop() {
     intakeRoller.stopMotor();
     intakePivot.stopMotor();
+  }
+
+  @Override
+  public void setPivotPosition(double position) {
+    final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
+
+    intakePivot.setControl(m_request.withPosition(position));
   }
 
   @Override

@@ -6,7 +6,9 @@ public interface IntakeIO {
   @AutoLog
   public static class IntakeIOInputs {}
 
-  public default void pivotToPosition(double position) {}
+  public final int[] powerPorts = {};
+
+  public default void setPivotPosition(double position) {}
 
   public default void stop() {}
 

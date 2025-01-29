@@ -1,10 +1,10 @@
 package frc.robot.subsystems.Intake;
 
-import org.littletonrobotics.junction.Logger;
-
+import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.util.RBSISubsystem;
+import org.littletonrobotics.junction.Logger;
 
 public class Intake extends RBSISubsystem {
   private final IntakeIO io;
@@ -16,11 +16,11 @@ public class Intake extends RBSISubsystem {
     sysId =
         new SysIdRoutine(
             new SysIdRoutine.Config(
-                null,
-                null,
-                null,
-                (state) -> Logger.recordOutput("Flywheel/SysIdState", state.toString())),
-            new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Volts)), null, this));
+                Volts.of(1.0).div(Seconds.of(1.5)), // QuasiStatis
+                Volts.of(1.5), // Dynamic
+                Seconds.of(2.0),
+                (state) -> Logger.recordOutput("Intake/SysIdState", state.toString())),
+            new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Units.Volts)), null, this));
   }
 
   public void setPivotPosition(double position) {

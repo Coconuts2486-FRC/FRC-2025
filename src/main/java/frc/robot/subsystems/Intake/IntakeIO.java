@@ -8,24 +8,21 @@ public interface IntakeIO {
 
   public default void pivotToPosition(double position) {}
 
-  // Runs the intake rollers in radians per second
-  public default void runIntakeRollers(double speedRPS) {}
-
-  // Stop in open loop.
   public default void stop() {}
 
   public default void setPivotVolts(double volts) {}
 
   public default void setRollerVolts(double volts) {}
 
-  // Set velocity PID constants.
-  public default void configurePID(double kP, double kI, double kD) {}
-
-  public default double getRollerCurrent() {
-    return 0.0;
-  }
-
-  public default double getEncoder() {
-    return 0.0;
-  }
+  public default void configure(
+      double kG,
+      double kS,
+      double kV,
+      double kA,
+      double kP,
+      double kI,
+      double kD,
+      double velocity,
+      double acceleration,
+      double jerk) {}
 }

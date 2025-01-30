@@ -52,10 +52,6 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   public void setPosistion(double posistion) {
     final MotionMagicVoltage motionMagic = new MotionMagicVoltage(0);
 
-    
-
-
-
     elevatorMotor.setControl(motionMagic.withPosition(posistion));
   }
 

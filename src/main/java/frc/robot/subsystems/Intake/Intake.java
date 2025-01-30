@@ -1,12 +1,17 @@
 package frc.robot.subsystems.Intake;
 
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Volts;
+
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.util.RBSISubsystem;
+import org.littletonrobotics.junction.Logger;
 
 public class Intake extends RBSISubsystem {
   private final IntakeIO io;
-
+  private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
   private final SysIdRoutine sysId;
 
   public Intake(IntakeIO io) {
@@ -19,7 +24,14 @@ public class Intake extends RBSISubsystem {
                 Volts.of(1.5), // Dynamic
                 Seconds.of(2.0),
                 (state) -> Logger.recordOutput("Intake/SysIdState", state.toString())),
-            new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Units.Volts)), null, this));
+            new SysIdRoutine.Mechanism(
+                (voltage) -> runPivotVolts(voltage.in(Units.Volts)), null, this));
+  }
+
+  @Override
+  public void periodic() {
+    io.updateInputs(inputs);
+    Logger.processInputs("Intake", inputs);
   }
 
   public void setPivotPosition(double position) {

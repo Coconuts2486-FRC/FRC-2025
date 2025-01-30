@@ -358,6 +358,19 @@ public class RobotContainer {
           "Drive SysId (Dynamic Reverse)",
           m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
+        autoChooserPathPlanner.addOption(
+            "Intake SysId (Quasistatic Forward)",
+            m_intake.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        autoChooserPathPlanner.addOption(
+            "Intake SysId (Quasistatic Reverse)",
+            m_intake.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        autoChooserPathPlanner.addOption(
+            "Intake SysId (Dynamic Forward)",
+            m_intake.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        autoChooserPathPlanner.addOption(
+            "Intake SysId (Dynamic Reverse)",
+            m_intake.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
       // Example Flywheel SysId Characterization
       autoChooserPathPlanner.addOption(
           "Flywheel SysId (Quasistatic Forward)",

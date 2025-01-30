@@ -136,7 +136,7 @@ public final class Constants {
     //       case NUTHOUSE -> Units.feetToMeters(1);
     //       case FIELD -> Units.feetToMeters(18);
     //     };
-    public static final double kMaxLinearSpeed = Units.feetToMeters(18);
+    public static final double kMaxLinearSpeed = Units.feetToMeters(30);
 
     // Set 3/4 of a rotation per second as the max angular velocity (radians/sec)
     public static final double kMaxAngularSpeed = 1.5 * Math.PI;

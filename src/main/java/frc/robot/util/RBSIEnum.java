@@ -67,8 +67,8 @@ public class RBSIEnum {
     BRAKE // Hold motor position when idle
   }
 
-  // public static enum PracticeSpace {
-  //   NUTHOUSE,
-  //   FIELD
-  // }
+  //   public static enum PracticeSpace {
+  //     NUTHOUSE,
+  //     FIELD
+  //   }
 }

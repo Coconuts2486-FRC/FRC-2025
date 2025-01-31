@@ -41,7 +41,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Intake.Intake;
-import frc.robot.subsystems.Intake.IntakeIOSpark;
+import frc.robot.subsystems.Intake.IntakeIOKraken;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.flywheel_example.Flywheel;
@@ -80,7 +80,7 @@ public class RobotContainer {
   private final Accelerometer m_accel;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final Intake m_intake = new Intake(new IntakeIOSpark());
+  private final Intake m_intake = new Intake(new IntakeIOKraken());
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -266,7 +266,7 @@ public class RobotContainer {
                         - driverController.getLeftTriggerAxis() * 5),
             m_intake));
 
-    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 1));
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 10));
     driverController.leftBumper().whileTrue(new IntakeCommand(m_intake, -1));
 
     // Press Y button --> Manually Re-Zero the Gyro
@@ -357,6 +357,17 @@ public class RobotContainer {
       autoChooserPathPlanner.addOption(
           "Drive SysId (Dynamic Reverse)",
           m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
+      autoChooserPathPlanner.addOption(
+          "Intake SysId (Quasistatic Forward)",
+          m_intake.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      autoChooserPathPlanner.addOption(
+          "Intake SysId (Quasistatic Reverse)",
+          m_intake.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      autoChooserPathPlanner.addOption(
+          "Intake SysId (Dynamic Forward)", m_intake.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      autoChooserPathPlanner.addOption(
+          "Intake SysId (Dynamic Reverse)", m_intake.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
       // Example Flywheel SysId Characterization
       autoChooserPathPlanner.addOption(

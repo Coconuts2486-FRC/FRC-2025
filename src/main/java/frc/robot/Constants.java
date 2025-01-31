@@ -136,7 +136,7 @@ public final class Constants {
     //       case NUTHOUSE -> Units.feetToMeters(1);
     //       case FIELD -> Units.feetToMeters(18);
     //     };
-    public static final double kMaxLinearSpeed = Units.feetToMeters(30);
+    public static final double kMaxLinearSpeed = Units.feetToMeters(6);
 
     // Set 3/4 of a rotation per second as the max angular velocity (radians/sec)
     public static final double kMaxAngularSpeed = 1.5 * Math.PI;
@@ -243,8 +243,9 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(3.5, 0.0, 0.0);
-    public static final PIDConstants kPPsteerPID = new PIDConstants(2, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(1.9, 0.0, 0.0);
+    public static final PIDConstants kPPsteerPID = new PIDConstants(1.9, 0.0, 0.0);
+    //1 Cordinate = 39.3437945791726
 
     // PathPlanner Config constants
     public static final RobotConfig kPathPlannerConfig =

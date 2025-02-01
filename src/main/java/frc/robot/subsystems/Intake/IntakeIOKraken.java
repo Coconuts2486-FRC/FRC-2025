@@ -33,9 +33,9 @@ public class IntakeIOKraken implements IntakeIO {
   public void updateInputs(IntakeIOInputs inputs) {
     BaseStatusSignal.refreshAll(pivotPosition, pivotVelocity, pivotAppliedVolts, pivotCurrent);
     inputs.positionRad =
-        Units.rotationsToRadians(pivotPosition.getValueAsDouble()) / 21.42857; // gear ratio
+        Units.rotationsToRadians(pivotPosition.getValueAsDouble()); // 21.42857; // gear ratio
     inputs.velocityRadPerSec =
-        Units.rotationsToRadians(pivotVelocity.getValueAsDouble()) / 21.42857; // gear ratio
+        Units.rotationsToRadians(pivotVelocity.getValueAsDouble()); // 21.42857; // gear ratio
     inputs.appliedVolts = pivotAppliedVolts.getValueAsDouble();
     inputs.currentAmps = new double[] {pivotCurrent.getValueAsDouble()};
   }

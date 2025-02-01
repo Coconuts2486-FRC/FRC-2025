@@ -28,6 +28,7 @@ import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,8 +41,11 @@ import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LED.LEDCommand;
 import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIOKraken;
+import frc.robot.subsystems.LED.LED;
+import frc.robot.subsystems.LED.LEDIOCandle;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.flywheel_example.Flywheel;
@@ -81,6 +85,8 @@ public class RobotContainer {
   private final Vision m_vision;
   private final PowerMonitoring m_power;
   private final Intake m_intake = new Intake(new IntakeIOKraken());
+  private final LED led = new LED(new LEDIOCandle());
+  private final DigitalInput lightStop = new DigitalInput(1);
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -262,6 +268,12 @@ public class RobotContainer {
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
+    driverController
+        .rightBumper()
+        .onTrue(
+            new LEDCommand(led, lightStop::get)
+                .ignoringDisable(true)
+                .until(driverController.leftBumper()));
     driverController
         .b()
         .onTrue(

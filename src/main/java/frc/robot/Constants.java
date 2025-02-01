@@ -19,17 +19,21 @@ package frc.robot;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
+import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.SwerveConstants;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
@@ -37,7 +41,6 @@ import frc.robot.util.RBSIEnum.AutoType;
 import frc.robot.util.RBSIEnum.CTREPro;
 import frc.robot.util.RBSIEnum.Mode;
 import frc.robot.util.RBSIEnum.MotorIdleMode;
-import frc.robot.util.RBSIEnum.RobotType;
 import frc.robot.util.RBSIEnum.SwerveType;
 import frc.robot.util.RBSIEnum.VisionType;
 import frc.robot.util.RobotDeviceId;
@@ -72,6 +75,15 @@ public final class Constants {
   private static CTREPro phoenixPro = CTREPro.UNLICENSED; // LICENSED, UNLICENSED
   private static AutoType autoType = AutoType.PATHPLANNER; // PATHPLANNER, CHOREO
   private static VisionType visionType = VisionType.NONE; // PHOTON, LIMELIGHT, NONE
+
+  // private static PracticeSpace practiceSpace = PracticeSpace.NUTHOUSE; // NUTHOUSE, FIELD
+
+  /** Enumerate the robot types (name your robots here) */
+  public static enum RobotType {
+    DEVBOT, // Development / Alpha / Practice Bot
+    COMPBOT, // Competition robot
+    SIMBOT // Simulated robot
+  }
 
   /** Checks whether the correct robot is selected when deploying. */
   public static void main(String... args) {
@@ -125,7 +137,12 @@ public final class Constants {
     // Theoretical free speed (m/s) at 12v applied output;
     // IMPORTANT: Follow the AdvantageKit instructions for measuring the ACTUAL maximum linear speed
     // of YOUR ROBOT, and replace the estimate here with your measured value!
-    public static final double kMaxLinearSpeed = Units.feetToMeters(18);
+    // public static final double kMaxLinearSpeed =
+    //     switch (practiceSpace) {
+    //       case NUTHOUSE -> Units.feetToMeters(1);
+    //       case FIELD -> Units.feetToMeters(18);
+    //     };
+    public static final double kMaxLinearSpeed = Units.feetToMeters(6);
 
     // Set 3/4 of a rotation per second as the max angular velocity (radians/sec)
     public static final double kMaxAngularSpeed = 1.5 * Math.PI;
@@ -134,10 +151,6 @@ public final class Constants {
     // TODO: Compute the maximum linear acceleration given the PHYSICS of the ROBOT!
     public static final double kMaxLinearAccel = 4.0; // m/s/s
     public static final double kMaxAngularAccel = Units.degreesToRadians(720);
-
-    // Drive and Turn PID constants
-    public static final PIDConstants drivePID = new PIDConstants(0.05, 0.0, 0.0);
-    public static final PIDConstants steerPID = new PIDConstants(2.0, 0.0, 0.4);
 
     // Hold time on motor brakes when disabled
     public static final double kWheelLockTime = 10; // seconds
@@ -235,10 +248,31 @@ public final class Constants {
   /** Autonomous Action Constants ****************************************** */
   public static final class AutoConstants {
 
-    // PathPlanner Translation PID constants
-    public static final PIDConstants kAutoDrivePID = new PIDConstants(0.7, 0, 0);
-    // PathPlanner Rotation PID constants
-    public static final PIDConstants kAutoSteerPID = new PIDConstants(0.4, 0, 0.01);
+    // Drive and Turn PID constants used for PathPlanner
+    public static final PIDConstants kPPdrivePID = new PIDConstants(1.9, 0.0, 0.0);
+    public static final PIDConstants kPPsteerPID = new PIDConstants(1.9, 0.0, 0.0);
+    // 1 Cordinate = 39.3437945791726
+
+    // PathPlanner Config constants
+    public static final RobotConfig kPathPlannerConfig =
+        new RobotConfig(
+            PhysicalConstants.kRobotMassKg,
+            PhysicalConstants.kRobotMOI,
+            new ModuleConfig(
+                SwerveConstants.kWheelRadiusMeters,
+                DrivebaseConstants.kMaxLinearSpeed,
+                PhysicalConstants.kWheelCOF,
+                DCMotor.getKrakenX60Foc(1).withReduction(SwerveConstants.kDriveGearRatio),
+                SwerveConstants.kDriveSlipCurrent,
+                1),
+            Drive.getModuleTranslations());
+
+    // Alternatively, we can build this from the PathPlanner GUI:
+    // public static final RobotConfig kPathPlannerConfig = RobotConfig.fromGUISettings();
+
+    // Drive and Turn PID constants used for Chorep
+    public static final PIDConstants kChoreoDrivePID = new PIDConstants(10.0, 0.0, 0.0);
+    public static final PIDConstants kChoreoSteerPID = new PIDConstants(7.5, 0.0, 0.0);
   }
 
   /** Vision Constants (Assuming PhotonVision) ***************************** */
@@ -348,8 +382,7 @@ public final class Constants {
   }
 
   /** AprilTag Field Layout ************************************************ */
-  /* SEASON SPECIFIC! -- This section is for 2024 (Crescendo) */
-  // NOTE: This section will be updated to 2025 "Reefscape" following kickoff
+  /* SEASON SPECIFIC! -- This section is for 2025 (Reefscape) */
   public static class AprilTagConstants {
 
     public static final double aprilTagWidth = Units.inchesToMeters(6.50);
@@ -361,10 +394,11 @@ public final class Constants {
 
     @Getter
     public enum AprilTagLayoutType {
-      OFFICIAL("2024-official"),
-      SPEAKERS_ONLY("2024-speakers"),
-      AMPS_ONLY("2024-amps"),
-      WPI("2024-wpi");
+      OFFICIAL("2025-official");
+
+      // SPEAKERS_ONLY("2024-speakers"),
+      // AMPS_ONLY("2024-amps"),
+      // WPI("2024-wpi");
 
       private AprilTagLayoutType(String name) {
         if (Constants.disableHAL) {

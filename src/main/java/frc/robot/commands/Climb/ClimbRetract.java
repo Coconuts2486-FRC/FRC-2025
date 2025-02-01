@@ -5,6 +5,7 @@ import frc.robot.subsystems.Climb.Climb;
 
 public class ClimbRetract extends Command {
   private final Climb climb;
+
   public ClimbRetract(Climb climb) {
     this.climb = climb;
   }

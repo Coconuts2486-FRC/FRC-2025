@@ -76,6 +76,8 @@ public final class Constants {
   private static AutoType autoType = AutoType.PATHPLANNER; // PATHPLANNER, CHOREO
   private static VisionType visionType = VisionType.NONE; // PHOTON, LIMELIGHT, NONE
 
+  // private static PracticeSpace practiceSpace = PracticeSpace.NUTHOUSE; // NUTHOUSE, FIELD
+
   /** Enumerate the robot types (name your robots here) */
   public static enum RobotType {
     DEVBOT, // Development / Alpha / Practice Bot
@@ -135,7 +137,12 @@ public final class Constants {
     // Theoretical free speed (m/s) at 12v applied output;
     // IMPORTANT: Follow the AdvantageKit instructions for measuring the ACTUAL maximum linear speed
     // of YOUR ROBOT, and replace the estimate here with your measured value!
-    public static final double kMaxLinearSpeed = Units.feetToMeters(18);
+    // public static final double kMaxLinearSpeed =
+    //     switch (practiceSpace) {
+    //       case NUTHOUSE -> Units.feetToMeters(1);
+    //       case FIELD -> Units.feetToMeters(18);
+    //     };
+    public static final double kMaxLinearSpeed = Units.feetToMeters(6);
 
     // Set 3/4 of a rotation per second as the max angular velocity (radians/sec)
     public static final double kMaxAngularSpeed = 1.5 * Math.PI;
@@ -242,8 +249,9 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(5.0, 0.0, 0.0);
-    public static final PIDConstants kPPsteerPID = new PIDConstants(5.0, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(1.9, 0.0, 0.0);
+    public static final PIDConstants kPPsteerPID = new PIDConstants(1.9, 0.0, 0.0);
+    // 1 Cordinate = 39.3437945791726
 
     // PathPlanner Config constants
     public static final RobotConfig kPathPlannerConfig =

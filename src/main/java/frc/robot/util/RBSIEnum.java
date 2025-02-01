@@ -19,13 +19,6 @@ package frc.robot.util;
  */
 public class RBSIEnum {
 
-  /** Enumerate the robot types (add additional bots here) */
-  public static enum RobotType {
-    DEVBOT, // Development / Alpha / Practice Bot
-    COMPBOT, // Competition robot
-    SIMBOT // Simulated robot
-  }
-
   /** Enumerate the robot operation modes */
   public static enum Mode {
     REAL, // REAL == Running on a real robot
@@ -66,4 +59,9 @@ public class RBSIEnum {
     COAST, // Allow the motor to coast when idle
     BRAKE // Hold motor position when idle
   }
+
+  //   public static enum PracticeSpace {
+  //     NUTHOUSE,
+  //     FIELD
+  //   }
 }

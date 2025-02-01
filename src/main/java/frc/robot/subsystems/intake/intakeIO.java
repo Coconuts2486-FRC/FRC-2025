@@ -18,7 +18,7 @@ public interface intakeIO {
   // Sets the voltage for rollers
   public default void setRollerVolts(double volts) {}
 
-  //Sets the voltage for the pivot on the intake
+  // Sets the voltage for the pivot on the intake
   public default void setPivotVolts(double volts) {}
 
   // Sets PID constants

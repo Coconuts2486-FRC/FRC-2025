@@ -12,14 +12,14 @@ public class intake {
   public void stopRollers() {
     io.stopRollers();
   }
-  
+
   public void stopPivot() {
     io.stopPivot();
   }
-  
+
   public void runRollerVolts(double volts) {
     io.setRollerVolts(volts);
-  } 
+  }
 
   public void runPivotVolts(double volts) {
     io.setPivotVolts(volts);

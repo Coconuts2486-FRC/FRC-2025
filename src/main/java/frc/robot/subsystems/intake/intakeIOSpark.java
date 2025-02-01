@@ -8,7 +8,7 @@ import edu.wpi.first.math.util.Units;
 
 public class intakeIOSpark implements intakeIO {
   // Need to figure out how to code in the encoder
-  
+
   private final SparkMax intakeSpark1 = new SparkMax(21, MotorType.kBrushless); // Roller motor
   private final SparkMax intakeSpark2 = new SparkMax(22, MotorType.kBrushless); // Pivot motor
   private final SparkClosedLoopController intakeController1 =
@@ -37,10 +37,12 @@ public class intakeIOSpark implements intakeIO {
         Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec),
         ControlType.kMAXMotionVelocityControl);
   }
-  @Override 
+
+  @Override
   public void setPivotVolts(double volts) {
     intakeSpark2.setVoltage(volts);
   }
+
   @Override
   public void setRollerVolts(double volts) {
     intakeSpark1.setVoltage(volts);

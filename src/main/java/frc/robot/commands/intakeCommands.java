@@ -1,25 +1,25 @@
-package frc.robot.commands;
+// package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.intake.intake;
+// import edu.wpi.first.wpilibj2.command.Command;
+// import frc.robot.subsystems.intake.intake;
 
-public class intakeCommands extends Command {
-  private final double volts;
+// public class intakeCommands extends Command {
+//   private final double volts;
 
-  public intakeCommand(double volts) {
-    this.volts = volts;
-  }
+//   public void intakeCommand(double volts) {
+//     this.volts = volts;
+//   }
 
-  @Override
-  public void initialize() {}
+//   @Override
+//   public void initialize() {}
 
-  @Override
-  public void execute() {
-    double intakeVoltage = volts;
-  }
+//   @Override
+//   public void execute() {
+//     double intakeVoltage = volts;
+//   }
 
-  @Override
-  public void stopIntake() {
-    intake.stop();
-  }
-}
+//   @Override
+//   public void stopIntake() {
+//     intake.stop();
+//   }
+// }

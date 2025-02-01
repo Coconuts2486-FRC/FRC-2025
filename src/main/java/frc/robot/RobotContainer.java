@@ -39,7 +39,10 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.CoralScorerCommand;
 import frc.robot.commands.DriveCommands;
+import frc.robot.subsystems.CoralScorer.CoralScorer;
+import frc.robot.subsystems.CoralScorer.CoralScorerIOSpark;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.flywheel_example.Flywheel;
@@ -74,6 +77,8 @@ public class RobotContainer {
   private final Drive m_drivebase;
 
   private final Flywheel m_flywheel;
+
+  private final CoralScorer m_CoralScorer = new CoralScorer(new CoralScorerIOSpark());
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
   private final Vision m_vision;
@@ -242,6 +247,19 @@ public class RobotContainer {
                         () -> -driveStickX.value(),
                         () -> turnStickX.value()),
                 m_drivebase));
+
+    m_CoralScorer.setDefaultCommand(
+        Commands.run(
+            () ->
+                m_CoralScorer.runVolts(
+                    driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
+            m_CoralScorer));
+    driverController
+        .x()
+        .whileTrue(
+            new CoralScorerCommand(
+                m_CoralScorer,
+                driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()));
 
     // Press A button -> BRAKE
     driverController

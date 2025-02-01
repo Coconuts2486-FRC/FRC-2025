@@ -14,35 +14,21 @@
 // GNU General Public License for more details.
 package frc.robot.subsystems.CoralScorer;
 
+import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface CoralScorerIO {
 
-  // IMPORTANT: Include here all devices that are part of this mechanism!
-  public final int[] powerPorts = {};
-
   @AutoLog
-  public static class CoralScorerIOInputs {
-    public double positionRad = 0.0;
-    public double velocityRadPerSec = 0.0;
-    public double appliedVolts = 0.0;
-    public double[] currentAmps = new double[] {};
+  public static class IntakeIOInputs {}
+
+  public default void lightStop(BooleanSupplier lightStop) {}
+
+  public default void setVolts(double volts) {}
+
+  public default boolean getLightStop() {
+    return false;
   }
 
-  /** Updates the set of loggable inputs. */
-  public default void updateInputs(CoralScorerIOInputs inputs) {}
-
-  /** Run open loop at the specified voltage. */
-  public default void setVoltage(double volts) {}
-
-  /** Run closed loop at the specified velocity. */
-  public default void setVelocity(double velocityRadPerSec, double ffVolts) {}
-
-  /** Stop in open loop. */
   public default void stop() {}
-
-  public default void moveXInches(double inches) {}
-
-  /** Set velocity PID constants. */
-  public default void configurePID(double kP, double kI, double kD) {}
 }

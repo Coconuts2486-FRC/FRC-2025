@@ -1,25 +1,35 @@
 package frc.robot.subsystems.CoralScorer;
 
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase;
-import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkMax;
+import edu.wpi.first.wpilibj.DigitalInput;
+import java.util.function.BooleanSupplier;
 
 public class CoralScorerIOSpark implements CoralScorerIO {
-private SparkMax motor = new SparkMax(0, MotorType.kBrushless);
-private SparkMaxConfig config = new SparkMaxConfig();
-private SparkClosedLoopController m_pidController;
 
-public CoralScorerIOSpark() {
-  config.encoder.positionConversionFactor(1000);
-  config.
-}
-@Override 
-public void moveXInches(double inches) {
-motor.configure(config, null, null);
-motor.getEncoder().getPosition();
-m_pidController.setReference(inches, SparkBase.ControlType.kSmartMotion);
-}
-  
+  public CoralScorerIOSpark() {}
+
+  private final SparkMax coralMotor = new SparkMax(16, MotorType.kBrushless);
+
+  private final DigitalInput lightStop = new DigitalInput(1);
+
+  @Override
+  public void setVolts(double volts) {
+    coralMotor.setVoltage(volts);
+  }
+
+  @Override
+  public void lightStop(BooleanSupplier lightStop) {
+    if (lightStop.getAsBoolean()) {}
+  }
+
+  @Override
+  public boolean getLightStop() {
+    return lightStop.get();
+  }
+
+  @Override
+  public void stop() {
+    coralMotor.stopMotor();
+  }
 }

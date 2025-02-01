@@ -1,44 +1,38 @@
 package frc.robot.subsystems.algae_hands;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.robot.Constants.AlgaeHandsConstants.*;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants;
-import frc.robot.subsystems.AlgaeHands_example.AlgaeHandsIO;
 import frc.robot.util.RBSISubsystem;
-import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-public class AlgaeHands extends RBSISubsystem{
+public class AlgaeHands extends RBSISubsystem {
   private final AlgaeHandsIO io;
-  private final AlgaeHandsIOInputsAutoLogged inputs = new AlgaeHandsIOInputsAutoLogged();
-  private final SimpleMotorFeedforward ffModel;
+  // private final AlgaeHandsIOInputsAutoLogged inputs = new AlgaeHandsIOInputsAutoLogged();
+  // private final SimpleMotorFeedforward ffModel;
   private final SysIdRoutine sysId;
-}
 
-public AlgaeHands(AlgaeHandsIO io) {
+  public AlgaeHands(AlgaeHandsIO io) {
     this.io = io;
 
     // Switch constants based on mode (the physics simulator is treated as a
     // separate robot with different tuning)
-    switch (Constants.getMode()) {
-      case REAL:
-      case REPLAY:
-        ffModel = new SimpleMotorFeedforward(kStaticGainReal, kVelocityGainReal);
-        io.configurePID(pidReal.kP, pidReal.kI, pidReal.kD);
-        break;
-      case SIM:
-        ffModel = new SimpleMotorFeedforward(kStaticGainSim, kVelocityGainSim);
-        io.configurePID(pidSim.kP, pidSim.kI, pidSim.kD);
-        break;
-      default:
-        ffModel = new SimpleMotorFeedforward(0.0, 0.0);
-        break;
-    }
+    // switch (Constants.getMode()) {
+    //   case REAL:
+    //   case REPLAY:
+    // ffModel = new SimpleMotorFeedforward(kStaticGainReal, kVelocityGainReal);
+    //     io.configurePID(pidReal.kP, pidReal.kI, pidReal.kD);
+    //     break;
+    //   case SIM:
+    //     ffModel = new SimpleMotorFeedforward(kStaticGainSim, kVelocityGainSim);
+    //     io.configurePID(pidSim.kP, pidSim.kI, pidSim.kD);
+    //     break;
+    //   default:
+    //     ffModel = new SimpleMotorFeedforward(0.0, 0.0);
+    //     break;
+    // }
 
     // Configure SysId
     sysId =
@@ -53,8 +47,8 @@ public AlgaeHands(AlgaeHandsIO io) {
 
   @Override
   public void periodic() {
-    io.updateInputs(inputs);
-    Logger.processInputs("Flywheel", inputs);
+    // io.updateInputs(inputs);
+    // Logger.processInputs("Flywheel", inputs);
   }
 
   /** Run open loop at the specified voltage. */
@@ -63,12 +57,13 @@ public AlgaeHands(AlgaeHandsIO io) {
   }
 
   /** Run closed loop at the specified velocity. */
+  //TODO fix ffvolts
   public void runVelocity(double velocityRPM) {
     var velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(velocityRPM);
-    io.setVelocity(velocityRadPerSec, ffModel.calculate(velocityRadPerSec));
-
+    // io.setVelocity(velocityRadPerSec, ffModel.calculate(velocityRadPerSec));
+    io.setVelocity(velocityRPM, 0);
     // Log flywheel setpoint
-    Logger.recordOutput("Flywheel/SetpointRPM", velocityRPM);
+    Logger.recordOutput("algae_hands/SetpointRPM", velocityRPM);
   }
 
   /** Stops the flywheel. */
@@ -85,8 +80,9 @@ public AlgaeHands(AlgaeHandsIO io) {
     return sysId.dynamic(direction);
   }
 
-  /** Returns the current velocity in RPM. */
-  @AutoLogOutput(key = "Mechanism/Flywheel")
-  public double getVelocityRPM() {
-    return Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
-  }
+  // /** Returns the current velocity in RPM. */
+  // @AutoLogOutput(key = "Mechanism/Flywheel")
+  // //public double getVelocityRPM() {
+  //   //  return Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
+  // }
+}

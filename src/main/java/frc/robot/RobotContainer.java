@@ -40,7 +40,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.Algae_Hands.AlgaeCommand;
 import frc.robot.subsystems.accelerometer.Accelerometer;
+import frc.robot.subsystems.algae_hands.AlgaeHands;
+import frc.robot.subsystems.algae_hands.AlgaeHandsIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.flywheel_example.Flywheel;
 import frc.robot.subsystems.flywheel_example.FlywheelIO;
@@ -78,6 +81,7 @@ public class RobotContainer {
   private final Accelerometer m_accel;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
+  private final AlgaeHands m_algaeHands = new AlgaeHands(new AlgaeHandsIOTalonFX());
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -231,6 +235,9 @@ public class RobotContainer {
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
+driverController.x().whileTrue(new AlgaeCommand(m_algaeHands));
+
+
     driverController
         .b()
         .onTrue(

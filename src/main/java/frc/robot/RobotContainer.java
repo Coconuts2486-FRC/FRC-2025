@@ -198,6 +198,32 @@ public class RobotContainer {
     configureBindings();
   }
 
+  //   // Create a list of waypoints from poses. Each pose represents one waypoint.
+  // // The rotation component of the pose should be the direction of travel. Do not use holonomic
+  // rotation.
+  // List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
+  //   new Pose2d(1.0, 1.0, Rotation2d.fromDegrees(0)),
+  //   new Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90))
+  // );
+
+  // PathConstraints constraints = new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI); // The
+  // constraints for this path.
+  // // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also
+  // use unlimited constraints, only limited by motor torque and nominal battery voltage
+
+  // // Create the path using the waypoints created above
+  // PathPlannerPath path = new PathPlannerPath(
+  //   waypoints,
+  //   constraints,
+  //   null, // The ideal starting state, this is only relevant for pre-planned paths, so can be
+  // null for on-the-fly paths.
+  //   new GoalEndState(0.0, Rotation2d.fromDegrees(-90)) // Goal end state. You can set a holonomic
+  // rotation here. If using a differential drivetrain, the rotation will have no effect.
+  // );
+
+  // // Prevent the path from being flipped if the coordinates are already correct
+  // path.preventFlipping = true;
+
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
 
@@ -280,6 +306,10 @@ public class RobotContainer {
                     m_drivebase)
                 .ignoringDisable(true));
 
+    driverController
+        .leftBumper()
+        .onTrue(Commands.runOnce(() -> new Pose2d(10.0, 10.0, new Rotation2d())));
+
     // Press RIGHT BUMPER --> Run the example flywheel
     driverController
         .rightBumper()
@@ -358,30 +388,19 @@ public class RobotContainer {
           "Drive SysId (Dynamic Reverse)",
           m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-      autoChooserPathPlanner.addOption(
-          "Intake SysId (Quasistatic Forward)",
-          m_intake.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Intake SysId (Quasistatic Reverse)",
-          m_intake.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      autoChooserPathPlanner.addOption(
-          "Intake SysId (Dynamic Forward)", m_intake.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Intake SysId (Dynamic Reverse)", m_intake.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-
-      // Example Flywheel SysId Characterization
-      autoChooserPathPlanner.addOption(
-          "Flywheel SysId (Quasistatic Forward)",
-          m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Flywheel SysId (Quasistatic Reverse)",
-          m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      autoChooserPathPlanner.addOption(
-          "Flywheel SysId (Dynamic Forward)",
-          m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Flywheel SysId (Dynamic Reverse)",
-          m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+      // // Example Flywheel SysId Characterization
+      // autoChooserPathPlanner.addOption(
+      //     "Flywheel SysId (Quasistatic Forward)",
+      //     m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      // autoChooserPathPlanner.addOption(
+      //     "Flywheel SysId (Quasistatic Reverse)",
+      //     m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      // autoChooserPathPlanner.addOption(
+      //     "Flywheel SysId (Dynamic Forward)",
+      //     m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      // autoChooserPathPlanner.addOption(
+      //     "Flywheel SysId (Dynamic Reverse)",
+      //     m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     }
   }
 

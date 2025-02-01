@@ -41,7 +41,6 @@ import frc.robot.util.RBSIEnum.AutoType;
 import frc.robot.util.RBSIEnum.CTREPro;
 import frc.robot.util.RBSIEnum.Mode;
 import frc.robot.util.RBSIEnum.MotorIdleMode;
-import frc.robot.util.RBSIEnum.RobotType;
 import frc.robot.util.RBSIEnum.SwerveType;
 import frc.robot.util.RBSIEnum.VisionType;
 import frc.robot.util.RobotDeviceId;
@@ -76,6 +75,15 @@ public final class Constants {
   private static CTREPro phoenixPro = CTREPro.UNLICENSED; // LICENSED, UNLICENSED
   private static AutoType autoType = AutoType.PATHPLANNER; // PATHPLANNER, CHOREO
   private static VisionType visionType = VisionType.NONE; // PHOTON, LIMELIGHT, NONE
+
+  // private static PracticeSpace practiceSpace = PracticeSpace.NUTHOUSE; // NUTHOUSE, FIELD
+
+  /** Enumerate the robot types (name your robots here) */
+  public static enum RobotType {
+    DEVBOT, // Development / Alpha / Practice Bot
+    COMPBOT, // Competition robot
+    SIMBOT // Simulated robot
+  }
 
   /** Checks whether the correct robot is selected when deploying. */
   public static void main(String... args) {
@@ -129,7 +137,12 @@ public final class Constants {
     // Theoretical free speed (m/s) at 12v applied output;
     // IMPORTANT: Follow the AdvantageKit instructions for measuring the ACTUAL maximum linear speed
     // of YOUR ROBOT, and replace the estimate here with your measured value!
-    public static final double kMaxLinearSpeed = Units.feetToMeters(18);
+    // public static final double kMaxLinearSpeed =
+    //     switch (practiceSpace) {
+    //       case NUTHOUSE -> Units.feetToMeters(1);
+    //       case FIELD -> Units.feetToMeters(18);
+    //     };
+    public static final double kMaxLinearSpeed = Units.feetToMeters(6);
 
     // Set 3/4 of a rotation per second as the max angular velocity (radians/sec)
     public static final double kMaxAngularSpeed = 1.5 * Math.PI;
@@ -236,8 +249,9 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(5.0, 0.0, 0.0);
-    public static final PIDConstants kPPsteerPID = new PIDConstants(5.0, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(1.9, 0.0, 0.0);
+    public static final PIDConstants kPPsteerPID = new PIDConstants(1.9, 0.0, 0.0);
+    // 1 Cordinate = 39.3437945791726
 
     // PathPlanner Config constants
     public static final RobotConfig kPathPlannerConfig =
@@ -368,8 +382,7 @@ public final class Constants {
   }
 
   /** AprilTag Field Layout ************************************************ */
-  /* SEASON SPECIFIC! -- This section is for 2024 (Crescendo) */
-  // NOTE: This section will be updated to 2025 "Reefscape" following kickoff
+  /* SEASON SPECIFIC! -- This section is for 2025 (Reefscape) */
   public static class AprilTagConstants {
 
     public static final double aprilTagWidth = Units.inchesToMeters(6.50);
@@ -381,10 +394,11 @@ public final class Constants {
 
     @Getter
     public enum AprilTagLayoutType {
-      OFFICIAL("2024-official"),
-      SPEAKERS_ONLY("2024-speakers"),
-      AMPS_ONLY("2024-amps"),
-      WPI("2024-wpi");
+      OFFICIAL("2025-official");
+
+      // SPEAKERS_ONLY("2024-speakers"),
+      // AMPS_ONLY("2024-amps"),
+      // WPI("2024-wpi");
 
       private AprilTagLayoutType(String name) {
         if (Constants.disableHAL) {

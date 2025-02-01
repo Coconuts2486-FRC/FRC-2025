@@ -160,6 +160,9 @@ public class RobotContainer {
     // ``m_drivebase``, as that is automatically monitored.
     m_power = new PowerMonitoring(batteryCapacity, m_flywheel);
 
+    // Idk where this is suppose to go. but I think this works, just setting up auto commands
+    NamedCommands.registerCommand("Score", new CoralScorerCommand(m_CoralScorer, -0.75));
+
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
       case PATHPLANNER:

@@ -36,12 +36,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.LED.LEDCommand;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.subsystems.LED.LEDIOCandle;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.IntakeIOKraken;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.flywheel_example.Flywheel;
@@ -80,6 +84,7 @@ public class RobotContainer {
   private final Accelerometer m_accel;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
+  private final Intake m_intake = new Intake(new IntakeIOKraken());
   private final LED led = new LED(new LEDIOCandle());
   private final DigitalInput lightStop = new DigitalInput(1);
 
@@ -289,6 +294,19 @@ public class RobotContainer {
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
 
+    // driverController.a().whileTrue(new IntakeCommand(m_intake, 0));
+
+    m_intake.setDefaultCommand(
+        Commands.run(
+            () ->
+                m_intake.runPivotVolts(
+                    driverController.getRightTriggerAxis()
+                        - driverController.getLeftTriggerAxis() * 5),
+            m_intake));
+
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 10));
+    driverController.leftBumper().whileTrue(new IntakeCommand(m_intake, -1));
+
     // Press Y button --> Manually Re-Zero the Gyro
     driverController
         .y()
@@ -363,24 +381,24 @@ public class RobotContainer {
   private void definesysIdRoutines() {
     if (Constants.getAutoType() == RBSIEnum.AutoType.PATHPLANNER) {
       // Drivebase characterization
-      // autoChooserPathPlanner.addOption(
-      //     "Drive Wheel Radius Characterization",
-      //     DriveCommands.wheelRadiusCharacterization(m_drivebase));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive Simple FF Characterization",
-      //     DriveCommands.feedforwardCharacterization(m_drivebase));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Quasistatic Forward)",
-      //     m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Quasistatic Reverse)",
-      //     m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Dynamic Forward)",
-      //     m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Dynamic Reverse)",
-      //     m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+      autoChooserPathPlanner.addOption(
+          "Drive Wheel Radius Characterization",
+          DriveCommands.wheelRadiusCharacterization(m_drivebase));
+      autoChooserPathPlanner.addOption(
+          "Drive Simple FF Characterization",
+          DriveCommands.feedforwardCharacterization(m_drivebase));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Quasistatic Forward)",
+          m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Quasistatic Reverse)",
+          m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Dynamic Forward)",
+          m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Dynamic Reverse)",
+          m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
       // // Example Flywheel SysId Characterization
       // autoChooserPathPlanner.addOption(

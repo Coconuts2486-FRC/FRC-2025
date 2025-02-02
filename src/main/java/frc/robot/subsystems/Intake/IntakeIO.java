@@ -22,17 +22,11 @@ public interface IntakeIO {
 
   public default void setPivotVolts(double volts) {}
 
+  public default void configure(double kP, double kI, double kD) {}
+
   public default void setRollerVolts(double volts) {}
 
-  public default void configure(
-      double kG,
-      double kS,
-      double kV,
-      double kA,
-      double kP,
-      double kI,
-      double kD,
-      double velocity,
-      double acceleration,
-      double jerk) {}
+  public default double getEncoder() {
+    return 0.0;
+  }
 }

@@ -86,7 +86,7 @@ public class RobotContainer {
   private final PowerMonitoring m_power;
   private final Intake m_intake = new Intake(new IntakeIOKraken());
   private final LED led = new LED(new LEDIOCandle());
-  private final DigitalInput lightStop = new DigitalInput(1);
+  private final DigitalInput lightStop = new DigitalInput(5);
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -296,16 +296,7 @@ public class RobotContainer {
 
     // driverController.a().whileTrue(new IntakeCommand(m_intake, 0));
 
-    m_intake.setDefaultCommand(
-        Commands.run(
-            () ->
-                m_intake.runPivotVolts(
-                    driverController.getRightTriggerAxis()
-                        - driverController.getLeftTriggerAxis() * 5),
-            m_intake));
-
-    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 10));
-    driverController.leftBumper().whileTrue(new IntakeCommand(m_intake, -1));
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.4));
 
     // Press Y button --> Manually Re-Zero the Gyro
     driverController
@@ -414,16 +405,6 @@ public class RobotContainer {
       //     "Flywheel SysId (Dynamic Reverse)",
       //     m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-      autoChooserPathPlanner.addOption(
-          "Intake SysId (Quasistatic Forward)",
-          m_intake.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Intake SysId (Quasistatic Reverse)",
-          m_intake.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      autoChooserPathPlanner.addOption(
-          "Intake SysId (Dynamic Forward)", m_intake.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Intake SysId (Dynamic Reverse)", m_intake.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     }
   }
 

@@ -6,19 +6,21 @@ import frc.robot.subsystems.Intake.Intake;
 public class IntakeCommand extends Command {
 
   private final Intake intake;
-  private final double direction;
+  private final double wantedPosistion;
 
-  public IntakeCommand(Intake intake, double direction) {
+  public IntakeCommand(Intake intake, double wantedPosistion) {
     this.intake = intake;
-    this.direction = direction;
+    this.wantedPosistion = wantedPosistion;
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    intake.configure(1, 0, 0);
+  }
 
   @Override
   public void execute() {
-    intake.setRollerVolts(-direction);
+    intake.setPivotPosition(wantedPosistion);
   }
 
   @Override

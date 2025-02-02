@@ -85,7 +85,7 @@ public class Module {
 
     // Apply setpoints
     double speedRadPerSec = state.speedMetersPerSecond / kWheelRadiusMeters;
-    io.setDriveVelocity(speedRadPerSec, ffModel.calculate(speedRadPerSec));
+    io.setDriveVelocity(speedRadPerSec); // , ffModel.calculate(speedRadPerSec));
     io.setTurnPosition(state.angle);
   }
 

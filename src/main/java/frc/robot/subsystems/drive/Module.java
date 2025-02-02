@@ -17,22 +17,18 @@ package frc.robot.subsystems.drive;
 
 import static frc.robot.subsystems.drive.SwerveConstants.*;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
-import frc.robot.Constants.DrivebaseConstants;
 import org.littletonrobotics.junction.Logger;
 
 public class Module {
   private final ModuleIO io;
   private final ModuleIOInputsAutoLogged inputs = new ModuleIOInputsAutoLogged();
   private final int index;
-
-  private final SimpleMotorFeedforward ffModel;
 
   private final Alert driveDisconnectedAlert;
   private final Alert turnDisconnectedAlert;
@@ -42,8 +38,6 @@ public class Module {
   public Module(ModuleIO io, int index) {
     this.io = io;
     this.index = index;
-
-    ffModel = new SimpleMotorFeedforward(DrivebaseConstants.kDriveS, DrivebaseConstants.kDriveV);
 
     driveDisconnectedAlert =
         new Alert(

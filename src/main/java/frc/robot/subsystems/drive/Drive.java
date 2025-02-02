@@ -149,7 +149,7 @@ public class Drive extends SubsystemBase {
               this::getPose,
               this::resetPose,
               this::getChassisSpeeds,
-              (speeds, feedforwards) -> runVelocity(speeds),
+              (speeds) -> runVelocity(speeds),
               new PPHolonomicDriveController(AutoConstants.kPPdrivePID, AutoConstants.kPPsteerPID),
               AutoConstants.kPathPlannerConfig,
               () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
@@ -173,6 +173,7 @@ public class Drive extends SubsystemBase {
       case CHOREO:
         // TODO: Probably need to add something here for Choreo autonomous path building
         break;
+
       default:
     }
 

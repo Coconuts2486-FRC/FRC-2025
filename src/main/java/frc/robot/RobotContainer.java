@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
@@ -71,6 +72,9 @@ public class RobotContainer {
   /** Define the Driver and, optionally, the Operator/Co-Driver Controllers */
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
   final CommandXboxController driverController = new CommandXboxController(0); // Main Driver
+
+  private Trigger leftBumper = driverController.leftBumper();
+  private Trigger rightBumper = driverController.rightBumper();
 
   final CommandXboxController operatorController = new CommandXboxController(1); // Second Operator
   final OverrideSwitches overrides = new OverrideSwitches(2); // Console toggle switches
@@ -304,11 +308,23 @@ public class RobotContainer {
     //             () -> m_intake.setPivotPosition(0.3),
     //             m_intake));
 
-    m_intake.setDefaultCommand();
+    // m_elevator.setDefaultCommand(
+    //     Commands.run(
+    //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
 
-    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.9, 0.1, 0));
+    driverController
+        .rightBumper()
+        .whileTrue(new IntakeCommand(m_intake, 0.9, 0.1, 0))
+        .whileFalse(new IntakeCommand(m_intake, 0.4, 0, 0).until(leftBumper));
 
-    driverController.leftBumper().whileTrue(new IntakeCommand(m_intake, 0.4, 0, 0));
+    driverController
+        .leftBumper()
+        .whileTrue(new IntakeCommand(m_intake, 0.6, -0.5, 0))
+        .whileFalse(new IntakeCommand(m_intake, 0.4, 0, 0).until(rightBumper));
+
+    
+
+    driverController.a().whileTrue(new IntakeCommand(m_intake, 0.9, 0, 1));
 
     // Press Y button --> Manually Re-Zero the Gyro
     driverController

@@ -72,7 +72,7 @@ public final class Constants {
   //       under strict caveat emptor -- and submit any error and bugfixes
   //       via GitHub issues.
   private static SwerveType swerveType = SwerveType.PHOENIX6; // PHOENIX6, YAGSL
-  private static CTREPro phoenixPro = CTREPro.UNLICENSED; // LICENSED, UNLICENSED
+  private static CTREPro phoenixPro = CTREPro.LICENSED; // LICENSED, UNLICENSED
   private static AutoType autoType = AutoType.PATHPLANNER; // PATHPLANNER, CHOREO
   private static VisionType visionType = VisionType.NONE; // PHOTON, LIMELIGHT, NONE
 
@@ -161,11 +161,16 @@ public final class Constants {
     public static final double kQuasiTimeout = 5.0; // seconds
     public static final double kDynamicTimeout = 3.0; // seconds
 
-    // Not sure what to do with these, yet...
-    // kDriveF = 0.13;
-    // kDriveIZ = 0.0;
-    // kSteerF = 0.0;
-    // kSteerIZ = 0.0;
+    // Default TalonFX Gains (Replaces what's in Phoenix X's Tuner Constants)
+    // NOTE: Default values from 6328's 2025 Public Code
+    public static final double kDriveP = 35.0;
+    public static final double kDriveD = 0.0;
+    public static final double kDriveV = 0.0;
+    public static final double kDriveS = 5.0;
+    public static final double kDriveT =
+        SwerveConstants.kDriveGearRatio / DCMotor.getKrakenX60Foc(1).KtNMPerAmp;
+    public static final double kSteerP = 4000.0;
+    public static final double kSteerD = 50.0;
   }
 
   /** Example Flywheel Mechanism Constants ********************************* */
@@ -249,9 +254,12 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(2.3, 0.0, 0.07);
-    public static final PIDConstants kPPsteerPID = new PIDConstants(1.5, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID =
+        new PIDConstants(DrivebaseConstants.kDriveP, 0.0, DrivebaseConstants.kDriveD);
+    public static final PIDConstants kPPsteerPID =
+        new PIDConstants(DrivebaseConstants.kSteerP, 0.0, DrivebaseConstants.kSteerD);
     // 1 Cordinate = 39.3437945791726
+    // *** 1 meter = 39.3701 inches
 
     // PathPlanner Config constants
     public static final RobotConfig kPathPlannerConfig =

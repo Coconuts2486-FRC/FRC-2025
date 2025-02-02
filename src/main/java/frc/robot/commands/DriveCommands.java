@@ -41,6 +41,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
+import org.littletonrobotics.junction.Logger;
 
 public class DriveCommands {
 
@@ -69,6 +70,13 @@ public class DriveCommands {
           double omega = getOmega(omegaSupplier.getAsDouble());
 
           // Convert to field relative speeds & send command
+          Logger.recordOutput("Thingie/maxlinear", drive.getMaxLinearSpeedMetersPerSec());
+          Logger.recordOutput("Thingie/maxangular", drive.getMaxAngularSpeedRadPerSec());
+          Logger.recordOutput(
+              "Thingie/xspeed", linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec());
+          Logger.recordOutput(
+              "Thingie/yspeed", linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec());
+          Logger.recordOutput("Thingie/omega", omega * drive.getMaxAngularSpeedRadPerSec());
           ChassisSpeeds speeds =
               new ChassisSpeeds(
                   linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),

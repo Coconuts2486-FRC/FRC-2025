@@ -296,7 +296,19 @@ public class RobotContainer {
 
     // driverController.a().whileTrue(new IntakeCommand(m_intake, 0));
 
-    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.4));
+    // driverController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         Commands.runEnd(
+    //             () -> m_intake.setPivotPosition(0.9),
+    //             () -> m_intake.setPivotPosition(0.3),
+    //             m_intake));
+
+    m_intake.setDefaultCommand();
+
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.9, 0.1, 0));
+
+    driverController.leftBumper().whileTrue(new IntakeCommand(m_intake, 0.4, 0, 0));
 
     // Press Y button --> Manually Re-Zero the Gyro
     driverController

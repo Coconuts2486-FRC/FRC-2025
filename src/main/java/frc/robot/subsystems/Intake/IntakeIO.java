@@ -18,6 +18,8 @@ public interface IntakeIO {
 
   public default void setPivotPosition(double position) {}
 
+  public default void rollerSpeed(double speed) {}
+
   public default void stop() {}
 
   public default void setPivotVolts(double volts) {}

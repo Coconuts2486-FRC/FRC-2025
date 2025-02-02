@@ -37,6 +37,10 @@ public class Intake extends RBSISubsystem {
     io.setPivotPosition(position);
   }
 
+  public void rollerSpeed(double speed) {
+    io.rollerSpeed(speed);
+  }
+
   public void runPivotVolts(double volts) {
     io.setPivotVolts(volts);
   }

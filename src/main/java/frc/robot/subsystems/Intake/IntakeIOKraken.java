@@ -13,15 +13,12 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants.CANandPowerPorts;
 
 public class IntakeIOKraken implements IntakeIO {
+
   private final TalonFX intakeRoller =
       new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
-
   private final TalonFX intakePivot = new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
 
-  private static final DutyCycleEncoder encoderActual =
-      new DutyCycleEncoder(
-          1); // Encoder actual is the actual encoder object where as encoder is a double with the
-  // value of encoder actaul
+  private static final DutyCycleEncoder encoderActual = new DutyCycleEncoder(1);
 
   PIDController pivotPID = new PIDController(0, 0, 0);
 
@@ -66,6 +63,11 @@ public class IntakeIOKraken implements IntakeIO {
   @Override
   public void setPivotPosition(double position) {
     intakePivot.set(-pivotPID.calculate(encoderActual.get(), position));
+  }
+
+  @Override
+  public void rollerSpeed(double speed) {
+    intakeRoller.set(speed);
   }
 
   @Override

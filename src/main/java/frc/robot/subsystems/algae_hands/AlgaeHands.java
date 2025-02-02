@@ -71,6 +71,10 @@ public class AlgaeHands extends RBSISubsystem {
     io.stop();
   }
 
+  public void pivotToPosition(double position){
+    io.pivotToPosition(position);
+  }
+
   public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
     return sysId.quasistatic(direction);
   }

@@ -17,6 +17,7 @@ package frc.robot.subsystems.algae_hands;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -51,7 +52,10 @@ public class AlgaeHandsIOTalonFX implements AlgaeHandsIO {
     roller.stopMotor();
   }
 
-  
+  @Override
+  public void pivotToPosition(double position) {
+   pivot.setControl(new PositionDutyCycle(position));
+  }
 
   @Override
   public void configurePID(double kP, double kI, double kD) {

@@ -2,6 +2,8 @@ package frc.robot.subsystems.algae_hands;
 
 import org.littletonrobotics.junction.AutoLog;
 
+import com.ctre.phoenix6.swerve.SwerveDrivetrain.DeviceConstructor;
+
 public interface AlgaeHandsIO {
 
   // IMPORTANT: Include here all devices that are part of this mechanism!
@@ -29,4 +31,6 @@ public interface AlgaeHandsIO {
 
   /** Set velocity PID constants. */
   public default void configurePID(double kP, double kI, double kD) {}
+
+  public default void pivotToPosition(double position) {}
 }

@@ -20,20 +20,21 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import edu.wpi.first.math.util.Units;
 
 public class AlgaeHandsIOTalonFX implements AlgaeHandsIO {
-private final TalonFX roller = new TalonFX(28);
-private final TalonFX pivot = new TalonFX(29);
-private TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
-private TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
-public AlgaeHandsIOTalonFX(){
-rollerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-roller.getConfigurator().apply(rollerConfig);
-pivotConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-pivot.getConfigurator().apply(pivotConfig);
-}
+  private final TalonFX roller = new TalonFX(28);
+  private final TalonFX pivot = new TalonFX(29);
+  private TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
+  private TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
+
+  public AlgaeHandsIOTalonFX() {
+    rollerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    roller.getConfigurator().apply(rollerConfig);
+    pivotConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    pivot.getConfigurator().apply(pivotConfig);
+  }
+
   // Define the leader / follower motors from the Ports section of RobotContainer
 
   @Override
@@ -41,13 +42,16 @@ pivot.getConfigurator().apply(pivotConfig);
 
   @Override
   public void setVelocity(double velocityRadPerSec, double ffVolts) {
-    roller.setControl(new VelocityDutyCycle(Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec)));
+    roller.setControl(
+        new VelocityDutyCycle(Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec)));
   }
 
   @Override
   public void stop() {
     roller.stopMotor();
   }
+
+  
 
   @Override
   public void configurePID(double kP, double kI, double kD) {

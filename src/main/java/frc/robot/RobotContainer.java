@@ -39,8 +39,8 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Algae_Hands.AlgaeCommand;
+import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.algae_hands.AlgaeHands;
 import frc.robot.subsystems.algae_hands.AlgaeHandsIOTalonFX;
@@ -235,8 +235,7 @@ public class RobotContainer {
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
-driverController.x().whileTrue(new AlgaeCommand(m_algaeHands));
-
+    driverController.x().whileTrue(new AlgaeCommand(m_algaeHands));
 
     driverController
         .b()

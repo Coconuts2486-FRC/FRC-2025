@@ -17,6 +17,8 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.*;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pathplanner.lib.config.ModuleConfig;
@@ -264,14 +266,14 @@ public final class Constants {
     // PathPlanner Config constants
     public static final RobotConfig kPathPlannerConfig =
         new RobotConfig(
-            PhysicalConstants.kRobotMassKg,
-            PhysicalConstants.kRobotMOI,
+            Kilograms.of(PhysicalConstants.kRobotMassKg),
+            KilogramSquareMeters.of(PhysicalConstants.kRobotMOI),
             new ModuleConfig(
-                SwerveConstants.kWheelRadiusMeters,
-                DrivebaseConstants.kMaxLinearSpeed,
+                Meters.of(SwerveConstants.kWheelRadiusMeters),
+                MetersPerSecond.of(DrivebaseConstants.kMaxLinearSpeed),
                 PhysicalConstants.kWheelCOF,
                 DCMotor.getKrakenX60Foc(1).withReduction(SwerveConstants.kDriveGearRatio),
-                SwerveConstants.kDriveSlipCurrent,
+                Amps.of(SwerveConstants.kDriveSlipCurrent),
                 1),
             Drive.getModuleTranslations());
 

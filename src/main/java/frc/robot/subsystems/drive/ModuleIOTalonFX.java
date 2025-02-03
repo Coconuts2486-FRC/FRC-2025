@@ -284,6 +284,8 @@ public class ModuleIOTalonFX implements ModuleIO {
   public void setDriveVelocity(double velocityRadPerSec) {
     double velocityRotPerSec = Units.radiansToRotations(velocityRadPerSec);
     Logger.recordOutput("Thingie/closedloop", m_DriveMotorClosedLoopOutput);
+    Logger.recordOutput("Thingie/wheelradius_inches", SwerveConstants.kWheelRadiusInches);
+    Logger.recordOutput("Thingie/wheelradius_meters", SwerveConstants.kWheelRadiusMeters);
     driveTalon.setControl(
         switch (m_DriveMotorClosedLoopOutput) {
           case Voltage -> velocityVoltageRequest.withVelocity(velocityRotPerSec);

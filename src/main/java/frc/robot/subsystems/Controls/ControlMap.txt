@@ -1,0 +1,37 @@
+A map of all controls
+
+    Driver Controls:
+A:
+B:
+X:    Grab Coral
+Y:    Zero
+D-Pad Up/Down:
+D-Pad Left/right:  Change score index Left/Right
+Right Bumper:   Intake
+Left Bumper:    Intake Score
+Right Trigger:
+Left Trigger:
+Start:
+Stop:
+Right Stick:   Rotate
+Left Stick:    Strafe
+Right Stick Button:
+Left Stick Button:
+
+    Co-Driver Controls:
+A:
+B:
+X:
+Y:
+D-Pad Up/Down:    Change score index Up/Down
+D-Pad Left/Right:
+Right Bumper:   Score coral
+Left Bumper:
+Right Trigger:
+Left Trigger:
+Start:
+Stop:
+Right Stick:
+Left Stick:
+Right Stick Button:
+Left Stick Button:

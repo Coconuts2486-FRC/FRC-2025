@@ -2,6 +2,7 @@ package frc.robot.subsystems.Intake;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
@@ -9,7 +10,6 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants.CANandPowerPorts;
 
 public class IntakeIOKraken implements IntakeIO {
@@ -18,7 +18,7 @@ public class IntakeIOKraken implements IntakeIO {
       new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
   private final TalonFX intakePivot = new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
 
-  private static final DutyCycleEncoder encoderActual = new DutyCycleEncoder(1);
+  private final CANcoder encoderActual = new CANcoder(1);
 
   PIDController pivotPID = new PIDController(0, 0, 0);
 
@@ -26,7 +26,7 @@ public class IntakeIOKraken implements IntakeIO {
     CANandPowerPorts.INTAKE_PIVOT.getPowerPort(), CANandPowerPorts.INTAKE_ROLLER.getPowerPort()
   };
 
-  private final StatusSignal<Angle> pivotPosition = intakePivot.getPosition();
+  private final StatusSignal<Angle> pivotPosition = encoderActual.getAbsolutePosition();
   private final StatusSignal<AngularVelocity> pivotVelocity = intakePivot.getVelocity();
   private final StatusSignal<Voltage> pivotAppliedVolts = intakePivot.getMotorVoltage();
   private final StatusSignal<Current> pivotCurrent = intakePivot.getSupplyCurrent();
@@ -62,7 +62,7 @@ public class IntakeIOKraken implements IntakeIO {
 
   @Override
   public void setPivotPosition(double position) {
-    intakePivot.set(-pivotPID.calculate(encoderActual.get(), position));
+    intakePivot.set(-pivotPID.calculate(pivotPosition.getValueAsDouble(), position));
   }
 
   @Override
@@ -79,6 +79,6 @@ public class IntakeIOKraken implements IntakeIO {
 
   @Override
   public double getEncoder() {
-    return encoderActual.get();
+    return pivotPosition.getValueAsDouble();
   }
 }

@@ -311,8 +311,8 @@ public class RobotContainer {
         Commands.run(
             () ->
                 m_intake.runPivotVolts(
-                    driverController.getLeftTriggerAxis()
-                        - driverController.getRightTriggerAxis())));
+                    driverController.getRightTriggerAxis()
+                        - driverController.getLeftTriggerAxis())));
 
     driverController
         .rightBumper()

@@ -300,20 +300,19 @@ public class RobotContainer {
 
     // driverController.a().whileTrue(new IntakeCommand(m_intake, 0));
 
-    // driverController
-    //     .rightBumper()
-    //     .whileTrue(
-    //         Commands.runEnd(
-    //             () -> m_intake.setPivotPosition(0.9),
-    //             () -> m_intake.setPivotPosition(0.3),
-    //             m_intake));
-
     // m_elevator.setDefaultCommand(
     //     Commands.run(
     //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
 
     // the two driver controller bumpers below make it so when you let go of either button the
     // intake pivot will go to a resting posistion
+
+    m_intake.setDefaultCommand(
+        Commands.run(
+            () ->
+                m_intake.runPivotVolts(
+                    driverController.getLeftTriggerAxis()
+                        - driverController.getRightTriggerAxis())));
 
     driverController
         .rightBumper()

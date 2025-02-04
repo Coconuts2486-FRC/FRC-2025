@@ -78,9 +78,10 @@ public class Module {
     state.cosineScale(inputs.turnPosition);
 
     // Apply setpoints
-    double speedRadPerSec = state.speedMetersPerSecond / kWheelRadiusMeters;
-    io.setDriveVelocity(speedRadPerSec); // , ffModel.calculate(speedRadPerSec));
+    io.setDriveVelocity(state.speedMetersPerSecond / kWheelRadiusMeters);
     io.setTurnPosition(state.angle);
+    Logger.recordOutput(
+        "Thingie/output_radpersec", state.speedMetersPerSecond / kWheelRadiusMeters);
   }
 
   /** Runs the module with the specified output while controlling to zero degrees. */

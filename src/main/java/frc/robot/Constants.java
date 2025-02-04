@@ -74,7 +74,7 @@ public final class Constants {
   //       under strict caveat emptor -- and submit any error and bugfixes
   //       via GitHub issues.
   private static SwerveType swerveType = SwerveType.PHOENIX6; // PHOENIX6, YAGSL
-  private static CTREPro phoenixPro = CTREPro.LICENSED; // LICENSED, UNLICENSED
+  private static CTREPro phoenixPro = CTREPro.UNLICENSED; // LICENSED, UNLICENSED
   private static AutoType autoType = AutoType.PATHPLANNER; // PATHPLANNER, CHOREO
   private static VisionType visionType = VisionType.NONE; // PHOTON, LIMELIGHT, NONE
 
@@ -137,7 +137,7 @@ public final class Constants {
     // Theoretical free speed (m/s) at 12v applied output;
     // IMPORTANT: Follow the AdvantageKit instructions for measuring the ACTUAL maximum linear speed
     // of YOUR ROBOT, and replace the estimate here with your measured value!
-    public static final double kMaxLinearSpeed = Units.feetToMeters(18);
+    public static final double kMaxLinearSpeed = Units.feetToMeters(18); // 18);
 
     // Set 3/4 of a rotation per second as the max angular velocity (radians/sec)
     public static final double kMaxAngularSpeed = 1.5 * Math.PI;
@@ -158,14 +158,14 @@ public final class Constants {
 
     // Default TalonFX Gains (Replaces what's in Phoenix X's Tuner Constants)
     // NOTE: Default values from 6328's 2025 Public Code
-    public static final double kDriveP = 35.0;
-    public static final double kDriveD = 0.0;
-    public static final double kDriveV = 0.0;
-    public static final double kDriveS = 5.0;
+    public static final double kDriveP = 1.0;
+    public static final double kDriveD = 0.001;
+    public static final double kDriveV = 0.83;
+    public static final double kDriveS = 0.21;
     public static final double kDriveT =
         SwerveConstants.kDriveGearRatio / DCMotor.getKrakenX60Foc(1).KtNMPerAmp;
-    public static final double kSteerP = 4000.0;
-    public static final double kSteerD = 50.0;
+    public static final double kSteerP = 100.0;
+    public static final double kSteerD = 1.0;
   }
 
   /** Example Flywheel Mechanism Constants ********************************* */

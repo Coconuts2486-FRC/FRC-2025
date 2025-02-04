@@ -149,7 +149,7 @@ public class Drive extends SubsystemBase {
               this::getPose,
               this::resetPose,
               this::getChassisSpeeds,
-              (speeds) -> runVelocity(speeds),
+              this::runVelocity,
               new PPHolonomicDriveController(AutoConstants.kPPdrivePID, AutoConstants.kPPsteerPID),
               AutoConstants.kPathPlannerConfig,
               () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,

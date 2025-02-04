@@ -36,13 +36,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LED.LEDCommand;
+import frc.robot.subsystems.Controls.CoralControl;
 import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIOKraken;
 import frc.robot.subsystems.LED.LED;
@@ -83,10 +83,11 @@ public class RobotContainer {
   private final Flywheel m_flywheel;
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
+  private final CoralControl m_coralControl = new CoralControl();
   private final Vision m_vision;
   private final PowerMonitoring m_power;
   private final Intake m_intake = new Intake(new IntakeIOKraken());
-  private final LED led = new LED(new LEDIOCandle());
+  private final LED m_led = new LED(new LEDIOCandle());
   private final DigitalInput lightStop = new DigitalInput(1);
 
   /** Dashboard inputs ***************************************************** */
@@ -136,6 +137,7 @@ public class RobotContainer {
               default -> null;
             };
         m_accel = new Accelerometer(m_drivebase.getGyro());
+   
         break;
 
       case SIM:
@@ -269,10 +271,12 @@ public class RobotContainer {
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
+    
+
     driverController
         .rightBumper()
         .onTrue(
-            new LEDCommand(led, lightStop::get)
+            new LEDCommand(m_led, lightStop::get)
                 .ignoringDisable(true)
                 .until(driverController.leftBumper()));
     driverController
@@ -287,6 +291,9 @@ public class RobotContainer {
                         () -> turnStickX.value()),
                 m_drivebase));
 
+
+      driverController.a().onTrue(Commands.run(() -> m_coralControl.indexL()));
+      driverController.y().onTrue(Commands.run(() -> m_coralControl.indexR()));
     // Press A button -> BRAKE
     driverController
         .a()

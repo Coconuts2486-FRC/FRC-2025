@@ -372,6 +372,9 @@ public final class Constants {
     public static final RobotDeviceId INTAKE_PIVOT = new RobotDeviceId(22, "", 10);
     public static final RobotDeviceId INTAKE_ROLLER = new RobotDeviceId(21, "", 11);
 
+    public static final RobotDeviceId CLIMB_TALON = new RobotDeviceId(31, "", 12);
+    public static final int CLIMB_SERVO = 1;
+
     /* BEAM BREAK and/or LIMIT SWITCH DIO CHANNELS */
     // This is where digital I/O feedback devices are defined
     // Example:

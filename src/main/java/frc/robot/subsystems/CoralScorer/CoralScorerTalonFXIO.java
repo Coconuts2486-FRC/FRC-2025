@@ -1,5 +1,3 @@
 package frc.robot.subsystems.CoralScorer;
 
-public class CoralScorerTalonFXIO {
-  
-}
+public class CoralScorerTalonFXIO {}

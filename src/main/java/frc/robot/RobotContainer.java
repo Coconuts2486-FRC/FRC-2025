@@ -26,6 +26,10 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -56,10 +60,44 @@ import frc.robot.util.LoggedTunableNumber;
 import frc.robot.util.OverrideSwitches;
 import frc.robot.util.PowerMonitoring;
 import frc.robot.util.RBSIEnum;
+import java.util.List;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
+
+  // **** This is a Pathplanner On-the-Fly Command ****/
+  // Create a list of waypoints from poses. Each pose represents one waypoint.
+  // The rotation component of the pose should be the direction of travel. Do not use
+  // holonomic rotation.
+  List<Waypoint> woahpoints =
+      PathPlannerPath.waypointsFromPoses(
+          new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)),
+          new Pose2d(9.4, 6.184, Rotation2d.fromDegrees(0)));
+
+  PathConstraints constraints =
+      new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+  // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can
+  // also use unlimited constraints, only limited by motor torque and nominal battery
+  // voltage
+
+  // Create the path using the waypoints created above
+  PathPlannerPath woah =
+      new PathPlannerPath(
+          woahpoints,
+          constraints,
+          null, // The ideal starting state, this is only relevant for pre-planned paths,
+          // so
+          // can be null for on-the-fly paths.
+          new GoalEndState(
+              0.0,
+              Rotation2d.fromDegrees(
+                  180)) // Goal end state. You can set a holonomic rotation here. If
+          // using a
+          // differential drivetrain, the rotation will have no effect.
+          );
+
+  // Prevent the path from being flipped if the coordinates are already correct
 
   /** Define the Driver and, optionally, the Operator/Co-Driver Controllers */
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
@@ -99,7 +137,7 @@ public class RobotContainer {
    * devices, and commands.
    */
   public RobotContainer() {
-
+    woah.preventFlipping = true;
     // Instantiate Robot Subsystems based on RobotType
     switch (Constants.getMode()) {
       case REAL:
@@ -148,7 +186,6 @@ public class RobotContainer {
         m_accel = new Accelerometer(m_drivebase.getGyro());
         break;
     }
-
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
@@ -249,8 +286,12 @@ public class RobotContainer {
         .a()
         .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
 
+    driverController.rightBumper();
+
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
+
+    driverController.leftBumper().whileTrue(Commands.run(() -> getAutonomousCommandPathPlanner()));
 
     // Press Y button --> Manually Re-Zero the Gyro
     driverController
@@ -264,13 +305,13 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     // Press RIGHT BUMPER --> Run the example flywheel
-    driverController
-        .rightBumper()
-        .whileTrue(
-            Commands.startEnd(
-                () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
-                m_flywheel::stop,
-                m_flywheel));
+    // driverController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         Commands.startEnd(
+    //             () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
+    //             m_flywheel::stop,
+    //             m_flywheel));
   }
 
   /**
@@ -280,7 +321,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommandPathPlanner() {
     // Use the ``autoChooser`` to define your auto path from the SmartDashboard
-    return autoChooserPathPlanner.get();
+    // return autoChooserPathPlanner.get();
+    return AutoBuilder.followPath(woah);
   }
 
   /**

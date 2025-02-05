@@ -294,6 +294,7 @@ public class RobotContainer {
     //         Commands.startEnd(
     //             () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
     //             m_flywheel::stop,
+
     //             m_flywheel));
 
     driverController
@@ -307,10 +308,10 @@ public class RobotContainer {
     //     Commands.run(
     //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
 
-    driverController.a().whileTrue(new ElevatorCommand(72, 40, 40, m_elevator));
-    driverController
-        .a()
-        .whileFalse(new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
+    // driverController.a().whileTrue(new ElevatorCommand(72, 40, 40, m_elevator));
+    // driverController
+    //     .a()
+    //     .whileFalse(new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
 
     driverController
         .rightStick()

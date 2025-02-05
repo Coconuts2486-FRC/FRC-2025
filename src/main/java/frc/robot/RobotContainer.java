@@ -311,22 +311,26 @@ public class RobotContainer {
         Commands.run(
             () ->
                 m_intake.runPivotVolts(
-                    driverController.getRightTriggerAxis()
-                        - driverController.getLeftTriggerAxis())));
+                    driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
+            m_intake));
 
     driverController
         .rightBumper()
-        .whileTrue(new IntakeCommand(m_intake, 0.9, 0.1, 0))
-        .whileFalse(new IntakeCommand(m_intake, 0.4, 0, 0).until(leftBumper));
+        .whileTrue(new IntakeCommand(m_intake, 0.25, -0.35, 0))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0, 0).until(leftBumper));
 
     driverController
         .leftBumper()
-        .whileTrue(new IntakeCommand(m_intake, 0.6, -0.5, 0))
-        .whileFalse(new IntakeCommand(m_intake, 0.4, 0, 0).until(rightBumper));
+        .whileTrue(
+            new IntakeCommand(m_intake, 0.75, 0, 0)
+                .withTimeout(0.075)
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.7, 0)))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0, 0).until(rightBumper));
 
     driverController.a().whileTrue(new IntakeCommand(m_intake, 0.9, 0, 1));
 
     // Press Y button --> Manually Re-Zero the Gyro
+
     driverController
         .y()
         .onTrue(

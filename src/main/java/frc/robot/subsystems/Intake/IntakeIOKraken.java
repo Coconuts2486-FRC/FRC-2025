@@ -18,9 +18,9 @@ public class IntakeIOKraken implements IntakeIO {
       new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
   private final TalonFX intakePivot = new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
 
-  private final CANcoder encoderActual = new CANcoder(1);
+  private final CANcoder encoderActual = new CANcoder(23);
 
-  PIDController pivotPID = new PIDController(0, 0, 0);
+  PIDController pivotPID = new PIDController(1.5, 0, 0);
 
   public final int[] powerPorts = {
     CANandPowerPorts.INTAKE_PIVOT.getPowerPort(), CANandPowerPorts.INTAKE_ROLLER.getPowerPort()
@@ -35,9 +35,11 @@ public class IntakeIOKraken implements IntakeIO {
 
   @Override
   public void updateInputs(IntakeIOInputs inputs) {
-    BaseStatusSignal.refreshAll(pivotPosition, pivotVelocity, pivotAppliedVolts, pivotCurrent);
+    BaseStatusSignal.refreshAll(
+        encoderActual.getAbsolutePosition(), pivotVelocity, pivotAppliedVolts, pivotCurrent);
     inputs.positionRad =
-        Units.rotationsToRadians(pivotPosition.getValueAsDouble()); // 21.42857; // gear ratio
+        Units.rotationsToRadians(
+            encoderActual.getAbsolutePosition().getValueAsDouble()); // 21.42857; // gear ratio
     inputs.velocityRadPerSec =
         Units.rotationsToRadians(pivotVelocity.getValueAsDouble()); // 21.42857; // gear ratio
     inputs.appliedVolts = pivotAppliedVolts.getValueAsDouble();
@@ -62,7 +64,8 @@ public class IntakeIOKraken implements IntakeIO {
 
   @Override
   public void setPivotPosition(double position) {
-    intakePivot.set(-pivotPID.calculate(pivotPosition.getValueAsDouble(), position));
+    intakePivot.set(
+        -pivotPID.calculate(encoderActual.getAbsolutePosition().getValueAsDouble(), position));
   }
 
   @Override
@@ -79,6 +82,6 @@ public class IntakeIOKraken implements IntakeIO {
 
   @Override
   public double getEncoder() {
-    return pivotPosition.getValueAsDouble();
+    return encoderActual.getAbsolutePosition().getValueAsDouble();
   }
 }

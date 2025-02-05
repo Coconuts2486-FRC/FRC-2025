@@ -26,6 +26,7 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -322,6 +323,7 @@ public class RobotContainer {
   public Command getAutonomousCommandPathPlanner() {
     // Use the ``autoChooser`` to define your auto path from the SmartDashboard
     // return autoChooserPathPlanner.get();
+    //return new PathPlannerAuto("Consistancy Test");
     return AutoBuilder.followPath(woah);
   }
 

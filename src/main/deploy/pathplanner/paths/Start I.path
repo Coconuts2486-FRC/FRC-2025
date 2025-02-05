@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.18,
-        "y": 6.184303023726215
+        "x": 7.113697554976851,
+        "y": 5.073642939814815
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.212921357306778,
-        "y": 6.171556666618397
+        "x": 6.866487409886389,
+        "y": 5.0363985554817035
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 9.4,
-        "y": 6.184303023726215
+        "x": 5.3,
+        "y": 5.075
       },
       "prevControl": {
-        "x": 8.871020062209338,
-        "y": 6.188910128563965
+        "x": 5.549961397721135,
+        "y": 5.07060686338746
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0.0
+    "velocity": 0,
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Tests",
+  "folder": "Matrix Start",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 0.0,
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

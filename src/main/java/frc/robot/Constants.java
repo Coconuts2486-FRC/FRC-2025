@@ -255,16 +255,15 @@ public final class Constants {
     // new PIDConstants(DrivebaseConstants.kSteerP, 0.0, DrivebaseConstants.kSteerD);
     // 1 Cordinate = 1 meter
     // *** 1 meter = 39.3701 inches
-    //Pathplanner Maxiums with MK4i L3 with an amp limit of 40 Amps and other robot specifics
-    //Max Linear Speed = 5 m/s
-    //Max Angular Accel = 1354 m/s^2
-    //Max Linear Accel = 9 m/s^2
+    // Pathplanner Maxiums with MK4i L3 with an amp limit of 40 Amps and other robot specifics
+    // Max Linear Speed = 5 m/s
+    // Max Angular Accel = 1354 m/s^2
+    // Max Linear Accel = 9 m/s^2
 
-    //Theroedical Maximums
-    //Max Linear Speed = 5.14 m/s
-    //Max Angular Accel = 1824 m/s^2
-    //Max Linear Accel = 11.8 m/s^2
-
+    // Theroedical Maximums
+    // Max Linear Speed = 5.14 m/s
+    // Max Angular Accel = 1824 m/s^2
+    // Max Linear Accel = 11.8 m/s^2
 
     // PathPlanner Config constants
     public static final RobotConfig kPathPlannerConfig =

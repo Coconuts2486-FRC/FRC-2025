@@ -39,6 +39,7 @@
     "{\"name\":\"Elevator\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":-0.25,\"y\":0.0},\"size\":{\"width\":0.4,\"length\":0.1},\"borderRadius\":0.01,\"strokeWidth\":0.01,\"filled\":false}}",
     "{\"name\":\"Coral Scorer\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":-0.3,\"y\":0.0},\"size\":{\"width\":0.2,\"length\":0.15},\"borderRadius\":0.05,\"strokeWidth\":0.01,\"filled\":false}}",
     "{\"name\":\"Climber\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.0,\"y\":0.35},\"size\":{\"width\":0.15,\"length\":0.09},\"borderRadius\":0.02,\"strokeWidth\":0.02,\"filled\":false}}",
-    "{\"name\":\"Ground Intake\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.34,\"y\":0.0},\"size\":{\"width\":0.8,\"length\":0.1},\"borderRadius\":0.02,\"strokeWidth\":0.01,\"filled\":false}}"
+    "{\"name\":\"Ground Intake\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.34,\"y\":0.0},\"size\":{\"width\":0.8,\"length\":0.1},\"borderRadius\":0.02,\"strokeWidth\":0.01,\"filled\":false}}",
+    "{\"name\":\"Circle\",\"type\":\"circle\",\"data\":{\"center\":{\"x\":-0.46,\"y\":0.0},\"radius\":0.032,\"strokeWidth\":0.01,\"filled\":true}}"
   ]
 }

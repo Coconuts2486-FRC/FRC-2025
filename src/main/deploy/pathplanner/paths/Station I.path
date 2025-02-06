@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.864379667749841,
-        "y": 5.365315445609797
+        "x": 4.896876895193732,
+        "y": 5.286601098309946
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Coral I"
     },
     {
       "anchor": {
@@ -20,15 +20,20 @@
         "y": 7.34
       },
       "prevControl": {
-        "x": 2.377690531080061,
-        "y": 6.846242002323428
+        "x": 2.534001634131834,
+        "y": 6.818173414328754
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Station"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.28626644736842033,
+      "rotationDegrees": 59.99999999999999
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

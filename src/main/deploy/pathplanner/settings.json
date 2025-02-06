@@ -9,6 +9,7 @@
     "Tests"
   ],
   "autoFolders": [
+    "T",
     "Test Autos"
   ],
   "defaultMaxVel": 1.0,

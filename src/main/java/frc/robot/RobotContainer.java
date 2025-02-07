@@ -26,13 +26,13 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -234,9 +234,26 @@ public class RobotContainer {
 
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
-
     // NamedCommands.registerCommand("Zero", Commands.runOnce(() -> m_drivebase.zero()));
   }
+
+          // **** This is a Pathplanner Pathfinding Command ****/
+          // Since we are using a holonomic drivetrain, the rotation component of this pose
+          // represents the goal holonomic rotation
+          Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
+
+          // Create the constraints to use while pathfinding
+          PathConstraints constraints = new PathConstraints(
+                  1.0, 1.0,
+                  Units.degreesToRadians(540), Units.degreesToRadians(720));
+
+          // Since AutoBuilder is configured, we can use it to build pathfinding commands
+          Command InfiniteCommand = AutoBuilder.pathfindToPose(
+                  targetPose,
+                  constraints,
+                  0.0, // Goal end velocity in meters/sec
+                  0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
+          );
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -281,13 +298,12 @@ public class RobotContainer {
                         () -> -driveStickX.value(),
                         () -> turnStickX.value()),
                 m_drivebase));
-
     // Press A button -> BRAKE
     driverController
         .a()
         .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
 
-    driverController.rightBumper();
+    driverController.rightBumper().onTrue(Commands.runOnce(()-> Drive.Squirtle(what, constraint)));
 
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
@@ -315,6 +331,29 @@ public class RobotContainer {
     //             m_flywheel));
   }
 
+
+
+                      // **** This is a Pathplanner Pathfinding Command ****/
+  public static Command pathfindAndAlignChute(){
+          // Since we are using a holonomic drivetrain, the rotation component of this pose
+  // represents the goal holonomic rotation
+  Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
+
+  // Create the constraints to use while pathfinding
+  PathConstraints constraints = new PathConstraints(
+          1.0, 1.0,
+          Units.degreesToRadians(540), Units.degreesToRadians(720));
+
+    return Commands.sequence(
+      AutoBuilder.pathfindToPose(Pose2d targetPose, PathConstraints.constraints)
+      .until(
+          () ->
+              swerve
+                      .getPose()
+                      .getTranslation()
+                      .getDistance(Constants.targetPoseRed.getTranslation())
+                  <= 2.5));
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -323,7 +362,7 @@ public class RobotContainer {
   public Command getAutonomousCommandPathPlanner() {
     // Use the ``autoChooser`` to define your auto path from the SmartDashboard
     // return autoChooserPathPlanner.get();
-    //return new PathPlannerAuto("Consistancy Test");
+    // return new PathPlannerAuto("Consistancy Test");
     return AutoBuilder.followPath(woah);
   }
 

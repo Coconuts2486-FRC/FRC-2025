@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6252787822001746,
-        "y": 0.6846960119263781
+        "x": 7.625266203703704,
+        "y": 0.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.383067625382321,
-        "y": 1.2002762326375018
+        "x": 8.625266203703703,
+        "y": 0.0
       },
       "isLocked": false,
-      "linkedName": "Station 2"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.121799448374155,
-        "y": 2.4796823862436645
+        "x": 3.5,
+        "y": 4.492603443287037
       },
       "prevControl": {
-        "x": 4.911432267667752,
-        "y": 2.3446059290735133
-      },
-      "nextControl": {
-        "x": 5.574295126425253,
-        "y": 2.7702291952597125
-      },
-      "isLocked": false,
-      "linkedName": "Gpoint"
-    },
-    {
-      "anchor": {
-        "x": 5.819968723606419,
-        "y": 3.864209149334881
-      },
-      "prevControl": {
-        "x": 6.06263147302576,
-        "y": 3.2297308844489017
+        "x": 4.0247001591435065,
+        "y": 3.4616033709490743
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Coral G"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -61,10 +45,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Matrix Coral",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

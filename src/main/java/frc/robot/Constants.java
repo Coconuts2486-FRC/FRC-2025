@@ -316,16 +316,24 @@ public final class Constants {
   /** Vision Camera Posses ************************************************* */
   public static class Cameras {
     // Camera names, must match names configured on coprocessor
-    public static String camera0Name = "camera_0";
-    public static String camera1Name = "camera_1";
+    public static String camera0Name = "Photon_BW1";
+    public static String camera1Name = "Photon_BW2";
     // ... And more, if needed
 
     // Robot to camera transforms
     // (ONLY USED FOR PHOTONVISION -- Limelight: configure in web UI instead)
     public static Transform3d robotToCamera0 =
-        new Transform3d(0.2, 0.0, 0.2, new Rotation3d(0.0, -0.4, 0.0));
+        new Transform3d(
+            Units.inchesToMeters(14),
+            0.0,
+            Units.inchesToMeters(4.25),
+            new Rotation3d(0.0, Units.degreesToRadians(+30), 0.0));
     public static Transform3d robotToCamera1 =
-        new Transform3d(-0.2, 0.0, 0.2, new Rotation3d(0.0, -0.4, Math.PI));
+        new Transform3d(
+            Units.inchesToMeters(-14),
+            0.0,
+            Units.inchesToMeters(4.25),
+            new Rotation3d(0.0, 0.0, Math.PI));
 
     // Standard deviation multipliers for each camera
     // (Adjust to trust some cameras more than others)
@@ -341,45 +349,49 @@ public final class Constants {
 
     /* DRIVETRAIN CAN DEVICE IDS */
     // Input the correct Power Distribution Module port for each motor!!!!
-    // NOTE: The CAN ID and bus are set in the Swerve Generator (Phoenix Tuner or YAGSL)
 
     // Front Left
     public static final RobotDeviceId FL_DRIVE =
-        new RobotDeviceId(SwerveConstants.kFLDriveMotorId, SwerveConstants.kFLDriveCanbus, 18);
+        new RobotDeviceId(SwerveConstants.kFLDriveMotorId, SwerveConstants.kFLDriveCanbus, 7);
     public static final RobotDeviceId FL_ROTATION =
-        new RobotDeviceId(SwerveConstants.kFLSteerMotorId, SwerveConstants.kFLSteerCanbus, 19);
+        new RobotDeviceId(SwerveConstants.kFLSteerMotorId, SwerveConstants.kFLSteerCanbus, 6);
     public static final RobotDeviceId FL_CANCODER =
-        new RobotDeviceId(SwerveConstants.kFLEncoderId, SwerveConstants.kFLEncoderCanbus, null);
+        new RobotDeviceId(SwerveConstants.kFLEncoderId, SwerveConstants.kFLEncoderCanbus, 5);
     // Front Right
     public static final RobotDeviceId FR_DRIVE =
-        new RobotDeviceId(SwerveConstants.kFRDriveMotorId, SwerveConstants.kFRDriveCanbus, 17);
+        new RobotDeviceId(SwerveConstants.kFRDriveMotorId, SwerveConstants.kFRDriveCanbus, 2);
     public static final RobotDeviceId FR_ROTATION =
-        new RobotDeviceId(SwerveConstants.kFRSteerMotorId, SwerveConstants.kFRSteerCanbus, 16);
+        new RobotDeviceId(SwerveConstants.kFRSteerMotorId, SwerveConstants.kFRSteerCanbus, 3);
     public static final RobotDeviceId FR_CANCODER =
-        new RobotDeviceId(SwerveConstants.kFREncoderId, SwerveConstants.kFREncoderCanbus, null);
+        new RobotDeviceId(SwerveConstants.kFREncoderId, SwerveConstants.kFREncoderCanbus, 4);
     // Back Left
     public static final RobotDeviceId BL_DRIVE =
-        new RobotDeviceId(SwerveConstants.kBLDriveMotorId, SwerveConstants.kBLDriveCanbus, 1);
+        new RobotDeviceId(SwerveConstants.kBLDriveMotorId, SwerveConstants.kBLDriveCanbus, 12);
     public static final RobotDeviceId BL_ROTATION =
-        new RobotDeviceId(SwerveConstants.kBLSteerMotorId, SwerveConstants.kBLSteerCanbus, 0);
+        new RobotDeviceId(SwerveConstants.kBLSteerMotorId, SwerveConstants.kBLSteerCanbus, 13);
     public static final RobotDeviceId BL_CANCODER =
-        new RobotDeviceId(SwerveConstants.kBLEncoderId, SwerveConstants.kBLEncoderCanbus, null);
+        new RobotDeviceId(SwerveConstants.kBLEncoderId, SwerveConstants.kBLEncoderCanbus, 14);
     // Back Right
     public static final RobotDeviceId BR_DRIVE =
-        new RobotDeviceId(SwerveConstants.kBRDriveMotorId, SwerveConstants.kBRSteerCanbus, 2);
+        new RobotDeviceId(SwerveConstants.kBRDriveMotorId, SwerveConstants.kBRSteerCanbus, 17);
     public static final RobotDeviceId BR_ROTATION =
-        new RobotDeviceId(SwerveConstants.kBRSteerMotorId, SwerveConstants.kBRSteerCanbus, 3);
+        new RobotDeviceId(SwerveConstants.kBRSteerMotorId, SwerveConstants.kBRSteerCanbus, 16);
     public static final RobotDeviceId BR_CANCODER =
-        new RobotDeviceId(SwerveConstants.kBREncoderId, SwerveConstants.kBREncoderCanbus, null);
+        new RobotDeviceId(SwerveConstants.kBREncoderId, SwerveConstants.kBREncoderCanbus, 15);
     // Pigeon
     public static final RobotDeviceId PIGEON =
         new RobotDeviceId(SwerveConstants.kPigeonId, SwerveConstants.kCANbusName, null);
 
     /* SUBSYSTEM CAN DEVICE IDS */
-    // This is where mechanism subsystem devices are defined (Including ID, bus, and power port)
-    // Example:
-    public static final RobotDeviceId FLYWHEEL_LEADER = new RobotDeviceId(3, "", 8);
-    public static final RobotDeviceId FLYWHEEL_FOLLOWER = new RobotDeviceId(4, "", 9);
+    public static final RobotDeviceId ELEVATOR = new RobotDeviceId(11, "", 18);
+    public static final RobotDeviceId CORAL_MECH = new RobotDeviceId(16, "", 19);
+    public static final RobotDeviceId INTAKE_PIVOT = new RobotDeviceId(21, "", 0);
+    public static final RobotDeviceId INTAKE_ROLLER = new RobotDeviceId(22, "", 1);
+    public static final RobotDeviceId INTAKE_ENCODER = new RobotDeviceId(23, "", null);
+    public static final RobotDeviceId ALGAE_PIVOT = new RobotDeviceId(26, "", 10);
+    public static final RobotDeviceId ALGAE_ROLLER = new RobotDeviceId(27, "", 11);
+    public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "", 8);
+    public static final RobotDeviceId LED = new RobotDeviceId(36, "", null);
 
     /* BEAM BREAK and/or LIMIT SWITCH DIO CHANNELS */
     // This is where digital I/O feedback devices are defined

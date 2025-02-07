@@ -59,9 +59,4 @@ public class RBSIEnum {
     COAST, // Allow the motor to coast when idle
     BRAKE // Hold motor position when idle
   }
-
-  //   public static enum PracticeSpace {
-  //     NUTHOUSE,
-  //     FIELD
-  //   }
 }

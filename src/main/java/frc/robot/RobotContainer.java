@@ -26,6 +26,11 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -35,14 +40,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.flywheel_example.Flywheel;
-import frc.robot.subsystems.flywheel_example.FlywheelIO;
-import frc.robot.subsystems.flywheel_example.FlywheelIOSim;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -55,10 +58,44 @@ import frc.robot.util.LoggedTunableNumber;
 import frc.robot.util.OverrideSwitches;
 import frc.robot.util.PowerMonitoring;
 import frc.robot.util.RBSIEnum;
+import java.util.List;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
+
+  // **** This is a Pathplanner On-the-Fly Command ****/
+  // Create a list of waypoints from poses. Each pose represents one waypoint.
+  // The rotation component of the pose should be the direction of travel. Do not use
+  // holonomic rotation.
+  List<Waypoint> woahpoints =
+      PathPlannerPath.waypointsFromPoses(
+          new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)),
+          new Pose2d(9.4, 6.184, Rotation2d.fromDegrees(0)));
+
+  PathConstraints constraints =
+      new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+  // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can
+  // also use unlimited constraints, only limited by motor torque and nominal battery
+  // voltage
+
+  // Create the path using the waypoints created above
+  PathPlannerPath woah =
+      new PathPlannerPath(
+          woahpoints,
+          constraints,
+          null, // The ideal starting state, this is only relevant for pre-planned paths,
+          // so
+          // can be null for on-the-fly paths.
+          new GoalEndState(
+              0.0,
+              Rotation2d.fromDegrees(
+                  180)) // Goal end state. You can set a holonomic rotation here. If
+          // using a
+          // differential drivetrain, the rotation will have no effect.
+          );
+
+  // Prevent the path from being flipped if the coordinates are already correct
 
   /** Define the Driver and, optionally, the Operator/Co-Driver Controllers */
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
@@ -71,7 +108,6 @@ public class RobotContainer {
   // These are the "Active Subsystems" that the robot controlls
   private final Drive m_drivebase;
 
-  private final Flywheel m_flywheel;
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
   private final Vision m_vision;
@@ -98,14 +134,13 @@ public class RobotContainer {
    * devices, and commands.
    */
   public RobotContainer() {
-
+    woah.preventFlipping = true;
     // Instantiate Robot Subsystems based on RobotType
     switch (Constants.getMode()) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
         // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIOSim()); // new Flywheel(new FlywheelIOTalonFX());
         m_vision =
             switch (Constants.getVisionType()) {
               case PHOTON ->
@@ -129,7 +164,6 @@ public class RobotContainer {
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIOSim() {});
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
@@ -141,17 +175,28 @@ public class RobotContainer {
       default:
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIO() {});
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
         break;
     }
-
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
-    m_power = new PowerMonitoring(batteryCapacity, m_flywheel);
+    m_power = new PowerMonitoring(batteryCapacity);
+
+    // Idk where this is suppose to go. but I think this works, just setting up auto commands
+    NamedCommands.registerCommand("L4", (Commands.print("L4")));
+
+    NamedCommands.registerCommand("L3", (Commands.print("L3")));
+
+    NamedCommands.registerCommand("L2", (Commands.print("L2")));
+
+    NamedCommands.registerCommand("L0", (Commands.print("L0")));
+
+    NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
+
+    NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
 
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
@@ -192,32 +237,6 @@ public class RobotContainer {
     // Configure the button and trigger bindings
     configureBindings();
   }
-
-  //   // Create a list of waypoints from poses. Each pose represents one waypoint.
-  // // The rotation component of the pose should be the direction of travel. Do not use holonomic
-  // rotation.
-  // List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-  //   new Pose2d(1.0, 1.0, Rotation2d.fromDegrees(0)),
-  //   new Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90))
-  // );
-
-  // PathConstraints constraints = new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI); // The
-  // constraints for this path.
-  // // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also
-  // use unlimited constraints, only limited by motor torque and nominal battery voltage
-
-  // // Create the path using the waypoints created above
-  // PathPlannerPath path = new PathPlannerPath(
-  //   waypoints,
-  //   constraints,
-  //   null, // The ideal starting state, this is only relevant for pre-planned paths, so can be
-  // null for on-the-fly paths.
-  //   new GoalEndState(0.0, Rotation2d.fromDegrees(-90)) // Goal end state. You can set a holonomic
-  // rotation here. If using a differential drivetrain, the rotation will have no effect.
-  // );
-
-  // // Prevent the path from being flipped if the coordinates are already correct
-  // path.preventFlipping = true;
 
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
@@ -274,8 +293,12 @@ public class RobotContainer {
         .a()
         .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
 
+    driverController.rightBumper();
+
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
+
+    driverController.leftBumper().whileTrue(Commands.run(() -> getAutonomousCommandPathPlanner()));
 
     // Press Y button --> Manually Re-Zero the Gyro
     driverController
@@ -288,18 +311,14 @@ public class RobotContainer {
                     m_drivebase)
                 .ignoringDisable(true));
 
-    driverController
-        .leftBumper()
-        .onTrue(Commands.runOnce(() -> new Pose2d(10.0, 10.0, new Rotation2d())));
-
     // Press RIGHT BUMPER --> Run the example flywheel
-    driverController
-        .rightBumper()
-        .whileTrue(
-            Commands.startEnd(
-                () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
-                m_flywheel::stop,
-                m_flywheel));
+    // driverController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         Commands.startEnd(
+    //             () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
+    //             m_flywheel::stop,
+    //             m_flywheel));
   }
 
   /**
@@ -309,7 +328,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommandPathPlanner() {
     // Use the ``autoChooser`` to define your auto path from the SmartDashboard
-    return autoChooserPathPlanner.get();
+    // return autoChooserPathPlanner.get();
+    // return new PathPlannerAuto("Consistancy Test");
+    return AutoBuilder.followPath(woah);
   }
 
   /**
@@ -351,38 +372,38 @@ public class RobotContainer {
   private void definesysIdRoutines() {
     if (Constants.getAutoType() == RBSIEnum.AutoType.PATHPLANNER) {
       // Drivebase characterization
-      // autoChooserPathPlanner.addOption(
-      //     "Drive Wheel Radius Characterization",
-      //     DriveCommands.wheelRadiusCharacterization(m_drivebase));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive Simple FF Characterization",
-      //     DriveCommands.feedforwardCharacterization(m_drivebase));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Quasistatic Forward)",
-      //     m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Quasistatic Reverse)",
-      //     m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Dynamic Forward)",
-      //     m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Dynamic Reverse)",
-      //     m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+      autoChooserPathPlanner.addOption(
+          "Drive Wheel Radius Characterization",
+          DriveCommands.wheelRadiusCharacterization(m_drivebase));
+      autoChooserPathPlanner.addOption(
+          "Drive Simple FF Characterization",
+          DriveCommands.feedforwardCharacterization(m_drivebase));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Quasistatic Forward)",
+          m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Quasistatic Reverse)",
+          m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Dynamic Forward)",
+          m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Dynamic Reverse)",
+          m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-      // // Example Flywheel SysId Characterization
-      // autoChooserPathPlanner.addOption(
-      //     "Flywheel SysId (Quasistatic Forward)",
-      //     m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Flywheel SysId (Quasistatic Reverse)",
-      //     m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      // autoChooserPathPlanner.addOption(
-      //     "Flywheel SysId (Dynamic Forward)",
-      //     m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Flywheel SysId (Dynamic Reverse)",
-      //     m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+      //   // Example Flywheel SysId Characterization
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Quasistatic Forward)",
+      //       m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Quasistatic Reverse)",
+      //       m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Dynamic Forward)",
+      //       m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Dynamic Reverse)",
+      //       m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     }
   }
 

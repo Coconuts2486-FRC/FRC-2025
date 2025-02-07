@@ -33,6 +33,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,12 +41,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.ElevatorCommand;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -63,6 +69,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
+
+  private final DigitalInput elevatorStop = new DigitalInput(0);
+  private final Trigger elevatorTrigger = new Trigger(elevatorStop::get);
 
   // **** This is a Pathplanner On-the-Fly Command ****/
   // Create a list of waypoints from poses. Each pose represents one waypoint.
@@ -108,6 +117,7 @@ public class RobotContainer {
   // These are the "Active Subsystems" that the robot controlls
   private final Drive m_drivebase;
 
+  private final Elevator m_elevator;
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
   private final Vision m_vision;
@@ -141,6 +151,7 @@ public class RobotContainer {
         // Real robot, instantiate hardware IO implementations
         // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
+        m_elevator = new Elevator(new ElevatorIOTalonFX());
         m_vision =
             switch (Constants.getVisionType()) {
               case PHOTON ->
@@ -164,6 +175,7 @@ public class RobotContainer {
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
+        m_elevator = new Elevator(new ElevatorIO() {}); // make elevator Io sim
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
@@ -175,6 +187,7 @@ public class RobotContainer {
       default:
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
+        m_elevator = new Elevator(new ElevatorIO() {});
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
@@ -183,16 +196,17 @@ public class RobotContainer {
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
-    m_power = new PowerMonitoring(batteryCapacity);
+    m_power = new PowerMonitoring(batteryCapacity, m_elevator);
 
     // Idk where this is suppose to go. but I think this works, just setting up auto commands
-    NamedCommands.registerCommand("L4", (Commands.print("L4")));
+    NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
 
-    NamedCommands.registerCommand("L3", (Commands.print("L3")));
+    NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
 
-    NamedCommands.registerCommand("L2", (Commands.print("L2")));
+    NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
 
-    NamedCommands.registerCommand("L0", (Commands.print("L0")));
+    NamedCommands.registerCommand(
+        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
 
     NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
 
@@ -289,9 +303,9 @@ public class RobotContainer {
                 m_drivebase));
 
     // Press A button -> BRAKE
-    driverController
-        .a()
-        .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
+    // driverController
+    //     .a()
+    //     .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
 
     driverController.rightBumper();
 
@@ -318,7 +332,30 @@ public class RobotContainer {
     //         Commands.startEnd(
     //             () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
     //             m_flywheel::stop,
+
     //             m_flywheel));
+
+    driverController
+        .leftBumper()
+        .whileTrue(Commands.startEnd(() -> m_elevator.runVolts(-1), m_elevator::stop, m_elevator));
+    driverController
+        .rightBumper()
+        .whileTrue(Commands.startEnd(() -> m_elevator.runVolts(1), m_elevator::stop, m_elevator));
+
+    // m_elevator.setDefaultCommand(
+    //     Commands.run(
+    //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
+
+    // driverController.a().whileTrue(new ElevatorCommand(72, 40, 40, m_elevator));
+    // driverController
+    //     .a()
+    //     .whileFalse(new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
+
+    driverController
+        .rightStick()
+        .whileTrue(
+            Commands.startEnd(() -> m_elevator.setCoast(), m_elevator::setBrake, m_elevator)
+                .ignoringDisable(true));
   }
 
   /**

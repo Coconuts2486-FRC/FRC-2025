@@ -192,6 +192,46 @@ public final class Constants {
     public static final PIDConstants pidSim = new PIDConstants(1.0, 0.0, 0.0);
   }
 
+  /** elevator subsystem constants ***************************************** */
+  public static final class ElevatorConstants {
+
+    // idle mode //6
+    public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE;
+
+    // gear ratio
+    public static final double kElevatorGearRatio = 0.1;
+
+    // mode real/replay
+    public static final double kStaticGainReal = 0.1;
+    public static final double kVelocityGainReal = 0.05;
+    // motor configs
+    public static final double kGReal = 0.3375;
+    public static final double kSReal = 0.075;
+    public static final double kVReal = 0.0018629;
+    public static final double kAReal = 0; // 0.000070378;
+    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
+    public static final double kPReal = 17.983;
+    public static final double kIReal = 0;
+    public static final double kDReal = 0;
+
+    // mode sim
+    public static final double kStaticGainSim = 0.1;
+    public static final double kVelocityGainSim = 0.05;
+    // motor configs
+    public static final double kGSim = 0;
+    public static final double kSSim = 0;
+    public static final double kVSim = 0;
+    public static final double kASim = 0;
+    public static final double kPSim = 0;
+    public static final double kISim = 0;
+    public static final double kDSim = 0;
+
+    // Magic motion constants
+    public static final double kVelocity = 1.4;
+    public static final double kAcceleration = 2.8;
+    public static final double kJerk = 0;
+  }
+
   /** Accelerometer Constants ********************************************** */
   public static class AccelerometerConstants {
 

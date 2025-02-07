@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 9.400179398148147,
-        "y": 6.184303023726215
+        "x": 5.81,
+        "y": 4.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.344286040449957,
-        "y": 6.024162773971541
+        "x": 5.891382083985707,
+        "y": 4.693782289657143
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "H Coral"
     },
     {
       "anchor": {
-        "x": 8.18,
-        "y": 6.184303023726215
+        "x": 5.499679542824074,
+        "y": 5.352166883680556
       },
       "prevControl": {
-        "x": 8.712695419531927,
-        "y": 6.121957862338586
+        "x": 5.704714626736111,
+        "y": 5.092277199074074
+      },
+      "nextControl": {
+        "x": 4.77661172716539,
+        "y": 6.268682550049404
+      },
+      "isLocked": false,
+      "linkedName": "Hpoint"
+    },
+    {
+      "anchor": {
+        "x": 1.62,
+        "y": 7.34
+      },
+      "prevControl": {
+        "x": 3.848334780092592,
+        "y": 6.261751663773148
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Station"
     }
   ],
   "rotationTargets": [],
@@ -41,13 +57,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 90.0
+    "velocity": 0,
+    "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Tests",
+  "folder": "Matrix Station",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": 0.0
   },
   "useDefaultConstraints": true

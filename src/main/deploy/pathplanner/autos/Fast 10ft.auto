@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Consistancy Test"
+            "pathName": "Better Consistancy Test"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Test Autos",
   "choreoAuto": false
 }

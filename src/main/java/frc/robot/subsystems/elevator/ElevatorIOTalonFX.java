@@ -21,13 +21,11 @@ public class ElevatorIOTalonFX implements ElevatorIO {
 
   // motor called in
   private final TalonFX elevatorMotor =
-      new TalonFX(
-          CANandPowerPorts.ELEVATOR_MOTOR.getDeviceNumber(),
-          CANandPowerPorts.ELEVATOR_MOTOR.getBus());
+      new TalonFX(CANandPowerPorts.ELEVATOR.getDeviceNumber(), CANandPowerPorts.ELEVATOR.getBus());
 
   private final StatusSignal<AngularVelocity> velocity = elevatorMotor.getVelocity();
 
-  public final int[] powerPorts = {CANandPowerPorts.ELEVATOR_MOTOR.getPowerPort()};
+  public final int[] powerPorts = {CANandPowerPorts.ELEVATOR.getPowerPort()};
 
   private final StatusSignal<Angle> elevatorPosition = elevatorMotor.getPosition();
   private final StatusSignal<AngularVelocity> elevatorVelocity = elevatorMotor.getVelocity();

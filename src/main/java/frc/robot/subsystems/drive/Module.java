@@ -38,6 +38,7 @@ public class Module {
   public Module(ModuleIO io, int index) {
     this.io = io;
     this.index = index;
+
     driveDisconnectedAlert =
         new Alert(
             "Disconnected drive motor on module " + Integer.toString(index) + ".",
@@ -59,7 +60,7 @@ public class Module {
     int sampleCount = inputs.odometryTimestamps.length; // All signals are sampled together
     odometryPositions = new SwerveModulePosition[sampleCount];
     for (int i = 0; i < sampleCount; i++) {
-      double positionMeters = inputs.odometryDrivePositionsRad[i] * kWheelRadiusInches;
+      double positionMeters = inputs.odometryDrivePositionsRad[i] * kWheelRadiusMeters;
       Rotation2d angle = inputs.odometryTurnPositions[i];
       odometryPositions[i] = new SwerveModulePosition(positionMeters, angle);
     }
@@ -79,6 +80,8 @@ public class Module {
     // Apply setpoints
     io.setDriveVelocity(state.speedMetersPerSecond / kWheelRadiusMeters);
     io.setTurnPosition(state.angle);
+    Logger.recordOutput(
+        "Thingie/output_radpersec", state.speedMetersPerSecond / kWheelRadiusMeters);
   }
 
   /** Runs the module with the specified output while controlling to zero degrees. */

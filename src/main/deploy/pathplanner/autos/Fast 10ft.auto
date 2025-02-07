@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Cherio Matey.0"
+            "pathName": "Better Consistancy Test"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
-  "choreoAuto": true
+  "folder": "Test Autos",
+  "choreoAuto": false
 }

@@ -66,15 +66,13 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
-
   // **** This is a Pathplanner On-the-Fly Command ****/
   // Create a list of waypoints from poses. Each pose represents one waypoint.
   // The rotation component of the pose should be the direction of travel. Do not use
   // holonomic rotation.
-  List<Waypoint> woahpoints =
+  List<Waypoint> what =
       PathPlannerPath.waypointsFromPoses(
-          new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)),
-          new Pose2d(9.4, 6.184, Rotation2d.fromDegrees(0)));
+          new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)));
 
   PathConstraints constraints =
       new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
@@ -83,9 +81,9 @@ public class RobotContainer {
   // voltage
 
   // Create the path using the waypoints created above
-  PathPlannerPath woah =
+  PathPlannerPath Squirtle =
       new PathPlannerPath(
-          woahpoints,
+          what,
           constraints,
           null, // The ideal starting state, this is only relevant for pre-planned paths,
           // so
@@ -138,7 +136,7 @@ public class RobotContainer {
    * devices, and commands.
    */
   public RobotContainer() {
-    woah.preventFlipping = true;
+    Squirtle.preventFlipping = true;
     // Instantiate Robot Subsystems based on RobotType
     switch (Constants.getMode()) {
       case REAL:
@@ -243,16 +241,15 @@ public class RobotContainer {
           Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
 
           // Create the constraints to use while pathfinding
-          PathConstraints constraints = new PathConstraints(
+          PathConstraints constraint = new PathConstraints(
                   1.0, 1.0,
                   Units.degreesToRadians(540), Units.degreesToRadians(720));
 
           // Since AutoBuilder is configured, we can use it to build pathfinding commands
           Command InfiniteCommand = AutoBuilder.pathfindToPose(
                   targetPose,
-                  constraints,
-                  0.0, // Goal end velocity in meters/sec
-                  0.0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
+                  constraint,
+                  0.0 // Goal end velocity in meters/sec
           );
 
   /**
@@ -303,7 +300,9 @@ public class RobotContainer {
         .a()
         .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
 
-    driverController.rightBumper().onTrue(Commands.runOnce(()-> Drive.Squirtle(what, constraint)));
+    //setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
+
+    driverController.rightBumper().onTrue(Commands.runOnce(() -> getPathPlannerPath(Squirtle(what, constraints))));
 
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
@@ -334,26 +333,26 @@ public class RobotContainer {
 
 
                       // **** This is a Pathplanner Pathfinding Command ****/
-  public static Command pathfindAndAlignChute(){
-          // Since we are using a holonomic drivetrain, the rotation component of this pose
-  // represents the goal holonomic rotation
-  Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
+  // public static Command pathfindAndAlignChute(){
+  //         // Since we are using a holonomic drivetrain, the rotation component of this pose
+  // // represents the goal holonomic rotation
+  // Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
 
-  // Create the constraints to use while pathfinding
-  PathConstraints constraints = new PathConstraints(
-          1.0, 1.0,
-          Units.degreesToRadians(540), Units.degreesToRadians(720));
+  // // Create the constraints to use while pathfinding
+  // PathConstraints constraints = new PathConstraints(
+  //         1.0, 1.0,
+  //         Units.degreesToRadians(540), Units.degreesToRadians(720));
 
-    return Commands.sequence(
-      AutoBuilder.pathfindToPose(Pose2d targetPose, PathConstraints.constraints)
-      .until(
-          () ->
-              swerve
-                      .getPose()
-                      .getTranslation()
-                      .getDistance(Constants.targetPoseRed.getTranslation())
-                  <= 2.5));
-  }
+  //   return Commands.sequence(
+  //     AutoBuilder.pathfindToPose(Pose2d targetPose, PathConstraints.constraints)
+  //     .until(
+  //         () ->
+  //             swerve
+  //                     .getPose()
+  //                     .getTranslation()
+  //                     .getDistance(Constants.targetPoseRed.getTranslation())
+  //                 <= 2.5));
+  // }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -363,7 +362,7 @@ public class RobotContainer {
     // Use the ``autoChooser`` to define your auto path from the SmartDashboard
     // return autoChooserPathPlanner.get();
     // return new PathPlannerAuto("Consistancy Test");
-    return AutoBuilder.followPath(woah);
+    return AutoBuilder.followPath(Squirtle);
   }
 
   /**

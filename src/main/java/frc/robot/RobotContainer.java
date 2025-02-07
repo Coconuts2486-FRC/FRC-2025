@@ -26,6 +26,7 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
@@ -191,6 +192,19 @@ public class RobotContainer {
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
     m_power = new PowerMonitoring(batteryCapacity, m_flywheel);
+
+        // Idk where this is suppose to go. but I think this works, just setting up auto commands
+        NamedCommands.registerCommand("L4", (Commands.print("L4")));
+
+        NamedCommands.registerCommand("L3", (Commands.print("L3")));
+
+        NamedCommands.registerCommand("L2", (Commands.print("L2")));
+    
+        NamedCommands.registerCommand("L0", (Commands.print("L0")));
+
+        NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
+
+        NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
 
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {

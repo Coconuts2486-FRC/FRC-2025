@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.util.RBSISubsystem;
 import org.littletonrobotics.junction.Logger;
 
+// hi :D
 public class AlgaeMech extends RBSISubsystem {
   private final AlgaeMechIO io;
   // private final AlgaeMechIOInputsAutoLogged inputs = new AlgaeMechIOInputsAutoLogged();
@@ -16,6 +17,7 @@ public class AlgaeMech extends RBSISubsystem {
 
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
+    
 
     // Switch constants based on mode (the physics simulator is treated as a
     // separate robot with different tuning)
@@ -51,6 +53,10 @@ public class AlgaeMech extends RBSISubsystem {
     // Logger.processInputs("Flywheel", inputs);
   }
 
+  public void printEncoder() {
+    System.out.println(io.getEncoderPose());
+  }
+
   /** Run open loop at the specified voltage. */
   public void runVolts(double volts) {
     io.setVoltage(volts);
@@ -84,6 +90,21 @@ public class AlgaeMech extends RBSISubsystem {
     return sysId.dynamic(direction);
   }
 
+  // Pibot to stored position
+  public void pivotUp() {
+    io.pivotToPosition(.209);
+  }
+
+  // Pivots to position to pick up off floor
+  public void pivotHorizontal() {
+    // io.pivotToPosition(.45);
+    io.pivotToPosition(.45);
+  }
+
+  // Pivots to remove coral from reef
+  public void pivotOffReef() {
+    io.pivotToPosition(.521);
+  }
   // /** Returns the current velocity in RPM. */
   // @AutoLogOutput(key = "Mechanism/Flywheel")
   // //public double getVelocityRPM() {

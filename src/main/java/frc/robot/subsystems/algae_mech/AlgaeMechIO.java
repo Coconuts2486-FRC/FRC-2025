@@ -30,5 +30,13 @@ public interface AlgaeMechIO {
   /** Set velocity PID constants. */
   public default void configurePID(double kP, double kI, double kD) {}
 
+  public default double getCurrent() {
+    return 0.0;
+  }
+
+  public default double getEncoderPose() {
+    return 0.0;
+  }
+
   public default void pivotToPosition(double position) {}
 }

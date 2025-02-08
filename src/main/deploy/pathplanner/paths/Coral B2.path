@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.62,
+        "y": 7.34
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.083740583985182,
+        "y": 6.392161972094246
+      },
+      "isLocked": false,
+      "linkedName": "Station"
+    },
+    {
+      "anchor": {
+        "x": 3.1675437644675917,
+        "y": 3.857757523148148
+      },
+      "prevControl": {
+        "x": 2.869732369403141,
+        "y": 4.487782712505203
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Coral B"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 360.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Matrix Coral",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 126.0
+  },
+  "useDefaultConstraints": true
+}

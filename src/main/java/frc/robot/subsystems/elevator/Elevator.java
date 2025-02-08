@@ -19,10 +19,14 @@ import static frc.robot.Constants.ElevatorConstants.*;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
+import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
 public class Elevator extends RBSISubsystem {
@@ -30,6 +34,9 @@ public class Elevator extends RBSISubsystem {
   private final ElevatorIO io;
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
   private final SysIdRoutine sysId;
+
+  private BooleanSupplier disableSupplier = DriverStation::isDisabled;
+  private BooleanSupplier disableOverride;
 
   public Elevator(ElevatorIO io) {
     this.io = io;
@@ -72,24 +79,59 @@ public class Elevator extends RBSISubsystem {
             new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Units.Volts)), null, this));
   }
 
+  /** Set the override for this subsystem */
+  public void setOverrides(BooleanSupplier disableOverride) {
+    disableSupplier = () -> disableOverride.getAsBoolean() || DriverStation.isDisabled();
+    this.disableOverride = disableOverride;
+  }
+
+  /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
+    Logger.recordOutput("Overrides/Elevator", !disableOverride.getAsBoolean());
+
+    // Check if disabled
+    if (disableSupplier.getAsBoolean()) {
+      stop();
+      setCoast();
+      LED.getInstance().elevatorEstopped =
+          disableSupplier.getAsBoolean() && DriverStation.isEnabled();
+    }
   }
 
-  public boolean getBottomStop() {
-    return io.getBottomStop();
+  /**
+   * Set position
+   *
+   * <p>Does not run when Driver Station is disabled or override switch is thrown
+   *
+   * @param position The linear distance to which to move the elevator
+   */
+  public void setPosistion(Distance posistion) {
+    if (!disableSupplier.getAsBoolean()) {
+      io.setPosistion(posistion);
+    }
   }
 
-  public void setPosistion(double posistion) {
-    io.setPosistion(posistion);
+  /**
+   * Run open loop at the specified voltage
+   *
+   * <p>Does not run when Driver Station is disabled or override switch is thrown
+   *
+   * @param volts The voltage at which to run the elevator
+   */
+  public void runVolts(double volts) {
+    if (!disableSupplier.getAsBoolean()) {
+      io.setVoltage(volts);
+    }
   }
 
   public void stop() {
     io.stop();
   }
 
+  /* Configuaration and Setter / Getter Functions ************************** */
   public void configure(
       double Kg,
       double Ks,
@@ -104,6 +146,19 @@ public class Elevator extends RBSISubsystem {
     io.configure(Kg, Ks, Kv, Ka, Kp, Ki, Kd, velocity, aceleration, jerk);
   }
 
+  public boolean getBottomStop() {
+    return io.getBottomStop();
+  }
+
+  public void setCoast() {
+    io.setCoast();
+  }
+
+  public void setBrake() {
+    io.setBrake();
+  }
+
+  /* SysId Functions ******************************************************* */
   // NOTE: This is how to measure the SysId for elevators that cannot hold
   //       themselves up under the force of gravity:
   // https://www.chiefdelphi.com/t/running-backwards-sysid-for-elevator-that-can-t-hold-itself-up/427876/2
@@ -113,19 +168,6 @@ public class Elevator extends RBSISubsystem {
 
   public Command sysIdDynamic(SysIdRoutine.Direction direction) {
     return sysId.dynamic(direction);
-  }
-
-  /** Run open loop at the specified voltage. */
-  public void runVolts(double volts) {
-    io.setVoltage(volts);
-  }
-
-  public void setCoast() {
-    io.setCoast();
-  }
-
-  public void setBrake() {
-    io.setBrake();
   }
 
   @Override

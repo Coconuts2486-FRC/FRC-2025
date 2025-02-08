@@ -29,6 +29,8 @@ public interface AlgaeMechIO {
 
   public default void updateInputs(AlgaeMechIOInputs inputs) {}
 
+  public default void stop() {}
+
   public default void setCoast() {}
 
   public default void setBrake() {}

@@ -13,34 +13,52 @@
 
 package frc.robot.commands;
 
+import static edu.wpi.first.units.Units.*;
+
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.elevator.Elevator;
 
 public class ElevatorCommand extends Command {
 
-  private final double posistion;
-  private final double acceleration;
-  private final double velocity;
+  private final Distance position;
+  private final LinearAcceleration acceleration;
+  private final LinearVelocity velocity;
   private final Elevator elevator;
 
   public ElevatorCommand(
-      double posistion, double acceleration, double velocity, Elevator elevator) {
-    this.posistion = posistion;
-    this.elevator = elevator;
+      Distance position,
+      LinearAcceleration acceleration,
+      LinearVelocity velocity,
+      Elevator elevator) {
+    this.position = position;
     this.acceleration = acceleration;
     this.velocity = velocity;
+    this.elevator = elevator;
   }
 
   @Override
   public void initialize() {
 
-    elevator.configure(0.3375, 0.075, 0.18629, 0.01, 18, 0, 0.01, velocity, acceleration, 0);
+    elevator.configure(
+        0.3375,
+        0.075,
+        0.18629,
+        0.01,
+        18,
+        0,
+        0.01,
+        velocity.in(MetersPerSecond),
+        acceleration.in(MetersPerSecondPerSecond),
+        0);
   }
 
   @Override
   public void execute() {
-    double rotationsPosition = (35 / 54.75) * posistion - 10.86758;
-    elevator.setPosistion(rotationsPosition);
+
+    elevator.setPosistion(position);
   }
 
   @Override

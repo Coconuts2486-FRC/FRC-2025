@@ -17,14 +17,20 @@ import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
+import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
 public class Intake extends RBSISubsystem {
   private final IntakeIO io;
   private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
   private final SysIdRoutine sysId;
+
+  private BooleanSupplier disableSupplier = DriverStation::isDisabled;
+  private BooleanSupplier disableOverride;
 
   public Intake(IntakeIO io) {
     this.io = io;
@@ -40,32 +46,83 @@ public class Intake extends RBSISubsystem {
                 (voltage) -> runPivotVolts(voltage.in(Units.Volts)), null, this));
   }
 
+  /** Set the override for this subsystem */
+  public void setOverrides(BooleanSupplier disableOverride) {
+    disableSupplier = () -> disableOverride.getAsBoolean() || DriverStation.isDisabled();
+    this.disableOverride = disableOverride;
+  }
+
   @Override
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Intake", inputs);
+    Logger.recordOutput("Overrides/IntakePivot", !disableOverride.getAsBoolean());
+
+    // Check if disabled
+    if (disableSupplier.getAsBoolean()) {
+      stop();
+      LED.getInstance().intakeEstopped =
+          disableSupplier.getAsBoolean() && DriverStation.isEnabled();
+    }
   }
 
+  /**
+   * Set pivot position
+   *
+   * <p>Does not run when Driver Station is disabled or override switch is thrown
+   *
+   * @param position The position to which to move the intake pivot
+   */
   public void setPivotPosition(double position) {
-    io.setPivotPosition(position);
+    if (!disableSupplier.getAsBoolean()) {
+      io.setPivotPosition(position);
+    }
   }
 
+  /**
+   * Set intake roller speed
+   *
+   * <p>Does not run when Driver Station is disabled or override switch is thrown
+   *
+   * @param speed The speed at which to run the intake rollers
+   */
   public void rollerSpeed(double speed) {
-    io.rollerSpeed(speed);
+    if (!disableSupplier.getAsBoolean()) {
+      io.rollerSpeed(speed);
+    }
   }
 
+  /**
+   * Run the intake pivot at a designated voltage
+   *
+   * <p>Does not run when Driver Station is disabled or override switch is thrown
+   *
+   * @param volts The voltage at which to run the intake pivot
+   */
   public void runPivotVolts(double volts) {
-    io.setPivotVolts(volts);
+    if (!disableSupplier.getAsBoolean()) {
+      io.setPivotVolts(volts);
+    }
   }
 
+  /**
+   * Run the intake rollers at a designated voltage
+   *
+   * <p>Does not run when Driver Station is disabled or override switch is thrown
+   *
+   * @param speed The voltage at which to run the intake rollers
+   */
   public void setRollerVolts(double volts) {
-    io.setRollerVolts(volts);
+    if (!disableSupplier.getAsBoolean()) {
+      io.setRollerVolts(volts);
+    }
   }
 
   public void stop() {
     io.stop();
   }
 
+  /* Configuaration and Setter / Getter Functions ************************** */
   public void configure(double kP, double kI, double kD) {
     io.configure(kP, kI, kD);
   }

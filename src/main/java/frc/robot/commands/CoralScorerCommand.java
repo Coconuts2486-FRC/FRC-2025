@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.CoralScorer.CoralScorer;
+import frc.robot.subsystems.coral_mech.CoralScorer;
 
 public class CoralScorerCommand extends Command {
   private final CoralScorer coralScorer;

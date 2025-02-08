@@ -26,6 +26,7 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -40,6 +41,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.CoralScorerCommand;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.CoralScorer.CoralScorer;
+import frc.robot.subsystems.CoralScorer.CoralScorerIO;
 import frc.robot.subsystems.CoralScorer.CoralScorerIOSpark;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
@@ -75,11 +77,12 @@ public class RobotContainer {
   private final Drive m_drivebase;
 
   private final Flywheel m_flywheel;
+  private final CoralScorer m_CoralScorer;
+
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final CoralScorer m_CoralScorer = new CoralScorer(new CoralScorerIOSpark());
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -110,6 +113,7 @@ public class RobotContainer {
         // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
         m_flywheel = new Flywheel(new FlywheelIOSim()); // new Flywheel(new FlywheelIOTalonFX());
+        m_CoralScorer = new CoralScorer(new CoralScorerIOSpark());
         m_vision =
             switch (Constants.getVisionType()) {
               case PHOTON ->
@@ -134,6 +138,7 @@ public class RobotContainer {
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
         m_flywheel = new Flywheel(new FlywheelIOSim() {});
+        m_CoralScorer = new CoralScorer(new CoralScorerIO() {});
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
@@ -146,6 +151,7 @@ public class RobotContainer {
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
         m_flywheel = new Flywheel(new FlywheelIO() {});
+        m_CoralScorer = new CoralScorer(new CoralScorerIO() {});
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
@@ -156,6 +162,9 @@ public class RobotContainer {
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
     m_power = new PowerMonitoring(batteryCapacity, m_flywheel);
+
+    // Idk where this is suppose to go. but I think this works, just setting up auto commands
+    NamedCommands.registerCommand("Score", new CoralScorerCommand(m_CoralScorer, -0.75));
 
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
@@ -280,6 +289,19 @@ public class RobotContainer {
                         () -> -driveStickX.value(),
                         () -> turnStickX.value()),
                 m_drivebase));
+
+    m_CoralScorer.setDefaultCommand(
+        Commands.run(
+            () ->
+                m_CoralScorer.runVolts(
+                    driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
+            m_CoralScorer));
+    driverController
+        .x()
+        .whileTrue(
+            new CoralScorerCommand(
+                m_CoralScorer,
+                driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()));
 
     // Press A button -> BRAKE
     driverController

@@ -47,6 +47,12 @@ import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.LED.LEDCommand;
+import frc.robot.subsystems.Controls.CoralControl;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.IntakeIOKraken;
+import frc.robot.subsystems.LED.LED;
+import frc.robot.subsystems.LED.LEDIOCandle;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.elevator.Elevator;
@@ -120,8 +126,12 @@ public class RobotContainer {
   private final Elevator m_elevator;
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
+  private final CoralControl m_coralControl = new CoralControl();
   private final Vision m_vision;
   private final PowerMonitoring m_power;
+  private final Intake m_intake = new Intake(new IntakeIOKraken());
+  private final LED m_led = new LED(new LEDIOCandle());
+  private final DigitalInput lightStop = new DigitalInput(1);
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -170,6 +180,7 @@ public class RobotContainer {
               default -> null;
             };
         m_accel = new Accelerometer(m_drivebase.getGyro());
+
         break;
 
       case SIM:
@@ -290,6 +301,13 @@ public class RobotContainer {
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
+
+    driverController
+        .rightBumper()
+        .onTrue(
+            new LEDCommand(m_led, lightStop::get)
+                .ignoringDisable(true)
+                .until(driverController.leftBumper()));
     driverController
         .b()
         .onTrue(
@@ -302,6 +320,8 @@ public class RobotContainer {
                         () -> turnStickX.value()),
                 m_drivebase));
 
+    driverController.a().onTrue(Commands.run(() -> m_coralControl.indexL()));
+    driverController.y().onTrue(Commands.run(() -> m_coralControl.indexR()));
     // Press A button -> BRAKE
     // driverController
     //     .a()

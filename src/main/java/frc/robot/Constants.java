@@ -442,7 +442,7 @@ public final class Constants {
     // This is where PWM-controlled devices (actuators, servos, pneumatics, etc.)
     // are defined
     // Example:
-    // public static final int INTAKE_SERVO = 0;
+    public static final int CLIMB_SERVO = 4;
   }
 
   /** AprilTag Field Layout ************************************************ */

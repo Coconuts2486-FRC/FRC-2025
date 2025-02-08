@@ -6,19 +6,30 @@ import frc.robot.subsystems.Intake.Intake;
 public class IntakeCommand extends Command {
 
   private final Intake intake;
-  private final double direction;
+  private final double wantedPosistion;
+  private final double rollerSpeed;
+  private final double test; // get rid of this variable in future
 
-  public IntakeCommand(Intake intake, double direction) {
+  public IntakeCommand(Intake intake, double wantedPosistion, double rollerSpeed, double test) {
     this.intake = intake;
-    this.direction = direction;
+    this.wantedPosistion = wantedPosistion;
+    this.rollerSpeed = rollerSpeed;
+    this.test = test;
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    intake.configure(1, 0, 0);
+  }
 
   @Override
   public void execute() {
-    intake.setRollerVolts(-direction);
+    if (test == 0) {
+      intake.setPivotPosition(wantedPosistion);
+      intake.rollerSpeed(rollerSpeed);
+    } else if (test == 1) {
+      System.out.println(intake.getEncoder());
+    }
   }
 
   @Override

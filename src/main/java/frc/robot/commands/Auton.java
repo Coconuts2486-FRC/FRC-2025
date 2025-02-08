@@ -11,14 +11,26 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.LED;
+package frc.robot.commands;
 
-public interface LEDIO {
-  public default void rainbowTwinkle() {}
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.drive.Drive;
 
-  public default void off() {}
+public class Auton extends Command {
 
-  public default void scoreReady() {}
+  private Drive drive;
 
-  public default void scoreNotReady() {}
+  public Auton(Drive drive) {
+    this.drive = drive;
+
+    addRequirements(drive);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {}
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {}
 }

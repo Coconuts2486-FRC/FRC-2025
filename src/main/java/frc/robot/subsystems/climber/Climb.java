@@ -11,30 +11,38 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.LED;
+package frc.robot.subsystems.climber;
 
 import frc.robot.util.RBSISubsystem;
 
-public class LED extends RBSISubsystem {
-  private LEDIO io;
+public class Climb extends RBSISubsystem {
+  private ClimbIO io;
+  private boolean rachetToggle;
 
-  public LED(LEDIO io) {
+  public Climb(ClimbIO io) {
     this.io = io;
+    io.configPID(1, 0, 0);
+    rachetToggle = false;
   }
 
-  public void rainbowTwinkle() {
-    io.rainbowTwinkle();
+  public void twistToPosition(double position) {
+    io.twistMotorToPosition(position);
   }
 
-  public void off() {
-    io.off();
+  public void manualControl(double controlVolts) {
+    io.twistMotorVolts(controlVolts * 3);
   }
 
-  public void scoreReady(boolean lightstop) {
-    if (lightstop) {
-      io.scoreReady();
+  public void rachetToggle(boolean toggleSwitch) {
+    if (rachetToggle) {
+      io.turnClimbServo(0);
     } else {
-      io.rainbowTwinkle();
+      io.turnClimbServo(1);
     }
+  }
+
+  @Override
+  public int[] getPowerPorts() {
+    return io.powerPorts;
   }
 }

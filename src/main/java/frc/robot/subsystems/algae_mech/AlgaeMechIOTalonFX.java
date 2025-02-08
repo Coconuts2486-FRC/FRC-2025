@@ -11,14 +11,6 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.LED;
+package frc.robot.subsystems.algae_mech;
 
-public interface LEDIO {
-  public default void rainbowTwinkle() {}
-
-  public default void off() {}
-
-  public default void scoreReady() {}
-
-  public default void scoreNotReady() {}
-}
+public class AlgaeMechIOTalonFX implements AlgaeMechIO {}

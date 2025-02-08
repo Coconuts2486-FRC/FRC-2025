@@ -1,4 +1,17 @@
-package frc.robot.subsystems.Intake;
+// Copyright (c) 2025 FRC 2486
+// http://github.com/Coconuts2486-FRC
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// version 3 as published by the Free Software Foundation or
+// available in the root directory of this project.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+
+package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -12,7 +25,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants.CANandPowerPorts;
 
-public class IntakeIOKraken implements IntakeIO {
+public class IntakeIOTalonFX implements IntakeIO {
 
   private final TalonFX intakeRoller =
       new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
@@ -31,7 +44,7 @@ public class IntakeIOKraken implements IntakeIO {
   private final StatusSignal<Voltage> pivotAppliedVolts = intakePivot.getMotorVoltage();
   private final StatusSignal<Current> pivotCurrent = intakePivot.getSupplyCurrent();
 
-  public IntakeIOKraken() {}
+  public IntakeIOTalonFX() {}
 
   @Override
   public void updateInputs(IntakeIOInputs inputs) {

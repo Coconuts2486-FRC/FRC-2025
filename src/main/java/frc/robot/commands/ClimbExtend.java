@@ -14,37 +14,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.climber.Climb;
 
-public class ElevatorCommand extends Command {
+public class ClimbExtend extends Command {
+  private final Climb climb;
 
-  private final double posistion;
-  private final double acceleration;
-  private final double velocity;
-  private final Elevator elevator;
-
-  public ElevatorCommand(
-      double posistion, double acceleration, double velocity, Elevator elevator) {
-    this.posistion = posistion;
-    this.elevator = elevator;
-    this.acceleration = acceleration;
-    this.velocity = velocity;
+  public ClimbExtend(Climb climb) {
+    this.climb = climb;
   }
 
   @Override
   public void initialize() {
-
-    elevator.configure(0.3375, 0.075, 0.18629, 0.01, 18, 0, 0.01, velocity, acceleration, 0);
+    climb.rachetToggle(false);
   }
 
   @Override
   public void execute() {
-    double rotationsPosition = (35 / 54.75) * posistion - 10.86758;
-    elevator.setPosistion(rotationsPosition);
+    climb.twistToPosition(180);
   }
 
   @Override
-  public void end(boolean interrupted) {
-    elevator.stop();
-  }
+  public void end(boolean interrupted) {}
 }

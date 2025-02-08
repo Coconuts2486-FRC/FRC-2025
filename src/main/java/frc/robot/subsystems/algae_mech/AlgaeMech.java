@@ -11,14 +11,28 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.LED;
+package frc.robot.subsystems.algae_mech;
 
-public interface LEDIO {
-  public default void rainbowTwinkle() {}
+import frc.robot.util.RBSISubsystem;
+import org.littletonrobotics.junction.Logger;
 
-  public default void off() {}
+public class AlgaeMech extends RBSISubsystem {
 
-  public default void scoreReady() {}
+  private final AlgaeMechIO io;
+  private final AlgaeMechIOInputsAutoLogged inputs = new AlgaeMechIOInputsAutoLogged();
 
-  public default void scoreNotReady() {}
+  public AlgaeMech(AlgaeMechIO io) {
+    this.io = io;
+  }
+
+  @Override
+  public void periodic() {
+    io.updateInputs(inputs);
+    Logger.processInputs("AlgaeMech", inputs);
+  }
+
+  @Override
+  public int[] getPowerPorts() {
+    return io.powerPorts;
+  }
 }

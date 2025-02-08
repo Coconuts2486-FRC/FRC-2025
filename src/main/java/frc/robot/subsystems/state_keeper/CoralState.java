@@ -1,14 +1,27 @@
-package frc.robot.subsystems.Controls;
+// Copyright (c) 2025 FRC 2486
+// http://github.com/Coconuts2486-FRC
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// version 3 as published by the Free Software Foundation or
+// available in the root directory of this project.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+
+package frc.robot.subsystems.state_keeper;
 
 import frc.robot.util.VirtualSubsystem;
 
-public class CoralControl extends VirtualSubsystem {
+public class CoralState extends VirtualSubsystem {
   // scoreStates[0] stores horizontal state
   // scoreStates[1] stores vertical state
   // scoreStates[2] stores left or right state
   private int[] scoreStates;
 
-  public CoralControl() {
+  public CoralState() {
     scoreStates[0] = 0;
     scoreStates[1] = 0;
     scoreStates[2] = 0;

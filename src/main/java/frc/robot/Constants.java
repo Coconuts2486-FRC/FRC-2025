@@ -1,3 +1,5 @@
+// Copyright (c) 2025 FRC 2486
+// http://github.com/Coconuts2486-FRC
 // Copyright (c) 2024-2025 Az-FIRST
 // http://github.com/AZ-First
 //
@@ -66,7 +68,7 @@ public final class Constants {
    * Define the various multiple robots that use this same code (e.g., COMPBOT, DEVBOT, SIMBOT,
    * etc.) and the operating modes of the code (REAL, SIM, or REPLAY)
    */
-  private static RobotType robotType = RobotType.COMPBOT;
+  private static RobotType robotType = RobotType.GEORGE;
 
   // Define swerve, auto, and vision types being used
   // NOTE: Only PHOENIX6 swerve base has been tested at this point!!!
@@ -80,7 +82,7 @@ public final class Constants {
 
   /** Enumerate the robot types (name your robots here) */
   public static enum RobotType {
-    DEVBOT, // Development / Alpha / Practice Bot
+    GEORGE, // Development / Alpha / Practice Bot
     COMPBOT, // Competition robot
     SIMBOT // Simulated robot
   }
@@ -137,7 +139,7 @@ public final class Constants {
     // Theoretical free speed (m/s) at 12v applied output;
     // IMPORTANT: Follow the AdvantageKit instructions for measuring the ACTUAL maximum linear speed
     // of YOUR ROBOT, and replace the estimate here with your measured value!
-    public static final double kMaxLinearSpeed = Units.feetToMeters(18); // 18);
+    public static final double kMaxLinearSpeed = Units.feetToMeters(18);
 
     // Set 3/4 of a rotation per second as the max angular velocity (radians/sec)
     public static final double kMaxAngularSpeed = 1.5 * Math.PI;
@@ -168,38 +170,14 @@ public final class Constants {
     public static final double kSteerD = 1.0;
   }
 
-  /** Example Flywheel Mechanism Constants ********************************* */
-  public static final class FlywheelConstants {
-
-    // Mechanism idle mode
-    public static final MotorIdleMode kFlywheelIdleMode = MotorIdleMode.COAST; // BRAKE, COAST
-
-    // Mechanism motor gear ratio
-    public static final double kFlywheelGearRatio = 1.5;
-
-    // MODE == REAL / REPLAY
-    // Feedforward constants
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
-    // Feedback (PID) constants
-    public static final PIDConstants pidReal = new PIDConstants(1.0, 0.0, 0.0);
-
-    // MODE == SIM
-    // Feedforward constants
-    public static final double kStaticGainSim = 0.0;
-    public static final double kVelocityGainSim = 0.03;
-    // Feedback (PID) constants
-    public static final PIDConstants pidSim = new PIDConstants(1.0, 0.0, 0.0);
-  }
-
-  /** elevator subsystem constants ***************************************** */
+  /** Elevator Subsystem Constants ***************************************** */
   public static final class ElevatorConstants {
 
-    // idle mode //6
-    public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE;
+    // Idle Mode
+    public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // gear ratio
-    public static final double kElevatorGearRatio = 0.1;
+    // Gear Ratio
+    public static final double kElevatorGearRatio = 10.0;
 
     // mode real/replay
     public static final double kStaticGainReal = 0.1;
@@ -226,7 +204,171 @@ public final class Constants {
     public static final double kISim = 0;
     public static final double kDSim = 0;
 
-    // Magic motion constants
+    // Motion Magic constants
+    public static final double kVelocity = 1.4;
+    public static final double kAcceleration = 2.8;
+    public static final double kJerk = 0;
+  }
+
+  /** Coral Mechanism Subsystem Constants ********************************** */
+  public static final class CoralMechConstants {
+
+    // Idle Mode
+    public static final MotorIdleMode kCoralIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
+
+    // Gear Ratio
+    public static final double kCoralGearRatio = 10.0;
+
+    // mode real/replay
+    public static final double kStaticGainReal = 0.1;
+    public static final double kVelocityGainReal = 0.05;
+    // motor configs
+    public static final double kGReal = 0.3375;
+    public static final double kSReal = 0.075;
+    public static final double kVReal = 0.0018629;
+    public static final double kAReal = 0; // 0.000070378;
+    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
+    public static final double kPReal = 17.983;
+    public static final double kIReal = 0;
+    public static final double kDReal = 0;
+
+    // mode sim
+    public static final double kStaticGainSim = 0.1;
+    public static final double kVelocityGainSim = 0.05;
+    // motor configs
+    public static final double kGSim = 0;
+    public static final double kSSim = 0;
+    public static final double kVSim = 0;
+    public static final double kASim = 0;
+    public static final double kPSim = 0;
+    public static final double kISim = 0;
+    public static final double kDSim = 0;
+
+    // Motion Magic constants
+    public static final double kVelocity = 1.4;
+    public static final double kAcceleration = 2.8;
+    public static final double kJerk = 0;
+  }
+
+  /** Intake Subsystem Constants ******************************************* */
+  public static final class IntakeConstants {
+
+    // Idle Mode
+    public static final MotorIdleMode kIntakePivotIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
+    public static final MotorIdleMode kIntakeRollerIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
+
+    // Gear Ratio
+    public static final double kIntakePivotGearRatio = 10.0;
+    public static final double kIntakeRollerGearRatio = 10.0;
+
+    // mode real/replay
+    public static final double kStaticGainReal = 0.1;
+    public static final double kVelocityGainReal = 0.05;
+    // motor configs
+    public static final double kGReal = 0.3375;
+    public static final double kSReal = 0.075;
+    public static final double kVReal = 0.0018629;
+    public static final double kAReal = 0; // 0.000070378;
+    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
+    public static final double kPReal = 17.983;
+    public static final double kIReal = 0;
+    public static final double kDReal = 0;
+
+    // mode sim
+    public static final double kStaticGainSim = 0.1;
+    public static final double kVelocityGainSim = 0.05;
+    // motor configs
+    public static final double kGSim = 0;
+    public static final double kSSim = 0;
+    public static final double kVSim = 0;
+    public static final double kASim = 0;
+    public static final double kPSim = 0;
+    public static final double kISim = 0;
+    public static final double kDSim = 0;
+
+    // Motion Magic constants
+    public static final double kVelocity = 1.4;
+    public static final double kAcceleration = 2.8;
+    public static final double kJerk = 0;
+  }
+
+  /** Algae Mechanism Subsystem Constants ********************************** */
+  public static final class AlgaeMechConstants {
+
+    // Idle Mode
+    public static final MotorIdleMode kAlgaePivotIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
+    public static final MotorIdleMode kAlgaeRollerIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
+
+    // Gear Ratio
+    public static final double kAlgaePivotGearRatio = 10.0;
+    public static final double kAlgaeRollerGearRatio = 10.0;
+
+    // mode real/replay
+    public static final double kStaticGainReal = 0.1;
+    public static final double kVelocityGainReal = 0.05;
+    // motor configs
+    public static final double kGReal = 0.3375;
+    public static final double kSReal = 0.075;
+    public static final double kVReal = 0.0018629;
+    public static final double kAReal = 0; // 0.000070378;
+    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
+    public static final double kPReal = 17.983;
+    public static final double kIReal = 0;
+    public static final double kDReal = 0;
+
+    // mode sim
+    public static final double kStaticGainSim = 0.1;
+    public static final double kVelocityGainSim = 0.05;
+    // motor configs
+    public static final double kGSim = 0;
+    public static final double kSSim = 0;
+    public static final double kVSim = 0;
+    public static final double kASim = 0;
+    public static final double kPSim = 0;
+    public static final double kISim = 0;
+    public static final double kDSim = 0;
+
+    // Motion Magic constants
+    public static final double kVelocity = 1.4;
+    public static final double kAcceleration = 2.8;
+    public static final double kJerk = 0;
+  }
+
+  /** Climb Subsystem Constants ******************************************** */
+  public static final class ClimbConstants {
+
+    // Idle Mode
+    public static final MotorIdleMode kClimbIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
+
+    // Gear Ratio
+    public static final double kClimbGearRatio = 10.0;
+
+    // mode real/replay
+    public static final double kStaticGainReal = 0.1;
+    public static final double kVelocityGainReal = 0.05;
+    // motor configs
+    public static final double kGReal = 0.3375;
+    public static final double kSReal = 0.075;
+    public static final double kVReal = 0.0018629;
+    public static final double kAReal = 0; // 0.000070378;
+    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
+    public static final double kPReal = 17.983;
+    public static final double kIReal = 0;
+    public static final double kDReal = 0;
+
+    // mode sim
+    public static final double kStaticGainSim = 0.1;
+    public static final double kVelocityGainSim = 0.05;
+    // motor configs
+    public static final double kGSim = 0;
+    public static final double kSSim = 0;
+    public static final double kVSim = 0;
+    public static final double kASim = 0;
+    public static final double kPSim = 0;
+    public static final double kISim = 0;
+    public static final double kDSim = 0;
+
+    // Motion Magic constants
     public static final double kVelocity = 1.4;
     public static final double kAcceleration = 2.8;
     public static final double kJerk = 0;
@@ -242,14 +384,14 @@ public final class Constants {
     public static final Rotation2d kRioOrientation =
         switch (getRobot()) {
           case COMPBOT -> Rotation2d.fromDegrees(90.);
-          case DEVBOT -> Rotation2d.fromDegrees(0.);
+          case GEORGE -> Rotation2d.fromDegrees(0.);
           default -> Rotation2d.fromDegrees(0.);
         };
     // IMU can be one of Pigeon2 or NavX
     public static final Rotation2d kIMUOrientation =
         switch (getRobot()) {
           case COMPBOT -> Rotation2d.fromDegrees(0.);
-          case DEVBOT -> Rotation2d.fromDegrees(0.);
+          case GEORGE -> Rotation2d.fromDegrees(0.);
           default -> Rotation2d.fromDegrees(0.);
         };
   }
@@ -259,7 +401,12 @@ public final class Constants {
 
     // Joystick Functions
     // Set to TRUE for Drive = Left Stick, Turn = Right Stick; else FALSE
-    public static final boolean kDriveLeftTurnRight = true;
+    public static final boolean kDriveLeftTurnRight =
+        switch (getRobot()) {
+          case GEORGE -> true; // Testing
+          case COMPBOT -> false; // Kate's preference
+          case SIMBOT -> true; // Default
+        };
 
     // Joystick Deadbands
     public static final double kDeadband = 0.1;
@@ -460,10 +607,6 @@ public final class Constants {
     public enum AprilTagLayoutType {
       OFFICIAL("2025-official");
 
-      // SPEAKERS_ONLY("2024-speakers"),
-      // AMPS_ONLY("2024-amps"),
-      // WPI("2024-wpi");
-
       private AprilTagLayoutType(String name) {
         if (Constants.disableHAL) {
           layout = null;
@@ -517,7 +660,7 @@ public final class Constants {
   /** Get the current robot mode */
   public static Mode getMode() {
     return switch (robotType) {
-      case DEVBOT, COMPBOT -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
+      case GEORGE, COMPBOT -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
       case SIMBOT -> Mode.SIM;
     };
   }

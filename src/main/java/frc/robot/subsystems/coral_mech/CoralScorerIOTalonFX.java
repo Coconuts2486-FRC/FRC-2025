@@ -11,14 +11,19 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.LED;
+package frc.robot.subsystems.coral_mech;
 
-public interface LEDIO {
-  public default void rainbowTwinkle() {}
+import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.Constants.CANandPowerPorts;
 
-  public default void off() {}
+public class CoralScorerIOTalonFX implements CoralScorerIO {
 
-  public default void scoreReady() {}
+  private final DigitalInput lightStop = new DigitalInput(5);
 
-  public default void scoreNotReady() {}
+  public final int[] powerPorts = {CANandPowerPorts.CORAL_MECH.getPowerPort()};
+
+  @Override
+  public boolean getLightStop() {
+    return lightStop.get();
+  }
 }

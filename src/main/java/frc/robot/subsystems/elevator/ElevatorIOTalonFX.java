@@ -1,3 +1,16 @@
+// Copyright (c) 2025 FRC 2486
+// http://github.com/Coconuts2486-FRC
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// version 3 as published by the Free Software Foundation or
+// available in the root directory of this project.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+
 package frc.robot.subsystems.elevator;
 
 import static frc.robot.Constants.ElevatorConstants.*;
@@ -14,10 +27,13 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.CANandPowerPorts;
 import java.util.function.BooleanSupplier;
 
 public class ElevatorIOTalonFX implements ElevatorIO {
+
+  private final DigitalInput elevatorStop = new DigitalInput(0);
 
   // motor called in
   private final TalonFX elevatorMotor =
@@ -97,6 +113,11 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   @Override
   public void limit(BooleanSupplier limitSwitch) {
     if (limitSwitch.getAsBoolean()) {}
+  }
+
+  @Override
+  public boolean getBottomStop() {
+    return elevatorStop.get();
   }
 
   @Override

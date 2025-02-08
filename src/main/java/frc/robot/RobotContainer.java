@@ -1,3 +1,5 @@
+// Copyright (c) 2025 FRC 2486
+// http://github.com/Coconuts2486-FRC
 // Copyright (c) 2024-2025 Az-FIRST
 // http://github.com/AZ-First
 // Copyright (c) 2021-2025 FRC 6328
@@ -33,7 +35,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,17 +49,28 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.LED.LEDCommand;
-import frc.robot.subsystems.Controls.CoralControl;
-import frc.robot.subsystems.Intake.Intake;
-import frc.robot.subsystems.Intake.IntakeIOKraken;
+import frc.robot.commands.LEDCommand;
 import frc.robot.subsystems.LED.LED;
-import frc.robot.subsystems.LED.LEDIOCandle;
+import frc.robot.subsystems.LED.LEDIO;
+import frc.robot.subsystems.LED.LEDIOCANdle;
 import frc.robot.subsystems.accelerometer.Accelerometer;
+import frc.robot.subsystems.algae_mech.AlgaeMech;
+import frc.robot.subsystems.algae_mech.AlgaeMechIO;
+import frc.robot.subsystems.algae_mech.AlgaeMechIOTalonFX;
+import frc.robot.subsystems.climber.Climb;
+import frc.robot.subsystems.climber.ClimbIO;
+import frc.robot.subsystems.climber.ClimbIOTalonFX;
+import frc.robot.subsystems.coral_mech.CoralScorer;
+import frc.robot.subsystems.coral_mech.CoralScorerIO;
+import frc.robot.subsystems.coral_mech.CoralScorerIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOTalonFX;
+import frc.robot.subsystems.state_keeper.CoralState;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -76,9 +88,6 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
-
-  private final DigitalInput elevatorStop = new DigitalInput(0);
-  private final Trigger elevatorTrigger = new Trigger(elevatorStop::get);
 
   // **** This is a Pathplanner On-the-Fly Command ****/
   // Create a list of waypoints from poses. Each pose represents one waypoint.
@@ -128,14 +137,17 @@ public class RobotContainer {
   private final Drive m_drivebase;
 
   private final Elevator m_elevator;
+  private final CoralScorer m_coralScorer;
+  private final Intake m_intake;
+  private final AlgaeMech m_algaeMech;
+  private final Climb m_climber;
+
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
-  private final CoralControl m_coralControl = new CoralControl();
+  private final CoralState m_coralState;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final Intake m_intake = new Intake(new IntakeIOKraken());
-  private final LED m_led = new LED(new LEDIOCandle());
-  private final DigitalInput lightStop = new DigitalInput(5);
+  private final LED m_led;
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -146,9 +158,6 @@ public class RobotContainer {
   // Input estimated battery capacity (if full, use printed value)
   private final LoggedTunableNumber batteryCapacity =
       new LoggedTunableNumber("Battery Amp-Hours", 18.0);
-  // EXAMPLE TUNABLE FLYWHEEL SPEED INPUT FROM DASHBOARD
-  private final LoggedTunableNumber flywheelSpeedInput =
-      new LoggedTunableNumber("Flywheel Speed", 1500.0);
 
   // Alerts
   private final Alert aprilTagLayoutAlert = new Alert("", AlertType.INFO);
@@ -163,9 +172,14 @@ public class RobotContainer {
     switch (Constants.getMode()) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
-        // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
         m_elevator = new Elevator(new ElevatorIOTalonFX());
+        m_coralScorer = new CoralScorer(new CoralScorerIOTalonFX());
+        m_intake = new Intake(new IntakeIOTalonFX());
+        m_algaeMech = new AlgaeMech(new AlgaeMechIOTalonFX());
+        m_climber = new Climb(new ClimbIOTalonFX());
+
+        // Virtual Subsystems
         m_vision =
             switch (Constants.getVisionType()) {
               case PHOTON ->
@@ -184,48 +198,53 @@ public class RobotContainer {
               default -> null;
             };
         m_accel = new Accelerometer(m_drivebase.getGyro());
-
+        m_coralState = new CoralState();
+        m_led = new LED(new LEDIOCANdle());
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
         m_elevator = new Elevator(new ElevatorIO() {}); // make elevator Io sim
+        m_coralScorer = new CoralScorer(new CoralScorerIO() {});
+        m_intake = new Intake(new IntakeIO() {});
+        m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
+        m_climber = new Climb(new ClimbIO() {});
+
+        // Virtual Subsystems
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
                 new VisionIOPhotonVisionSim(camera0Name, robotToCamera0, m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(camera1Name, robotToCamera1, m_drivebase::getPose));
         m_accel = new Accelerometer(m_drivebase.getGyro());
+        m_coralState = new CoralState();
+        m_led = new LED(new LEDIO() {});
         break;
 
       default:
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
         m_elevator = new Elevator(new ElevatorIO() {});
+        m_coralScorer = new CoralScorer(new CoralScorerIO() {});
+        m_intake = new Intake(new IntakeIO() {});
+        m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
+        m_climber = new Climb(new ClimbIO() {});
+
+        // Virtual Subsystems
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
+        m_coralState = new CoralState();
+        m_led = new LED(new LEDIO() {});
         break;
     }
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
-    m_power = new PowerMonitoring(batteryCapacity, m_elevator);
-
-    // Idk where this is suppose to go. but I think this works, just setting up auto commands
-    NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
-
-    NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
-
-    NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
-
-    NamedCommands.registerCommand(
-        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
-
-    NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
-
-    NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
+    m_power =
+        new PowerMonitoring(
+            batteryCapacity, m_elevator, m_coralScorer, m_intake, m_algaeMech, m_climber);
 
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
@@ -270,7 +289,13 @@ public class RobotContainer {
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
 
-    // NamedCommands.registerCommand("Zero", Commands.runOnce(() -> m_drivebase.zero()));
+    NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
+    NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
+    NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
+    NamedCommands.registerCommand(
+        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(m_elevator::getBottomStop));
+    NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
+    NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
   }
 
   /**
@@ -309,7 +334,7 @@ public class RobotContainer {
     driverController
         .rightBumper()
         .onTrue(
-            new LEDCommand(m_led, lightStop::get)
+            new LEDCommand(m_led, m_coralScorer::getLightStop)
                 .ignoringDisable(true)
                 .until(driverController.leftBumper()));
     driverController
@@ -324,8 +349,8 @@ public class RobotContainer {
                         () -> turnStickX.value()),
                 m_drivebase));
 
-    driverController.a().onTrue(Commands.run(() -> m_coralControl.indexL()));
-    driverController.y().onTrue(Commands.run(() -> m_coralControl.indexR()));
+    driverController.a().onTrue(Commands.run(() -> m_coralState.indexL()));
+    driverController.y().onTrue(Commands.run(() -> m_coralState.indexR()));
     // Press A button -> BRAKE
     // driverController
     //     .a()
@@ -378,16 +403,6 @@ public class RobotContainer {
                             new Pose2d(m_drivebase.getPose().getTranslation(), new Rotation2d())),
                     m_drivebase)
                 .ignoringDisable(true));
-
-    // Press RIGHT BUMPER --> Run the example flywheel
-    // driverController
-    //     .rightBumper()
-    //     .whileTrue(
-    //         Commands.startEnd(
-    //             () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
-    //             m_flywheel::stop,
-
-    //             m_flywheel));
 
     driverController
         .leftBumper()

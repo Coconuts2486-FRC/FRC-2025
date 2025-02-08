@@ -11,14 +11,35 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.LED;
+package frc.robot.subsystems.coral_mech;
 
-public interface LEDIO {
-  public default void rainbowTwinkle() {}
+import frc.robot.util.RBSISubsystem;
 
-  public default void off() {}
+public class CoralScorer extends RBSISubsystem {
+  private final CoralScorerIO io;
 
-  public default void scoreReady() {}
+  public CoralScorer(CoralScorerIO io) {
+    this.io = io;
+  }
 
-  public default void scoreNotReady() {}
+  public void runVolts(double volts) {
+    io.setVolts(volts);
+  }
+
+  public void setVelocity(double velocity) {
+    io.setVelocity(velocity);
+  }
+
+  public void stop() {
+    io.stop();
+  }
+
+  public boolean getLightStop() {
+    return io.getLightStop();
+  }
+
+  @Override
+  public int[] getPowerPorts() {
+    return io.powerPorts;
+  }
 }

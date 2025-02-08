@@ -17,7 +17,6 @@ public class AlgaeMech extends RBSISubsystem {
 
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
-    
 
     // Switch constants based on mode (the physics simulator is treated as a
     // separate robot with different tuning)

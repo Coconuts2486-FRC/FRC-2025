@@ -41,7 +41,6 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
     PIDConfig.kI = 0;
     PIDConfig.kD = 0;
 
-
     rollerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     roller.getConfigurator().apply(rollerConfig);
     roller.getConfigurator().apply(PIDConfig);

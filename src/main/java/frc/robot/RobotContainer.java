@@ -47,6 +47,7 @@ import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LED.LEDCommand;
 import frc.robot.subsystems.Controls.CoralControl;
 import frc.robot.subsystems.Intake.Intake;
@@ -116,6 +117,9 @@ public class RobotContainer {
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
   final CommandXboxController driverController = new CommandXboxController(0); // Main Driver
 
+  private Trigger leftBumper = driverController.leftBumper();
+  private Trigger rightBumper = driverController.rightBumper();
+
   final CommandXboxController operatorController = new CommandXboxController(1); // Second Operator
   final OverrideSwitches overrides = new OverrideSwitches(2); // Console toggle switches
 
@@ -131,7 +135,7 @@ public class RobotContainer {
   private final PowerMonitoring m_power;
   private final Intake m_intake = new Intake(new IntakeIOKraken());
   private final LED m_led = new LED(new LEDIOCandle());
-  private final DigitalInput lightStop = new DigitalInput(1);
+  private final DigitalInput lightStop = new DigitalInput(5);
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -332,9 +336,39 @@ public class RobotContainer {
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
 
-    driverController.leftBumper().whileTrue(Commands.run(() -> getAutonomousCommandPathPlanner()));
+    // driverController.a().whileTrue(new IntakeCommand(m_intake, 0));
+
+    // m_elevator.setDefaultCommand(
+    //     Commands.run(
+    //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
+
+    // the two driver controller bumpers below make it so when you let go of either button the
+    // intake pivot will go to a resting posistion
+
+    m_intake.setDefaultCommand(
+        Commands.run(
+            () ->
+                m_intake.runPivotVolts(
+                    driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
+            m_intake));
+
+    driverController
+        .rightBumper()
+        .whileTrue(new IntakeCommand(m_intake, 0.25, -0.35, 0))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0, 0).until(leftBumper));
+
+    driverController
+        .leftBumper()
+        .whileTrue(
+            new IntakeCommand(m_intake, 0.75, 0, 0)
+                .withTimeout(0.075)
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.7, 0)))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0, 0).until(rightBumper));
+
+    driverController.a().whileTrue(new IntakeCommand(m_intake, 0.9, 0, 1));
 
     // Press Y button --> Manually Re-Zero the Gyro
+
     driverController
         .y()
         .onTrue(
@@ -461,6 +495,7 @@ public class RobotContainer {
       //   autoChooserPathPlanner.addOption(
       //       "Flywheel SysId (Dynamic Reverse)",
       //       m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
     }
   }
 

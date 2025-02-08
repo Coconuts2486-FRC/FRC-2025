@@ -2,9 +2,9 @@ package frc.robot.subsystems.Intake;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -13,16 +13,20 @@ import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants.CANandPowerPorts;
 
 public class IntakeIOKraken implements IntakeIO {
+
   private final TalonFX intakeRoller =
       new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
-
   private final TalonFX intakePivot = new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
+
+  private final CANcoder encoderActual = new CANcoder(23);
+
+  PIDController pivotPID = new PIDController(1.5, 0, 0);
 
   public final int[] powerPorts = {
     CANandPowerPorts.INTAKE_PIVOT.getPowerPort(), CANandPowerPorts.INTAKE_ROLLER.getPowerPort()
   };
 
-  private final StatusSignal<Angle> pivotPosition = intakePivot.getPosition();
+  private final StatusSignal<Angle> pivotPosition = encoderActual.getAbsolutePosition();
   private final StatusSignal<AngularVelocity> pivotVelocity = intakePivot.getVelocity();
   private final StatusSignal<Voltage> pivotAppliedVolts = intakePivot.getMotorVoltage();
   private final StatusSignal<Current> pivotCurrent = intakePivot.getSupplyCurrent();
@@ -31,11 +35,13 @@ public class IntakeIOKraken implements IntakeIO {
 
   @Override
   public void updateInputs(IntakeIOInputs inputs) {
-    BaseStatusSignal.refreshAll(pivotPosition, pivotVelocity, pivotAppliedVolts, pivotCurrent);
+    BaseStatusSignal.refreshAll(
+        encoderActual.getAbsolutePosition(), pivotVelocity, pivotAppliedVolts, pivotCurrent);
     inputs.positionRad =
-        Units.rotationsToRadians(pivotPosition.getValueAsDouble()) / 21.42857; // gear ratio
+        Units.rotationsToRadians(
+            encoderActual.getAbsolutePosition().getValueAsDouble()); // 21.42857; // gear ratio
     inputs.velocityRadPerSec =
-        Units.rotationsToRadians(pivotVelocity.getValueAsDouble()) / 21.42857; // gear ratio
+        Units.rotationsToRadians(pivotVelocity.getValueAsDouble()); // 21.42857; // gear ratio
     inputs.appliedVolts = pivotAppliedVolts.getValueAsDouble();
     inputs.currentAmps = new double[] {pivotCurrent.getValueAsDouble()};
   }
@@ -58,39 +64,24 @@ public class IntakeIOKraken implements IntakeIO {
 
   @Override
   public void setPivotPosition(double position) {
-    final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
-
-    intakePivot.setControl(m_request.withPosition(position));
+    intakePivot.set(
+        -pivotPID.calculate(encoderActual.getAbsolutePosition().getValueAsDouble(), position));
   }
 
   @Override
-  public void configure(
-      double kG,
-      double kS,
-      double kV,
-      double kA,
-      double kP,
-      double kI,
-      double kD,
-      double velocity,
-      double acceleration,
-      double jerk) {
+  public void rollerSpeed(double speed) {
+    intakeRoller.set(speed);
+  }
 
-    var talonFXConfigs = new TalonFXConfiguration();
-    var slot0Configs = talonFXConfigs.Slot0;
+  @Override
+  public void configure(double kP, double kI, double kD) {
+    pivotPID.setP(kP);
+    pivotPID.setI(kI);
+    pivotPID.setD(kD);
+  }
 
-    slot0Configs.kG = kG;
-    slot0Configs.kS = kS;
-    slot0Configs.kV = kV;
-    slot0Configs.kA = kA;
-    slot0Configs.kP = kP;
-    slot0Configs.kI = kI;
-    slot0Configs.kD = kD;
-
-    var motionMagicConfigs = talonFXConfigs.MotionMagic;
-
-    motionMagicConfigs.MotionMagicCruiseVelocity = velocity;
-    motionMagicConfigs.MotionMagicAcceleration = acceleration;
-    motionMagicConfigs.MotionMagicJerk = jerk;
+  @Override
+  public double getEncoder() {
+    return encoderActual.getAbsolutePosition().getValueAsDouble();
   }
 }

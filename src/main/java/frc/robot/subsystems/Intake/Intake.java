@@ -4,7 +4,6 @@ import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.util.RBSISubsystem;
 import org.littletonrobotics.junction.Logger;
@@ -38,6 +37,10 @@ public class Intake extends RBSISubsystem {
     io.setPivotPosition(position);
   }
 
+  public void rollerSpeed(double speed) {
+    io.rollerSpeed(speed);
+  }
+
   public void runPivotVolts(double volts) {
     io.setPivotVolts(volts);
   }
@@ -50,30 +53,17 @@ public class Intake extends RBSISubsystem {
     io.stop();
   }
 
-  public void configure(
-      double kG,
-      double kS,
-      double kV,
-      double kA,
-      double kP,
-      double kI,
-      double kD,
-      double velocity,
-      double acceleration,
-      double jerk) {
-    io.configure(kG, kS, kV, kA, kP, kI, kD, velocity, acceleration, jerk);
+  public void configure(double kP, double kI, double kD) {
+    io.configure(kP, kI, kD);
+  }
+  ;
+
+  public double getEncoder() {
+    return io.getEncoder();
   }
 
   @Override
   public int[] getPowerPorts() {
     return io.powerPorts;
-  }
-
-  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-    return sysId.quasistatic(direction);
-  }
-
-  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-    return sysId.dynamic(direction);
   }
 }

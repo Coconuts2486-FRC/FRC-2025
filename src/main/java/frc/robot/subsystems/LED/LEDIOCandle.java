@@ -6,13 +6,13 @@ import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.TwinkleOffAnimation;
 import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 
-public class LEDIOCandle implements LEDIO {
+public class LEDIOCANdle implements LEDIO {
   CANdle candle = new CANdle(1);
   CANdleConfiguration config = new CANdleConfiguration();
   private boolean red;
   private double i = 0;
 
-  public LEDIOCandle() {
+  public LEDIOCANdle() {
     red = false;
     config.stripType = LEDStripType.RGB; // set the strip type to RGB
     config.brightnessScalar = 0.5; // dim the LEDs to half brightness

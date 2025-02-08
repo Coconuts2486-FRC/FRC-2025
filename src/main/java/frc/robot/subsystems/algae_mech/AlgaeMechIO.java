@@ -13,4 +13,15 @@
 
 package frc.robot.subsystems.algae_mech;
 
-public class AlgaeMechIO {}
+import org.littletonrobotics.junction.AutoLog;
+
+public interface AlgaeMechIO {
+
+  @AutoLog
+  public static class AlgaeMechIOInputs {
+    public double positionRad = 0.0;
+    public double velocityRadPerSec = 0.0;
+    public double appliedVolts = 0.0;
+    public double[] currentAmps = new double[] {};
+  }
+}

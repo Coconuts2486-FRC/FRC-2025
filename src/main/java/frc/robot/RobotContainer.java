@@ -50,18 +50,27 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LED.LEDCommand;
-import frc.robot.subsystems.Controls.CoralControl;
 import frc.robot.subsystems.LED.LED;
-import frc.robot.subsystems.LED.LEDIOCandle;
+import frc.robot.subsystems.LED.LEDIO;
+import frc.robot.subsystems.LED.LEDIOCANdle;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.algae_mech.AlgaeMech;
+import frc.robot.subsystems.algae_mech.AlgaeMechIO;
+import frc.robot.subsystems.algae_mech.AlgaeMechIOTalonFX;
 import frc.robot.subsystems.climber.Climb;
+import frc.robot.subsystems.climber.ClimbIO;
+import frc.robot.subsystems.climber.ClimbIOTalonFX;
 import frc.robot.subsystems.coral_mech.CoralScorer;
+import frc.robot.subsystems.coral_mech.CoralScorerIO;
+import frc.robot.subsystems.coral_mech.CoralScorerIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOTalonFX;
+import frc.robot.subsystems.state_keeper.CoralState;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -135,10 +144,10 @@ public class RobotContainer {
 
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
-  private final CoralControl m_coralControl = new CoralControl();
+  private final CoralState m_coralState;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final LED m_led = new LED(new LEDIOCandle());
+  private final LED m_led;
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -163,9 +172,14 @@ public class RobotContainer {
     switch (Constants.getMode()) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
-        // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
         m_elevator = new Elevator(new ElevatorIOTalonFX());
+        m_coralScorer = new CoralScorer(new CoralScorerIOTalonFX());
+        m_intake = new Intake(new IntakeIOTalonFX());
+        m_algaeMech = new AlgaeMech(new AlgaeMechIOTalonFX());
+        m_climber = new Climb(new ClimbIOTalonFX());
+
+        // Virtual Subsystems
         m_vision =
             switch (Constants.getVisionType()) {
               case PHOTON ->
@@ -184,28 +198,45 @@ public class RobotContainer {
               default -> null;
             };
         m_accel = new Accelerometer(m_drivebase.getGyro());
-
+        m_coralState = new CoralState();
+        m_led = new LED(new LEDIOCANdle());
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
         m_elevator = new Elevator(new ElevatorIO() {}); // make elevator Io sim
+        m_coralScorer = new CoralScorer(new CoralScorerIO() {});
+        m_intake = new Intake(new IntakeIO() {});
+        m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
+        m_climber = new Climb(new ClimbIO() {});
+
+        // Virtual Subsystems
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
                 new VisionIOPhotonVisionSim(camera0Name, robotToCamera0, m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(camera1Name, robotToCamera1, m_drivebase::getPose));
         m_accel = new Accelerometer(m_drivebase.getGyro());
+        m_coralState = new CoralState();
+        m_led = new LED(new LEDIO() {});
         break;
 
       default:
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
         m_elevator = new Elevator(new ElevatorIO() {});
+        m_coralScorer = new CoralScorer(new CoralScorerIO() {});
+        m_intake = new Intake(new IntakeIO() {});
+        m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
+        m_climber = new Climb(new ClimbIO() {});
+
+        // Virtual Subsystems
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
+        m_coralState = new CoralState();
+        m_led = new LED(new LEDIO() {});
         break;
     }
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
@@ -311,7 +342,7 @@ public class RobotContainer {
     driverController
         .rightBumper()
         .onTrue(
-            new LEDCommand(m_led, lightStop::get)
+            new LEDCommand(m_led, m_coralScorer::getLightStop)
                 .ignoringDisable(true)
                 .until(driverController.leftBumper()));
     driverController
@@ -326,8 +357,8 @@ public class RobotContainer {
                         () -> turnStickX.value()),
                 m_drivebase));
 
-    driverController.a().onTrue(Commands.run(() -> m_coralControl.indexL()));
-    driverController.y().onTrue(Commands.run(() -> m_coralControl.indexR()));
+    driverController.a().onTrue(Commands.run(() -> m_coralState.indexL()));
+    driverController.y().onTrue(Commands.run(() -> m_coralState.indexR()));
     // Press A button -> BRAKE
     // driverController
     //     .a()

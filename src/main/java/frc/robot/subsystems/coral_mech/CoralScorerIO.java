@@ -13,5 +13,9 @@ public interface CoralScorerIO {
 
   public default void stop() {}
 
+  public default boolean getLightStop() {
+    return false;
+  }
+
   public default void setVelocity(double velocity) {}
 }

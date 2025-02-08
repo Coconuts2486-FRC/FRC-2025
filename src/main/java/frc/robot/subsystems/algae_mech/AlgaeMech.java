@@ -15,4 +15,12 @@ package frc.robot.subsystems.algae_mech;
 
 import frc.robot.util.RBSISubsystem;
 
-public class AlgaeMech extends RBSISubsystem {}
+public class AlgaeMech extends RBSISubsystem {
+
+  private final AlgaeMechIO io;
+  private final AlgaeMechIOInputsAutoLogged inputs = new AlgaeMechIOInputsAutoLogged();
+
+  public AlgaeMech(AlgaeMechIO io) {
+    this.io = io;
+  }
+}

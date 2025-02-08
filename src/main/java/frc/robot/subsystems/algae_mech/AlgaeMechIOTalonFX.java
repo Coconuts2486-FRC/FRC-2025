@@ -13,4 +13,4 @@
 
 package frc.robot.subsystems.algae_mech;
 
-public class AlgaeMechIOTalonFX {}
+public class AlgaeMechIOTalonFX implements AlgaeMechIO {}

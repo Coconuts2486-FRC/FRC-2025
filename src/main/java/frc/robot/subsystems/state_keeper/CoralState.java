@@ -1,14 +1,14 @@
-package frc.robot.subsystems.Controls;
+package frc.robot.subsystems.state_keeper;
 
 import frc.robot.util.VirtualSubsystem;
 
-public class CoralControl extends VirtualSubsystem {
+public class CoralState extends VirtualSubsystem {
   // scoreStates[0] stores horizontal state
   // scoreStates[1] stores vertical state
   // scoreStates[2] stores left or right state
   private int[] scoreStates;
 
-  public CoralControl() {
+  public CoralState() {
     scoreStates[0] = 0;
     scoreStates[1] = 0;
     scoreStates[2] = 0;

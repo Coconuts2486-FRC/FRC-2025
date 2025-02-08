@@ -21,6 +21,10 @@ public class CoralScorer extends RBSISubsystem {
     io.stop();
   }
 
+  public boolean getLightStop() {
+    return io.getLightStop();
+  }
+
   @Override
   public int[] getPowerPorts() {
     return io.powerPorts;

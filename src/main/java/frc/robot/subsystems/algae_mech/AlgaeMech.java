@@ -14,6 +14,7 @@
 package frc.robot.subsystems.algae_mech;
 
 import frc.robot.util.RBSISubsystem;
+import org.littletonrobotics.junction.Logger;
 
 public class AlgaeMech extends RBSISubsystem {
 
@@ -22,5 +23,16 @@ public class AlgaeMech extends RBSISubsystem {
 
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
+  }
+
+  @Override
+  public void periodic() {
+    io.updateInputs(inputs);
+    Logger.processInputs("AlgaeMech", inputs);
+  }
+
+  @Override
+  public int[] getPowerPorts() {
+    return io.powerPorts;
   }
 }

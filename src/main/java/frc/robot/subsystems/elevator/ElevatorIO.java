@@ -28,9 +28,9 @@ public interface ElevatorIO {
     public double[] currentAmps = new double[] {};
   }
 
-  public default void setPosistion(double posistion) {}
-
   public default void updateInputs(ElevatorIOInputs inputs) {}
+
+  public default void setPosistion(double posistion) {}
 
   public default void stop() {}
 

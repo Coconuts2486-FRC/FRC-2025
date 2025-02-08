@@ -127,4 +127,9 @@ public class Elevator extends RBSISubsystem {
   public void setBrake() {
     io.setBrake();
   }
+
+  @Override
+  public int[] getPowerPorts() {
+    return io.powerPorts;
+  }
 }

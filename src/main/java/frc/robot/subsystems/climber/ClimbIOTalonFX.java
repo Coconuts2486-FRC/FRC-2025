@@ -25,6 +25,8 @@ public class ClimbIOTalonFX implements ClimbIO {
   private final Servo climbExtender = new Servo(CANandPowerPorts.CLIMB_SERVO);
   private final TalonFX climber = new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber());
 
+  public final int[] powerPorts = {CANandPowerPorts.CLIMB.getPowerPort()};
+
   public ClimbIOTalonFX() {
     var climbConfig = new TalonFXConfiguration();
     climbConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;

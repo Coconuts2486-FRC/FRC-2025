@@ -14,10 +14,13 @@
 package frc.robot.subsystems.coral_mech;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.Constants.CANandPowerPorts;
 
 public class CoralScorerIOTalonFX implements CoralScorerIO {
 
   private final DigitalInput lightStop = new DigitalInput(5);
+
+  public final int[] powerPorts = {CANandPowerPorts.CORAL_MECH.getPowerPort()};
 
   @Override
   public boolean getLightStop() {

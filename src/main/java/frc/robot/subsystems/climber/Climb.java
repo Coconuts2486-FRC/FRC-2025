@@ -40,4 +40,9 @@ public class Climb extends RBSISubsystem {
       io.turnClimbServo(1);
     }
   }
+
+  @Override
+  public int[] getPowerPorts() {
+    return io.powerPorts;
+  }
 }

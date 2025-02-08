@@ -13,7 +13,16 @@
 
 package frc.robot.subsystems.climber;
 
+import org.littletonrobotics.junction.AutoLog;
+
 public interface ClimbIO {
+
+  public final int[] powerPorts = {};
+
+  @AutoLog
+  public static class ClimbIOInputs {}
+
+  public default void updateInputs(ClimbIOInputs inputs) {}
 
   public default void turnClimbServo(double position) {}
 
@@ -22,4 +31,8 @@ public interface ClimbIO {
   public default void configPID(double kP, double kI, double kD) {}
 
   public default void twistMotorVolts(double volts) {}
+
+  public default void setCoast() {}
+
+  public default void setBrake() {}
 }

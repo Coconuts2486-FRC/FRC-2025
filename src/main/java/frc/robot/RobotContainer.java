@@ -26,6 +26,7 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -33,6 +34,7 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,15 +42,24 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LED.LEDCommand;
+import frc.robot.subsystems.Controls.CoralControl;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.IntakeIOKraken;
+import frc.robot.subsystems.LED.LED;
+import frc.robot.subsystems.LED.LEDIOCandle;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.flywheel_example.Flywheel;
-import frc.robot.subsystems.flywheel_example.FlywheelIO;
-import frc.robot.subsystems.flywheel_example.FlywheelIOSim;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -66,13 +77,15 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
+
+  private final DigitalInput elevatorStop = new DigitalInput(0);
+  private final Trigger elevatorTrigger = new Trigger(elevatorStop::get);
   // **** This is a Pathplanner On-the-Fly Command ****/
   // Create a list of waypoints from poses. Each pose represents one waypoint.
   // The rotation component of the pose should be the direction of travel. Do not use
   // holonomic rotation.
   List<Waypoint> what =
-      PathPlannerPath.waypointsFromPoses(
-          new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)));
+      PathPlannerPath.waypointsFromPoses(new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)));
 
   PathConstraints constraints =
       new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
@@ -102,6 +115,9 @@ public class RobotContainer {
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
   final CommandXboxController driverController = new CommandXboxController(0); // Main Driver
 
+  private Trigger leftBumper = driverController.leftBumper();
+  private Trigger rightBumper = driverController.rightBumper();
+
   final CommandXboxController operatorController = new CommandXboxController(1); // Second Operator
   final OverrideSwitches overrides = new OverrideSwitches(2); // Console toggle switches
 
@@ -109,11 +125,15 @@ public class RobotContainer {
   // These are the "Active Subsystems" that the robot controlls
   private final Drive m_drivebase;
 
-  private final Flywheel m_flywheel;
+  private final Elevator m_elevator;
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
+  private final CoralControl m_coralControl = new CoralControl();
   private final Vision m_vision;
   private final PowerMonitoring m_power;
+  private final Intake m_intake = new Intake(new IntakeIOKraken());
+  private final LED m_led = new LED(new LEDIOCandle());
+  private final DigitalInput lightStop = new DigitalInput(5);
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -143,7 +163,7 @@ public class RobotContainer {
         // Real robot, instantiate hardware IO implementations
         // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIOSim()); // new Flywheel(new FlywheelIOTalonFX());
+        m_elevator = new Elevator(new ElevatorIOTalonFX());
         m_vision =
             switch (Constants.getVisionType()) {
               case PHOTON ->
@@ -162,12 +182,13 @@ public class RobotContainer {
               default -> null;
             };
         m_accel = new Accelerometer(m_drivebase.getGyro());
+
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIOSim() {});
+        m_elevator = new Elevator(new ElevatorIO() {}); // make elevator Io sim
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
@@ -179,7 +200,7 @@ public class RobotContainer {
       default:
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIO() {});
+        m_elevator = new Elevator(new ElevatorIO() {});
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
@@ -188,7 +209,21 @@ public class RobotContainer {
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
-    m_power = new PowerMonitoring(batteryCapacity, m_flywheel);
+    m_power = new PowerMonitoring(batteryCapacity, m_elevator);
+
+    // Idk where this is suppose to go. but I think this works, just setting up auto commands
+    NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
+
+    NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
+
+    NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
+
+    NamedCommands.registerCommand(
+        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
+
+    NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
+
+    NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
 
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
@@ -235,21 +270,19 @@ public class RobotContainer {
     // NamedCommands.registerCommand("Zero", Commands.runOnce(() -> m_drivebase.zero()));
   }
 
-          // **** This is a Pathplanner Pathfinding Command ****/
-          // Since we are using a holonomic drivetrain, the rotation component of this pose
-          // represents the goal holonomic rotation
-          Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
+  // **** This is a Pathplanner Pathfinding Command ****/
+  // Since we are using a holonomic drivetrain, the rotation component of this pose
+  // represents the goal holonomic rotation
+  Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
 
-          // Create the constraints to use while pathfinding
-          PathConstraints constraint = new PathConstraints(
-                  1.0, 1.0,
-                  Units.degreesToRadians(540), Units.degreesToRadians(720));
+  // Create the constraints to use while pathfinding
+  PathConstraints constraint =
+      new PathConstraints(1.0, 1.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
 
-          // Since AutoBuilder is configured, we can use it to build pathfinding commands
-          Command InfiniteCommand = AutoBuilder.pathfindToPose(
-                  targetPose,
-                  constraint,
-                  0.0 // Goal end velocity in meters/sec
+  // Since AutoBuilder is configured, we can use it to build pathfinding commands
+  Command InfiniteCommand =
+      AutoBuilder.pathfindToPose(
+          targetPose, constraint, 0.0 // Goal end velocity in meters/sec
           );
 
   /**
@@ -284,6 +317,13 @@ public class RobotContainer {
 
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
+
+    driverController
+        .rightBumper()
+        .onTrue(
+            new LEDCommand(m_led, lightStop::get)
+                .ignoringDisable(true)
+                .until(driverController.leftBumper()));
     driverController
         .b()
         .onTrue(
@@ -295,21 +335,51 @@ public class RobotContainer {
                         () -> -driveStickX.value(),
                         () -> turnStickX.value()),
                 m_drivebase));
+    driverController.a().onTrue(Commands.run(() -> m_coralControl.indexL()));
+    driverController.y().onTrue(Commands.run(() -> m_coralControl.indexR()));
     // Press A button -> BRAKE
     driverController
         .a()
         .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
 
-    //setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
-
-    driverController.rightBumper().onTrue(Commands.runOnce(() -> getPathPlannerPath(Squirtle(what, constraints))));
+    driverController.rightBumper();
 
     // Press X button --> Stop with wheels in X-Lock position
     driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
 
-    driverController.leftBumper().whileTrue(Commands.run(() -> getAutonomousCommandPathPlanner()));
+    // driverController.a().whileTrue(new IntakeCommand(m_intake, 0));
+
+    // m_elevator.setDefaultCommand(
+    //     Commands.run(
+    //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
+
+    // the two driver controller bumpers below make it so when you let go of either button the
+    // intake pivot will go to a resting posistion
+
+    m_intake.setDefaultCommand(
+        Commands.run(
+            () ->
+                m_intake.runPivotVolts(
+                    driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
+            m_intake));
+
+    driverController
+        .rightBumper()
+        .whileTrue(new IntakeCommand(m_intake, 0.25, -0.35, 0))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0, 0).until(leftBumper));
+
+    driverController
+        .leftBumper()
+        .whileTrue(
+            new IntakeCommand(m_intake, 0.75, 0, 0)
+                .withTimeout(0.075)
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.7, 0)))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0, 0).until(rightBumper));
+
+    driverController.a().whileTrue(new IntakeCommand(m_intake, 0.9, 0, 1));
 
     // Press Y button --> Manually Re-Zero the Gyro
+
     driverController
         .y()
         .onTrue(
@@ -327,12 +397,11 @@ public class RobotContainer {
     //         Commands.startEnd(
     //             () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
     //             m_flywheel::stop,
+
     //             m_flywheel));
   }
 
-
-
-                      // **** This is a Pathplanner Pathfinding Command ****/
+  // **** This is a Pathplanner Pathfinding Command ****/
   // public static Command pathfindAndAlignChute(){
   //         // Since we are using a holonomic drivetrain, the rotation component of this pose
   // // represents the goal holonomic rotation
@@ -361,7 +430,7 @@ public class RobotContainer {
   public Command getAutonomousCommandPathPlanner() {
     // Use the ``autoChooser`` to define your auto path from the SmartDashboard
     // return autoChooserPathPlanner.get();
-    // return new PathPlannerAuto("Consistancy Test");
+    //  return new PathPlannerAuto("Consistancy Test");
     return AutoBuilder.followPath(Squirtle);
   }
 
@@ -423,19 +492,20 @@ public class RobotContainer {
           "Drive SysId (Dynamic Reverse)",
           m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-      // Example Flywheel SysId Characterization
-      autoChooserPathPlanner.addOption(
-          "Flywheel SysId (Quasistatic Forward)",
-          m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Flywheel SysId (Quasistatic Reverse)",
-          m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      autoChooserPathPlanner.addOption(
-          "Flywheel SysId (Dynamic Forward)",
-          m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      autoChooserPathPlanner.addOption(
-          "Flywheel SysId (Dynamic Reverse)",
-          m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+      //   // Example Flywheel SysId Characterization
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Quasistatic Forward)",
+      //       m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Quasistatic Reverse)",
+      //       m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Dynamic Forward)",
+      //       m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Dynamic Reverse)",
+      //       m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
     }
   }
 

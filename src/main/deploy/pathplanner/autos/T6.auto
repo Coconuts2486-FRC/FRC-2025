@@ -53,7 +53,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Ground"
+                        "name": "L0"
                       }
                     }
                   ]
@@ -124,7 +124,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Ground"
+                        "name": "L0"
                       }
                     }
                   ]
@@ -195,7 +195,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Ground"
+                        "name": "L0"
                       }
                     }
                   ]

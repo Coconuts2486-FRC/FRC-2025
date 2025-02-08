@@ -1,6 +1,8 @@
-package frc.robot.subsystems.Climb;
+package frc.robot.subsystems.climber;
 
-public class Climb {
+import frc.robot.util.RBSISubsystem;
+
+public class Climb extends RBSISubsystem {
   private ClimbIO io;
   private boolean rachetToggle;
 

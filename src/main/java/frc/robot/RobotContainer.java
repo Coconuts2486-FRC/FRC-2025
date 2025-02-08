@@ -1,3 +1,5 @@
+// Copyright (c) 2025 FRC 2486
+// http://github.com/Coconuts2486-FRC
 // Copyright (c) 2024-2025 Az-FIRST
 // http://github.com/AZ-First
 // Copyright (c) 2021-2025 FRC 6328
@@ -33,7 +35,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,15 +51,17 @@ import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LED.LEDCommand;
 import frc.robot.subsystems.Controls.CoralControl;
-import frc.robot.subsystems.Intake.Intake;
-import frc.robot.subsystems.Intake.IntakeIOKraken;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.subsystems.LED.LEDIOCandle;
 import frc.robot.subsystems.accelerometer.Accelerometer;
+import frc.robot.subsystems.algae_mech.AlgaeMech;
+import frc.robot.subsystems.climber.Climb;
+import frc.robot.subsystems.coral_mech.CoralScorer;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -76,9 +79,6 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
-
-  private final DigitalInput elevatorStop = new DigitalInput(0);
-  private final Trigger elevatorTrigger = new Trigger(elevatorStop::get);
 
   // **** This is a Pathplanner On-the-Fly Command ****/
   // Create a list of waypoints from poses. Each pose represents one waypoint.
@@ -128,14 +128,17 @@ public class RobotContainer {
   private final Drive m_drivebase;
 
   private final Elevator m_elevator;
+  private final CoralScorer m_coralScorer;
+  private final Intake m_intake;
+  private final AlgaeMech m_algaeMech;
+  private final Climb m_climber;
+
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
   private final CoralControl m_coralControl = new CoralControl();
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final Intake m_intake = new Intake(new IntakeIOKraken());
   private final LED m_led = new LED(new LEDIOCandle());
-  private final DigitalInput lightStop = new DigitalInput(5);
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -208,7 +211,9 @@ public class RobotContainer {
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
-    m_power = new PowerMonitoring(batteryCapacity, m_elevator);
+    m_power =
+        new PowerMonitoring(
+            batteryCapacity, m_elevator, m_coralScorer, m_intake, m_algaeMech, m_climber);
 
     // Idk where this is suppose to go. but I think this works, just setting up auto commands
     NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
@@ -218,7 +223,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
 
     NamedCommands.registerCommand(
-        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
+        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(m_elevator::getBottomStop));
 
     NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
 

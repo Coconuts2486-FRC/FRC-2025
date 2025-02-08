@@ -1,4 +1,4 @@
-package frc.robot.subsystems.CoralScorer;
+package frc.robot.subsystems.coral_mech;
 
 import org.littletonrobotics.junction.AutoLog;
 

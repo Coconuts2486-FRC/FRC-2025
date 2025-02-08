@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Intake;
+package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -12,7 +12,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants.CANandPowerPorts;
 
-public class IntakeIOKraken implements IntakeIO {
+public class IntakeIOTalonFX implements IntakeIO {
 
   private final TalonFX intakeRoller =
       new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
@@ -31,7 +31,7 @@ public class IntakeIOKraken implements IntakeIO {
   private final StatusSignal<Voltage> pivotAppliedVolts = intakePivot.getMotorVoltage();
   private final StatusSignal<Current> pivotCurrent = intakePivot.getSupplyCurrent();
 
-  public IntakeIOKraken() {}
+  public IntakeIOTalonFX() {}
 
   @Override
   public void updateInputs(IntakeIOInputs inputs) {

@@ -246,20 +246,6 @@ public class RobotContainer {
         new PowerMonitoring(
             batteryCapacity, m_elevator, m_coralScorer, m_intake, m_algaeMech, m_climber);
 
-    // Idk where this is suppose to go. but I think this works, just setting up auto commands
-    NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
-
-    NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
-
-    NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
-
-    NamedCommands.registerCommand(
-        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(m_elevator::getBottomStop));
-
-    NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
-
-    NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
-
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
       case PATHPLANNER:
@@ -303,7 +289,13 @@ public class RobotContainer {
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
 
-    // NamedCommands.registerCommand("Zero", Commands.runOnce(() -> m_drivebase.zero()));
+    NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
+    NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
+    NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
+    NamedCommands.registerCommand(
+        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(m_elevator::getBottomStop));
+    NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
+    NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
   }
 
   /**
@@ -411,16 +403,6 @@ public class RobotContainer {
                             new Pose2d(m_drivebase.getPose().getTranslation(), new Rotation2d())),
                     m_drivebase)
                 .ignoringDisable(true));
-
-    // Press RIGHT BUMPER --> Run the example flywheel
-    // driverController
-    //     .rightBumper()
-    //     .whileTrue(
-    //         Commands.startEnd(
-    //             () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
-    //             m_flywheel::stop,
-
-    //             m_flywheel));
 
     driverController
         .leftBumper()

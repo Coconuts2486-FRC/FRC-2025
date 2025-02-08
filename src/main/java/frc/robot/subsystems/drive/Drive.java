@@ -149,15 +149,33 @@ public class Drive extends SubsystemBase {
               this::getPose,
               this::resetPose,
               this::getChassisSpeeds,
-              (speeds, feedforwards) -> runVelocity(speeds),
+              this::runVelocity,
               new PPHolonomicDriveController(AutoConstants.kPPdrivePID, AutoConstants.kPPsteerPID),
               AutoConstants.kPathPlannerConfig,
               () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
               this);
+
+          // // **** This is a Pathplanner Pathfinding Command ****/
+          // // Since we are using a holonomic drivetrain, the rotation component of this pose
+          // // represents the goal holonomic rotation
+          // Pose2d targetPose = new Pose2d(9.4, 6.184, Rotation2d.fromDegrees(180));
+
+          // // Create the constraints to use while pathfinding
+          // PathConstraints constraints =
+          //     new PathConstraints(1.0, 1.0, Units.degreesToRadians(270),
+          // Units.degreesToRadians(135));
+
+          // // Since AutoBuilder is configured, we can use it to build pathfinding commands
+          // Command pathfindingCommand =
+          //     AutoBuilder.pathfindToPose(
+          //         targetPose, constraints, 1.0 // Goal end velocity in meters/sec
+          //         );
+
         } catch (Exception e) {
           DriverStation.reportError(
               "Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
         }
+
         Pathfinding.setPathfinder(new LocalADStarAK());
         PathPlannerLogging.setLogActivePathCallback(
             (activePath) -> {
@@ -173,6 +191,7 @@ public class Drive extends SubsystemBase {
       case CHOREO:
         // TODO: Probably need to add something here for Choreo autonomous path building
         break;
+
       default:
     }
 

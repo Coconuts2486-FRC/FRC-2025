@@ -32,23 +32,24 @@ public class CoralControl extends VirtualSubsystem {
 
   public void indexUp(boolean indexUp, boolean indexDown) {
 
-      scoreStates[1] = scoreStates[1] + 1;
-      if (scoreStates[1] > 3) {
-        scoreStates[1] = 3;
-      }
+    scoreStates[1] = scoreStates[1] + 1;
+    if (scoreStates[1] > 3) {
+      scoreStates[1] = 3;
+    }
   }
-  public void indexDown(){
-   
-      scoreStates[1] =  scoreStates[1] - 1;
+
+  public void indexDown() {
+
+    scoreStates[1] = scoreStates[1] - 1;
     if (scoreStates[1] < 0) {
       scoreStates[1] = 0;
     }
   }
 
   public void indexR() {
-      scoreStates[2] = 1;
-
+    scoreStates[2] = 1;
   }
+
   public void indexL() {
     scoreStates[2] = 0;
   }

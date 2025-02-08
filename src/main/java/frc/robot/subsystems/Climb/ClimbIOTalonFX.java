@@ -10,7 +10,7 @@ import frc.robot.Constants.CANandPowerPorts;
 
 public class ClimbIOTalonFX implements ClimbIO {
   private final Servo climbExtender = new Servo(CANandPowerPorts.CLIMB_SERVO);
-  private final TalonFX climber = new TalonFX(CANandPowerPorts.CLIMB_TALON.getDeviceNumber());
+  private final TalonFX climber = new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber());
 
   public ClimbIOTalonFX() {
     var climbConfig = new TalonFXConfiguration();

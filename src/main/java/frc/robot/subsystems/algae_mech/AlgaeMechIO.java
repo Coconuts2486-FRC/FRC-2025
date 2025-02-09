@@ -36,4 +36,23 @@ public interface AlgaeMechIO {
   public default void setBrake() {}
 
   public default void pivotToPosition(double position) {}
+
+  /** Updates the set of loggable inputs. */
+
+  /** Run open loop at the specified voltage. */
+  public default void setVoltage(double volts) {}
+
+  /** Run closed loop at the specified velocity. */
+  public default void setVelocity(double velocityRadPerSec, double ffVolts) {}
+
+  /** Set velocity PID constants. */
+  public default void configurePID(double kP, double kI, double kD) {}
+
+  public default double getCurrent() {
+    return 0.0;
+  }
+
+  public default double getEncoderPose() {
+    return 0.0;
+  }
 }

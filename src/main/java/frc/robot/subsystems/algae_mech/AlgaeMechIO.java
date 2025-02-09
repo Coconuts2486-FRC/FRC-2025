@@ -34,4 +34,6 @@ public interface AlgaeMechIO {
   public default void setCoast() {}
 
   public default void setBrake() {}
+
+  public default void pivotToPosition(double position) {}
 }

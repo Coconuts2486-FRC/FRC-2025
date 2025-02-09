@@ -13,6 +13,7 @@
 
 package frc.robot.subsystems.coral_mech;
 
+import frc.robot.subsystems.algae_mech.AlgaeMechIO.AlgaeMechIOInputs;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface CoralScorerIO {
@@ -22,7 +23,7 @@ public interface CoralScorerIO {
   @AutoLog
   public static class CoralScorerIOInputs {}
 
-  // public default void updateInputs(AlgaeMechIOInputs inputs) {}
+  public default void updateInputs(AlgaeMechIOInputs inputs) {}
 
   public default void setVolts(double volts) {}
 

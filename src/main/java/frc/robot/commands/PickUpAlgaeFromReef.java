@@ -5,5 +5,11 @@ import frc.robot.subsystems.algae_mech.AlgaeMech;
 import frc.robot.subsystems.elevator.Elevator;
 
 public class PickUpAlgaeFromReef extends SequentialCommandGroup {
-  public PickUpAlgaeFromReef(Elevator m_elevator, AlgaeMech m_algaeMech) {}
+  Elevator m_elevator;
+  AlgaeMech m_algaeMech;
+
+  public PickUpAlgaeFromReef(Elevator m_elevator, AlgaeMech m_algaeMech) {
+    this.m_elevator = m_elevator;
+    this.m_algaeMech = m_algaeMech;
+  }
 }

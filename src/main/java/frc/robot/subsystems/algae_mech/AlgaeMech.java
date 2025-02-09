@@ -89,7 +89,7 @@ public class AlgaeMech extends RBSISubsystem {
     return sysId.dynamic(direction);
   }
 
-  // Pibot to stored position
+  // Pivot to stored position
   public void pivotUp() {
     io.pivotToPosition(.209);
   }

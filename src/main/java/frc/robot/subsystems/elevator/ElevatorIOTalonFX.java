@@ -13,6 +13,7 @@
 
 package frc.robot.subsystems.elevator;
 
+import static edu.wpi.first.units.Units.Inches;
 import static frc.robot.Constants.ElevatorConstants.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -26,6 +27,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.CANandPowerPorts;
@@ -63,10 +65,14 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   }
 
   @Override
-  public void setPosistion(double posistion) {
-    final MotionMagicVoltage motionMagic = new MotionMagicVoltage(0);
+  public void setPosistion(Distance posistion) {
 
-    elevatorMotor.setControl(motionMagic.withPosition(posistion));
+    final MotionMagicVoltage motionMagic = new MotionMagicVoltage(0);
+    // This is the conversion from Elevator height in inches to motor rotations
+    // TODO: Write this in terms of CONSTANTS (e.g., gear ratios, offsets, etc.)
+    double rotationsPosition = (35 / 54.75) * posistion.in(Inches) - 10.86758;
+
+    elevatorMotor.setControl(motionMagic.withPosition(rotationsPosition));
   }
 
   @Override

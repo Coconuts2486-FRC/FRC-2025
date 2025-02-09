@@ -11,30 +11,14 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.coral_mech;
+package frc.robot.subsystems.LED;
 
-import org.littletonrobotics.junction.AutoLog;
+public interface LEDIO {
+  public default void rainbowTwinkle() {}
 
-public interface CoralScorerIO {
+  public default void off() {}
 
-  public final int[] powerPorts = {};
+  public default void scoreReady() {}
 
-  @AutoLog
-  public static class CoralScorerIOInputs {}
-
-  // public default void updateInputs(AlgaeMechIOInputs inputs) {}
-
-  public default void setVolts(double volts) {}
-
-  public default void stop() {}
-
-  public default boolean getLightStop() {
-    return false;
-  }
-
-  public default void setVelocity(double velocity) {}
-
-  public default void setCoast() {}
-
-  public default void setBrake() {}
+  public default void scoreNotReady() {}
 }

@@ -14,37 +14,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.LED.LED;
+import java.util.function.BooleanSupplier;
 
-public class ElevatorCommand extends Command {
+public class LEDCommand extends Command {
+  LED led;
+  BooleanSupplier lightstop;
 
-  private final double posistion;
-  private final double acceleration;
-  private final double velocity;
-  private final Elevator elevator;
-
-  public ElevatorCommand(
-      double posistion, double acceleration, double velocity, Elevator elevator) {
-    this.posistion = posistion;
-    this.elevator = elevator;
-    this.acceleration = acceleration;
-    this.velocity = velocity;
+  public LEDCommand(LED led, BooleanSupplier lightStop) {
+    this.led = led;
+    this.lightstop = lightStop;
   }
 
   @Override
-  public void initialize() {
-
-    elevator.configure(0.3375, 0.075, 0.18629, 0.01, 18, 0, 0.01, velocity, acceleration, 0);
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    double rotationsPosition = (35 / 54.75) * posistion - 10.86758;
-    elevator.setPosistion(rotationsPosition);
+    led.scoreReady(lightstop.getAsBoolean());
+    // led.rainbowTwinkle();
+    // led.larson();
+    // led.police();
   }
 
   @Override
   public void end(boolean interrupted) {
-    elevator.stop();
+    led.off();
   }
 }

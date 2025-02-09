@@ -34,7 +34,6 @@ import frc.robot.Constants.AprilTagConstants;
 import frc.robot.subsystems.vision.VisionIO.PoseObservationType;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
 public class Vision extends SubsystemBase {
@@ -42,8 +41,6 @@ public class Vision extends SubsystemBase {
   private final VisionIO[] io;
   private final VisionIOInputsAutoLogged[] inputs;
   private final Alert[] disconnectedAlerts;
-
-  private BooleanSupplier disableSupplier;
 
   public Vision(VisionConsumer consumer, VisionIO... io) {
     this.consumer = consumer;
@@ -73,18 +70,12 @@ public class Vision extends SubsystemBase {
     return inputs[cameraIndex].latestTargetObservation.tx();
   }
 
-  /** Set the override for this subsystem */
-  public void setOverrides(BooleanSupplier disableOverride) {
-    disableSupplier = () -> disableOverride.getAsBoolean();
-  }
-
   @Override
   public void periodic() {
     for (int i = 0; i < io.length; i++) {
       io[i].updateInputs(inputs[i]);
       Logger.processInputs("Vision/Camera" + Integer.toString(i), inputs[i]);
     }
-    Logger.recordOutput("Overrides/VisionOdometry", !disableSupplier.getAsBoolean());
 
     // Initialize logging values
     List<Pose3d> allTagPoses = new LinkedList<>();
@@ -155,12 +146,10 @@ public class Vision extends SubsystemBase {
         }
 
         // Send vision observation
-        if (!disableSupplier.getAsBoolean()) {
-          consumer.accept(
-              observation.pose().toPose2d(),
-              observation.timestamp(),
-              VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev));
-        }
+        consumer.accept(
+            observation.pose().toPose2d(),
+            observation.timestamp(),
+            VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev));
       }
 
       // Log camera datadata

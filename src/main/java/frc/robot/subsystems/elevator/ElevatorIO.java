@@ -13,6 +13,7 @@
 
 package frc.robot.subsystems.elevator;
 
+import edu.wpi.first.units.measure.Distance;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLog;
 
@@ -30,7 +31,7 @@ public interface ElevatorIO {
 
   public default void updateInputs(ElevatorIOInputs inputs) {}
 
-  public default void setPosistion(double posistion) {}
+  public default void setPosistion(Distance posistion) {}
 
   public default void stop() {}
 

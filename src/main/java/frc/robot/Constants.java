@@ -419,17 +419,10 @@ public final class Constants {
     // Assumes this controller: https://www.amazon.com/gp/product/B00UUROWWK
     // Example from:
     // https://www.chiefdelphi.com/t/frc-6328-mechanical-advantage-2024-build-thread/442736/72
-    public static final int DRIVER_SWITCH_0 = 1;
-    public static final int DRIVER_SWITCH_1 = 2;
-    public static final int DRIVER_SWITCH_2 = 3;
-
-    public static final int OPERATOR_SWITCH_0 = 8;
-    public static final int OPERATOR_SWITCH_1 = 9;
-    public static final int OPERATOR_SWITCH_2 = 10;
-    public static final int OPERATOR_SWITCH_3 = 11;
-    public static final int OPERATOR_SWITCH_4 = 12;
-
-    public static final int[] MULTI_TOGGLE = {4, 5};
+    public static final int ELEVATOR_OVERRIDE = 9;
+    public static final int INTAKE_OVERRIDE = 10;
+    public static final int ALGAE_OVERRIDE = 11;
+    public static final int VISION_OVERRIDE = 12;
   }
 
   /** Autonomous Action Constants ****************************************** */
@@ -472,6 +465,13 @@ public final class Constants {
     // Drive and Turn PID constants used for Chorep
     public static final PIDConstants kChoreoDrivePID = new PIDConstants(10.0, 0.0, 0.0);
     public static final PIDConstants kChoreoSteerPID = new PIDConstants(7.5, 0.0, 0.0);
+  }
+
+  /** LED Constants ******************************************************** */
+  public static class LEDConstants {
+
+    // Number of LEDS
+    public static final int nLED = 67;
   }
 
   /** Vision Constants (Assuming PhotonVision) ***************************** */

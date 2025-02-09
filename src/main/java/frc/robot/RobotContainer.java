@@ -21,6 +21,7 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.*;
 import static frc.robot.Constants.Cameras.*;
 
 import choreo.auto.AutoChooser;
@@ -35,6 +36,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,10 +53,7 @@ import frc.robot.commands.CoralScorerCommand;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.LEDCommand;
 import frc.robot.subsystems.LED.LED;
-import frc.robot.subsystems.LED.LEDIO;
-import frc.robot.subsystems.LED.LEDIOCANdle;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.algae_mech.AlgaeMech;
 import frc.robot.subsystems.algae_mech.AlgaeMechIO;
@@ -71,7 +71,6 @@ import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
-import frc.robot.subsystems.state_keeper.CoralState;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -127,11 +126,23 @@ public class RobotContainer {
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
   final CommandXboxController driverController = new CommandXboxController(0); // Main Driver
 
-  private Trigger leftBumper = driverController.leftBumper();
-  private Trigger rightBumper = driverController.rightBumper();
-
   final CommandXboxController operatorController = new CommandXboxController(1); // Second Operator
   final OverrideSwitches overrides = new OverrideSwitches(2); // Console toggle switches
+
+  // Define Triggers
+  private Trigger leftBumper = driverController.leftBumper();
+  private Trigger rightBumper = driverController.rightBumper();
+  private final Trigger elevatorDisable = overrides.Switch(OperatorConstants.ELEVATOR_OVERRIDE);
+  private final Trigger intakePivotDisable = overrides.Switch(OperatorConstants.INTAKE_OVERRIDE);
+  private final Trigger algaePivotDisable = overrides.Switch(OperatorConstants.ALGAE_OVERRIDE);
+  private final Trigger visionOdometryDisable = overrides.Switch(OperatorConstants.VISION_OVERRIDE);
+
+  //   private final Alert driverDisconnected =
+  //       new Alert("Driver controller disconnected (port 0).", AlertType.kWarning);
+  //   private final Alert operatorDisconnected =
+  //       new Alert("Operator controller disconnected (port 1).", AlertType.kWarning);
+  //   private final Alert overrideDisconnected =
+  //       new Alert("Override controller disconnected (port 5).", AlertType.kInfo);
 
   /** Declare the robot subsystems here ************************************ */
   // These are the "Active Subsystems" that the robot controlls
@@ -145,10 +156,10 @@ public class RobotContainer {
 
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
-  private final CoralState m_coralState;
+  //   private final CoralState m_coralState;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final LED m_led;
+  private final LED m_led = LED.getInstance();
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -199,8 +210,7 @@ public class RobotContainer {
               default -> null;
             };
         m_accel = new Accelerometer(m_drivebase.getGyro());
-        m_coralState = new CoralState();
-        m_led = new LED(new LEDIOCANdle());
+        // m_coralState = new CoralState();
         break;
 
       case SIM:
@@ -219,8 +229,7 @@ public class RobotContainer {
                 new VisionIOPhotonVisionSim(camera0Name, robotToCamera0, m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(camera1Name, robotToCamera1, m_drivebase::getPose));
         m_accel = new Accelerometer(m_drivebase.getGyro());
-        m_coralState = new CoralState();
-        m_led = new LED(new LEDIO() {});
+        // m_coralState = new CoralState();
         break;
 
       default:
@@ -236,8 +245,7 @@ public class RobotContainer {
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
-        m_coralState = new CoralState();
-        m_led = new LED(new LEDIO() {});
+        // m_coralState = new CoralState();
         break;
     }
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
@@ -279,6 +287,12 @@ public class RobotContainer {
             "Incorrect AUTO type selected in Constants: " + Constants.getAutoType());
     }
 
+    // Set up subsystem overrides
+    m_elevator.setOverrides(elevatorDisable);
+    m_intake.setOverrides(intakePivotDisable);
+    m_algaeMech.setOverrides(algaePivotDisable);
+    m_vision.setOverrides(visionOdometryDisable);
+
     // Define Auto commands
     defineAutoCommands();
     // Define SysIs Routines
@@ -290,11 +304,15 @@ public class RobotContainer {
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
 
-    NamedCommands.registerCommand("L4", new ElevatorCommand(72, 40, 40, m_elevator));
-    NamedCommands.registerCommand("L3", new ElevatorCommand(50, 40, 40, m_elevator));
-    NamedCommands.registerCommand("L2", new ElevatorCommand(32, 40, 40, m_elevator));
+    LinearVelocity v = MetersPerSecond.of(40);
+    LinearAcceleration a = MetersPerSecondPerSecond.of(40);
+    NamedCommands.registerCommand("L4", new ElevatorCommand(Inches.of(72), a, v, m_elevator));
+    NamedCommands.registerCommand("L3", new ElevatorCommand(Inches.of(50), a, v, m_elevator));
+    NamedCommands.registerCommand("L2", new ElevatorCommand(Inches.of(32), a, v, m_elevator));
     NamedCommands.registerCommand(
-        "Bottom", new ElevatorCommand(0, 10, 20, m_elevator).until(m_elevator::getBottomStop));
+        "Bottom",
+        new ElevatorCommand(Inches.of(0), a.div(4.0), v.div(2.0), m_elevator)
+            .until(m_elevator::getBottomStop));
     NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
     NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
   }
@@ -340,12 +358,12 @@ public class RobotContainer {
     // ** Example Commands -- Remap, remove, or change as desired **
     // Press B button while driving --> ROBOT-CENTRIC
 
-    driverController
-        .rightBumper()
-        .onTrue(
-            new LEDCommand(m_led, m_coralScorer::getLightStop)
-                .ignoringDisable(true)
-                .until(driverController.leftBumper()));
+    // driverController
+    //     .rightBumper()
+    //     .onTrue(
+    //         new LEDCommand(m_led, m_coralScorer::getLightStop)
+    //             .ignoringDisable(true)
+    //             .until(driverController.leftBumper()));
     driverController
         .b()
         .onTrue(
@@ -358,8 +376,8 @@ public class RobotContainer {
                         () -> turnStickX.value()),
                 m_drivebase));
 
-    driverController.a().onTrue(Commands.run(() -> m_coralState.indexL()));
-    driverController.y().onTrue(Commands.run(() -> m_coralState.indexR()));
+    // driverController.a().onTrue(Commands.run(() -> m_coralState.indexL()));
+    // driverController.y().onTrue(Commands.run(() -> m_coralState.indexR()));
     m_coralScorer.setDefaultCommand(
         Commands.run(
             () ->

@@ -32,6 +32,7 @@ import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.CANandPowerPorts;
 import java.util.function.BooleanSupplier;
+import org.littletonrobotics.junction.Logger;
 
 public class ElevatorIOTalonFX implements ElevatorIO {
 
@@ -71,6 +72,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     // This is the conversion from Elevator height in inches to motor rotations
     // TODO: Write this in terms of CONSTANTS (e.g., gear ratios, offsets, etc.)
     double rotationsPosition = (35 / 54.75) * posistion.in(Inches) - 10.86758;
+    Logger.recordOutput("Mechanism/Elevator/CommandPos", rotationsPosition);
 
     elevatorMotor.setControl(motionMagic.withPosition(rotationsPosition));
   }

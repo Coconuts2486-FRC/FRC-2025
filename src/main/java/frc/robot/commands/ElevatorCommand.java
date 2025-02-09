@@ -37,13 +37,14 @@ public class ElevatorCommand extends Command {
     this.acceleration = acceleration;
     this.velocity = velocity;
     this.elevator = elevator;
+    addRequirements(elevator);
   }
 
   @Override
   public void initialize() {
 
     elevator.configure(
-        0.3375,
+        0.65,
         0.075,
         0.18629,
         0.01,

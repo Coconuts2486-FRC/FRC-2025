@@ -433,11 +433,28 @@ public class RobotContainer {
     // m_elevator.setDefaultCommand(
     //     Commands.run(
     //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
+    m_elevator.setDefaultCommand(
+        new ElevatorCommand(
+            Inches.of(10.9), MetersPerSecondPerSecond.of(20), MetersPerSecond.of(40), m_elevator));
+    operatorController
+        .a()
+        .whileTrue(
+            new ElevatorCommand(
+                Inches.of(38),
+                MetersPerSecondPerSecond.of(40),
+                MetersPerSecond.of(80),
+                m_elevator));
 
-    // driverController.a().whileTrue(new ElevatorCommand(72, 40, 40, m_elevator));
     // driverController
     //     .a()
-    //     .whileFalse(new ElevatorCommand(0, 10, 20, m_elevator).until(elevatorTrigger));
+    //     .whileFalse(new ElevatorCommand(    Inches.of(10.9),
+    //     MetersPerSecondPerSecond.of(10),
+    //     MetersPerSecond.of(10), m_elevator));
+
+    m_algaeMech.setDefaultCommand(Commands.run(() -> m_algaeMech.pivotUp(), m_algaeMech));
+
+    // operatorController.leftBumper().whileTrue(new ElevatorCommand(Inches.of(12),
+    // MetersPerSecondPerSecond.of(), MetersPerSecond.of(), m_elevator));
 
     driverController
         .rightStick()

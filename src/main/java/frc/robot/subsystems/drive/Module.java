@@ -38,7 +38,6 @@ public class Module {
   public Module(ModuleIO io, int index) {
     this.io = io;
     this.index = index;
-
     driveDisconnectedAlert =
         new Alert(
             "Disconnected drive motor on module " + Integer.toString(index) + ".",
@@ -80,8 +79,6 @@ public class Module {
     // Apply setpoints
     io.setDriveVelocity(state.speedMetersPerSecond / kWheelRadiusMeters);
     io.setTurnPosition(state.angle);
-    Logger.recordOutput(
-        "Thingie/output_radpersec", state.speedMetersPerSecond / kWheelRadiusMeters);
   }
 
   /** Runs the module with the specified output while controlling to zero degrees. */

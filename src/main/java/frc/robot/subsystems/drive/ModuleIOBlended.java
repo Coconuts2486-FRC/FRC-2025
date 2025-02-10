@@ -15,7 +15,6 @@
 
 package frc.robot.subsystems.drive;
 
-import static edu.wpi.first.units.Units.*;
 import static frc.robot.subsystems.drive.SwerveConstants.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -351,7 +350,7 @@ public class ModuleIOBlended implements ModuleIO {
               .withDriveMotorGearRatio(kDriveGearRatio)
               .withSteerMotorGearRatio(kSteerGearRatio)
               .withCouplingGearRatio(kCoupleRatio)
-              .withWheelRadius(Meters.of(kWheelRadiusMeters))
+              .withWheelRadius(kWheelRadiusMeters)
               .withSteerInertia(kSteerInertia)
               .withDriveInertia(kDriveInertia)
               .withSteerFrictionVoltage(kSteerFrictionVoltage)

@@ -439,6 +439,8 @@ public class RobotContainer {
         .whileTrue(
             Commands.startEnd(() -> m_elevator.setCoast(), m_elevator::setBrake, m_elevator)
                 .ignoringDisable(true));
+
+    driverController.leftStick().onTrue(AutoBuilder.followPath(Squirtle));
   }
 
   /**

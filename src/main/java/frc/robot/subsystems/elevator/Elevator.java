@@ -13,12 +13,13 @@
 
 package frc.robot.subsystems.elevator;
 
-import static edu.wpi.first.units.Units.Seconds;
-import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.*;
 import static frc.robot.Constants.ElevatorConstants.*;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -64,7 +65,8 @@ public class Elevator extends RBSISubsystem {
         break;
       default:
         ffModel = new ElevatorFeedforward(0.0, 0.0, 0.0, 0.0);
-        io.configure(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        io.configure(
+            0, 0, 0, 0, 0, 0, 0, RotationsPerSecond.of(0), RotationsPerSecondPerSecond.of(0), 0);
         break;
     }
 
@@ -140,8 +142,8 @@ public class Elevator extends RBSISubsystem {
       double Kp,
       double Ki,
       double Kd,
-      double velocity,
-      double aceleration,
+      AngularVelocity velocity,
+      AngularAcceleration aceleration,
       double jerk) {
     io.configure(Kg, Ks, Kv, Ka, Kp, Ki, Kd, velocity, aceleration, jerk);
   }

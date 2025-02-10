@@ -34,6 +34,8 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
@@ -177,36 +179,32 @@ public final class Constants {
     public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
     // Gear Ratio
-    public static final double kElevatorGearRatio = 10.0;
+    public static final double kElevatorGearRatio = (60.0 / 20.0) * (40.0 / 14.0);
 
     // mode real/replay
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0.3375;
+    public static final double kGReal = 0.65;
     public static final double kSReal = 0.075;
-    public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
+    public static final double kVReal = 0.18629;
+    public static final double kAReal = 0.01; // 0.000070378;
     // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    public static final double kPReal = 18.0;
+    public static final double kIReal = 0.0;
+    public static final double kDReal = 0.01;
 
     // mode sim
-    public static final double kStaticGainSim = 0.1;
-    public static final double kVelocityGainSim = 0.05;
     // motor configs
     public static final double kGSim = 0;
-    public static final double kSSim = 0;
-    public static final double kVSim = 0;
+    public static final double kSSim = 0.1;
+    public static final double kVSim = 0.05;
     public static final double kASim = 0;
     public static final double kPSim = 0;
     public static final double kISim = 0;
     public static final double kDSim = 0;
 
     // Motion Magic constants
-    public static final double kVelocity = 1.4;
-    public static final double kAcceleration = 2.8;
+    public static final AngularVelocity kVelocity = RotationsPerSecond.of(1.4);
+    public static final AngularAcceleration kAcceleration = RotationsPerSecondPerSecond.of(2.8);
     public static final double kJerk = 0;
   }
 
@@ -512,15 +510,15 @@ public final class Constants {
     public static Transform3d robotToCamera0 =
         new Transform3d(
             Units.inchesToMeters(14),
-            0.0,
-            Units.inchesToMeters(4.25),
-            new Rotation3d(0.0, Units.degreesToRadians(+30), 0.0));
+            Units.inchesToMeters(-12),
+            Units.inchesToMeters(24),
+            new Rotation3d(0.0, Units.degreesToRadians(+15), Units.degreesToRadians(+30.0)));
     public static Transform3d robotToCamera1 =
         new Transform3d(
-            Units.inchesToMeters(-14),
-            0.0,
-            Units.inchesToMeters(4.25),
-            new Rotation3d(0.0, 0.0, Math.PI));
+            Units.inchesToMeters(-13),
+            Units.inchesToMeters(-8),
+            Units.inchesToMeters(10),
+            new Rotation3d(0.0, Units.degreesToRadians(+30), Units.degreesToRadians(180)));
 
     // Standard deviation multipliers for each camera
     // (Adjust to trust some cameras more than others)

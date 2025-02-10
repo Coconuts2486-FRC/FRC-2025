@@ -14,6 +14,8 @@
 package frc.robot.subsystems.elevator;
 
 import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static frc.robot.Constants.ElevatorConstants.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -25,6 +27,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
@@ -70,6 +73,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
 
     final MotionMagicVoltage motionMagic = new MotionMagicVoltage(0);
     // This is the conversion from Elevator height in inches to motor rotations
+
     // TODO: Write this in terms of CONSTANTS (e.g., gear ratios, offsets, etc.)
     double rotationsPosition = (35 / 54.75) * posistion.in(Inches) - 10.86758;
     Logger.recordOutput("Mechanism/Elevator/CommandPos", rotationsPosition);
@@ -91,8 +95,8 @@ public class ElevatorIOTalonFX implements ElevatorIO {
       double Kp,
       double Ki,
       double Kd,
-      double velocity,
-      double aceleration,
+      AngularVelocity velocity,
+      AngularAcceleration aceleration,
       double jerk) {
     var talonFXConfigs = new TalonFXConfiguration();
     var talonSlot0Configs = talonFXConfigs.Slot0;
@@ -106,8 +110,8 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     talonSlot0Configs.kI = Ki;
     talonSlot0Configs.kD = Kd;
 
-    motionMagicConfigs.MotionMagicCruiseVelocity = velocity;
-    motionMagicConfigs.MotionMagicAcceleration = aceleration;
+    motionMagicConfigs.MotionMagicCruiseVelocity = velocity.in(RotationsPerSecond);
+    motionMagicConfigs.MotionMagicAcceleration = aceleration.in(RotationsPerSecondPerSecond);
     motionMagicConfigs.MotionMagicJerk = jerk;
 
     elevatorMotor.getConfigurator().apply(talonFXConfigs);

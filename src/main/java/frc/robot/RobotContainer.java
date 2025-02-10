@@ -36,8 +36,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.measure.LinearAcceleration;
-import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -304,14 +304,17 @@ public class RobotContainer {
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
 
-    LinearVelocity v = MetersPerSecond.of(40);
-    LinearAcceleration a = MetersPerSecondPerSecond.of(40);
-    NamedCommands.registerCommand("L4", new ElevatorCommand(Inches.of(72), a, v, m_elevator));
-    NamedCommands.registerCommand("L3", new ElevatorCommand(Inches.of(50), a, v, m_elevator));
-    NamedCommands.registerCommand("L2", new ElevatorCommand(Inches.of(32), a, v, m_elevator));
+    AngularVelocity omega = RotationsPerSecond.of(40);
+    AngularAcceleration alpha = RotationsPerSecondPerSecond.of(40);
+    NamedCommands.registerCommand(
+        "L4", new ElevatorCommand(Inches.of(72), alpha, omega, m_elevator));
+    NamedCommands.registerCommand(
+        "L3", new ElevatorCommand(Inches.of(50), alpha, omega, m_elevator));
+    NamedCommands.registerCommand(
+        "L2", new ElevatorCommand(Inches.of(32), alpha, omega, m_elevator));
     NamedCommands.registerCommand(
         "Bottom",
-        new ElevatorCommand(Inches.of(0), a.div(4.0), v.div(2.0), m_elevator)
+        new ElevatorCommand(Inches.of(0), alpha.div(4.0), omega.div(2.0), m_elevator)
             .until(m_elevator::getBottomStop));
     NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
     NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
@@ -384,6 +387,7 @@ public class RobotContainer {
                 m_coralScorer.runVolts(
                     driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
             m_coralScorer));
+
     driverController
         .x()
         .whileTrue(
@@ -410,27 +414,18 @@ public class RobotContainer {
     // the two driver controller bumpers below make it so when you let go of either button the
     // intake pivot will go to a resting posistion
 
-    m_intake.setDefaultCommand(
-        Commands.run(
-            () ->
-                m_intake.runPivotVolts(
-                    driverController.getRightTriggerAxis() - driverController.getLeftTriggerAxis()),
-            m_intake));
-
     driverController
         .rightBumper()
-        .whileTrue(new IntakeCommand(m_intake, 0.25, -0.35, 0))
-        .whileFalse(new IntakeCommand(m_intake, 0.9, 0, 0).until(leftBumper));
+        .whileTrue(new IntakeCommand(m_intake, 0.25, -0.35))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0).until(leftBumper));
 
     driverController
         .leftBumper()
         .whileTrue(
-            new IntakeCommand(m_intake, 0.75, 0, 0)
+            new IntakeCommand(m_intake, 0.75, 0)
                 .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, 0.7, 0)))
-        .whileFalse(new IntakeCommand(m_intake, 0.9, 0, 0).until(rightBumper));
-
-    driverController.a().whileTrue(new IntakeCommand(m_intake, 0.9, 0, 1));
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0).until(rightBumper));
 
     // Press Y button --> Manually Re-Zero the Gyro
 
@@ -444,28 +439,26 @@ public class RobotContainer {
                     m_drivebase)
                 .ignoringDisable(true));
 
-    driverController
-        .leftBumper()
-        .whileTrue(Commands.startEnd(() -> m_elevator.runVolts(-1), m_elevator::stop, m_elevator));
-    driverController
-        .rightBumper()
-        .whileTrue(Commands.startEnd(() -> m_elevator.runVolts(1), m_elevator::stop, m_elevator));
-
     // m_elevator.setDefaultCommand(
     //     Commands.run(
     //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
     m_elevator.setDefaultCommand(
         new ElevatorCommand(
-            Inches.of(10.9), MetersPerSecondPerSecond.of(20), MetersPerSecond.of(40), m_elevator));
+            Inches.of(10.9),
+            RotationsPerSecondPerSecond.of(20),
+            RotationsPerSecond.of(40),
+            m_elevator));
     operatorController
         .a()
         .whileTrue(
             new ElevatorCommand(
                 Inches.of(38),
-                MetersPerSecondPerSecond.of(40),
-                MetersPerSecond.of(80),
+                RotationsPerSecondPerSecond.of(40),
+                RotationsPerSecond.of(80),
                 m_elevator));
 
+    m_coralScorer.setDefaultCommand(
+        Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer));
     // driverController
     //     .a()
     //     .whileFalse(new ElevatorCommand(    Inches.of(10.9),

@@ -13,6 +13,8 @@
 
 package frc.robot.subsystems.elevator;
 
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLog;
@@ -47,8 +49,8 @@ public interface ElevatorIO {
       double Kp,
       double Ki,
       double Kd,
-      double velocity,
-      double aceleration,
+      AngularVelocity velocity,
+      AngularAcceleration aceleration,
       double jerk) {}
 
   public default void setVoltage(double volts) {}

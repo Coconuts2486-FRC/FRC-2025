@@ -30,6 +30,16 @@ public class CoralScorer extends RBSISubsystem {
     io.setVelocity(velocity);
   }
 
+  public void automaticIntake() {
+    if (io.getLightStop()) {
+      System.out.println("should work");
+      io.setPercentOut(1);
+    } else {
+      System.out.println("angry noises");
+      io.setPercentOut(0);
+    }
+  }
+
   public void stop() {
     io.stop();
   }

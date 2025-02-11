@@ -448,14 +448,60 @@ public class RobotContainer {
             RotationsPerSecondPerSecond.of(20),
             RotationsPerSecond.of(40),
             m_elevator));
+
+    // preset for l4
+    operatorController
+        .x()
+        .whileTrue(
+            Commands.parallel(
+                new ElevatorCommand(
+                    Inches.of(72),
+                    RotationsPerSecondPerSecond.of(40),
+                    RotationsPerSecond.of(80),
+                    m_elevator),
+                Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+                    .withTimeout(2)
+                    .andThen(
+                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+    // preset for l3
+    operatorController
+        .b()
+        .whileTrue(
+            Commands.parallel(
+                new ElevatorCommand(
+                    Inches.of(56),
+                    RotationsPerSecondPerSecond.of(40),
+                    RotationsPerSecond.of(80),
+                    m_elevator),
+                Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+                    .withTimeout(1.2)
+                    .andThen(
+                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+    // preset for l2 coral
     operatorController
         .a()
         .whileTrue(
-            new ElevatorCommand(
-                Inches.of(38),
-                RotationsPerSecondPerSecond.of(40),
-                RotationsPerSecond.of(80),
-                m_elevator));
+            Commands.parallel(
+                new ElevatorCommand(
+                    Inches.of(38),
+                    RotationsPerSecondPerSecond.of(40),
+                    RotationsPerSecond.of(80),
+                    m_elevator),
+                Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+                    .withTimeout(.8)
+                    .andThen(
+                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+
+    // .alongWith(Commands.run(() -> m_coralScorer.setCoralPercent(0), m_algaeMech))
+    // .withTimeout(1)
+    // .andThen(
+    //     new ElevatorCommand(
+    //             Inches.of(38),
+    //             RotationsPerSecondPerSecond.of(40),
+    //             RotationsPerSecond.of(80),
+    //             m_elevator)
+    //         .alongWith(
+    //             Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 
     m_coralScorer.setDefaultCommand(
         Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer));

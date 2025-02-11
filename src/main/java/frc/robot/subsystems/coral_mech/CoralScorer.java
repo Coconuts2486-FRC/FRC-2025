@@ -31,13 +31,17 @@ public class CoralScorer extends RBSISubsystem {
   }
 
   public void automaticIntake() {
-    if (io.getLightStop()) {
-      System.out.println("should work");
-      io.setPercentOut(1);
+    if (!io.getLightStop()) {
+
+      io.setPercentOut(.2);
     } else {
-      System.out.println("angry noises");
+
       io.setPercentOut(0);
     }
+  }
+
+  public void setCoralPercent(double percent) {
+    io.setPercentOut(percent);
   }
 
   public void stop() {

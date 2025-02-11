@@ -93,17 +93,16 @@ public class ElevatorIOTalonFX implements ElevatorIO {
 
     // This is the conversion from Elevator height in inches to motor rotations
     // (commanded position - zero_height) /  sproket_radius * gear ratio / 2π
-    double rotationsPosition =
+    Angle motorPosition =
         position
-                .minus(kElevatorZeroHeight)
-                .div(kElevatorSproketRadius)
-                .times(kElevatorGearRatio)
-                .magnitude()
-            / (2 * Math.PI);
+            .minus(kElevatorZeroHeight) // Delta y
+            .div(kElevatorSproketRadius) // into angle
+            .times(kElevatorGearRatio) // output shaft to motor angle
+            .times(Radians.of(1.0)); // this is in radians
 
     // Log the value and send the rotation position to the motor
-    Logger.recordOutput("Mechanism/Elevator/CommandPos", rotationsPosition);
-    m_elevatorMotor.setControl(m_motionMagic.withPosition(rotationsPosition));
+    Logger.recordOutput("Mechanism/Elevator/CommandPos", motorPosition.in(Rotations));
+    m_elevatorMotor.setControl(m_motionMagic.withPosition(motorPosition.in(Rotations)));
   }
 
   /** Stop the elevator */

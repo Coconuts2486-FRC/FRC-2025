@@ -181,12 +181,12 @@ public final class Constants {
 
     // Physical Things on the Robot
     public static final double kElevatorGearRatio = (60.0 / 20.0) * (40.0 / 14.0);
-    public static final Distance kElevatorSproketRadius = Centimeters.of(2.2);
+    public static final Distance kElevatorSproketRadius = Inches.of(1.75 / 2.0);
+    // These are heights off the ground of the top row of bolts on the elevator 1st stage
     public static final Distance kElevatorZeroHeight = Inches.of(19.875);
     public static final Distance kL2 = Inches.of(33.375);
     public static final Distance kL3 = Inches.of(41.25);
     public static final Distance kL4 = Inches.of(73.0);
-    
 
     // mode real/replay
     // motor configs

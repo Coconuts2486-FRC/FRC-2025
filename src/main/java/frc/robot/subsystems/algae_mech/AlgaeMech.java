@@ -59,8 +59,7 @@ public class AlgaeMech extends RBSISubsystem {
     // Check if disabled
     if (disableSupplier.getAsBoolean()) {
       stop();
-      LED.getInstance().algaemechEstopped =
-          disableSupplier.getAsBoolean() && DriverStation.isEnabled();
+      LED.getInstance().setAgaeMechEStop( disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
   }
 

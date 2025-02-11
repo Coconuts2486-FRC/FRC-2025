@@ -37,9 +37,11 @@ public class LED extends VirtualSubsystem {
   private Color secondaryDisabledColor = Color.kDarkBlue;
 
   private boolean estopped = false;
-  public boolean elevatorEstopped = false;
-  public boolean intakeEstopped = false;
-  public boolean algaemechEstopped = false;
+  private boolean elevatorEstopped = false;
+  private boolean intakeEstopped = false;
+  private boolean algaemechEstopped = false;
+  private boolean coralReady = false;
+
 
   private static LED instance;
 
@@ -168,5 +170,33 @@ public class LED extends VirtualSubsystem {
   private void scoreNotReady() {
     candle.clearAnimation(0);
     candle.setLEDs(0, 0, 255, 0, 0, LEDConstants.nLED);
+  }
+
+  public boolean getElevatorEStop(){
+    return elevatorEstopped;
+  }
+
+  public boolean getIntakeEStop(){
+    return intakeEstopped;
+  }
+
+  public boolean getAgaeMechEStop(){
+    return algaemechEstopped;
+  }
+
+  public void setElevatorEStop(boolean eStopSwitch){
+    elevatorEstopped = eStopSwitch;
+  }
+
+  public void setIntakeEStop(boolean eStopSwitch){
+    intakeEstopped = eStopSwitch;
+  }
+
+  public void setAgaeMechEStop(boolean eStopSwitch){
+    algaemechEstopped = eStopSwitch;
+  }
+
+  public void setCoralReady(boolean coralReady){
+    this.coralReady = coralReady;
   }
 }

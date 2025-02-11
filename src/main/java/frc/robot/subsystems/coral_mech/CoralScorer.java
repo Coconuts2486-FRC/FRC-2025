@@ -17,6 +17,7 @@ import frc.robot.util.RBSISubsystem;
 
 public class CoralScorer extends RBSISubsystem {
   private final CoralScorerIO io;
+  private boolean hasCoral = false;
 
   public CoralScorer(CoralScorerIO io) {
     this.io = io;
@@ -34,6 +35,7 @@ public class CoralScorer extends RBSISubsystem {
     if (!io.getLightStop()) {
 
       io.setPercentOut(.2);
+      hasCoral = true;
     } else {
 
       io.setPercentOut(0);
@@ -42,6 +44,10 @@ public class CoralScorer extends RBSISubsystem {
 
   public void setCoralPercent(double percent) {
     io.setPercentOut(percent);
+
+    if (percent > 0){
+      hasCoral = false;
+    }
   }
 
   public void stop() {

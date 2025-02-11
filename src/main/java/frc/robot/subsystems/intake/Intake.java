@@ -61,8 +61,7 @@ public class Intake extends RBSISubsystem {
     // Check if disabled
     if (disableSupplier.getAsBoolean()) {
       stop();
-      LED.getInstance().intakeEstopped =
-          disableSupplier.getAsBoolean() && DriverStation.isEnabled();
+      LED.getInstance().setIntakeEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
   }
 

@@ -48,6 +48,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.CoralScorerCommand;
 import frc.robot.commands.DriveCommands;
@@ -444,7 +445,7 @@ public class RobotContainer {
     //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
     m_elevator.setDefaultCommand(
         new ElevatorCommand(
-            Inches.of(10.9),
+            ElevatorConstants.kElevatorZeroHeight,
             RotationsPerSecondPerSecond.of(20),
             RotationsPerSecond.of(40),
             m_elevator));
@@ -455,7 +456,7 @@ public class RobotContainer {
         .whileTrue(
             Commands.parallel(
                 new ElevatorCommand(
-                    Inches.of(72),
+                    ElevatorConstants.kL4,
                     RotationsPerSecondPerSecond.of(40),
                     RotationsPerSecond.of(80),
                     m_elevator),
@@ -469,12 +470,12 @@ public class RobotContainer {
         .whileTrue(
             Commands.parallel(
                 new ElevatorCommand(
-                    Inches.of(56),
+                    ElevatorConstants.kL3,
                     RotationsPerSecondPerSecond.of(40),
                     RotationsPerSecond.of(80),
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(1.2)
+                    .withTimeout(1.3)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
     // preset for l2 coral
@@ -483,12 +484,12 @@ public class RobotContainer {
         .whileTrue(
             Commands.parallel(
                 new ElevatorCommand(
-                    Inches.of(38),
+                    ElevatorConstants.kL2,
                     RotationsPerSecondPerSecond.of(40),
                     RotationsPerSecond.of(80),
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(.8)
+                    .withTimeout(.9)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 

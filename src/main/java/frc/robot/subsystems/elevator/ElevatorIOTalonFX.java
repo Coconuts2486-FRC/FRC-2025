@@ -13,9 +13,7 @@
 
 package frc.robot.subsystems.elevator;
 
-import static edu.wpi.first.units.Units.Inches;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
+import static edu.wpi.first.units.Units.*;
 import static frc.robot.Constants.ElevatorConstants.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -34,28 +32,45 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.CANandPowerPorts;
-import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
 public class ElevatorIOTalonFX implements ElevatorIO {
 
-  private final DigitalInput elevatorStop = new DigitalInput(0);
-
-  // motor called in
-  private final TalonFX elevatorMotor =
+  // Define the motor and the limit switch at the bottom of the elevator
+  private final TalonFX m_elevatorMotor =
       new TalonFX(CANandPowerPorts.ELEVATOR.getDeviceNumber(), CANandPowerPorts.ELEVATOR.getBus());
+  private final DigitalInput m_elevatorStop = new DigitalInput(0);
 
-  private final StatusSignal<AngularVelocity> velocity = elevatorMotor.getVelocity();
+  // Status signals from CTRE for logging
+  private final StatusSignal<Angle> elevatorPosition = m_elevatorMotor.getPosition();
+  private final StatusSignal<AngularVelocity> elevatorVelocity = m_elevatorMotor.getVelocity();
+  private final StatusSignal<Voltage> elevatorAppliedVolts = m_elevatorMotor.getMotorVoltage();
+  private final StatusSignal<Current> elevatorCurrent = m_elevatorMotor.getSupplyCurrent();
 
+  // Power port
   public final int[] powerPorts = {CANandPowerPorts.ELEVATOR.getPowerPort()};
 
-  private final StatusSignal<Angle> elevatorPosition = elevatorMotor.getPosition();
-  private final StatusSignal<AngularVelocity> elevatorVelocity = elevatorMotor.getVelocity();
-  private final StatusSignal<Voltage> elevatorAppliedVolts = elevatorMotor.getMotorVoltage();
-  private final StatusSignal<Current> elevatorCurrent = elevatorMotor.getSupplyCurrent();
+  // Set up the Motion Magic instance
+  private final MotionMagicVoltage m_motionMagic = new MotionMagicVoltage(0);
 
-  public ElevatorIOTalonFX() {}
+  /** Constructor for using a TalonFX to drive the elevator */
+  public ElevatorIOTalonFX() {
+    var config = new TalonFXConfiguration();
+    config.CurrentLimits.SupplyCurrentLimit = 30.0;
+    config.CurrentLimits.SupplyCurrentLimitEnable = true;
+    config.MotorOutput.NeutralMode =
+        switch (kElevatorIdle) {
+          case COAST -> NeutralModeValue.Coast;
+          case BRAKE -> NeutralModeValue.Brake;
+        };
+    m_elevatorMotor.getConfigurator().apply(config);
 
+    BaseStatusSignal.setUpdateFrequencyForAll(
+        50.0, elevatorPosition, elevatorVelocity, elevatorAppliedVolts, elevatorCurrent);
+    m_elevatorMotor.optimizeBusUtilization();
+  }
+
+  /** Update the inputs for / from logs */
   @Override
   public void updateInputs(ElevatorIOInputs inputs) {
     BaseStatusSignal.refreshAll(
@@ -68,24 +83,49 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     inputs.currentAmps = new double[] {elevatorCurrent.getValueAsDouble()};
   }
 
+  /**
+   * Set the position of the elevator based on the coral mech's position above ground
+   *
+   * @param position The height of the coral mechanism above the ground
+   */
   @Override
-  public void setPosistion(Distance posistion) {
+  public void setPosistion(Distance position) {
 
-    final MotionMagicVoltage motionMagic = new MotionMagicVoltage(0);
     // This is the conversion from Elevator height in inches to motor rotations
+    // (commanded position - zero_height) /  sproket_radius * gear ratio / 2π
+    double rotationsPosition =
+        position
+                .minus(kElevatorZeroHeight)
+                .div(kElevatorSproketRadius)
+                .times(kElevatorGearRatio)
+                .magnitude()
+            / (2 * Math.PI);
 
-    // TODO: Write this in terms of CONSTANTS (e.g., gear ratios, offsets, etc.)
-    double rotationsPosition = (35 / 54.75) * posistion.in(Inches) - 10.86758;
+    // Log the value and send the rotation position to the motor
     Logger.recordOutput("Mechanism/Elevator/CommandPos", rotationsPosition);
-
-    elevatorMotor.setControl(motionMagic.withPosition(rotationsPosition));
+    m_elevatorMotor.setControl(m_motionMagic.withPosition(rotationsPosition));
   }
 
+  /** Stop the elevator */
   @Override
   public void stop() {
-    elevatorMotor.stopMotor();
+    m_elevatorMotor.stopMotor();
   }
 
+  /**
+   * Configure the PIDs and other constants
+   *
+   * @param Kg The gravity gain
+   * @param Ks The static gain
+   * @param Kv The feedforward veliocity gain
+   * @param Ka The feedforward acceleration gain
+   * @param Kp The proportional gain (PID)
+   * @param Ki The integral gain (PID)
+   * @param Kd The differential gain (PID)
+   * @param velocity The standard motion angular velocity in rot/s
+   * @param acceleration The standard motion angular acceleration in rot/s/s
+   * @param jerk The standard motion angular jerk in rot/s/s/s
+   */
   @Override
   public void configure(
       double Kg,
@@ -114,31 +154,36 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     motionMagicConfigs.MotionMagicAcceleration = aceleration.in(RotationsPerSecondPerSecond);
     motionMagicConfigs.MotionMagicJerk = jerk;
 
-    elevatorMotor.getConfigurator().apply(talonFXConfigs);
+    m_elevatorMotor.getConfigurator().apply(talonFXConfigs);
   }
 
+  /**
+   * Run the elevator at the provided voltage
+   *
+   * <p>This method is used for development and calibration only, SHOULD NOT BE USED IN COMPETITION
+   *
+   * @param volts The voltage at which to run the elevator
+   */
   @Override
   public void setVoltage(double volts) {
-    elevatorMotor.setControl(new VoltageOut(volts));
+    m_elevatorMotor.setControl(new VoltageOut(volts));
   }
 
-  @Override
-  public void limit(BooleanSupplier limitSwitch) {
-    if (limitSwitch.getAsBoolean()) {}
-  }
-
+  /** Return the value of the bottom stop switch at the bottom of the elevator */
   @Override
   public boolean getBottomStop() {
-    return elevatorStop.get();
+    return m_elevatorStop.get();
   }
 
+  /** Set the neutral mode of the elevator to COAST */
   @Override
   public void setCoast() {
-    elevatorMotor.setNeutralMode(NeutralModeValue.Coast);
+    m_elevatorMotor.setNeutralMode(NeutralModeValue.Coast);
   }
 
+  /** Set the neutral mode of the elevator to BRAKE */
   @Override
   public void setBrake() {
-    elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
+    m_elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 }

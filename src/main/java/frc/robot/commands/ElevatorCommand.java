@@ -13,13 +13,13 @@
 
 package frc.robot.commands;
 
-import static edu.wpi.first.units.Units.*;
 import static frc.robot.Constants.ElevatorConstants.*;
 
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.elevator.Elevator;
 
 public class ElevatorCommand extends Command {
@@ -44,10 +44,17 @@ public class ElevatorCommand extends Command {
   @Override
   public void initialize() {
 
-    // switch Constants.getMode(){
-    //   case REAL:
-    elevator.configure(kGReal, 0.075, 0.18629, 0.01, 18, 0, 0.01, velocity, acceleration, 0);
-    // case SIM:
+    switch (Constants.getMode()) {
+      case REAL:
+      case REPLAY:
+        elevator.configure(
+            kGReal, kSReal, kVReal, kAReal, kPReal, kIReal, kDReal, velocity, acceleration, 0.);
+        break;
+      case SIM:
+        elevator.configure(
+            kGSim, kSSim, kVSim, kASim, kPSim, kISim, kDSim, velocity, acceleration, 0.);
+        break;
+    }
   }
 
   @Override

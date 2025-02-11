@@ -36,6 +36,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
@@ -178,8 +179,14 @@ public final class Constants {
     // Idle Mode
     public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // Gear Ratio
+    // Physical Things on the Robot
     public static final double kElevatorGearRatio = (60.0 / 20.0) * (40.0 / 14.0);
+    public static final Distance kElevatorSproketRadius = Centimeters.of(2.2);
+    public static final Distance kElevatorZeroHeight = Inches.of(19.875);
+    public static final Distance kL2 = Inches.of(33.375);
+    public static final Distance kL3 = Inches.of(41.25);
+    public static final Distance kL4 = Inches.of(73.0);
+    
 
     // mode real/replay
     // motor configs
@@ -570,8 +577,8 @@ public final class Constants {
     /* SUBSYSTEM CAN DEVICE IDS */
     public static final RobotDeviceId ELEVATOR = new RobotDeviceId(11, "", 18);
     public static final RobotDeviceId CORAL_MECH = new RobotDeviceId(16, "", 19);
-    public static final RobotDeviceId INTAKE_PIVOT = new RobotDeviceId(21, "", 0);
-    public static final RobotDeviceId INTAKE_ROLLER = new RobotDeviceId(22, "", 1);
+    public static final RobotDeviceId INTAKE_PIVOT = new RobotDeviceId(22, "", 0);
+    public static final RobotDeviceId INTAKE_ROLLER = new RobotDeviceId(21, "", 1);
     public static final RobotDeviceId INTAKE_ENCODER = new RobotDeviceId(23, "", null);
     public static final RobotDeviceId ALGAE_PIVOT = new RobotDeviceId(26, "", 10);
     public static final RobotDeviceId ALGAE_ROLLER = new RobotDeviceId(27, "", 11);

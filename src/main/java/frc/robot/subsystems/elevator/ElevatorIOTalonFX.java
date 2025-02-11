@@ -25,10 +25,11 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.CANandPowerPorts;
@@ -121,9 +122,9 @@ public class ElevatorIOTalonFX implements ElevatorIO {
    * @param Kp The proportional gain (PID)
    * @param Ki The integral gain (PID)
    * @param Kd The differential gain (PID)
-   * @param velocity The standard motion angular velocity in rot/s
-   * @param acceleration The standard motion angular acceleration in rot/s/s
-   * @param jerk The standard motion angular jerk in rot/s/s/s
+   * @param velocity The standard elevator linear velocity in m/s
+   * @param acceleration The standard elevator linear acceleration in m/s/s
+   * @param jerk The standard elevator linear jerk in m/s/s/s
    */
   @Override
   public void configure(
@@ -134,8 +135,8 @@ public class ElevatorIOTalonFX implements ElevatorIO {
       double Kp,
       double Ki,
       double Kd,
-      AngularVelocity velocity,
-      AngularAcceleration aceleration,
+      LinearVelocity velocity,
+      LinearAcceleration acceleration,
       double jerk) {
     var talonFXConfigs = new TalonFXConfiguration();
     var talonSlot0Configs = talonFXConfigs.Slot0;
@@ -149,8 +150,20 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     talonSlot0Configs.kI = Ki;
     talonSlot0Configs.kD = Kd;
 
-    motionMagicConfigs.MotionMagicCruiseVelocity = velocity.in(RotationsPerSecond);
-    motionMagicConfigs.MotionMagicAcceleration = aceleration.in(RotationsPerSecondPerSecond);
+    // Angular Velocity and Acceleration for Motion Magic in rot/s and rot/s/s
+    double angularVerlocity =
+        velocity.in(MetersPerSecond)
+            / kElevatorSproketRadius.in(Meters)
+            * kElevatorGearRatio
+            / (2 * Math.PI);
+    double angularAcceleration =
+        acceleration.in(MetersPerSecondPerSecond)
+            / kElevatorSproketRadius.in(Meters)
+            * kElevatorGearRatio
+            / (2 * Math.PI);
+
+    motionMagicConfigs.MotionMagicCruiseVelocity = angularVerlocity;
+    motionMagicConfigs.MotionMagicAcceleration = angularAcceleration;
     motionMagicConfigs.MotionMagicJerk = jerk;
 
     m_elevatorMotor.getConfigurator().apply(talonFXConfigs);

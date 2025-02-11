@@ -15,9 +15,9 @@ package frc.robot.commands;
 
 import static frc.robot.Constants.ElevatorConstants.*;
 
-import edu.wpi.first.units.measure.AngularAcceleration;
-import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.elevator.Elevator;
@@ -25,14 +25,14 @@ import frc.robot.subsystems.elevator.Elevator;
 public class ElevatorCommand extends Command {
 
   private final Distance position;
-  private final AngularAcceleration acceleration;
-  private final AngularVelocity velocity;
+  private final LinearAcceleration acceleration;
+  private final LinearVelocity velocity;
   private final Elevator elevator;
 
   public ElevatorCommand(
       Distance position,
-      AngularAcceleration acceleration,
-      AngularVelocity velocity,
+      LinearAcceleration acceleration,
+      LinearVelocity velocity,
       Elevator elevator) {
     this.position = position;
     this.acceleration = acceleration;

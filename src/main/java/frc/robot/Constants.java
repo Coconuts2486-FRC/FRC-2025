@@ -34,9 +34,9 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.AngularAcceleration;
-import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
@@ -188,6 +188,11 @@ public final class Constants {
     public static final Distance kL3 = Inches.of(56.25);
     public static final Distance kL4 = Inches.of(68.125);
 
+    // Motion Magic constants
+    public static final LinearVelocity kVelocity = MetersPerSecond.of(1.4);
+    public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(2.8);
+    public static final double kJerk = 0;
+
     // mode real/replay
     // motor configs
     public static final double kGReal = 0.65;
@@ -208,11 +213,6 @@ public final class Constants {
     public static final double kPSim = 0;
     public static final double kISim = 0;
     public static final double kDSim = 0;
-
-    // Motion Magic constants
-    public static final AngularVelocity kVelocity = RotationsPerSecond.of(1.4);
-    public static final AngularAcceleration kAcceleration = RotationsPerSecondPerSecond.of(2.8);
-    public static final double kJerk = 0;
   }
 
   /** Coral Mechanism Subsystem Constants ********************************** */

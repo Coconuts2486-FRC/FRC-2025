@@ -36,8 +36,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.measure.AngularAcceleration;
-import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -305,17 +303,34 @@ public class RobotContainer {
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
 
-    AngularVelocity omega = RotationsPerSecond.of(40);
-    AngularAcceleration alpha = RotationsPerSecondPerSecond.of(40);
     NamedCommands.registerCommand(
-        "L4", new ElevatorCommand(Inches.of(72), alpha, omega, m_elevator));
+        "L4",
+        new ElevatorCommand(
+            ElevatorConstants.kL4,
+            ElevatorConstants.kAcceleration,
+            ElevatorConstants.kVelocity,
+            m_elevator));
     NamedCommands.registerCommand(
-        "L3", new ElevatorCommand(Inches.of(50), alpha, omega, m_elevator));
+        "L3",
+        new ElevatorCommand(
+            ElevatorConstants.kL3,
+            ElevatorConstants.kAcceleration,
+            ElevatorConstants.kVelocity,
+            m_elevator));
     NamedCommands.registerCommand(
-        "L2", new ElevatorCommand(Inches.of(32), alpha, omega, m_elevator));
+        "L2",
+        new ElevatorCommand(
+            ElevatorConstants.kL2,
+            ElevatorConstants.kAcceleration,
+            ElevatorConstants.kVelocity,
+            m_elevator));
     NamedCommands.registerCommand(
         "Bottom",
-        new ElevatorCommand(Inches.of(0), alpha.div(4.0), omega.div(2.0), m_elevator)
+        new ElevatorCommand(
+                ElevatorConstants.kElevatorZeroHeight,
+                ElevatorConstants.kAcceleration.div(4.0),
+                ElevatorConstants.kVelocity.div(4.0),
+                m_elevator)
             .until(m_elevator::getBottomStop));
     NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
     NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
@@ -446,8 +461,8 @@ public class RobotContainer {
     m_elevator.setDefaultCommand(
         new ElevatorCommand(
             ElevatorConstants.kElevatorZeroHeight,
-            RotationsPerSecondPerSecond.of(20),
-            RotationsPerSecond.of(40),
+            ElevatorConstants.kAcceleration.div(4), // Go slower on the way down
+            ElevatorConstants.kVelocity.div(4), // Go slower on the way down
             m_elevator));
 
     // preset for l4
@@ -457,8 +472,8 @@ public class RobotContainer {
             Commands.parallel(
                 new ElevatorCommand(
                     ElevatorConstants.kL4,
-                    RotationsPerSecondPerSecond.of(40),
-                    RotationsPerSecond.of(80),
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                     .withTimeout(2)
@@ -471,8 +486,8 @@ public class RobotContainer {
             Commands.parallel(
                 new ElevatorCommand(
                     ElevatorConstants.kL3,
-                    RotationsPerSecondPerSecond.of(40),
-                    RotationsPerSecond.of(80),
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                     .withTimeout(1.3)
@@ -485,8 +500,8 @@ public class RobotContainer {
             Commands.parallel(
                 new ElevatorCommand(
                     ElevatorConstants.kL2,
-                    RotationsPerSecondPerSecond.of(40),
-                    RotationsPerSecond.of(80),
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                     .withTimeout(.9)

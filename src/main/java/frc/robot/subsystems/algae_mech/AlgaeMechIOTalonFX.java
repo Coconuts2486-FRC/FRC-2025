@@ -32,7 +32,7 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
   private TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
   private TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
   private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(1);
-  private final PIDController pivotController = new PIDController(1, 0, 0);
+  private final PIDController pivotController = new PIDController(1.2, 0, 0);
 
   public AlgaeMechIOTalonFX() {
 
@@ -57,6 +57,11 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
   public void setVelocity(double velocityRadPerSec, double ffVolts) {
     roller.setControl(
         new VelocityDutyCycle(Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec)));
+  }
+
+  @Override
+  public void setPercent(double percent) {
+    roller.setControl(new DutyCycleOut(percent));
   }
 
   @Override

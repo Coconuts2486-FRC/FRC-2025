@@ -71,7 +71,7 @@ public final class Constants {
    * Define the various multiple robots that use this same code (e.g., COMPBOT, DEVBOT, SIMBOT,
    * etc.) and the operating modes of the code (REAL, SIM, or REPLAY)
    */
-  private static RobotType robotType = RobotType.GEORGE;
+  private static RobotType robotType = RobotType.COMPBOT;
 
   // Define swerve, auto, and vision types being used
   // NOTE: Only PHOENIX6 swerve base has been tested at this point!!!
@@ -187,9 +187,10 @@ public final class Constants {
     public static final Distance kL2 = Inches.of(48.125);
     public static final Distance kL3 = Inches.of(56.25);
     public static final Distance kL4 = Inches.of(68.125);
-
+    public static final Distance KAlgae1 = Inches.of(60.375);
+    public static final Distance KAlgae2 = Inches.of(65.75);
     // Motion Magic constants
-    public static final LinearVelocity kVelocity = MetersPerSecond.of(1.4);
+    public static final LinearVelocity kVelocity = MetersPerSecond.of(1.8);
     public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(2.8);
     public static final double kJerk = 0;
 

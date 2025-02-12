@@ -29,6 +29,7 @@ public class AlgaeMech extends RBSISubsystem {
 
   private BooleanSupplier disableSupplier = DriverStation::isDisabled;
   private BooleanSupplier disableOverride;
+  private boolean toggleStow = true;
 
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
@@ -59,7 +60,8 @@ public class AlgaeMech extends RBSISubsystem {
     // Check if disabled
     if (disableSupplier.getAsBoolean()) {
       stop();
-      LED.getInstance().setAgaeMechEStop( disableOverride.getAsBoolean() && DriverStation.isEnabled());
+      LED.getInstance()
+          .setAgaeMechEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
   }
 
@@ -69,6 +71,10 @@ public class AlgaeMech extends RBSISubsystem {
 
   public void pivotToPosition(double position) {
     io.pivotToPosition(position);
+  }
+
+  public void setPercent(double percent) {
+    io.setPercent(percent);
   }
 
   // public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
@@ -81,6 +87,22 @@ public class AlgaeMech extends RBSISubsystem {
   // }
 
   // Pivot to stored position
+  public void toggleUp(boolean stow) {
+    this.toggleStow = stow;
+  }
+
+  public boolean getToggleStow() {
+    return toggleStow;
+  }
+
+  public void holdToggle() {
+    if (toggleStow == true) {
+      io.pivotToPosition(.209);
+    } else {
+      io.pivotToPosition(.35);
+    }
+  }
+
   public void pivotUp() {
     io.pivotToPosition(.209);
   }
@@ -88,7 +110,7 @@ public class AlgaeMech extends RBSISubsystem {
   // Pivots to position to pick up off floor
   public void pivotHorizontal() {
     // io.pivotToPosition(.45);
-    io.pivotToPosition(.45);
+    io.pivotToPosition(.35);
   }
 
   // Pivots to remove coral from reef

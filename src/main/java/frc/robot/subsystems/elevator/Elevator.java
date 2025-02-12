@@ -97,8 +97,8 @@ public class Elevator extends RBSISubsystem {
     if (disableSupplier.getAsBoolean()) {
       stop();
       setCoast();
-      LED.getInstance().setElevatorEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
-    
+      LED.getInstance()
+          .setElevatorEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
   }
 

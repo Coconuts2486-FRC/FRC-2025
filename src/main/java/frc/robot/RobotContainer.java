@@ -461,8 +461,8 @@ public class RobotContainer {
     m_elevator.setDefaultCommand(
         new ElevatorCommand(
             ElevatorConstants.kElevatorZeroHeight,
-            ElevatorConstants.kAcceleration.div(4), // Go slower on the way down
-            ElevatorConstants.kVelocity.div(4), // Go slower on the way down
+            ElevatorConstants.kAcceleration.div(2), // Go slower on the way down
+            ElevatorConstants.kVelocity.div(2), // Go slower on the way down
             m_elevator));
 
     // preset for l4
@@ -476,7 +476,7 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(2)
+                    .withTimeout(.85)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
     // preset for l3
@@ -490,7 +490,7 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(1.3)
+                    .withTimeout(.6)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
     // preset for l2 coral
@@ -504,9 +504,49 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(.9)
+                    .withTimeout(.35)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+
+    operatorController
+        .y()
+        .whileTrue(
+            Commands.parallel(
+                new ElevatorCommand(
+                    ElevatorConstants.KAlgae1,
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
+                    m_elevator),
+                Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+                    .withTimeout(.35)
+                    .andThen(
+                        Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+                            .alongWith(Commands.run(() -> m_algaeMech.setPercent(.6)))
+                            .alongWith(Commands.runOnce(() -> m_algaeMech.toggleUp(false))))));
+
+    operatorController
+        .y()
+        .onFalse(
+            Commands.runOnce(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+                .alongWith(Commands.runOnce(() -> m_algaeMech.setPercent(0))));
+
+    operatorController
+        .rightBumper()
+        .whileTrue(
+            Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(-1))));
+
+    operatorController
+        .rightBumper()
+        .onFalse(
+            Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
+
+    operatorController
+        .leftBumper()
+        .onTrue(
+            Commands.runOnce(
+                () -> m_algaeMech.toggleUp(!m_algaeMech.getToggleStow()), m_algaeMech));
 
     // .alongWith(Commands.run(() -> m_coralScorer.setCoralPercent(0), m_algaeMech))
     // .withTimeout(1)
@@ -527,7 +567,7 @@ public class RobotContainer {
     //     MetersPerSecondPerSecond.of(10),
     //     MetersPerSecond.of(10), m_elevator));
 
-    m_algaeMech.setDefaultCommand(Commands.run(() -> m_algaeMech.pivotUp(), m_algaeMech));
+    m_algaeMech.setDefaultCommand(Commands.run(() -> m_algaeMech.holdToggle(), m_algaeMech));
 
     // operatorController.leftBumper().whileTrue(new ElevatorCommand(Inches.of(12),
     // MetersPerSecondPerSecond.of(), MetersPerSecond.of(), m_elevator));

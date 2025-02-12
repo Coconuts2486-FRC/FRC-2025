@@ -45,7 +45,7 @@ public class CoralScorer extends RBSISubsystem {
   public void setCoralPercent(double percent) {
     io.setPercentOut(percent);
 
-    if (percent > 0){
+    if (percent > 0) {
       hasCoral = false;
     }
   }

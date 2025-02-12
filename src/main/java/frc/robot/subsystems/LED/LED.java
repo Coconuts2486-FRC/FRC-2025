@@ -42,7 +42,6 @@ public class LED extends VirtualSubsystem {
   private boolean algaemechEstopped = false;
   private boolean coralReady = false;
 
-
   private static LED instance;
 
   public static LED getInstance() {
@@ -172,31 +171,31 @@ public class LED extends VirtualSubsystem {
     candle.setLEDs(0, 0, 255, 0, 0, LEDConstants.nLED);
   }
 
-  public boolean getElevatorEStop(){
+  public boolean getElevatorEStop() {
     return elevatorEstopped;
   }
 
-  public boolean getIntakeEStop(){
+  public boolean getIntakeEStop() {
     return intakeEstopped;
   }
 
-  public boolean getAgaeMechEStop(){
+  public boolean getAgaeMechEStop() {
     return algaemechEstopped;
   }
 
-  public void setElevatorEStop(boolean eStopSwitch){
+  public void setElevatorEStop(boolean eStopSwitch) {
     elevatorEstopped = eStopSwitch;
   }
 
-  public void setIntakeEStop(boolean eStopSwitch){
+  public void setIntakeEStop(boolean eStopSwitch) {
     intakeEstopped = eStopSwitch;
   }
 
-  public void setAgaeMechEStop(boolean eStopSwitch){
+  public void setAgaeMechEStop(boolean eStopSwitch) {
     algaemechEstopped = eStopSwitch;
   }
 
-  public void setCoralReady(boolean coralReady){
+  public void setCoralReady(boolean coralReady) {
     this.coralReady = coralReady;
   }
 }

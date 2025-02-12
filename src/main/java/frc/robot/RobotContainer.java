@@ -35,7 +35,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -71,7 +70,6 @@ import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
-import frc.robot.subsystems.state_keeper.CoralState;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -95,7 +93,9 @@ public class RobotContainer {
   // The rotation component of the pose should be the direction of travel. Do not use
   // holonomic rotation.
   List<Waypoint> what =
-      PathPlannerPath.waypointsFromPoses(new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)));
+      PathPlannerPath.waypointsFromPoses(
+          new Pose2d(1, 1, Rotation2d.fromDegrees(0)),
+          new Pose2d(2, 2, Rotation2d.fromDegrees(0)));
 
   PathConstraints constraints =
       new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
@@ -143,7 +143,7 @@ public class RobotContainer {
 
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
-  private final CoralState m_coralState;
+  // private final CoralState m_coralState;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
   private final LED m_led;
@@ -197,7 +197,7 @@ public class RobotContainer {
               default -> null;
             };
         m_accel = new Accelerometer(m_drivebase.getGyro());
-        m_coralState = new CoralState();
+        // m_coralState = new CoralState();
         m_led = new LED(new LEDIOCANdle());
         break;
 
@@ -217,7 +217,7 @@ public class RobotContainer {
                 new VisionIOPhotonVisionSim(camera0Name, robotToCamera0, m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(camera1Name, robotToCamera1, m_drivebase::getPose));
         m_accel = new Accelerometer(m_drivebase.getGyro());
-        m_coralState = new CoralState();
+        // m_coralState = new CoralState();
         m_led = new LED(new LEDIO() {});
         break;
 
@@ -234,7 +234,7 @@ public class RobotContainer {
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
-        m_coralState = new CoralState();
+        // m_coralState = new CoralState();
         m_led = new LED(new LEDIO() {});
         break;
     }
@@ -300,17 +300,17 @@ public class RobotContainer {
   // **** This is a Pathplanner Pathfinding Command ****/
   // Since we are using a holonomic drivetrain, the rotation component of this pose
   // represents the goal holonomic rotation
-  Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
+  //   Pose2d targetPose = new Pose2d(5, 5, Rotation2d.fromDegrees(0));
 
   // Create the constraints to use while pathfinding
-  PathConstraints constraint =
-      new PathConstraints(1.0, 1.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
+  //   PathConstraints constraint =
+  //       new PathConstraints(1.0, 1.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
 
   // Since AutoBuilder is configured, we can use it to build pathfinding commands
-  Command InfiniteCommand =
-      AutoBuilder.pathfindToPose(
-          targetPose, constraint, 0.0 // Goal end velocity in meters/sec
-          );
+  //   Command InfiniteCommand =
+  //       AutoBuilder.pathfindToPose(
+  //           targetPose, constraint, 0.0 // Goal end velocity in meters/sec
+  //           );
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -363,8 +363,8 @@ public class RobotContainer {
                         () -> turnStickX.value()),
                 m_drivebase));
 
-    driverController.a().onTrue(Commands.run(() -> m_coralState.indexL()));
-    driverController.y().onTrue(Commands.run(() -> m_coralState.indexR()));
+    // driverController.a().onTrue(Commands.run(() -> m_coralState.indexL(),m_coralState));
+    // driverController.y().onTrue(Commands.run(() -> m_coralState.indexR(),m_coralState));
     // Press A button -> BRAKE
     driverController
         .a()
@@ -440,7 +440,7 @@ public class RobotContainer {
             Commands.startEnd(() -> m_elevator.setCoast(), m_elevator::setBrake, m_elevator)
                 .ignoringDisable(true));
 
-    driverController.leftStick().onTrue(AutoBuilder.followPath(Squirtle));
+    driverController.leftStick().whileTrue(AutoBuilder.followPath(Squirtle));
   }
 
   /**

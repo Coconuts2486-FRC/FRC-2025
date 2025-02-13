@@ -37,10 +37,10 @@ public class LED extends VirtualSubsystem {
   private Color secondaryDisabledColor = Color.kDarkBlue;
 
   private boolean estopped = false;
-  private boolean elevatorEstopped = false;
-  private boolean intakeEstopped = false;
-  private boolean algaemechEstopped = false;
-  private boolean coralReady = false;
+  private static boolean elevatorEstopped = false;
+  private static boolean intakeEstopped = false;
+  private static boolean algaemechEstopped = false;
+  private static boolean coralReady = false;
 
   private static LED instance;
 
@@ -171,31 +171,31 @@ public class LED extends VirtualSubsystem {
     candle.setLEDs(0, 0, 255, 0, 0, LEDConstants.nLED);
   }
 
-  public boolean getElevatorEStop() {
+  public static boolean getElevatorEStop() {
     return elevatorEstopped;
   }
 
-  public boolean getIntakeEStop() {
+  public static boolean getIntakeEStop() {
     return intakeEstopped;
   }
 
-  public boolean getAgaeMechEStop() {
+  public static boolean getAgaeMechEStop() {
     return algaemechEstopped;
   }
 
-  public void setElevatorEStop(boolean eStopSwitch) {
+  public static void setElevatorEStop(boolean eStopSwitch) {
     elevatorEstopped = eStopSwitch;
   }
 
-  public void setIntakeEStop(boolean eStopSwitch) {
+  public static void setIntakeEStop(boolean eStopSwitch) {
     intakeEstopped = eStopSwitch;
   }
 
-  public void setAgaeMechEStop(boolean eStopSwitch) {
+  public static void setAgaeMechEStop(boolean eStopSwitch) {
     algaemechEstopped = eStopSwitch;
   }
 
-  public void setCoralReady(boolean coralReady) {
-    this.coralReady = coralReady;
+  public static void setCoralReady(boolean coralScoreReady) {
+    coralReady = coralScoreReady;
   }
 }

@@ -94,11 +94,10 @@ public class Elevator extends RBSISubsystem {
     Logger.recordOutput("Overrides/Elevator", !disableOverride.getAsBoolean());
 
     // Check if disabled
-    if (disableSupplier.getAsBoolean()) {
+    if (disableOverride.getAsBoolean()) {
       stop();
       setCoast();
-      LED.getInstance()
-          .setElevatorEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
+      LED.setElevatorEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
   }
 

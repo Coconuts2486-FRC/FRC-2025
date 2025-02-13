@@ -59,9 +59,9 @@ public class Intake extends RBSISubsystem {
     Logger.recordOutput("Overrides/IntakePivot", !disableOverride.getAsBoolean());
 
     // Check if disabled
-    if (disableSupplier.getAsBoolean()) {
+    if (disableOverride.getAsBoolean()) {
       stop();
-      LED.getInstance().setIntakeEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
+      LED.setIntakeEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
   }
 

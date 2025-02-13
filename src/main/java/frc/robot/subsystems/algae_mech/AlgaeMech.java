@@ -58,10 +58,9 @@ public class AlgaeMech extends RBSISubsystem {
     Logger.recordOutput("Overrides/AlgaeMechPivot", !disableOverride.getAsBoolean());
 
     // Check if disabled
-    if (disableSupplier.getAsBoolean()) {
+    if (disableOverride.getAsBoolean()) {
       stop();
-      LED.getInstance()
-          .setAgaeMechEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
+      LED.setAgaeMechEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
   }
 

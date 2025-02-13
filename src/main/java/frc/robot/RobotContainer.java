@@ -305,33 +305,37 @@ public class RobotContainer {
 
     NamedCommands.registerCommand(
         "L4",
-        new ElevatorCommand(
-            ElevatorConstants.kL4,
-            ElevatorConstants.kAcceleration,
-            ElevatorConstants.kVelocity,
-            m_elevator));
+        // new ElevatorCommand(
+        //     ElevatorConstants.kL4,
+        //     ElevatorConstants.kAcceleration,
+        //     ElevatorConstants.kVelocity,
+        //     m_elevator));
+        Commands.print("L4"));
     NamedCommands.registerCommand(
         "L3",
-        new ElevatorCommand(
-            ElevatorConstants.kL3,
-            ElevatorConstants.kAcceleration,
-            ElevatorConstants.kVelocity,
-            m_elevator));
+        // new ElevatorCommand(
+        //     ElevatorConstants.kL3,
+        //     ElevatorConstants.kAcceleration,
+        //     ElevatorConstants.kVelocity,
+        //     m_elevator));
+        Commands.print("L3"));
     NamedCommands.registerCommand(
         "L2",
-        new ElevatorCommand(
-            ElevatorConstants.kL2,
-            ElevatorConstants.kAcceleration,
-            ElevatorConstants.kVelocity,
-            m_elevator));
+        // new ElevatorCommand(
+        //     ElevatorConstants.kL2,
+        //     ElevatorConstants.kAcceleration,
+        //     ElevatorConstants.kVelocity,
+        //     m_elevator));
+        Commands.print("L2"));
     NamedCommands.registerCommand(
         "Bottom",
-        new ElevatorCommand(
-                ElevatorConstants.kElevatorZeroHeight,
-                ElevatorConstants.kAcceleration.div(4.0),
-                ElevatorConstants.kVelocity.div(4.0),
-                m_elevator)
-            .until(m_elevator::getBottomStop));
+        // new ElevatorCommand(
+        //         ElevatorConstants.kElevatorZeroHeight,
+        //         ElevatorConstants.kAcceleration.div(4.0),
+        //         ElevatorConstants.kVelocity.div(4.0),
+        //         m_elevator)
+        //     .until(m_elevator::getBottomStop));
+        Commands.print("Bottom"));
     NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
     NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
   }
@@ -586,9 +590,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommandPathPlanner() {
     // Use the ``autoChooser`` to define your auto path from the SmartDashboard
-    // return autoChooserPathPlanner.get();
+    return autoChooserPathPlanner.get();
     // return new PathPlannerAuto("Consistancy Test");
-    return AutoBuilder.followPath(woah);
+    // return AutoBuilder.followPath(woah);
   }
 
   /**

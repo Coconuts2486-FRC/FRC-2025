@@ -41,7 +41,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -50,19 +50,6 @@
                         "pathName": "Station I"
                       }
                     },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L0"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
                     {
                       "type": "named",
                       "data": {
@@ -124,7 +111,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L0"
+                        "name": "CoralDetect"
                       }
                     }
                   ]
@@ -195,7 +182,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L0"
+                        "name": "CoralDetect"
                       }
                     }
                   ]
@@ -266,7 +253,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L0"
+                        "name": "CoralDetect"
                       }
                     }
                   ]

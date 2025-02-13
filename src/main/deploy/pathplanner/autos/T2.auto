@@ -41,32 +41,19 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station I"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L0"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
                       "type": "named",
                       "data": {
                         "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Station I"
                       }
                     }
                   ]

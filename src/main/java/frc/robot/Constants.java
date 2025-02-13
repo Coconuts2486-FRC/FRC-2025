@@ -435,9 +435,9 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(15.0, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(32, 0.0, 0.0);
     // new PIDConstants(DrivebaseConstants.kDriveP, 0.0, DrivebaseConstants.kDriveD);
-    public static final PIDConstants kPPsteerPID = new PIDConstants(15.0, 0.0, 0.0);
+    public static final PIDConstants kPPsteerPID = new PIDConstants(5, 0.0, 0.0);
     // new PIDConstants(DrivebaseConstants.kSteerP, 0.0, DrivebaseConstants.kSteerD);
     // 1 Cordinate = 1 meter
     // *** 1 meter = 39.3701 inches

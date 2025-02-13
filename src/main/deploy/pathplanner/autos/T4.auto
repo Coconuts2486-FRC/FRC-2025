@@ -41,32 +41,19 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station I"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L0"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
                       "type": "named",
                       "data": {
                         "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Station I"
                       }
                     }
                   ]
@@ -112,7 +99,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -121,19 +108,6 @@
                         "pathName": "Station J"
                       }
                     },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L0"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
                     {
                       "type": "named",
                       "data": {

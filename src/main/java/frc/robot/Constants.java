@@ -81,7 +81,7 @@ public final class Constants {
   private static SwerveType swerveType = SwerveType.PHOENIX6; // PHOENIX6, YAGSL
   private static CTREPro phoenixPro = CTREPro.LICENSED; // LICENSED, UNLICENSED
   private static AutoType autoType = AutoType.PATHPLANNER; // PATHPLANNER, CHOREO
-  private static VisionType visionType = VisionType.PHOTON; // PHOTON, LIMELIGHT, NONE
+  private static VisionType visionType = VisionType.NONE; // PHOTON, LIMELIGHT, NONE
 
   /** Enumerate the robot types (name your robots here) */
   public static enum RobotType {
@@ -111,7 +111,7 @@ public final class Constants {
   /** General Constants **************************************************** */
   public static final double loopPeriodSecs = 0.02;
 
-  public static final boolean tuningMode = false;
+  public static final boolean tuningMode = true;
 
   /** Physical Constants for Robot Operation ******************************* */
   public static final class PhysicalConstants {
@@ -163,14 +163,14 @@ public final class Constants {
 
     // Default TalonFX Gains (Replaces what's in Phoenix X's Tuner Constants)
     // NOTE: Default values from 6328's 2025 Public Code
-    public static final double kDriveP = 1.0;
-    public static final double kDriveD = 0.001;
+    public static final double kDriveP = 40.0;
+    public static final double kDriveD = 0.03;
     public static final double kDriveV = 0.83;
     public static final double kDriveS = 0.21;
     public static final double kDriveT =
         SwerveConstants.kDriveGearRatio / DCMotor.getKrakenX60Foc(1).KtNMPerAmp;
-    public static final double kSteerP = 100.0;
-    public static final double kSteerD = 1.0;
+    public static final double kSteerP = 400.0;
+    public static final double kSteerD = 20.0;
   }
 
   /** Elevator Subsystem Constants ***************************************** */

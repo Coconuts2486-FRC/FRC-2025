@@ -69,11 +69,15 @@ public class AlgaeMech extends RBSISubsystem {
   }
 
   public void pivotToPosition(double position) {
-    io.pivotToPosition(position);
+    if (!disableSupplier.getAsBoolean()) {
+      io.pivotToPosition(position);
+    }
   }
 
   public void setPercent(double percent) {
-    io.setPercent(percent);
+    if (!disableSupplier.getAsBoolean()) {
+      io.setPercent(percent);
+    }
   }
 
   // public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
@@ -87,7 +91,9 @@ public class AlgaeMech extends RBSISubsystem {
 
   // Pivot to stored position
   public void toggleUp(boolean stow) {
-    this.toggleStow = stow;
+    if (!disableSupplier.getAsBoolean()) {
+      this.toggleStow = stow;
+    }
   }
 
   public boolean getToggleStow() {
@@ -95,26 +101,34 @@ public class AlgaeMech extends RBSISubsystem {
   }
 
   public void holdToggle() {
-    if (toggleStow == true) {
-      io.pivotToPosition(.209);
-    } else {
-      io.pivotToPosition(.35);
+    if (!disableSupplier.getAsBoolean()) {
+      if (toggleStow == true) {
+        io.pivotToPosition(.209);
+      } else {
+        io.pivotToPosition(.35);
+      }
     }
   }
 
   public void pivotUp() {
-    io.pivotToPosition(.209);
+    if (!disableSupplier.getAsBoolean()) {
+      io.pivotToPosition(.209);
+    }
   }
 
   // Pivots to position to pick up off floor
   public void pivotHorizontal() {
-    // io.pivotToPosition(.45);
-    io.pivotToPosition(.35);
+    if (!disableSupplier.getAsBoolean()) {
+      // io.pivotToPosition(.45);
+      io.pivotToPosition(.35);
+    }
   }
 
   // Pivots to remove coral from reef
   public void pivotOffReef() {
-    io.pivotToPosition(.521);
+    if (!disableSupplier.getAsBoolean()) {
+      io.pivotToPosition(.521);
+    }
   }
 
   // /** Returns the current velocity in RPM. */

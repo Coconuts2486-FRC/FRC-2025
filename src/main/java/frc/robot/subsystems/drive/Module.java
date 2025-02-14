@@ -20,12 +20,9 @@ import static frc.robot.subsystems.drive.SwerveConstants.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
-import frc.robot.Constants;
-import frc.robot.util.LoggedTunableNumber;
 import org.littletonrobotics.junction.Logger;
 
 public class Module {
@@ -38,39 +35,36 @@ public class Module {
   private final Alert turnEncoderDisconnectedAlert;
   private SwerveModulePosition[] odometryPositions = new SwerveModulePosition[] {};
 
-  private static final LoggedTunableNumber drivekS =
-      new LoggedTunableNumber("Drive/Module/DrivekS");
-  private static final LoggedTunableNumber drivekV =
-      new LoggedTunableNumber("Drive/Module/DrivekV");
-  private static final LoggedTunableNumber drivekT =
-      new LoggedTunableNumber("Drive/Module/DrivekT");
-  private static final LoggedTunableNumber drivekP =
-      new LoggedTunableNumber("Drive/Module/DrivekP");
-  private static final LoggedTunableNumber drivekD =
-      new LoggedTunableNumber("Drive/Module/DrivekD");
-  private static final LoggedTunableNumber turnkP = new LoggedTunableNumber("Drive/Module/TurnkP");
-  private static final LoggedTunableNumber turnkD = new LoggedTunableNumber("Drive/Module/TurnkD");
+  // private static final LoggedTunableNumber drivekS =
+  //     new LoggedTunableNumber("Drive/Module/DrivekS");
+  // private static final LoggedTunableNumber drivekV =
+  //     new LoggedTunableNumber("Drive/Module/DrivekV");
+  // private static final LoggedTunableNumber drivekP =
+  //     new LoggedTunableNumber("Drive/Module/DrivekP");
+  // private static final LoggedTunableNumber drivekD =
+  //     new LoggedTunableNumber("Drive/Module/DrivekD");
+  // private static final LoggedTunableNumber turnkP = new
+  // LoggedTunableNumber("Drive/Module/TurnkP");
+  // private static final LoggedTunableNumber turnkD = new
+  // LoggedTunableNumber("Drive/Module/TurnkD");
 
-  static {
-    switch (Constants.getRobot()) {
-      case COMPBOT, GEORGE -> {
-        // Multiplied by desired wheelTorqueNm
-        drivekT.initDefault(
-            SwerveConstants.kDriveGearRatio / DCMotor.getKrakenX60Foc(1).KtNMPerAmp);
-        drivekP.initDefault(35.0);
-        drivekD.initDefault(0);
-        turnkP.initDefault(4000.0);
-        turnkD.initDefault(50.0);
-      }
-      default -> {
-        drivekT.initDefault(0);
-        drivekP.initDefault(0.1);
-        drivekD.initDefault(0);
-        turnkP.initDefault(10.0);
-        turnkD.initDefault(0);
-      }
-    }
-  }
+  // static {
+  //   switch (Constants.getRobot()) {
+  //     case COMPBOT, GEORGE -> {
+  //       // Multiplied by desired wheelTorqueNm
+  //       drivekP.initDefault(35.0);
+  //       drivekD.initDefault(0);
+  //       turnkP.initDefault(4000.0);
+  //       turnkD.initDefault(50.0);
+  //     }
+  //     default -> {
+  //       drivekP.initDefault(0.1);
+  //       drivekD.initDefault(0);
+  //       turnkP.initDefault(10.0);
+  //       turnkD.initDefault(0);
+  //     }
+  //   }
+  // }
 
   public Module(ModuleIO io, int index) {
     this.io = io;
@@ -93,13 +87,15 @@ public class Module {
     io.updateInputs(inputs);
     Logger.processInputs("Drive/Module" + Integer.toString(index), inputs);
 
-    // Update tunable numbers
-    if (drivekP.hasChanged(hashCode()) || drivekD.hasChanged(hashCode())) {
-      io.setDrivePID(drivekP.get(), 0, drivekD.get());
-    }
-    if (turnkP.hasChanged(hashCode()) || turnkD.hasChanged(hashCode())) {
-      io.setTurnPID(turnkP.get(), 0, turnkD.get());
-    }
+    // // Update tunable numbers
+    // if (drivekP.hasChanged(hashCode()) || drivekD.hasChanged(hashCode())) {
+    //   System.out.println("Changing Tunable Drive PID");
+    //   io.setDrivePID(drivekP.get(), 0, drivekD.get());
+    // }
+    // if (turnkP.hasChanged(hashCode()) || turnkD.hasChanged(hashCode())) {
+    //   System.out.println("Changing Tunable Steer PID");
+    //   io.setTurnPID(turnkP.get(), 0, turnkD.get());
+    // }
 
     // Calculate positions for odometry
     int sampleCount = inputs.odometryTimestamps.length; // All signals are sampled together

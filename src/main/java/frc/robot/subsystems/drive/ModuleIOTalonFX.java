@@ -298,6 +298,10 @@ public class ModuleIOTalonFX implements ModuleIO {
     Logger.recordOutput("Thingie/wheelradius_meters", SwerveConstants.kWheelRadiusMeters);
     Logger.recordOutput("Thingie/talon_vradpersec", velocityRadPerSec);
     Logger.recordOutput("Thingie/talon_vrotpersec", velocityRotPerSec);
+    Logger.recordOutput("Thingie/kDriveP", driveConfig.Slot0.kP);
+    Logger.recordOutput("Thingie/kDriveD", driveConfig.Slot0.kD);
+    Logger.recordOutput("Thingie/kSteerP", turnConfig.Slot0.kP);
+    Logger.recordOutput("Thingie/kSteerD", turnConfig.Slot0.kD);
 
     driveTalon.setControl(
         switch (m_DriveMotorClosedLoopOutput) {

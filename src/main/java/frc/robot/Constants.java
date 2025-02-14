@@ -477,7 +477,7 @@ public final class Constants {
   public static class LEDConstants {
 
     // Number of LEDS
-    public static final int nLED = 67;
+    public static final int nLED = 128;
   }
 
   /** Vision Constants (Assuming PhotonVision) ***************************** */

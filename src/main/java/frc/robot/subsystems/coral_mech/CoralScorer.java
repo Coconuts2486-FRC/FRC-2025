@@ -13,6 +13,7 @@
 
 package frc.robot.subsystems.coral_mech;
 
+import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
 
 public class CoralScorer extends RBSISubsystem {
@@ -21,6 +22,11 @@ public class CoralScorer extends RBSISubsystem {
 
   public CoralScorer(CoralScorerIO io) {
     this.io = io;
+  }
+
+  @Override
+  public void periodic() {
+    LED.setCoralReady(hasCoral);
   }
 
   public void runVolts(double volts) {

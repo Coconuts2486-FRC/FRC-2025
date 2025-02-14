@@ -121,7 +121,7 @@ public final class Constants {
         new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), kRobotMassKg);
     // Robot moment of intertial; this can be obtained from a CAD model of your drivetrain. Usually,
     // this is between 3 and 8 kg*m^2.
-    public static final double kRobotMOI = 6.8;
+    public static final double kRobotMOI = 6.94;
 
     // Wheel coefficient of friction
     public static final double kWheelCOF = 1.2;

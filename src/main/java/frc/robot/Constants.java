@@ -379,9 +379,9 @@ public final class Constants {
     public static final double kAcceleration = 2.8;
     public static final double kJerk = 0;
 
-    public static final double startClimb = 0;
-    public static final double stowClimb = 0;
-    public static final double completeClimb = 0;
+    public static final double startClimb = .46;
+    public static final double stowClimb = .72;
+    public static final double completeClimb = .78;
   }
 
   /** Accelerometer Constants ********************************************** */

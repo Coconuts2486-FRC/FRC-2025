@@ -41,13 +41,13 @@ public class LED extends VirtualSubsystem {
   TwinkleOffAnimation twinkleB =
       new TwinkleOffAnimation(0, 0, 255, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
   TwinkleOffAnimation twinkleY =
-      new TwinkleOffAnimation(255, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+      new TwinkleOffAnimation(255, 165, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
   TwinkleOffAnimation twinkleO =
       new TwinkleOffAnimation(255, 80, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
   TwinkleOffAnimation twinkleP =
       new TwinkleOffAnimation(48, 25, 52, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
 
-  private TwinkleOffAnimation col1 = twinkleP;
+  private TwinkleOffAnimation col1 = twinkleG;
   private TwinkleOffAnimation col2 = twinkleB;
 
   private Optional<Alliance> alliance = Optional.empty();
@@ -70,6 +70,7 @@ public class LED extends VirtualSubsystem {
   }
 
   private LED() {
+
     red = false;
     config.stripType = LEDStripType.RGB; // set the strip type to RGB
     config.brightnessScalar = 0.5; // dim the LEDs to half brightness
@@ -201,6 +202,12 @@ public class LED extends VirtualSubsystem {
           0,
           LEDConstants.nLED);
     }
+  }
+
+  private void coralLarson(Color allianceColor) {
+    candle.clearAnimation(0);
+
+    candle.setLEDs(255, 255, 255, 0, 0, LEDConstants.nLED);
   }
 
   private void scoreReady() {

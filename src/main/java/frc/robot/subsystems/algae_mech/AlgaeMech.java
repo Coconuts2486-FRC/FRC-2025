@@ -59,6 +59,7 @@ public class AlgaeMech extends RBSISubsystem {
   /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
+
     io.updateInputs(inputs);
     Logger.processInputs("AlgaeMech", inputs);
     Logger.recordOutput("Overrides/AlgaeMechPivot", !disableOverride.getAsBoolean());
@@ -109,7 +110,7 @@ public class AlgaeMech extends RBSISubsystem {
   public void holdToggle() {
     if (!disableSupplier.getAsBoolean()) {
       if (toggleStow == true) {
-        io.pivotToPosition(.209);
+        io.pivotToPosition(.29);
       } else {
         io.pivotToPosition(.35);
       }

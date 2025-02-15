@@ -16,6 +16,7 @@ package frc.robot.subsystems.algae_mech;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
 import java.util.function.BooleanSupplier;
@@ -31,6 +32,7 @@ public class AlgaeMech extends RBSISubsystem {
   private BooleanSupplier disableOverride;
   private boolean toggleStow = true;
 
+  /** Constructor */
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
 
@@ -51,6 +53,12 @@ public class AlgaeMech extends RBSISubsystem {
     this.disableOverride = disableOverride;
   }
 
+  /** Initialize the default command for this subsystem */
+  public void initDefaultCommand() {
+    setDefaultCommand(Commands.run(() -> holdToggle(), this));
+  }
+
+  /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
     io.updateInputs(inputs);

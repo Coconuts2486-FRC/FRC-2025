@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.commands.ElevatorCommand;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
 import java.util.function.BooleanSupplier;
@@ -39,6 +41,7 @@ public class Elevator extends RBSISubsystem {
   private BooleanSupplier disableSupplier = DriverStation::isDisabled;
   private BooleanSupplier disableOverride;
 
+  /** Constructor */
   public Elevator(ElevatorIO io) {
     this.io = io;
 
@@ -84,6 +87,16 @@ public class Elevator extends RBSISubsystem {
   public void setOverrides(BooleanSupplier disableOverride) {
     disableSupplier = () -> disableOverride.getAsBoolean() || DriverStation.isDisabled();
     this.disableOverride = disableOverride;
+  }
+
+  /** Initialize the default command for this subsystem */
+  public void initDefaultCommand() {
+    setDefaultCommand(
+        new ElevatorCommand(
+            ElevatorConstants.kElevatorZeroHeight,
+            ElevatorConstants.kAcceleration.div(2), // Go slower on the way down
+            ElevatorConstants.kVelocity.div(2), // Go slower on the way down
+            this));
   }
 
   /** Periodic function called every robot cycle */

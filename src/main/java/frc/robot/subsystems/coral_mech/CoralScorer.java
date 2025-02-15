@@ -13,14 +13,31 @@
 
 package frc.robot.subsystems.coral_mech;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.util.RBSISubsystem;
+import org.littletonrobotics.junction.Logger;
 
 public class CoralScorer extends RBSISubsystem {
   private final CoralScorerIO io;
+  private final CoralScorerIOInputsAutoLogged inputs = new CoralScorerIOInputsAutoLogged();
+
   private boolean hasCoral = false;
 
+  /** Constructor */
   public CoralScorer(CoralScorerIO io) {
     this.io = io;
+  }
+
+  /** Initialize the default command for this subsystem */
+  public void initDefaultCommand() {
+    setDefaultCommand(Commands.run(() -> automaticIntake(), this));
+  }
+
+  /** Periodic function called every robot cycle */
+  @Override
+  public void periodic() {
+    io.updateInputs(inputs);
+    Logger.processInputs("CoralScorer", inputs);
   }
 
   public void runVolts(double volts) {

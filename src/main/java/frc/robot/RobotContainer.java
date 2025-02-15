@@ -91,10 +91,9 @@ public class RobotContainer {
   // Create a list of waypoints from poses. Each pose represents one waypoint.
   // The rotation component of the pose should be the direction of travel. Do not use
   // holonomic rotation.
-  List<Waypoint> woahpoints =
+  List<Waypoint> what =
       PathPlannerPath.waypointsFromPoses(
-          new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)),
-          new Pose2d(9.4, 6.184, Rotation2d.fromDegrees(0)));
+          new Pose2d(1, 1, Rotation2d.fromDegrees(0)), new Pose2d(2, 2, Rotation2d.fromDegrees(0)));
 
   PathConstraints constraints =
       new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
@@ -103,9 +102,9 @@ public class RobotContainer {
   // voltage
 
   // Create the path using the waypoints created above
-  PathPlannerPath woah =
+  PathPlannerPath Squirtle =
       new PathPlannerPath(
-          woahpoints,
+          what,
           constraints,
           null, // The ideal starting state, this is only relevant for pre-planned paths,
           // so
@@ -178,7 +177,7 @@ public class RobotContainer {
    * devices, and commands.
    */
   public RobotContainer() {
-    woah.preventFlipping = true;
+    Squirtle.preventFlipping = true;
     // Instantiate Robot Subsystems based on RobotType
     switch (Constants.getMode()) {
       case REAL:

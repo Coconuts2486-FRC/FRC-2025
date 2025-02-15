@@ -17,8 +17,6 @@ import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.RainbowAnimation;
-import com.ctre.phoenix.led.TwinkleAnimation;
-import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 import com.ctre.phoenix.led.TwinkleOffAnimation;
 import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,12 +33,22 @@ public class LED extends VirtualSubsystem {
   private boolean red;
   private double i = 0;
   private static double lightReset;
-  private TwinkleOffAnimation col1 =
-      new TwinkleOffAnimation(0, 0, 255, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-  ;
-  private TwinkleOffAnimation col2 =
+
+  TwinkleOffAnimation twinkleR =
       new TwinkleOffAnimation(255, 0, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-  ;
+  TwinkleOffAnimation twinkleG =
+      new TwinkleOffAnimation(0, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+  TwinkleOffAnimation twinkleB =
+      new TwinkleOffAnimation(0, 0, 255, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+  TwinkleOffAnimation twinkleY =
+      new TwinkleOffAnimation(255, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+  TwinkleOffAnimation twinkleO =
+      new TwinkleOffAnimation(255, 80, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+  TwinkleOffAnimation twinkleP =
+      new TwinkleOffAnimation(48, 25, 52, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+
+  private TwinkleOffAnimation col1 = twinkleP;
+  private TwinkleOffAnimation col2 = twinkleB;
 
   private Optional<Alliance> alliance = Optional.empty();
   private Color allianceColor = Color.kGold;
@@ -70,14 +78,14 @@ public class LED extends VirtualSubsystem {
 
   public synchronized void periodic() {
     // Update alliance color
-    if (DriverStation.isFMSAttached()) {
-      alliance = DriverStation.getAlliance();
-      allianceColor =
-          alliance
-              .map(alliance -> alliance == Alliance.Blue ? Color.kBlue : Color.kRed)
-              .orElse(Color.kGold);
-      secondaryDisabledColor = alliance.isPresent() ? Color.kBlack : Color.kDarkBlue;
-    }
+    // if (DriverStation.isFMSAttached()) {
+    alliance = DriverStation.getAlliance();
+    allianceColor =
+        alliance
+            .map(alliance -> alliance == Alliance.Blue ? Color.kBlue : Color.kRed)
+            .orElse(Color.kGold);
+    secondaryDisabledColor = alliance.isPresent() ? Color.kBlack : Color.kDarkBlue;
+    //  }
 
     // Update estop state
     if (DriverStation.isEStopped()) {
@@ -99,9 +107,7 @@ public class LED extends VirtualSubsystem {
     } else {
       // Teleop Enabled
       if (coralReady) {
-        candle.animate(
-            new TwinkleAnimation(
-                255, 255, 255, 0, 0.7, LEDConstants.nLED, TwinklePercent.Percent100));
+        solid(Color.kWhite);
       } else {
         solid(allianceColor);
         // setRGB(255, 255, 255);
@@ -139,21 +145,6 @@ public class LED extends VirtualSubsystem {
   public void rainbowTwinkle() {
     double rand = Math.random();
 
-    TwinkleOffAnimation twinkleR =
-        new TwinkleOffAnimation(255, 0, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleG =
-        new TwinkleOffAnimation(0, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleB =
-        new TwinkleOffAnimation(0, 0, 255, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleY =
-        new TwinkleOffAnimation(
-            255, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleO =
-        new TwinkleOffAnimation(
-            255, 165, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleP =
-        new TwinkleOffAnimation(
-            48, 25, 52, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
     // FireAnimation fire = new FireAnimation(1, .5, LEDConstants.nLED, .9, .5);
     // candle.setLEDs(0, 255, 0, 0, 0, LEDConstants.nLED);
     // candle.setLEDs(255, 255, 255, 0, 8, 44);
@@ -177,26 +168,6 @@ public class LED extends VirtualSubsystem {
   public void pickTwoTwinkle() {
 
     double randLightSet = Math.random();
-
-    TwinkleOffAnimation twinkleR =
-        new TwinkleOffAnimation(255, 0, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleG =
-        new TwinkleOffAnimation(0, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleB =
-        new TwinkleOffAnimation(0, 0, 255, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleY =
-        new TwinkleOffAnimation(
-            255, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleO =
-        new TwinkleOffAnimation(
-            255, 80, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-    TwinkleOffAnimation twinkleP =
-        new TwinkleOffAnimation(
-            48, 25, 52, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-
-    col1 = twinkleO;
-
-    col2 = twinkleB;
 
     if (randLightSet < .5) {
       candle.animate(col1);

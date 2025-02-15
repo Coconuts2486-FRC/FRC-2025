@@ -1,20 +1,6 @@
 package frc.robot.subsystems.algae_mech;
 
-// Copyright (c) 2024-2025 Az-FIRST
-// http://github.com/AZ-First
-// Copyright (c) 2021-2025 FRC 6328
-// http://github.com/Mechanical-Advantage
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// version 3 as published by the Free Software Foundation or
-// available in the root directory of this project.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
@@ -42,6 +28,8 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
     PIDConfig.kD = 0;
 
     rollerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    var ramp = new OpenLoopRampsConfigs();
+    ramp.withDutyCycleOpenLoopRampPeriod(0.25);
     roller.getConfigurator().apply(rollerConfig);
     roller.getConfigurator().apply(PIDConfig);
     pivotConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;

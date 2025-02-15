@@ -26,7 +26,7 @@ import frc.robot.Constants.CANandPowerPorts;
 public class ClimbIOTalonFX implements ClimbIO {
   private final Servo climbExtender = new Servo(CANandPowerPorts.CLIMB_SERVO);
   private final TalonFX climber = new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber());
-  private final PIDController pid = new PIDController(0, 0, 0);
+  private final PIDController pid = new PIDController(4, 0, .5);
   private final DutyCycleEncoder climbEncoder = new DutyCycleEncoder(3);
 
   public final int[] powerPorts = {CANandPowerPorts.CLIMB.getPowerPort()};
@@ -43,7 +43,7 @@ public class ClimbIOTalonFX implements ClimbIO {
 
   @Override
   public void twistMotorToPosition(double position) {
-    climber.setControl(new DutyCycleOut(pid.calculate(climbEncoder.get(), position)));
+    climber.setControl(new DutyCycleOut(-pid.calculate(climbEncoder.get(), position)));
   }
 
   @Override

@@ -44,6 +44,10 @@ public class Climb extends RBSISubsystem {
     }
   }
 
+  public void stop() {
+    io.setMotorPercent(0);
+  }
+
   @Override
   public int[] getPowerPorts() {
     return io.powerPorts;

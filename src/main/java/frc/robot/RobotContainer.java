@@ -45,6 +45,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
+import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
@@ -420,6 +421,23 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     // Operator A Button :>> Elevator to Level
+
+    operatorController
+        .x()
+        .whileTrue(
+            Commands.runEnd(
+                () -> m_climber.twistToPosition(ClimbConstants.stowClimb),
+                () -> m_climber.stop(),
+                m_climber));
+
+    operatorController
+        .b()
+        .whileTrue(
+            Commands.runEnd(
+                () -> m_climber.twistToPosition(ClimbConstants.startClimb),
+                () -> m_climber.stop(),
+                m_climber));
+
     operatorController
         .a()
         .whileTrue(

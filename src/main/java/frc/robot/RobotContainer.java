@@ -87,38 +87,6 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
 
-  // **** This is a Pathplanner On-the-Fly Command ****/
-  // Create a list of waypoints from poses. Each pose represents one waypoint.
-  // The rotation component of the pose should be the direction of travel. Do not use
-  // holonomic rotation.
-  List<Waypoint> what =
-      PathPlannerPath.waypointsFromPoses(
-          new Pose2d(1, 1, Rotation2d.fromDegrees(0)), new Pose2d(2, 2, Rotation2d.fromDegrees(0)));
-
-  PathConstraints constraints =
-      new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
-  // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can
-  // also use unlimited constraints, only limited by motor torque and nominal battery
-  // voltage
-
-  // Create the path using the waypoints created above
-  PathPlannerPath Squirtle =
-      new PathPlannerPath(
-          what,
-          constraints,
-          null, // The ideal starting state, this is only relevant for pre-planned paths,
-          // so
-          // can be null for on-the-fly paths.
-          new GoalEndState(
-              0.0,
-              Rotation2d.fromDegrees(
-                  180)) // Goal end state. You can set a holonomic rotation here. If
-          // using a
-          // differential drivetrain, the rotation will have no effect.
-          );
-
-  // Prevent the path from being flipped if the coordinates are already correct
-
   /** Define the Driver and, optionally, the Operator/Co-Driver Controllers */
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
   public final CommandXboxController driverController = new CommandXboxController(0); // Main Driver
@@ -144,13 +112,14 @@ public class RobotContainer {
 
   /** Declare the robot subsystems here ************************************ */
   // These are the "Active Subsystems" that the robot controlls
-  private final Drive m_drivebase;
+
 
   private final Elevator m_elevator;
   private final CoralScorer m_coralScorer;
   private final Intake m_intake;
   private final AlgaeMech m_algaeMech;
   private final Climb m_climber;
+  private final Drive m_drivebase;
 
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
@@ -176,8 +145,8 @@ public class RobotContainer {
    * Constructor for the Robot Container. This container holds subsystems, opertator interface
    * devices, and commands.
    */
+  Pose2d scuffed;
   public RobotContainer() {
-    Squirtle.preventFlipping = true;
     // Instantiate Robot Subsystems based on RobotType
     switch (Constants.getMode()) {
       case REAL:
@@ -285,6 +254,17 @@ public class RobotContainer {
             "Incorrect AUTO type selected in Constants: " + Constants.getAutoType());
     }
 
+  // **** This is a Pathplanner On-the-Fly Command ****/
+  // Create a list of waypoints from poses. Each pose represents one waypoint.
+  // The rotation component of the pose should be the direction of travel. Do not use
+  // holonomic rotation.
+  List<Waypoint> what;
+  PathConstraints constraints =
+      new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+  // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can
+  // also use unlimited constraints, only limited by motor torque and nominal battery
+  // voltage
+
     // Set up subsystem overrides
     m_elevator.setOverrides(elevatorDisable);
     m_intake.setOverrides(intakePivotDisable);
@@ -297,7 +277,32 @@ public class RobotContainer {
     definesysIdRoutines();
     // Configure the button and trigger bindings
     configureBindings();
+    what =
+    PathPlannerPath.waypointsFromPoses(
+     m_drivebase.getPose(), new Pose2d(2, 2, Rotation2d.fromDegrees(0)));
+
+
+  // Create the path using the waypoints created above
+  PathPlannerPath Squirtle =
+  new PathPlannerPath(
+      what,
+      constraints,
+      null, // The ideal starting state, this is only relevant for pre-planned paths,
+      // so
+      // can be null for on-the-fly paths.
+      new GoalEndState(
+          0.0,
+          Rotation2d.fromDegrees(
+              180)) // Goal end state. You can set a holonomic rotation here. If
+      // using a
+      // differential drivetrain, the rotation will have no effect.
+      );
+
+// Prevent the path from being flipped if the coordinates are already correct
+
+Squirtle.preventFlipping = true;
   }
+  
 
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
   private void defineAutoCommands() {
@@ -561,19 +566,20 @@ public class RobotContainer {
     // the two driver controller bumpers below make it so when you let go of either button the
     // intake pivot will go to a resting posistion
     driverController.leftStick().whileTrue(AutoBuilder.followPath(Squirtle));
-}
+  }
 
-/**
-* Use this to pass the autonomous command to the main {@link Robot} class.
-*
-* @return the command to run in autonomous
-*/
-public Command getAutonomousCommandPathPlanner() {
-// Use the ``autoChooser`` to define your auto path from the SmartDashboard
-// return autoChooserPathPlanner.get();
-//  return new PathPlannerAuto("Consistancy Test");
-return AutoBuilder.followPath(Squirtle);
-}
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
+  public Command getAutonomousCommandPathPlanner() {
+    // Use the ``autoChooser`` to define your auto path from the SmartDashboard
+    // return autoChooserPathPlanner.get();
+    //  return new PathPlannerAuto("Consistancy Test");
+    return AutoBuilder.followPath(Squirtle);
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

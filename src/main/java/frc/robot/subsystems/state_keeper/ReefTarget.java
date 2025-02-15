@@ -141,6 +141,7 @@ public class ReefTarget extends VirtualSubsystem {
 
   /** Return the A-L pose needed to line up with the reef post */
   public Pose2d getReefPose() {
+    // TODO: Put all of the reef poses here, based on alliance
     switch (reefPostAll) {
       case 0:
         // Post A

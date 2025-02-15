@@ -479,8 +479,12 @@ public class RobotContainer {
             Commands.runOnce(
                 () -> m_algaeMech.toggleUp(!m_algaeMech.getToggleStow()), m_algaeMech));
 
+    // Operator POV U-D :>> Change the intended reef coral score location L-R
+    operatorController.povUp().onTrue(Commands.runOnce(() -> m_reefTarget.indexUp()));
+    operatorController.povDown().onTrue(Commands.runOnce(() -> m_reefTarget.indexDown()));
     // Operator POV L-R :>> Change the intended reef coral score location L-R
-    // operatorController.povLeft().onTrue(Commands.runOnce(() -> ))
+    operatorController.povLeft().onTrue(Commands.runOnce(() -> m_reefTarget.indexLeft()));
+    operatorController.povRight().onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()));
 
     // .alongWith(Commands.run(() -> m_coralScorer.setCoralPercent(0), m_algaeMech))
     // .withTimeout(1)

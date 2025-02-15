@@ -43,6 +43,7 @@ public class Elevator extends RBSISubsystem {
 
   /** Constructor */
   public Elevator(ElevatorIO io) {
+
     this.io = io;
 
     switch (Constants.getMode()) {
@@ -81,6 +82,13 @@ public class Elevator extends RBSISubsystem {
                 Seconds.of(2.0),
                 (state) -> Logger.recordOutput("Elevator/SysIdState", state.toString())),
             new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Units.Volts)), null, this));
+
+    setDefaultCommand(
+        new ElevatorCommand(
+            ElevatorConstants.kElevatorZeroHeight,
+            ElevatorConstants.kAcceleration.div(2), // Go slower on the way down
+            ElevatorConstants.kVelocity.div(2), // Go slower on the way down
+            this));
   }
 
   /** Set the override for this subsystem */
@@ -90,14 +98,7 @@ public class Elevator extends RBSISubsystem {
   }
 
   /** Initialize the default command for this subsystem */
-  public void initDefaultCommand() {
-    setDefaultCommand(
-        new ElevatorCommand(
-            ElevatorConstants.kElevatorZeroHeight,
-            ElevatorConstants.kAcceleration.div(2), // Go slower on the way down
-            ElevatorConstants.kVelocity.div(2), // Go slower on the way down
-            this));
-  }
+  public void initDefaultCommand() {}
 
   /** Periodic function called every robot cycle */
   @Override

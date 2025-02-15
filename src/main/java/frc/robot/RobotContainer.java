@@ -419,37 +419,7 @@ public class RobotContainer {
                     m_drivebase)
                 .ignoringDisable(true));
 
-    // Operator X Button :>> Elevator to L4
-    operatorController
-        .x()
-        .whileTrue(
-            Commands.parallel(
-                new ElevatorCommand(
-                    ElevatorConstants.kL4,
-                    ElevatorConstants.kAcceleration,
-                    ElevatorConstants.kVelocity,
-                    m_elevator),
-                Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(.85)
-                    .andThen(
-                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
-
-    // Operator B Button :>> Elevator to L3
-    operatorController
-        .b()
-        .whileTrue(
-            Commands.parallel(
-                new ElevatorCommand(
-                    ElevatorConstants.kL3,
-                    ElevatorConstants.kAcceleration,
-                    ElevatorConstants.kVelocity,
-                    m_elevator),
-                Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(.6)
-                    .andThen(
-                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
-
-    // Operator A Button :>> Elevator to L2
+    // Operator A Button :>> Elevator to Level
     operatorController
         .a()
         .whileTrue(

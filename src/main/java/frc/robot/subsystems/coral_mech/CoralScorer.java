@@ -27,12 +27,11 @@ public class CoralScorer extends RBSISubsystem {
   /** Constructor */
   public CoralScorer(CoralScorerIO io) {
     this.io = io;
+    setDefaultCommand(Commands.run(() -> automaticIntake(), this));
   }
 
   /** Initialize the default command for this subsystem */
-  public void initDefaultCommand() {
-    setDefaultCommand(Commands.run(() -> automaticIntake(), this));
-  }
+  public void initDefaultCommand() {}
 
   /** Periodic function called every robot cycle */
   @Override

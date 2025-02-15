@@ -116,7 +116,39 @@ public class ReefTarget extends VirtualSubsystem {
     return String.valueOf((char) ('A' + num - 1));
   }
 
-  /* Acutal useful things getter functions ********************************* */
+  /* Setter functions to set kept state from Auto Commands ***************** */
+  /**
+   * Set the reef level state keeper
+   *
+   * <p>This method should only be called from Autonomous Commands
+   *
+   * @param level The reef level (1-4) to which the robot will score
+   */
+  public void setReefLevel(int level) {
+    if (level >= 1 && level <= 4) {
+      reefLevel = level;
+    } else {
+      // Raise Alert that improper level was set
+    }
+  }
+
+  /**
+   * Set the reef post Alphabetic state keeper
+   *
+   * <p>This method should only be called from Autonomous Commands
+   *
+   * @param post The reef post (0-11) to which the robot will score
+   */
+  public void setReefPost(int post) {
+    if (post >= 0 && post <= 11) {
+      reefPostAll = post;
+      reefPostLR = post % 2; // A is the left
+    } else {
+      // Raise Alert that improper post was set
+    }
+  }
+
+  /* Getter functions to return kept state ********************************* */
   /** Return the elevator height needed to score the coral at the stored level */
   public Distance getElevatorHeight() {
     switch (reefLevel) {

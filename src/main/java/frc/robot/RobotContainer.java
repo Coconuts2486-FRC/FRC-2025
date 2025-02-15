@@ -560,20 +560,20 @@ public class RobotContainer {
 
     // the two driver controller bumpers below make it so when you let go of either button the
     // intake pivot will go to a resting posistion
-  }
+    driverController.leftStick().whileTrue(AutoBuilder.followPath(Squirtle));
+}
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommandPathPlanner() {
-    // Use the ``autoChooser`` to define your auto path from the SmartDashboard
-    return autoChooserPathPlanner.get();
-    // return new PathPlannerAuto("Consistancy Test");
-    // return AutoBuilder.followPath(woah);
-  }
-
+/**
+* Use this to pass the autonomous command to the main {@link Robot} class.
+*
+* @return the command to run in autonomous
+*/
+public Command getAutonomousCommandPathPlanner() {
+// Use the ``autoChooser`` to define your auto path from the SmartDashboard
+// return autoChooserPathPlanner.get();
+//  return new PathPlannerAuto("Consistancy Test");
+return AutoBuilder.followPath(Squirtle);
+}
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

@@ -14,6 +14,7 @@
 package frc.robot.subsystems.coral_mech;
 
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
 import org.littletonrobotics.junction.Logger;
 
@@ -38,6 +39,7 @@ public class CoralScorer extends RBSISubsystem {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("CoralScorer", inputs);
+    LED.setCoralReady(hasCoral);
   }
 
   public void runVolts(double volts) {

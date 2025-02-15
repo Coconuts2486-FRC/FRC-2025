@@ -16,6 +16,9 @@ package frc.robot.subsystems.LED;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 import com.ctre.phoenix.led.TwinkleOffAnimation;
 import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -31,6 +34,13 @@ public class LED extends VirtualSubsystem {
   private CANdleConfiguration config = new CANdleConfiguration();
   private boolean red;
   private double i = 0;
+  private static double lightReset;
+  private TwinkleOffAnimation col1 =
+      new TwinkleOffAnimation(0, 0, 255, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+  ;
+  private TwinkleOffAnimation col2 =
+      new TwinkleOffAnimation(255, 0, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+  ;
 
   private Optional<Alliance> alliance = Optional.empty();
   private Color allianceColor = Color.kGold;
@@ -75,35 +85,55 @@ public class LED extends VirtualSubsystem {
     }
 
     // Select LED mode =====================================================
-    off(); // Default to off
+    // off(); // Default to off
 
     if (estopped) {
       // E-STOP
       solid(Color.kRed);
     } else if (DriverStation.isDisabled()) {
       // When disabled
-      rainbowTwinkle();
+      pickTwoTwinkle();
     } else if (DriverStation.isAutonomous()) {
       // Autonomous Mode
       solid(Color.kBrown);
     } else {
       // Teleop Enabled
-      solid(Color.kForestGreen);
+      if (coralReady) {
+        candle.animate(
+            new TwinkleAnimation(
+                255, 255, 255, 0, 0.7, LEDConstants.nLED, TwinklePercent.Percent100));
+      } else {
+        solid(allianceColor);
+        // setRGB(255, 255, 255);
+      }
+
+      // solid(Color.kForestGreen);
     }
 
     // VARIOUS ALERT OR SCORING MODES
     // Elevator estop alert
-    if (elevatorEstopped) {
-      solid(Color.kRed);
+    // if (elevatorEstopped) {
+    //   solid(Color.kRed);
+    // }
+    // // Intake estop alert
+    // if (intakeEstopped) {
+    //   solid(Color.kRed);
+    // }
+    // // AlgaeMech estop alert
+    // if (algaemechEstopped) {
+    //   solid(Color.kRed);
+    // }
+  }
+
+  private boolean getLightReset() {
+    boolean reset;
+    if (candle.getCurrent() < .2 && lightReset > .7) {
+      reset = true;
+    } else {
+      reset = false;
     }
-    // Intake estop alert
-    if (intakeEstopped) {
-      solid(Color.kRed);
-    }
-    // AlgaeMech estop alert
-    if (algaemechEstopped) {
-      solid(Color.kRed);
-    }
+    lightReset = candle.getCurrent();
+    return reset;
   }
 
   public void rainbowTwinkle() {
@@ -127,7 +157,7 @@ public class LED extends VirtualSubsystem {
     // FireAnimation fire = new FireAnimation(1, .5, LEDConstants.nLED, .9, .5);
     // candle.setLEDs(0, 255, 0, 0, 0, LEDConstants.nLED);
     // candle.setLEDs(255, 255, 255, 0, 8, 44);
-    // RainbowAnimation rainbowAnim = new RainbowAnimation(1, .5, LEDConstants.nLED);
+    RainbowAnimation rainbowAnim = new RainbowAnimation(1, .5, LEDConstants.nLED);
     if (rand < .166) {
       candle.animate(twinkleR);
     } else if (rand < .332) {
@@ -141,6 +171,38 @@ public class LED extends VirtualSubsystem {
     } else {
       candle.animate(twinkleP);
     }
+    // candle.animate(rainbowAnim);
+  }
+
+  public void pickTwoTwinkle() {
+
+    double randLightSet = Math.random();
+
+    TwinkleOffAnimation twinkleR =
+        new TwinkleOffAnimation(255, 0, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+    TwinkleOffAnimation twinkleG =
+        new TwinkleOffAnimation(0, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+    TwinkleOffAnimation twinkleB =
+        new TwinkleOffAnimation(0, 0, 255, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+    TwinkleOffAnimation twinkleY =
+        new TwinkleOffAnimation(
+            255, 255, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+    TwinkleOffAnimation twinkleO =
+        new TwinkleOffAnimation(
+            255, 80, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+    TwinkleOffAnimation twinkleP =
+        new TwinkleOffAnimation(
+            48, 25, 52, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
+
+    col1 = twinkleO;
+
+    col2 = twinkleB;
+
+    if (randLightSet < .5) {
+      candle.animate(col1);
+    } else {
+      candle.animate(col2);
+    }
   }
 
   private void off() {
@@ -148,9 +210,18 @@ public class LED extends VirtualSubsystem {
     candle.setLEDs(0, 0, 0, 0, 0, LEDConstants.nLED);
   }
 
+  private void setRGB(int r, int g, int b) {
+    candle.clearAnimation(0);
+    candle.setLEDs(r, g, b, 0, 0, LEDConstants.nLED);
+  }
+
+  private double getCurrent() {
+    return candle.getCurrent();
+  }
+
   private void solid(Color color) {
+    candle.clearAnimation(0);
     if (color != null) {
-      candle.clearAnimation(0);
       candle.setLEDs(
           (int) color.red * 255,
           (int) color.green * 255,

@@ -21,12 +21,19 @@ public class CoralState extends VirtualSubsystem {
   // scoreStates[2] stores left or right state
   private int[] scoreStates;
 
+  /** Constructor */
   public CoralState() {
     scoreStates[0] = 0;
     scoreStates[1] = 0;
     scoreStates[2] = 0;
   }
 
+  /**
+   * Index the desired scoring state horizontally
+   *
+   * @param indexRight Index the desired scoring position to the right
+   * @param indexLeft Index the desired scoring position the left
+   */
   public void indexHorizontal(boolean indexRight, boolean indexLeft) {
     if (indexRight) {
       scoreStates[0] = scoreStates[0] + 1;
@@ -43,6 +50,12 @@ public class CoralState extends VirtualSubsystem {
     }
   }
 
+  /**
+   * Index the desired scoring state vertically
+   *
+   * @param indexUp Index the desired scoring position up
+   * @param indexDown Index the desired scoring position down
+   */
   public void indexUp(boolean indexUp, boolean indexDown) {
 
     scoreStates[1] = scoreStates[1] + 1;
@@ -67,6 +80,7 @@ public class CoralState extends VirtualSubsystem {
     scoreStates[2] = 0;
   }
 
+  /** Periodic function includes logging and publishing to NT */
   @Override
   public void periodic() {}
 

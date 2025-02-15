@@ -35,6 +35,7 @@ public class AlgaeMech extends RBSISubsystem {
   /** Constructor */
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
+    setDefaultCommand(Commands.run(() -> holdToggle(), this));
 
     //   // Configure SysId
     //   sysId =
@@ -54,9 +55,6 @@ public class AlgaeMech extends RBSISubsystem {
   }
 
   /** Initialize the default command for this subsystem */
-  public void initDefaultCommand() {
-    setDefaultCommand(Commands.run(() -> holdToggle(), this));
-  }
 
   /** Periodic function called every robot cycle */
   @Override

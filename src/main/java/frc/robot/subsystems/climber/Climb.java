@@ -19,18 +19,14 @@ public class Climb extends RBSISubsystem {
   private ClimbIO io;
   private boolean rachetToggle;
 
-
   public Climb(ClimbIO io) {
     this.io = io;
     io.configPID(1, 0, 0);
     rachetToggle = false;
   }
-  
-  @Override
-    public void periodic() {
-      
-    }
 
+  @Override
+  public void periodic() {}
 
   public void twistToPosition(double position) {
     io.twistMotorToPosition(position);

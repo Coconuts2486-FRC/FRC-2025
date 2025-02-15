@@ -13,8 +13,6 @@
 
 package frc.robot.subsystems.algae_mech;
 
-import static edu.wpi.first.units.Units.*;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.LED.LED;

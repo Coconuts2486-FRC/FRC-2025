@@ -69,6 +69,7 @@ public class LED extends VirtualSubsystem {
     return instance;
   }
 
+  /** Constructor */
   private LED() {
     red = false;
     config.stripType = LEDStripType.RGB; // set the strip type to RGB

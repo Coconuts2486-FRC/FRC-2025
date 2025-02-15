@@ -21,7 +21,6 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
 import static frc.robot.Constants.Cameras.*;
 
 import choreo.auto.AutoChooser;
@@ -69,6 +68,7 @@ import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
+import frc.robot.subsystems.state_keeper.ReefTarget;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -155,7 +155,7 @@ public class RobotContainer {
 
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
-  //   private final CoralState m_coralState;
+  private final ReefTarget m_reefTarget = ReefTarget.getInstance();
   private final Vision m_vision;
   private final PowerMonitoring m_power;
   private final LED m_led = LED.getInstance();
@@ -508,6 +508,9 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> m_algaeMech.toggleUp(!m_algaeMech.getToggleStow()), m_algaeMech));
+
+    // Operator POV L-R :>> Change the intended reef coral score location L-R
+    // operatorController.povLeft().onTrue(Commands.runOnce(() -> ))
 
     // .alongWith(Commands.run(() -> m_coralScorer.setCoralPercent(0), m_algaeMech))
     // .withTimeout(1)

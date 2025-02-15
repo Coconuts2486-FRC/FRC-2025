@@ -14,39 +14,18 @@
 package frc.robot.subsystems.state_keeper;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.networktables.IntegerPublisher;
-import edu.wpi.first.networktables.IntegerTopic;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.NetworkTablesJNI;
-import edu.wpi.first.networktables.StringPublisher;
-import edu.wpi.first.networktables.StringTopic;
 import edu.wpi.first.units.measure.Distance;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.util.VirtualSubsystem;
 import org.littletonrobotics.junction.Logger;
 
+/** This class stores information about the targeted scoring location on the REEF */
 public class ReefTarget extends VirtualSubsystem {
-  // scoreStates[0] stores horizontal state
-  // scoreStates[1] stores vertical state
-  // scoreStates[2] stores left or right state
-  private static int reefPostAll = 1;
-  private static int reefPostLR = 0;
-  private static int reefLevel = 1;
+  private int reefPostAll = 1;
+  private int reefPostLR = 0;
+  private int reefLevel = 1;
 
   private static ReefTarget instance;
-
-  // Network Tables Stuff
-  NetworkTableInstance inst = NetworkTableInstance.getDefault();
-  NetworkTable table = inst.getTable("reefstate");
-  // Get the various topics from the NetworkTableInstance
-  IntegerTopic topicLevel = inst.getIntegerTopic("/level");
-  IntegerTopic topicPostLR = inst.getIntegerTopic("/post_lr");
-  StringTopic topicPostAll = inst.getStringTopic("/post_all");
-  // Network Table Publishers
-  final IntegerPublisher p_rLevel = topicLevel.publish();
-  final IntegerPublisher p_rPostLR = topicPostLR.publish();
-  final StringPublisher p_rPostAll = topicPostAll.publish();
 
   public static ReefTarget getInstance() {
     if (instance == null) {
@@ -64,22 +43,16 @@ public class ReefTarget extends VirtualSubsystem {
     Logger.recordOutput("ReefTarget/Post_ALL", convertIntToAlphabet(reefPostAll));
     Logger.recordOutput("ReefTarget/Post_LR", reefPostLR);
     Logger.recordOutput("ReefTarget/Level", reefLevel);
-
-    // Publish to the NT directly
-    long time = NetworkTablesJNI.now();
-    p_rLevel.set(reefLevel, time);
-    p_rPostLR.set(reefPostLR, time);
-    p_rPostAll.set(convertIntToAlphabet(reefPostAll), time);
   }
 
   /** Index the desired scoring state up one */
   public void indexUp() {
-    reefLevel = Math.max(++reefLevel, 4);
+    reefLevel = Math.min(++reefLevel, 4);
   }
 
   /** Index the desired scoring state down one */
   public void indexDown() {
-    reefLevel = Math.min(--reefLevel, 1);
+    reefLevel = Math.max(--reefLevel, 1);
   }
 
   /**
@@ -88,7 +61,7 @@ public class ReefTarget extends VirtualSubsystem {
    * <p>Following standard number line conventions, right is a larger integer.
    */
   public void indexRight() {
-    reefPostLR = Math.max(++reefPostLR, 1);
+    reefPostLR = Math.min(++reefPostLR, 1);
     // Continuously wrap the A-L designation
     if (++reefPostAll > 12) {
       reefPostAll -= 12;

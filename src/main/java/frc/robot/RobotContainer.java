@@ -497,12 +497,21 @@ public class RobotContainer {
             Commands.runOnce(
                 () -> m_algaeMech.toggleUp(!m_algaeMech.getToggleStow()), m_algaeMech));
 
+    // These commands can run when disabled
     // Operator POV U-D :>> Change the intended reef coral score location L-R
-    operatorController.povUp().onTrue(Commands.runOnce(() -> m_reefTarget.indexUp()));
-    operatorController.povDown().onTrue(Commands.runOnce(() -> m_reefTarget.indexDown()));
+    operatorController
+        .povUp()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexUp()).ignoringDisable(true));
+    operatorController
+        .povDown()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexDown()).ignoringDisable(true));
     // Operator POV L-R :>> Change the intended reef coral score location L-R
-    operatorController.povLeft().onTrue(Commands.runOnce(() -> m_reefTarget.indexLeft()));
-    operatorController.povRight().onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()));
+    operatorController
+        .povLeft()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexLeft()).ignoringDisable(true));
+    operatorController
+        .povRight()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()).ignoringDisable(true));
 
     // .alongWith(Commands.run(() -> m_coralScorer.setCoralPercent(0), m_algaeMech))
     // .withTimeout(1)

@@ -69,6 +69,7 @@ public class LED extends VirtualSubsystem {
     return instance;
   }
 
+  /** Constructor */
   private LED() {
 
     red = false;

@@ -285,7 +285,8 @@ public class RobotContainer {
                 m_elevator)
             .until(m_elevator::getBottomStop));
     NamedCommands.registerCommand(
-        "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
+        "CoralIntake",
+        (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer).withTimeout(2)));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include

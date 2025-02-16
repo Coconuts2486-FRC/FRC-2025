@@ -72,7 +72,6 @@ import frc.robot.subsystems.intake.IntakeIOTalonFX;
 import frc.robot.subsystems.state_keeper.ReefTarget;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
-import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVision;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.util.Alert;
@@ -197,13 +196,13 @@ public class RobotContainer {
               case PHOTON ->
                   new Vision(
                       m_drivebase::addVisionMeasurement,
-                      new VisionIOPhotonVision(camera0Name, robotToCamera0),
-                      new VisionIOPhotonVision(camera1Name, robotToCamera1));
+                      new VisionIOPhotonVision(cameraElevatorL, robotToCameraEL),
+                      new VisionIOPhotonVision(cameraElevatorR, robotToCameraER),
+                      new VisionIOPhotonVision(cameraIntakeUp, robotToCameraIU),
+                      new VisionIOPhotonVision(cameraIntakeDown, robotToCameraID));
               case LIMELIGHT ->
                   new Vision(
-                      m_drivebase::addVisionMeasurement,
-                      new VisionIOLimelight(camera0Name, m_drivebase::getRotation),
-                      new VisionIOLimelight(camera1Name, m_drivebase::getRotation));
+                      m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
               case NONE ->
                   new Vision(
                       m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
@@ -226,8 +225,11 @@ public class RobotContainer {
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
-                new VisionIOPhotonVisionSim(camera0Name, robotToCamera0, m_drivebase::getPose),
-                new VisionIOPhotonVisionSim(camera1Name, robotToCamera1, m_drivebase::getPose));
+                new VisionIOPhotonVisionSim(cameraElevatorL, robotToCameraEL, m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(cameraElevatorR, robotToCameraER, m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(cameraIntakeUp, robotToCameraIU, m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(
+                    cameraIntakeDown, robotToCameraID, m_drivebase::getPose));
         m_accel = new Accelerometer(m_drivebase.getGyro());
         // m_coralState = new CoralState();
         break;

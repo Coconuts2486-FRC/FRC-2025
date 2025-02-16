@@ -15,19 +15,19 @@
                 }
               },
               {
-                "type": "deadline",
+                "type": "race",
                 "data": {
                   "commands": [
                     {
                       "type": "named",
                       "data": {
-                        "name": "CoralScorer"
+                        "name": "L4"
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "L4"
+                        "waitTime": 1.4
                       }
                     }
                   ]

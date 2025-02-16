@@ -381,7 +381,7 @@ public final class Constants {
 
     public static final double startClimb = .46;
     public static final double stowClimb = .72;
-    public static final double completeClimb = .78;
+    public static final double completeClimb = .82;
   }
 
   /** Accelerometer Constants ********************************************** */
@@ -439,9 +439,9 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(32, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(10, 0.0, 0.0);
     // new PIDConstants(DrivebaseConstants.kDriveP, 0.0, DrivebaseConstants.kDriveD);
-    public static final PIDConstants kPPsteerPID = new PIDConstants(5, 0.0, 0.0);
+    public static final PIDConstants kPPsteerPID = new PIDConstants(4, 0.0, 0.0);
     // new PIDConstants(DrivebaseConstants.kSteerP, 0.0, DrivebaseConstants.kSteerD);
     // 1 Cordinate = 1 meter
     // *** 1 meter = 39.3701 inches
@@ -601,7 +601,7 @@ public final class Constants {
     // This is where PWM-controlled devices (actuators, servos, pneumatics, etc.)
     // are defined
     // Example:
-    public static final int CLIMB_SERVO = 4;
+    public static final int CLIMB_SERVO = 0;
   }
 
   /** AprilTag Field Layout ************************************************ */

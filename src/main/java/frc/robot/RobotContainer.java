@@ -248,6 +248,45 @@ public class RobotContainer {
         // m_coralState = new CoralState();
         break;
     }
+
+    NamedCommands.registerCommand(
+        "L4",
+        Commands.parallel(
+            new ElevatorCommand(
+                ElevatorConstants.kL4,
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator),
+            Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+                .withTimeout(1)
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+    NamedCommands.registerCommand(
+        "L3",
+        // new ElevatorCommand(
+        //     ElevatorConstants.kL3,
+        //     ElevatorConstants.kAcceleration,
+        //     ElevatorConstants.kVelocity,
+        //     m_elevator));
+        Commands.print("L3"));
+    NamedCommands.registerCommand(
+        "L2",
+        // new ElevatorCommand(
+        //     ElevatorConstants.kL2,
+        //     ElevatorConstants.kAcceleration,
+        //     ElevatorConstants.kVelocity,
+        //     m_elevator));
+        Commands.print("L2"));
+    NamedCommands.registerCommand(
+        "Bottom",
+        new ElevatorCommand(
+                ElevatorConstants.kElevatorZeroHeight,
+                ElevatorConstants.kAcceleration.div(2.0),
+                ElevatorConstants.kVelocity.div(2.0),
+                m_elevator)
+            .until(m_elevator::getBottomStop));
+    NamedCommands.registerCommand(
+        "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
+
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
@@ -302,44 +341,7 @@ public class RobotContainer {
   }
 
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
-  private void defineAutoCommands() {
-
-    NamedCommands.registerCommand(
-        "L4",
-        // new ElevatorCommand(
-        //     ElevatorConstants.kL4,
-        //     ElevatorConstants.kAcceleration,
-        //     ElevatorConstants.kVelocity,
-        //     m_elevator));
-        Commands.print("L4"));
-    NamedCommands.registerCommand(
-        "L3",
-        // new ElevatorCommand(
-        //     ElevatorConstants.kL3,
-        //     ElevatorConstants.kAcceleration,
-        //     ElevatorConstants.kVelocity,
-        //     m_elevator));
-        Commands.print("L3"));
-    NamedCommands.registerCommand(
-        "L2",
-        // new ElevatorCommand(
-        //     ElevatorConstants.kL2,
-        //     ElevatorConstants.kAcceleration,
-        //     ElevatorConstants.kVelocity,
-        //     m_elevator));
-        Commands.print("L2"));
-    NamedCommands.registerCommand(
-        "Bottom",
-        // new ElevatorCommand(
-        //         ElevatorConstants.kElevatorZeroHeight,
-        //         ElevatorConstants.kAcceleration.div(4.0),
-        //         ElevatorConstants.kVelocity.div(4.0),
-        //         m_elevator)
-        //     .until(m_elevator::getBottomStop));
-        Commands.print("Bottom"));
-    NamedCommands.registerCommand("CoralScorer", (Commands.print("CoralScorer")));
-    NamedCommands.registerCommand("CoralDetect", (Commands.print("CoralDetect")));
-  }
+  private void defineAutoCommands() {}
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -423,18 +425,18 @@ public class RobotContainer {
     // Operator A Button :>> Elevator to Level
 
     operatorController
-        .x()
-        .whileTrue(
-            Commands.runEnd(
-                () -> m_climber.twistToPosition(ClimbConstants.stowClimb),
-                () -> m_climber.stop(),
-                m_climber));
-
-    operatorController
         .b()
         .whileTrue(
             Commands.runEnd(
                 () -> m_climber.twistToPosition(ClimbConstants.startClimb),
+                () -> m_climber.stop(),
+                m_climber));
+
+    operatorController
+        .x()
+        .whileTrue(
+            Commands.runEnd(
+                () -> m_climber.goUntilPosition(-.5, ClimbConstants.completeClimb),
                 () -> m_climber.stop(),
                 m_climber));
 
@@ -451,6 +453,12 @@ public class RobotContainer {
                     .withTimeout(.35)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+
+    operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber));
+
+    operatorController
+        .back()
+        .onTrue(Commands.runOnce(() -> m_climber.rachetToggle(.42), m_climber));
 
     // Operator Y Button :>> Elevator to Lower Algae
     operatorController

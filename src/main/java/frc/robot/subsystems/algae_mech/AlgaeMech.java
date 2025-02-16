@@ -108,7 +108,7 @@ public class AlgaeMech extends RBSISubsystem {
   public void holdToggle() {
     if (!disableSupplier.getAsBoolean()) {
       if (toggleStow == true) {
-        io.pivotToPosition(.29);
+        io.pivotToPosition(.209);
       } else {
         io.pivotToPosition(.35);
       }
@@ -129,7 +129,7 @@ public class AlgaeMech extends RBSISubsystem {
     }
   }
 
-  // Pivots to remove coral from reef
+  // Pivots to remove algae from reef
   public void pivotOffReef() {
     if (!disableSupplier.getAsBoolean()) {
       io.pivotToPosition(.521);

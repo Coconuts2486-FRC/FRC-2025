@@ -25,12 +25,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.35
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -47,7 +53,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "CoralDetect"
+                        "name": "CoralIntake"
                       }
                     },
                     {
@@ -57,6 +63,12 @@
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
                 }
               }
             ]
@@ -83,12 +95,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.35
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]

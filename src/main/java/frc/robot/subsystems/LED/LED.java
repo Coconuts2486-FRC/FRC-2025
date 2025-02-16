@@ -46,9 +46,26 @@ public class LED extends VirtualSubsystem {
       new TwinkleOffAnimation(255, 80, 0, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
   TwinkleOffAnimation twinkleP =
       new TwinkleOffAnimation(48, 25, 52, 0, .01, LEDConstants.nLED, TwinkleOffPercent.Percent100);
-
-  private TwinkleOffAnimation col1 = twinkleG;
-  private TwinkleOffAnimation col2 = twinkleB;
+  TwinkleOffAnimation twinkleFG =
+      new TwinkleOffAnimation(
+          ((int) Color.kForestGreen.red * 255),
+          ((int) Color.kForestGreen.green * 255),
+          ((int) Color.kForestGreen.blue * 255),
+          0,
+          .01,
+          LEDConstants.nLED,
+          TwinkleOffPercent.Percent100);
+  TwinkleOffAnimation twinkleCoral =
+      new TwinkleOffAnimation(
+          ((int) Color.kCoral.red * 255),
+          ((int) Color.kCoral.green * 255),
+          ((int) Color.kCoral.blue * 255),
+          0,
+          .01,
+          LEDConstants.nLED,
+          TwinkleOffPercent.Percent100);
+  private TwinkleOffAnimation col1 = twinkleB;
+  private TwinkleOffAnimation col2 = twinkleP;
 
   private Optional<Alliance> alliance = Optional.empty();
   private Color allianceColor = Color.kGold;

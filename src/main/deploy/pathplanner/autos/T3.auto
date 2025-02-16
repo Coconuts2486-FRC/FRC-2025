@@ -25,12 +25,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.35
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -41,22 +47,21 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station I"
-                      }
-                    }
-                  ]
+                  "pathName": "Station I"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
                 }
               }
             ]
@@ -83,12 +88,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.35
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]

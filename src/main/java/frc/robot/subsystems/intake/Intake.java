@@ -18,6 +18,7 @@ import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
@@ -34,6 +35,8 @@ public class Intake extends RBSISubsystem {
 
   public Intake(IntakeIO io) {
     this.io = io;
+
+    setDefaultCommand(Commands.run(() -> setPivotPosition(0.9), this));
 
     sysId =
         new SysIdRoutine(

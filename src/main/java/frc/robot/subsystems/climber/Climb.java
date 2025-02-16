@@ -32,16 +32,21 @@ public class Climb extends RBSISubsystem {
     io.twistMotorToPosition(position);
   }
 
+  public void goUntilPosition(double percent, double position) {
+    if (io.getEncoderPose() > position) {
+      io.setMotorPercent(0);
+    } else {
+      io.setMotorPercent(percent);
+    }
+  }
+
   public void manualControl(double controlVolts) {
     io.twistMotorVolts(controlVolts * 3);
   }
 
-  public void rachetToggle(boolean toggleSwitch) {
-    if (rachetToggle) {
-      io.turnClimbServo(0);
-    } else {
-      io.turnClimbServo(1);
-    }
+  public void rachetToggle(double position) {
+
+    io.turnClimbServo(position);
   }
 
   public void stop() {

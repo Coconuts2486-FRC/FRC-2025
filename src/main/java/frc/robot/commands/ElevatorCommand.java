@@ -66,5 +66,6 @@ public class ElevatorCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     elevator.stop();
+    System.out.println("Done");
   }
 }

@@ -26,6 +26,7 @@ public class IntakeCommand extends Command {
     this.intake = intake;
     this.wantedPosistion = wantedPosistion;
     this.rollerSpeed = rollerSpeed;
+    addRequirements(intake);
   }
 
   @Override

@@ -25,12 +25,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.4
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -41,22 +47,15 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station I"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
+                  "pathName": "Station I"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
                 }
               }
             ]
@@ -83,12 +82,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.4
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -99,35 +104,15 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station J"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
+                  "pathName": "Station J"
                 }
               },
               {
-                "type": "race",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
+                  "name": "CoralIntake"
                 }
               }
             ]
@@ -154,12 +139,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.4
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -170,35 +161,15 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station K"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
+                  "pathName": "Station K"
                 }
               },
               {
-                "type": "race",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
+                  "name": "CoralIntake"
                 }
               }
             ]
@@ -225,12 +196,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.4
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -241,35 +218,15 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station L"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
+                  "pathName": "Station L"
                 }
               },
               {
-                "type": "race",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
+                  "name": "CoralIntake"
                 }
               }
             ]

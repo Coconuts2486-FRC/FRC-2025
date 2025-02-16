@@ -25,12 +25,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.4
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -41,22 +47,15 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station I"
-                      }
-                    }
-                  ]
+                  "pathName": "Station I"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
                 }
               }
             ]
@@ -83,12 +82,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.4
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -99,22 +104,15 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station J"
-                      }
-                    }
-                  ]
+                  "pathName": "Station J"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
                 }
               }
             ]
@@ -141,12 +139,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.4
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]
@@ -157,22 +161,15 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station K"
-                      }
-                    }
-                  ]
+                  "pathName": "Station K"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
                 }
               }
             ]
@@ -199,12 +196,18 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "CoralScorer"
+                        "waitTime": 1.4
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
                 }
               }
             ]

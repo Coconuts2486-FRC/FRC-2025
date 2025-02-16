@@ -36,12 +36,12 @@
         "y": 7.19375
       },
       "prevControl": {
-        "x": 3.2618347800925918,
-        "y": 6.115501663773148
+        "x": 3.261385590034438,
+        "y": 6.115719018201746
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -49,8 +49,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 360.0,
     "nominalVoltage": 12.0,

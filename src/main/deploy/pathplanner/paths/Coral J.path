@@ -12,7 +12,7 @@
         "y": 6.871999999999999
       },
       "isLocked": false,
-      "linkedName": "Station"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 360.0,
     "nominalVoltage": 12.0,
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 126.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

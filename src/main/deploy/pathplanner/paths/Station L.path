@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.683,
-        "y": 5.060191333912037
+        "x": 3.6551364704713984,
+        "y": 5.108367402674788
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.480798660513728,
-        "y": 5.315929596185727
+        "x": 3.452935130985127,
+        "y": 5.364105664948478
       },
       "isLocked": false,
       "linkedName": "Coral L"
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 360.0,
     "nominalVoltage": 12.0,

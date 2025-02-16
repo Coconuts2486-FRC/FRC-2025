@@ -250,12 +250,12 @@ public class RobotContainer {
         // m_coralState = new CoralState();
         break;
     }
-
-    NamedCommands.registerCommand(
+    // Named Commands For Pathplanner
+    NamedCommands.registerCommand( // Runs elevator and coral scorer to score coral on L4.
         "L4",
-        Commands.parallel(
+        Commands.parallel( // Needs to be canceled with a race group right now, the race group wait timer is at 1.4 seconds.
             new ElevatorCommand(
-                ElevatorConstants.kL4,
+                ElevatorConstants.kL4, //Change this to kL2 or kL3 for those levels
                 ElevatorConstants.kAcceleration,
                 ElevatorConstants.kVelocity,
                 m_elevator),
@@ -264,31 +264,24 @@ public class RobotContainer {
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
     NamedCommands.registerCommand(
         "L3",
-        // new ElevatorCommand(
-        //     ElevatorConstants.kL3,
-        //     ElevatorConstants.kAcceleration,
-        //     ElevatorConstants.kVelocity,
-        //     m_elevator));
-        Commands.print("L3"));
+        Commands.print("L3")); // Just print commands for right now.
     NamedCommands.registerCommand(
         "L2",
-        // new ElevatorCommand(
-        //     ElevatorConstants.kL2,
-        //     ElevatorConstants.kAcceleration,
-        //     ElevatorConstants.kVelocity,
-        //     m_elevator));
         Commands.print("L2"));
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( //Brings the elevator to the ground. Put after the race group to score.
         "Bottom",
         new ElevatorCommand(
                 ElevatorConstants.kElevatorZeroHeight,
-                ElevatorConstants.kAcceleration.div(2.0),
+                ElevatorConstants.kAcceleration.div(2.0), //Lowering both of these increases elevator drop speed
                 ElevatorConstants.kVelocity.div(2.0),
                 m_elevator)
             .until(m_elevator::getBottomStop));
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( //Auto intake from source to desired position 
         "CoralIntake",
-        (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer).withTimeout(2)));
+        (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
+    NamedCommands.registerCommand ( //Ends once coral is detected
+        "CoralDetect",
+        (Commands.print("Detecting").until(() -> m_coralScorer.getLightStop()==false)));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include

@@ -53,9 +53,41 @@
                 }
               },
               {
-                "type": "named",
+                "type": "deadline",
                 "data": {
-                  "name": "CoralIntake"
+                  "commands": [
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "CoralDetect"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 1.0
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Coral J"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralIntake"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -65,12 +97,6 @@
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Coral J"
-                }
-              },
               {
                 "type": "race",
                 "data": {

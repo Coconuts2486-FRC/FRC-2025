@@ -280,7 +280,7 @@ public class RobotContainer {
     configureBindings();
     what =
         PathPlannerPath.waypointsFromPoses(
-            m_drivebase.getPose(), new Pose2d(5.3, 5.13, Rotation2d.fromDegrees(60)));
+            m_drivebase.getPose(), new Pose2d(13.6, 2.75, Rotation2d.fromDegrees(120)));
 
     // Create the path using the waypoints created above
     Squirtle =

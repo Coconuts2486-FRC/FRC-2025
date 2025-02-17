@@ -280,7 +280,7 @@ public class RobotContainer {
     configureBindings();
     what =
         PathPlannerPath.waypointsFromPoses(
-            m_drivebase.getPose(), new Pose2d(2, 2, Rotation2d.fromDegrees(0)));
+            m_drivebase.getPose(), new Pose2d(5.3, 5.13, Rotation2d.fromDegrees(60)));
 
     // Create the path using the waypoints created above
     Squirtle =
@@ -385,6 +385,9 @@ public class RobotContainer {
                     m_drivebase)
                 .ignoringDisable(true));
 
+    //Driver button a :>> follows on-the-fly command
+    driverController.a().whileTrue(AutoBuilder.followPath(Squirtle));
+
     // Operator X Button :>> Elevator to L4
     operatorController
         .x()
@@ -474,8 +477,6 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> m_algaeMech.toggleUp(!m_algaeMech.getToggleStow()), m_algaeMech));
-
-    driverController.leftStick().whileTrue(AutoBuilder.followPath(Squirtle));
 
     // .alongWith(Commands.run(() -> m_coralScorer.setCoralPercent(0), m_algaeMech))
     // .withTimeout(1)

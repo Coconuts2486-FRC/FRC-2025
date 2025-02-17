@@ -281,7 +281,7 @@ public class RobotContainer {
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
     NamedCommands.registerCommand( // Ends once coral is detected
         "CoralDetect",
-        (Commands.print("Detecting").until(() -> m_coralScorer.getLightStop() == false)));
+        new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
@@ -372,7 +372,7 @@ public class RobotContainer {
     // Driver B button :>> Drive Robot-Centric
     driverController
         .start()
-        .whileTrue(new DriveToPose(m_drivebase, () -> DriveToPositionConstatnts.k11r));
+        .whileTrue(new DriveToPose(m_drivebase, () -> DriveToPositionConstatnts.k11l));
 
     driverController
         .b()
@@ -466,7 +466,7 @@ public class RobotContainer {
         .whileTrue(
             Commands.parallel(
                 new ElevatorCommand(
-                    ElevatorConstants.KAlgae1,
+                    ElevatorConstants.kL4,
                     ElevatorConstants.kAcceleration,
                     ElevatorConstants.kVelocity,
                     m_elevator),

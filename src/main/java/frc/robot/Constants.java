@@ -188,7 +188,7 @@ public final class Constants {
     public static final Distance kL2 = Inches.of(48.125);
     public static final Distance kL3 = Inches.of(56.25);
     public static final Distance kL4 = Inches.of(68.125);
-    public static final Distance KAlgae1 = Inches.of(60.375);
+    public static final Distance KAlgae1 = Inches.of(58.375);
     public static final Distance KAlgae2 = Inches.of(65.75);
     // Motion Magic constants
     public static final LinearVelocity kVelocity = MetersPerSecond.of(1.8);
@@ -646,7 +646,7 @@ public final class Constants {
     public static Pose2d k10c = null;
 
     public static Pose2d k11r = new Pose2d(12.55, 2.71, Rotation2d.fromDegrees(-118.22));
-    public static Pose2d k11l = null;
+    public static Pose2d k11l = new Pose2d(12.22, 2.94, Rotation2d.fromDegrees(-120.6));
     public static Pose2d k11c = null;
 
     public static Pose2d k17r = null;

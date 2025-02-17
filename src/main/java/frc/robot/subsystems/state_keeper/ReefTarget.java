@@ -23,7 +23,8 @@ import org.littletonrobotics.junction.Logger;
 public class ReefTarget extends VirtualSubsystem {
   private int reefPostAll = 1;
   private int reefPostLR = 0;
-  private int reefLevel = 1;
+  private static int reefLevel = 1;
+  public double elevatorDelay = 0;
 
   private static ReefTarget instance;
 
@@ -39,6 +40,7 @@ public class ReefTarget extends VirtualSubsystem {
 
   /** Periodic function includes logging and publishing to NT */
   public synchronized void periodic() {
+    getElevatorDelay();
     // Log to AdvantageKit
     Logger.recordOutput("ReefTarget/Post_ALL", convertIntToAlphabet(reefPostAll));
     Logger.recordOutput("ReefTarget/Post_LR", reefPostLR);
@@ -48,11 +50,13 @@ public class ReefTarget extends VirtualSubsystem {
   /** Index the desired scoring state up one */
   public void indexUp() {
     reefLevel = Math.min(++reefLevel, 4);
+    System.out.println(reefLevel);
   }
 
   /** Index the desired scoring state down one */
   public void indexDown() {
     reefLevel = Math.max(--reefLevel, 1);
+    System.out.println(reefLevel);
   }
 
   /**
@@ -132,7 +136,20 @@ public class ReefTarget extends VirtualSubsystem {
       case 4:
         return ElevatorConstants.kL4;
       default:
-        return ElevatorConstants.kElevatorZeroHeight;
+        return ElevatorConstants.kL2;
+    }
+  }
+
+  public void getElevatorDelay() {
+
+    if (reefLevel == 2) {
+      elevatorDelay = .35;
+    } else if (reefLevel == 3) {
+      elevatorDelay = .55;
+    } else if (reefLevel == 4) {
+      elevatorDelay = .85;
+    } else {
+      elevatorDelay = .35;
     }
   }
 

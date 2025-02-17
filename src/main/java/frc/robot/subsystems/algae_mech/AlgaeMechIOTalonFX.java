@@ -18,7 +18,7 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
   private TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
   private TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
   private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(1);
-  private final PIDController pivotController = new PIDController(14, 0, 0);
+  private final PIDController pivotController = new PIDController(10, 0, 0);
 
   public AlgaeMechIOTalonFX() {
 

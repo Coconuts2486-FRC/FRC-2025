@@ -46,9 +46,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.ClimbConstants;
+import frc.robot.Constants.DriveToPositionConstatnts;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.DriveToPose;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.LED.LED;
@@ -253,35 +255,33 @@ public class RobotContainer {
     // Named Commands For Pathplanner
     NamedCommands.registerCommand( // Runs elevator and coral scorer to score coral on L4.
         "L4",
-        Commands.parallel( // Needs to be canceled with a race group right now, the race group wait timer is at 1.4 seconds.
+        Commands.parallel( // Needs to be canceled with a race group right now, the race group wait
+            // timer is at 1.4 seconds.
             new ElevatorCommand(
-                ElevatorConstants.kL4, //Change this to kL2 or kL3 for those levels
+                ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
                 ElevatorConstants.kAcceleration,
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                 .withTimeout(1)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
-    NamedCommands.registerCommand(
-        "L3",
-        Commands.print("L3")); // Just print commands for right now.
-    NamedCommands.registerCommand(
-        "L2",
-        Commands.print("L2"));
-    NamedCommands.registerCommand( //Brings the elevator to the ground. Put after the race group to score.
-        "Bottom",
-        new ElevatorCommand(
-                ElevatorConstants.kElevatorZeroHeight,
-                ElevatorConstants.kAcceleration.div(2.0), //Lowering both of these increases elevator drop speed
-                ElevatorConstants.kVelocity.div(2.0),
-                m_elevator)
-            .until(m_elevator::getBottomStop));
-    NamedCommands.registerCommand( //Auto intake from source to desired position 
-        "CoralIntake",
-        (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
-    NamedCommands.registerCommand ( //Ends once coral is detected
+    NamedCommands.registerCommand("L3", Commands.print("L3")); // Just print commands for right now.
+    NamedCommands.registerCommand("L2", Commands.print("L2"));
+    NamedCommands
+        .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
+            "Bottom",
+            new ElevatorCommand(
+                    ElevatorConstants.kElevatorZeroHeight,
+                    ElevatorConstants.kAcceleration.div(
+                        2.0), // Lowering both of these increases elevator drop speed
+                    ElevatorConstants.kVelocity.div(2.0),
+                    m_elevator)
+                .until(m_elevator::getBottomStop));
+    NamedCommands.registerCommand( // Auto intake from source to desired position
+        "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
+    NamedCommands.registerCommand( // Ends once coral is detected
         "CoralDetect",
-        (Commands.print("Detecting").until(() -> m_coralScorer.getLightStop()==false)));
+        (Commands.print("Detecting").until(() -> m_coralScorer.getLightStop() == false)));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
@@ -371,6 +371,10 @@ public class RobotContainer {
 
     // Driver B button :>> Drive Robot-Centric
     driverController
+        .start()
+        .whileTrue(new DriveToPose(m_drivebase, () -> DriveToPositionConstatnts.k11r));
+
+    driverController
         .b()
         .onTrue(
             Commands.runOnce(
@@ -446,7 +450,7 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(.35)
+                    .withTimeout(.36)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 

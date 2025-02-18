@@ -1,0 +1,5 @@
+This directory contains the PhotonVision calibration files that are in use on
+the Orange Pi's.  They are listed by camera name, which is shown on the label
+on the back of each camera and in PhotonVision.  In case one of the Orange
+Pi's goes belly up, this directory contains the calibrations for quick transfer
+to the replacement device.

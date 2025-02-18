@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start I"
+                  "pathName": "Start G"
                 }
               },
               {
@@ -49,7 +49,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Station I"
+                  "pathName": "ZBCrazy Station G1"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ZBCrazy Station G2"
                 }
               },
               {
@@ -71,14 +77,14 @@
                             "data": {
                               "waitTime": 2.0
                             }
-                          },
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Coral J"
-                            }
                           }
                         ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ZBCrazy Coral B1"
                       }
                     },
                     {
@@ -97,6 +103,12 @@
           "type": "sequential",
           "data": {
             "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ZBCrazy Coral B2"
+                }
+              },
               {
                 "type": "race",
                 "data": {
@@ -129,6 +141,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "T",
+  "folder": null,
   "choreoAuto": false
 }

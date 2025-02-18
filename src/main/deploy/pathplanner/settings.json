@@ -6,6 +6,7 @@
     "Matrix Coral",
     "Matrix Start",
     "Matrix Station",
+    "Crazy 2",
     "Tests"
   ],
   "autoFolders": [
@@ -17,7 +18,7 @@
   "defaultMaxAngVel": 720.0,
   "defaultMaxAngAccel": 360.0,
   "defaultNominalVoltage": 12.0,
-  "robotMass": 45.0,
+  "robotMass": 50.35,
   "robotMOI": 6.883,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.048,

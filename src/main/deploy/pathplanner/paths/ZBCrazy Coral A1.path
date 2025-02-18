@@ -3,52 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 6.0
+        "x": 0.7019999999999998,
+        "y": 6.647749999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.646117799389556,
-        "y": 6.078108913222898
+        "x": 0.6435,
+        "y": 6.199249999999999
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Crazy HA"
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 7.0
+        "x": 0.53625,
+        "y": 5.0097499999999995
       },
       "prevControl": {
-        "x": 6.255959605612638,
-        "y": 6.441685728180104
+        "x": 0.5167500000000002,
+        "y": 5.858
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Crazy A"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6233463035019446,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 720.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Tests",
+  "folder": "Crazy 2",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 0.0,
+    "rotation": 126.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

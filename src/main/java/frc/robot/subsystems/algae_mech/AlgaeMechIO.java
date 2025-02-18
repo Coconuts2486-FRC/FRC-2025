@@ -55,6 +55,6 @@ public interface AlgaeMechIO {
   }
 
   public default double getEncoderPose() {
-    return 0.0;
+    return .209;
   }
 }

@@ -23,7 +23,7 @@ import org.littletonrobotics.junction.Logger;
 public class ReefTarget extends VirtualSubsystem {
   private int reefPostAll = 1;
   private int reefPostLR = 0;
-  private static int reefLevel = 1;
+  private int reefLevel = 1;
   public double elevatorDelay = 0;
 
   private static ReefTarget instance;
@@ -45,6 +45,7 @@ public class ReefTarget extends VirtualSubsystem {
     Logger.recordOutput("ReefTarget/Post_ALL", convertIntToAlphabet(reefPostAll));
     Logger.recordOutput("ReefTarget/Post_LR", reefPostLR);
     Logger.recordOutput("ReefTarget/Level", reefLevel);
+    Logger.recordOutput("ReefTarget/ElevatorHeight", getElevatorHeight());
   }
 
   /** Index the desired scoring state up one */

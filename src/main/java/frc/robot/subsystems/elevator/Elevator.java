@@ -85,7 +85,7 @@ public class Elevator extends RBSISubsystem {
 
     setDefaultCommand(
         new ElevatorCommand(
-            ElevatorConstants.kElevatorZeroHeight,
+            () -> ElevatorConstants.kElevatorZeroHeight,
             ElevatorConstants.kAcceleration.div(2), // Go slower on the way down
             ElevatorConstants.kVelocity.div(2), // Go slower on the way down
             this));
@@ -103,6 +103,9 @@ public class Elevator extends RBSISubsystem {
   /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
+    // Log the execution time
+    long start = System.nanoTime();
+
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
     Logger.recordOutput("Overrides/Elevator", !disableOverride.getAsBoolean());
@@ -113,6 +116,11 @@ public class Elevator extends RBSISubsystem {
       setCoast();
       LED.setElevatorEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/ElevatorCodeMS", (double) timeElapsed / 1.e6);
   }
 
   /**

@@ -57,6 +57,8 @@ public class AlgaeMech extends RBSISubsystem {
   /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
+    // Log the execution time
+    long start = System.nanoTime();
 
     io.updateInputs(inputs);
     Logger.processInputs("AlgaeMech", inputs);
@@ -67,6 +69,11 @@ public class AlgaeMech extends RBSISubsystem {
       stop();
       LED.setAgaeMechEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/AlgaeCodeMS", (double) timeElapsed / 1.e6);
   }
 
   public void stop() {

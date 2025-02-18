@@ -46,6 +46,9 @@ public class VisionIOPhotonVision implements VisionIO {
   public void updateInputs(VisionIOInputs inputs) {
     inputs.connected = camera.isConnected();
 
+    // TODO: Find the expensive function / object, and initialize it on robot/class
+    // initialization!!!
+
     // Read new camera observations
     Set<Short> tagIds = new HashSet<>();
     List<PoseObservation> poseObservations = new LinkedList<>();

@@ -21,6 +21,7 @@ import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.elevator.Elevator;
+import java.util.function.Supplier;
 
 public class ElevatorCommand extends Command {
 
@@ -30,11 +31,11 @@ public class ElevatorCommand extends Command {
   private final Elevator elevator;
 
   public ElevatorCommand(
-      Distance position,
+      Supplier<Distance> position,
       LinearAcceleration acceleration,
       LinearVelocity velocity,
       Elevator elevator) {
-    this.position = position;
+    this.position = position.get();
     this.acceleration = acceleration;
     this.velocity = velocity;
     this.elevator = elevator;

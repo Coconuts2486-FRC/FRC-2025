@@ -210,6 +210,9 @@ public class Drive extends SubsystemBase {
   /** Periodic function that is called each robot cycle by the command scheduler */
   @Override
   public void periodic() {
+    // Log the execution time
+    long start = System.nanoTime();
+
     odometryLock.lock(); // Prevents odometry updates while reading data
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);
@@ -264,6 +267,11 @@ public class Drive extends SubsystemBase {
 
     // Update gyro alert
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.getMode() != Mode.SIM);
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/DriveCodeMS", (double) timeElapsed / 1.e6);
   }
 
   /** Drive Base Action Functions ****************************************** */

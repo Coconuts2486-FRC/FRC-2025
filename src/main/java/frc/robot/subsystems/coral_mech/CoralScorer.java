@@ -36,9 +36,18 @@ public class CoralScorer extends RBSISubsystem {
   /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
+
+    // Log the execution time
+    long start = System.nanoTime();
+
     io.updateInputs(inputs);
     Logger.processInputs("CoralScorer", inputs);
     LED.setCoralReady(hasCoral);
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/CoralCodeMS", (double) timeElapsed / 1.e6);
   }
 
   public void runVolts(double volts) {

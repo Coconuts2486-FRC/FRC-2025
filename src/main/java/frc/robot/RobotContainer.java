@@ -258,7 +258,7 @@ public class RobotContainer {
         Commands.parallel( // Needs to be canceled with a race group right now, the race group wait
             // timer is at 1.4 seconds.
             new ElevatorCommand(
-                ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
+                () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
                 ElevatorConstants.kAcceleration,
                 ElevatorConstants.kVelocity,
                 m_elevator),
@@ -271,7 +271,7 @@ public class RobotContainer {
         .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
             "Bottom",
             new ElevatorCommand(
-                    ElevatorConstants.kElevatorZeroHeight,
+                    () -> ElevatorConstants.kElevatorZeroHeight,
                     ElevatorConstants.kAcceleration.div(
                         2.0), // Lowering both of these increases elevator drop speed
                     ElevatorConstants.kVelocity.div(2.0),
@@ -445,7 +445,7 @@ public class RobotContainer {
         .whileTrue(
             Commands.parallel(
                 new ElevatorCommand(
-                    ElevatorConstants.kL2,
+                    m_reefTarget::getElevatorHeight, // Send height as supplier
                     ElevatorConstants.kAcceleration,
                     ElevatorConstants.kVelocity,
                     m_elevator),
@@ -466,7 +466,7 @@ public class RobotContainer {
         .whileTrue(
             Commands.parallel(
                 new ElevatorCommand(
-                    ElevatorConstants.KAlgae1,
+                    () -> ElevatorConstants.KAlgae1,
                     ElevatorConstants.kAcceleration,
                     ElevatorConstants.kVelocity,
                     m_elevator),

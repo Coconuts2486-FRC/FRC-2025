@@ -26,6 +26,7 @@ import frc.robot.Constants.CANandPowerPorts;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.util.VirtualSubsystem;
 import java.util.Optional;
+import org.littletonrobotics.junction.Logger;
 
 public class LED extends VirtualSubsystem {
   private CANdle candle = new CANdle(CANandPowerPorts.LED.getDeviceNumber());
@@ -96,6 +97,9 @@ public class LED extends VirtualSubsystem {
   }
 
   public synchronized void periodic() {
+    // Log the execution time
+    long start = System.nanoTime();
+
     // Update alliance color
     // if (DriverStation.isFMSAttached()) {
     alliance = DriverStation.getAlliance();
@@ -148,6 +152,11 @@ public class LED extends VirtualSubsystem {
     // if (algaemechEstopped) {
     //   solid(Color.kRed);
     // }
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/LEDCodeMS", (double) timeElapsed / 1.e6);
   }
 
   private boolean getLightReset() {

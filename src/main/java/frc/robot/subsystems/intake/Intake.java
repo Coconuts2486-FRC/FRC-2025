@@ -33,6 +33,7 @@ public class Intake extends RBSISubsystem {
   private BooleanSupplier disableSupplier = DriverStation::isDisabled;
   private BooleanSupplier disableOverride;
 
+  /** Mechanism Constructor */
   public Intake(IntakeIO io) {
     this.io = io;
 
@@ -90,7 +91,7 @@ public class Intake extends RBSISubsystem {
    */
   public void rollerSpeed(double speed) {
     if (!disableSupplier.getAsBoolean()) {
-      io.rollerSpeed(speed);
+      io.rollerDutyCycle(speed);
     }
   }
 
@@ -131,7 +132,7 @@ public class Intake extends RBSISubsystem {
   ;
 
   public double getEncoder() {
-    return io.getEncoder();
+    return io.getEncoderValue();
   }
 
   @Override

@@ -43,15 +43,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "CoralIntake"
-                }
-              },
               {
                 "type": "path",
                 "data": {

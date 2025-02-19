@@ -67,12 +67,6 @@
                             }
                           },
                           {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 2.0
-                            }
-                          },
-                          {
                             "type": "path",
                             "data": {
                               "pathName": "Coral J"
@@ -116,18 +110,6 @@
                             "data": {
                               "name": "CoralDetect"
                             }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 2.0
-                            }
-                          },
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Coral K"
-                            }
                           }
                         ]
                       }
@@ -139,38 +121,6 @@
                       }
                     }
                   ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L4"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.4
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Bottom"
                 }
               }
             ]

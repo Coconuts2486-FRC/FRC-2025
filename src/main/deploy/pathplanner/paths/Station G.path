@@ -25,7 +25,7 @@
       },
       "nextControl": {
         "x": 5.000520314085312,
-        "y": 0.45234290747465544
+        "y": 0.4523429074746553
       },
       "isLocked": false,
       "linkedName": "Gpoint"
@@ -52,7 +52,7 @@
     "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 360.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },

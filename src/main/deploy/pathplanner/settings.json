@@ -10,13 +10,14 @@
     "Tests"
   ],
   "autoFolders": [
+    "Crazy 2",
     "T",
     "Test Autos"
   ],
   "defaultMaxVel": 2.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 720.0,
-  "defaultMaxAngAccel": 360.0,
+  "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
   "robotMass": 50.35,
   "robotMOI": 6.883,

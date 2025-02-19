@@ -71,12 +71,6 @@
                             "data": {
                               "name": "CoralDetect"
                             }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 2.0
-                            }
                           }
                         ]
                       }
@@ -141,6 +135,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Crazy 2",
   "choreoAuto": false
 }

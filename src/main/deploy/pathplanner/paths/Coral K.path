@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 1.32,
-        "y": 7.06
+        "y": 7.08
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.1822988252698803,
-        "y": 6.489942053835605
+        "y": 6.509942053835606
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Station Top"
     },
     {
       "anchor": {
-        "x": 3.9493503376588985,
-        "y": 5.285902740995762
+        "x": 3.96,
+        "y": 5.26
       },
       "prevControl": {
-        "x": 3.494736518415095,
-        "y": 5.609281834760594
+        "x": 3.5053861807561963,
+        "y": 5.583379093764832
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 360.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },

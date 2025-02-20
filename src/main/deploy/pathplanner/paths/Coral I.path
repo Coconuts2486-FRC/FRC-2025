@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.0335000000000003,
-        "y": 7.19375
+        "x": 1.32,
+        "y": 7.08
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8855580777772394,
-        "y": 6.606974638889406
+        "x": 2.1720580777772396,
+        "y": 6.493224638889407
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Station Top"
     },
     {
       "anchor": {
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 360.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },

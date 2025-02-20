@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.088113459321108,
-        "y": 5.211523838321585
+        "x": 5.101546947337963,
+        "y": 5.345004340277779
       },
       "isLocked": false,
       "linkedName": "Coral I"
@@ -20,22 +20,18 @@
         "y": 7.08
       },
       "prevControl": {
-        "x": 2.250450973546715,
-        "y": 6.631866576759489
+        "x": 2.251029369212962,
+        "y": 6.647946686921296
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Station Top"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.1392996108949402,
+      "waypointRelativePos": 0.17066446940104169,
       "rotationDegrees": 59.99999999999999
-    },
-    {
-      "waypointRelativePos": 0.5002498750624635,
-      "rotationDegrees": 119.99999999999999
     }
   ],
   "constraintZones": [],
@@ -59,5 +55,5 @@
     "velocity": 0.0,
     "rotation": 59.99999999999999
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

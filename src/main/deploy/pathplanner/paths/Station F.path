@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.721415889404325,
-        "y": 2.6067436567638773
+        "x": 4.684383155454372,
+        "y": 2.634500554089723
       },
       "isLocked": false,
       "linkedName": "Coral F"
     },
     {
       "anchor": {
-        "x": 1.6252787822001746,
-        "y": 0.6846960119263781
+        "x": 1.32,
+        "y": 0.9199999999999999
       },
       "prevControl": {
-        "x": 2.1805826833919486,
-        "y": 1.0674808187985327
+        "x": 1.7649355763806067,
+        "y": 1.1448575679304396
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Station Bottom"
     }
   ],
   "rotationTargets": [
@@ -38,10 +38,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 360.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },

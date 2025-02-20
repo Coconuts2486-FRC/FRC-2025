@@ -4,15 +4,15 @@
     {
       "anchor": {
         "x": 1.32,
-        "y": 7.06
+        "y": 7.08
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.170185508702348,
-        "y": 6.703061653269929
+        "y": 6.723061653269929
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Station Top"
     },
     {
       "anchor": {
@@ -36,7 +36,7 @@
     "maxVelocity": 2.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 360.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 126.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

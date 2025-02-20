@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start I"
+                  "pathName": "Start F"
                 }
               },
               {
@@ -53,7 +53,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station I"
+                        "pathName": "Station F"
                       }
                     }
                   ]
@@ -76,7 +76,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Coral J"
+                              "pathName": "Coral E"
                             }
                           }
                         ]
@@ -130,7 +130,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station J"
+                        "pathName": "Station E"
                       }
                     }
                   ]
@@ -153,7 +153,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Coral K"
+                              "pathName": "Coral D"
                             }
                           }
                         ]
@@ -191,35 +191,15 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Bottom"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station K"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
+            "name": "Bottom"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "T",
+  "folder": "B",
   "choreoAuto": false
 }

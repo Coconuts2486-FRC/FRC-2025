@@ -32,12 +32,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Bottom"
-                }
               }
             ]
           }
@@ -47,9 +41,22 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "parallel",
                 "data": {
-                  "pathName": "Station I"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Bottom"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Station I"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -102,12 +109,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Bottom"
-                }
               }
             ]
           }
@@ -117,9 +118,22 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "parallel",
                 "data": {
-                  "pathName": "Station J"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Bottom"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Station J"
+                      }
+                    }
+                  ]
                 }
               }
             ]

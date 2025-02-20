@@ -369,45 +369,42 @@ public class RobotContainer {
             () -> -driveStickX.value(),
             () -> -turnStickX.value()));
 
-
     /*  Driver Controls =================================== */
 
     // a (back right button) Drive To Position Command
-    //TODO change this to drive to returned command from ReefTarget
+    // TODO change this to drive to returned command from ReefTarget
     //
     driverController
         .a()
         .whileTrue(new DriveToPose(m_drivebase, () -> DriveToPositionConstatnts.k11l));
 
-
-        // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
-        driverController
-    .b()
-    .onTrue(Commands.runOnce(() -> m_reefTarget.indexLeft()).ignoringDisable(true));
+    // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
     driverController
-    .x()
-    .onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()).ignoringDisable(true));
-
-    //Drive to algae position (Back Left Bottom)
-       //TODO change this to drive to returned command from ReefTarget
+        .b()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexLeft()).ignoringDisable(true));
     driverController
-    .y()
-    .whileTrue(new DriveToPose(m_drivebase, () -> DriveToPositionConstatnts.k11l));
-      // Driver Right Bumper :>> Intake from the floor
-      driverController
-      .rightBumper()
-      .whileTrue(new IntakeCommand(m_intake, 0.25, -0.35))
-      .whileFalse(new IntakeCommand(m_intake, 0.9, 0).until(leftBumper));
+        .x()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()).ignoringDisable(true));
 
-  // Driver Left Bumper :>> Score L1
-  driverController
-      .leftBumper()
-      .whileTrue(
-          new IntakeCommand(m_intake, 0.75, 0)
-              .withTimeout(0.075)
-              .andThen(new IntakeCommand(m_intake, 0.75, 0.7)))
-      .whileFalse(new IntakeCommand(m_intake, 0.9, 0).until(rightBumper));
+    // Drive to algae position (Back Left Bottom)
+    // TODO change this to drive to returned command from ReefTarget
+    driverController
+        .y()
+        .whileTrue(new DriveToPose(m_drivebase, () -> DriveToPositionConstatnts.k11l));
+    // Driver Right Bumper :>> Intake from the floor
+    driverController
+        .rightBumper()
+        .whileTrue(new IntakeCommand(m_intake, 0.25, -0.35))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0).until(leftBumper));
 
+    // Driver Left Bumper :>> Score L1
+    driverController
+        .leftBumper()
+        .whileTrue(
+            new IntakeCommand(m_intake, 0.75, 0)
+                .withTimeout(0.075)
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)))
+        .whileFalse(new IntakeCommand(m_intake, 0.9, 0).until(rightBumper));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController
@@ -423,7 +420,7 @@ public class RobotContainer {
     //             m_drivebase));
 
     // Driver X button :>> Stop with wheels in X-Lock position
-   // driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
+    // driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
 
     // Driver RightStick :>> Coast the elevator while pressed
     // driverController
@@ -432,7 +429,6 @@ public class RobotContainer {
     //         Commands.startEnd(() -> m_elevator.setCoast(), m_elevator::setBrake, m_elevator)
     //             .ignoringDisable(true));
 
-  
     // Driver Y button :>> Manually Re-Zero the Gyro (DO NOT USE)
     // driverController
     //     .y()
@@ -440,35 +436,35 @@ public class RobotContainer {
     //         Commands.runOnce(
     //                 () ->
     //                     m_drivebase.resetPose(
-    //                         new Pose2d(m_drivebase.getPose().getTranslation(), new Rotation2d())),
+    //                         new Pose2d(m_drivebase.getPose().getTranslation(), new
+    // Rotation2d())),
     //                 m_drivebase)
     //             .ignoringDisable(true));
 
-        /* ================================================== */
+    /* ================================================== */
 
-        /* Co-Driver Controls================================ */
+    /* Co-Driver Controls================================ */
 
-    
     // Operator Y & A Button :>> Index elevator position up & down
     operatorController
-    .y()
-    .onTrue(Commands.runOnce(() -> m_reefTarget.indexUp()).ignoringDisable(true));
+        .y()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexUp()).ignoringDisable(true));
     operatorController
-    .a()
-    .onTrue(Commands.runOnce(() -> m_reefTarget.indexDown()).ignoringDisable(true));
+        .a()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexDown()).ignoringDisable(true));
 
-    operatorController.rightBumper()
-    .whileTrue(
-        Commands.parallel(
-            new ElevatorCommand(
-                m_reefTarget::getElevatorHeight, // Send height as supplier
-                ElevatorConstants.kAcceleration,
-                ElevatorConstants.kVelocity,
-                m_elevator),
-            Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(.35))
-                .andThen(
-                    Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer)));
+    operatorController
+        .rightBumper()
+        .whileTrue(
+            Commands.parallel(
+                    new ElevatorCommand(
+                        m_reefTarget::getElevatorHeight, // Send height as supplier
+                        ElevatorConstants.kAcceleration,
+                        ElevatorConstants.kVelocity,
+                        m_elevator),
+                    Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+                        .withTimeout(.35))
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer)));
 
     operatorController
         .start()
@@ -485,8 +481,6 @@ public class RobotContainer {
                 () -> m_climber.goUntilPosition(-.5, ClimbConstants.completeClimb),
                 () -> m_climber.stop(),
                 m_climber));
-
-       
 
     operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber));
 
@@ -537,8 +531,8 @@ public class RobotContainer {
 
     // These commands can run when disabled
     // Operator POV U-D :>> Change the intended reef coral score location L-R
-   
-        /* ================================================== */
+
+    /* ================================================== */
 
     // .alongWith(Commands.run(() -> m_coralScorer.setCoralPercent(0), m_algaeMech))
     // .withTimeout(1)

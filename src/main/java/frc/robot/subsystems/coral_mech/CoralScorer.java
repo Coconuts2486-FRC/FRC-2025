@@ -13,14 +13,18 @@
 
 package frc.robot.subsystems.coral_mech;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
+import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;
 
 public class CoralScorer extends RBSISubsystem {
   private final CoralScorerIO io;
   private final CoralScorerIOInputsAutoLogged inputs = new CoralScorerIOInputsAutoLogged();
+  private int delaySetup;
+  private Timer timer = new Timer();
 
   private boolean hasCoral = false;
 
@@ -32,6 +36,21 @@ public class CoralScorer extends RBSISubsystem {
 
   /** Initialize the default command for this subsystem */
   public void initDefaultCommand() {}
+
+  public boolean coralDelay(DoubleSupplier delay) {
+    if (delaySetup == 1) {
+      timer.reset();
+      timer.start();
+      delaySetup = 2;
+    }
+    if (delaySetup == 2) {
+      if (timer.get() - delay.getAsDouble() >= 0) {
+        delaySetup = 1;
+        return true;
+      }
+    }
+    return false;
+  }
 
   /** Periodic function called every robot cycle */
   @Override

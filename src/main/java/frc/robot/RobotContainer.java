@@ -463,7 +463,7 @@ public class RobotContainer {
                         ElevatorConstants.kVelocity,
                         m_elevator),
                     Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                        .withTimeout(.35))
+                        .until(() -> m_coralScorer.coralDelay(() -> .35)))
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer)));
 
     operatorController
@@ -473,16 +473,20 @@ public class RobotContainer {
                 () -> m_climber.twistToPosition(ClimbConstants.startClimb),
                 () -> m_climber.stop(),
                 m_climber));
+    // .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(1), m_climber)));
 
     operatorController
-        .x()
+        .b()
         .whileTrue(
             Commands.runEnd(
                 () -> m_climber.goUntilPosition(-.5, ClimbConstants.completeClimb),
                 () -> m_climber.stop(),
                 m_climber));
+    // .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber)));
 
-    operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber));
+    operatorController.back().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber));
+
+    operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(1), m_climber));
 
     // Operator Y Button :>> Elevator to Lower Algae
     operatorController

@@ -32,6 +32,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -541,7 +542,7 @@ public final class Constants {
             Units.inchesToMeters(12.95 - 0.25),
             Units.inchesToMeters(11.375 + 1.75),
             Units.inchesToMeters(23.4),
-            new Rotation3d(0.0, Units.degreesToRadians(+25.0), 0.0));
+            new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0));
     public static Transform3d robotToCameraID =
         new Transform3d(
             Units.inchesToMeters(12.95),
@@ -625,53 +626,15 @@ public final class Constants {
 
   public static class DriveToPositionConstatnts {
 
-    public static Pose2d k6r = null;
-    public static Pose2d k6l = null;
-    public static Pose2d k6c = null;
-
-    public static Pose2d k7r = null;
-    public static Pose2d k7l = null;
-    public static Pose2d k7c = null;
-
-    public static Pose2d k8r = null;
-    public static Pose2d k8l = null;
-    public static Pose2d k8c = null;
-
-    public static Pose2d k9r = null;
-    public static Pose2d k9l = null;
-    public static Pose2d k9c = null;
-
-    public static Pose2d k10r = null;
-    public static Pose2d k10l = null;
-    public static Pose2d k10c = null;
+    public static Translation2d kLeftReefPost =
+        new Translation2d(Units.inchesToMeters(-16.0), Units.inchesToMeters(+7.0));
+    public static Translation2d kRightReefPost =
+        new Translation2d(Units.inchesToMeters(-16.0), Units.inchesToMeters(-7.0));
+    public static Translation2d kAlgaeGrab =
+        new Translation2d(Units.inchesToMeters(-16.0), Units.inchesToMeters(0.0));
 
     public static Pose2d k11r = new Pose2d(12.55, 2.71, Rotation2d.fromDegrees(-118.22));
     public static Pose2d k11l = new Pose2d(12.22, 2.94, Rotation2d.fromDegrees(-120.6));
-    public static Pose2d k11c = null;
-
-    public static Pose2d k17r = null;
-    public static Pose2d k17l = null;
-    public static Pose2d k17c = null;
-
-    public static Pose2d k18r = null;
-    public static Pose2d k18l = null;
-    public static Pose2d k18c = null;
-
-    public static Pose2d k19r = null;
-    public static Pose2d k19l = null;
-    public static Pose2d k19c = null;
-
-    public static Pose2d k20r = null;
-    public static Pose2d k20l = null;
-    public static Pose2d k20c = null;
-
-    public static Pose2d k21r = null;
-    public static Pose2d k21l = null;
-    public static Pose2d k21c = null;
-
-    public static Pose2d k22r = null;
-    public static Pose2d k22l = null;
-    public static Pose2d k22c = null;
   }
 
   /** AprilTag Field Layout ************************************************ */

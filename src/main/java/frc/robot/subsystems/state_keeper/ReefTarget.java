@@ -14,9 +14,17 @@
 package frc.robot.subsystems.state_keeper;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.Constants.AprilTagConstants;
+import frc.robot.Constants.DriveToPositionConstatnts;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.util.VirtualSubsystem;
+import java.util.Optional;
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 /** This class stores information about the targeted scoring location on the REEF */
@@ -163,45 +171,117 @@ public class ReefTarget extends VirtualSubsystem {
   }
 
   /** Return the A-L pose needed to line up with the reef post */
+  @AutoLogOutput(key = "Odometry/ReefScoringPose")
   public Pose2d getReefPose() {
-    // TODO: Put all of the reef poses here, based on alliance
     switch (reefPostAll) {
       case 0:
         // Post A
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 7;
+              case Blue -> 18;
+            },
+            ScoringPosition.LEFT);
+
       case 1:
         // Post B
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 7;
+              case Blue -> 18;
+            },
+            ScoringPosition.RIGHT);
+
       case 2:
         // Post C
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 8;
+              case Blue -> 17;
+            },
+            ScoringPosition.LEFT);
+
       case 3:
         // Post D
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 8;
+              case Blue -> 17;
+            },
+            ScoringPosition.RIGHT);
+
       case 4:
         // Post E
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 9;
+              case Blue -> 22;
+            },
+            ScoringPosition.LEFT);
+
       case 5:
         // Post F
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 9;
+              case Blue -> 22;
+            },
+            ScoringPosition.RIGHT);
+
       case 6:
         // Post G
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 10;
+              case Blue -> 21;
+            },
+            ScoringPosition.LEFT);
+
       case 7:
         // Post H
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 10;
+              case Blue -> 21;
+            },
+            ScoringPosition.RIGHT);
+
       case 8:
         // Post I
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 11;
+              case Blue -> 20;
+            },
+            ScoringPosition.LEFT);
+
       case 9:
         // Post J
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 11;
+              case Blue -> 20;
+            },
+            ScoringPosition.RIGHT);
+
       case 10:
         // Post K
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 6;
+              case Blue -> 19;
+            },
+            ScoringPosition.LEFT);
+
       case 11:
         // Post L
-        return new Pose2d();
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 6;
+              case Blue -> 19;
+            },
+            ScoringPosition.RIGHT);
+
       default:
         // Shouldn't run, but required case
         return new Pose2d();
@@ -221,5 +301,44 @@ public class ReefTarget extends VirtualSubsystem {
   /** Return the integer value of the reef post */
   public int getReefPostAll() {
     return reefPostAll;
+  }
+
+  /* Utility Functions ***************************************************** */
+  /** The scoring position at any one REEF face */
+  private enum ScoringPosition {
+    LEFT, // Left reef post (coral)
+    RIGHT, // Right reef post (coral)
+    CENTER // Center position (algae grab)
+  }
+
+  /**
+   * Compute the pose of the robot to score at the specified REEF station
+   *
+   * <p>This method takes the AprilTag pose from the field and applies a translation with respect to
+   * the tag to find the desired robot position.
+   *
+   * @param tagID The AprilTag ID of the REEF face at which we are to score
+   * @param position The `ScoringPosition` at which to place the robot (left post, right post, or
+   *     centered for algae grab)
+   */
+  private Pose2d computeReefPose(int tagID, ScoringPosition position) {
+    Optional<Pose3d> tagPose = AprilTagConstants.aprilTagLayout.getTagPose(tagID);
+
+    // For whatever reason, if the specified tag pose doesn't exist, return empty pose
+    if (tagPose.isEmpty()) {
+      return new Pose2d();
+    }
+
+    return tagPose
+        .get()
+        .toPose2d()
+        .transformBy(
+            new Transform2d(
+                switch (position) {
+                  case LEFT -> DriveToPositionConstatnts.kLeftReefPost;
+                  case RIGHT -> DriveToPositionConstatnts.kRightReefPost;
+                  case CENTER -> DriveToPositionConstatnts.kAlgaeGrab;
+                },
+                new Rotation2d()));
   }
 }

@@ -46,7 +46,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.Constants.ClimbConstants;
-import frc.robot.Constants.DriveToPositionConstatnts;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
@@ -376,7 +375,7 @@ public class RobotContainer {
     //
     driverController
         .a()
-        .whileTrue(new DriveToPose(m_drivebase, () -> DriveToPositionConstatnts.k11l));
+        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefCoralPose()));
 
     // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
     driverController
@@ -390,7 +389,7 @@ public class RobotContainer {
     // TODO change this to drive to returned command from ReefTarget
     driverController
         .y()
-        .whileTrue(new DriveToPose(m_drivebase, () -> DriveToPositionConstatnts.k11l));
+        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefAlgaePose()));
     // Driver Right Bumper :>> Intake from the floor
     driverController
         .rightBumper()
@@ -463,7 +462,7 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(.35)
+                    .withTimeout(.36)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 

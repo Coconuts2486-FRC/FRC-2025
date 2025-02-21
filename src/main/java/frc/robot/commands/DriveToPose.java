@@ -57,13 +57,14 @@ public class DriveToPose extends Command {
       new LoggedTunableNumber("DriveToPose/FFMinRadius");
 
   static {
-    drivekP.initDefault(10.0);
+    drivekP.initDefault(9.0);
     drivekD.initDefault(0.0);
     thetakP.initDefault(4.0);
     thetakD.initDefault(0.0);
-    driveMaxVelocity.initDefault(Units.inchesToMeters(150.0));
-    driveMaxVelocitySlow.initDefault(Units.inchesToMeters(50.0));
-    driveMaxAcceleration.initDefault(Units.inchesToMeters(95.0));
+    // Values in m/s
+    driveMaxVelocity.initDefault(3);
+    driveMaxVelocitySlow.initDefault(1);
+    driveMaxAcceleration.initDefault(2.5);
     thetaMaxVelocity.initDefault(Units.degreesToRadians(360.0));
     thetaMaxVelocitySlow.initDefault(Units.degreesToRadians(90.0));
     thetaMaxAcceleration.initDefault(Units.degreesToRadians(720.0));
@@ -214,6 +215,7 @@ public class DriveToPose extends Command {
             lastSetpointTranslation,
             Rotation2d.fromRadians(thetaController.getSetpoint().position)));
     Logger.recordOutput("DriveToPose/Goal", targetPose);
+    Logger.recordOutput("DriveToPose/Velocity", driveVelocityScalar);
   }
 
   @Override

@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -15,19 +15,32 @@
                 }
               },
               {
-                "type": "race",
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "L4"
+                        "waitTime": 1.0
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "race",
                       "data": {
-                        "waitTime": 1.4
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "L4"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 1.4
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

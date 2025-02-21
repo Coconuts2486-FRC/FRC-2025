@@ -57,7 +57,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   // Set up the Motion Magic instance
   private final MotionMagicVoltage m_motionMagic = new MotionMagicVoltage(0);
 
-  private Angle m_commandedMotorPosition;
+  private Angle m_commandedMotorPosition = Rotations.of(0.);
 
   /** Constructor for using a TalonFX to drive the elevator */
   public ElevatorIOTalonFX() {
@@ -194,8 +194,9 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   /**
    * Return a boolean supplier of whether the elevator is at the requested height
    *
-   * <p>Realtive tolerance is 1% Absolute tolerance is 1" in elevator height ~ 10 revolutions of the
-   * motor
+   * <p>Realtive tolerance is 1%
+   *
+   * <p>Absolute tolerance...
    */
   @Override
   public BooleanSupplier isAtPosition() {
@@ -204,7 +205,17 @@ public class ElevatorIOTalonFX implements ElevatorIO {
             m_commandedMotorPosition.in(Rotations),
             m_elevatorMotor.getPosition().getValueAsDouble(),
             0.01,
-            10.);
+            0.5);
+  }
+
+  @Override
+  public double getMotorPosition() {
+    return m_elevatorMotor.getPosition().getValueAsDouble();
+  }
+
+  @Override
+  public double getCommandedPosition() {
+    return m_commandedMotorPosition.in(Rotations);
   }
 
   /** Return the value of the bottom stop switch at the bottom of the elevator */

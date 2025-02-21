@@ -109,6 +109,9 @@ public class Elevator extends RBSISubsystem {
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
     Logger.recordOutput("Overrides/Elevator", !disableOverride.getAsBoolean());
+    Logger.recordOutput("Mechanism/Elevator/isAtPosition", isAtPosition().getAsBoolean());
+    Logger.recordOutput("Mechanism/Elevator/ElevatorMotorPosition", io.getMotorPosition());
+    Logger.recordOutput("Mechanism/Elevator/ElevatorCommandedPosition", io.getCommandedPosition());
 
     // Check if disabled
     if (disableOverride.getAsBoolean()) {

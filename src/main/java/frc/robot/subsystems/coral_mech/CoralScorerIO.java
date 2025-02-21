@@ -37,6 +37,10 @@ public interface CoralScorerIO {
     return false;
   }
 
+  public default double getPercent() {
+    return 0;
+  }
+
   public default void setPercentOut(double percent) {}
 
   public default void setVelocity(double velocity) {}

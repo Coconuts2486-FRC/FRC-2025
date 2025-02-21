@@ -61,6 +61,14 @@ public interface ElevatorIO {
     return () -> false;
   }
 
+  public default double getMotorPosition() {
+    return 0;
+  }
+
+  public default double getCommandedPosition() {
+    return 0;
+  }
+
   public default void setVoltage(double volts) {}
 
   public default void limit(BooleanSupplier limitSwitch) {}

@@ -53,4 +53,10 @@ public class CoralScorerIOTalonFX implements CoralScorerIO {
   public void setVelocity(double velocity) {
     coralIndexer.setControl(new VelocityDutyCycle(velocity));
   }
+
+  /** Get the motor output percent */
+  @Override
+  public double getPercent() {
+    return coralIndexer.getDutyCycle().getValueAsDouble();
+  }
 }

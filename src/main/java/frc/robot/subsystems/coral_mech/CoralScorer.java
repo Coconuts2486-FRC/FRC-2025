@@ -68,6 +68,8 @@ public class CoralScorer extends RBSISubsystem {
     Logger.processInputs("CoralScorer", inputs);
     LED.setCoralReady(hasCoral);
 
+    Logger.recordOutput("Mechanism/CoralScorer/Velocity", io.getPercent());
+
     // Quick logging to see how long this periodic takes
     long finish = System.nanoTime();
     long timeElapsed = finish - start;

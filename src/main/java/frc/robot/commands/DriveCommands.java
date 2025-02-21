@@ -64,8 +64,8 @@ public class DriveCommands {
       DoubleSupplier omegaSupplier) {
     return Commands.run(
         () -> {
-          Pose2d pose = drive.getPose();
-          System.out.println(pose);
+          // Pose2d pose = drive.getPose();
+          // System.out.println(pose);
           // Get the Linear Velocity & Omega from inputs
           Translation2d linearVelocity =
               getLinearVelocity(xSupplier.getAsDouble(), ySupplier.getAsDouble());

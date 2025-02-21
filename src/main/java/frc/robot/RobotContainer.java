@@ -463,7 +463,7 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .until(() -> m_coralScorer.coralDelay(() -> 5))
+                    .withTimeout(.35)
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 

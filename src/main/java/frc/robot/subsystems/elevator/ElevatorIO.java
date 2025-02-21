@@ -41,6 +41,10 @@ public interface ElevatorIO {
     return false;
   }
 
+  public default double getElevatorHeight(){
+    return 0.0;
+  }
+
   public default void configure(
       double Kg,
       double Ks,

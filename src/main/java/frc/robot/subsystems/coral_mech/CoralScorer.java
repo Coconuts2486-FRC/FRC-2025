@@ -52,6 +52,11 @@ public class CoralScorer extends RBSISubsystem {
     return false;
   }
 
+  public void resetTimer() {
+    timer.stop();
+    timer.reset();
+  }
+
   /** Periodic function called every robot cycle */
   @Override
   public void periodic() {

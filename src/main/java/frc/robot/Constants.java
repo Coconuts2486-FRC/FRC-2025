@@ -192,8 +192,8 @@ public final class Constants {
     public static final Distance kL2 = Inches.of(48.125);
     public static final Distance kL3 = Inches.of(56.25);
     public static final Distance kL4 = Inches.of(68.125);
-    public static final Distance KAlgae1 = Inches.of(58.375);
-    public static final Distance KAlgae2 = Inches.of(65.75);
+    public static final Distance KAlgaeLower = Inches.of(58.375);
+    public static final Distance KAlgaeUpper = Inches.of(65.75);
     // Motion Magic constants
     public static final LinearVelocity kVelocity = MetersPerSecond.of(1.8);
     public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(2.8);

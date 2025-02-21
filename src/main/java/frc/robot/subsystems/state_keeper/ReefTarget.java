@@ -27,15 +27,25 @@ import java.util.Optional;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-/** This class stores information about the targeted scoring location on the REEF */
+/**
+ * This class stores information about the targeted scoring location on the REEF
+ *
+ * <p>Reef level is encoded as an INT between 1 and 4 corresponding to the Tough, L2, L3, and L4
+ * posts, respectively.
+ *
+ * <p>Reef Post going around (A-L) is encoded as a zero-indexed INT between 0 and 11.
+ *
+ * <p>Reef Post LR is encoded as a 0 (left) or 1 (right).
+ */
 public class ReefTarget extends VirtualSubsystem {
-  private int reefPostAll = 1;
+  private int reefPostAll = 0;
   private int reefPostLR = 0;
   private int reefLevel = 1;
   public double elevatorDelay = 0;
 
   private static ReefTarget instance;
 
+  /** Return an instance of this class */
   public static ReefTarget getInstance() {
     if (instance == null) {
       instance = new ReefTarget();
@@ -50,7 +60,7 @@ public class ReefTarget extends VirtualSubsystem {
   public synchronized void periodic() {
     getElevatorDelay();
     // Log to AdvantageKit
-    Logger.recordOutput("ReefTarget/Post_ALL", convertIntToAlphabet(reefPostAll));
+    Logger.recordOutput("ReefTarget/Post_ALL", convertIntToAlphabet(reefPostAll + 1));
     Logger.recordOutput("ReefTarget/Post_LR", reefPostLR);
     Logger.recordOutput("ReefTarget/Level", reefLevel);
     Logger.recordOutput("ReefTarget/ElevatorHeight", getElevatorHeight());
@@ -76,7 +86,7 @@ public class ReefTarget extends VirtualSubsystem {
   public void indexRight() {
     reefPostLR = Math.min(++reefPostLR, 1);
     // Continuously wrap the A-L designation
-    if (++reefPostAll > 12) {
+    if (++reefPostAll >= 12) {
       reefPostAll -= 12;
     }
   }
@@ -89,12 +99,16 @@ public class ReefTarget extends VirtualSubsystem {
   public void indexLeft() {
     reefPostLR = Math.max(--reefPostLR, 0);
     // Continuously wrap the A-L designation
-    if (--reefPostAll < 1) {
+    if (--reefPostAll < 0) {
       reefPostAll += 12;
     }
   }
 
-  /** Utility function for converting integer to letter */
+  /**
+   * Utility function for converting integer to letter
+   *
+   * @param num The integer (1-26) to convert to a letter
+   */
   public static String convertIntToAlphabet(int num) {
     if (num < 1 || num > 26) {
       throw new IllegalArgumentException("Number must be between 1 and 26");
@@ -332,6 +346,7 @@ public class ReefTarget extends VirtualSubsystem {
     return tagPose
         .get()
         .toPose2d()
+        .rotateBy(new Rotation2d(Math.PI))
         .transformBy(
             new Transform2d(
                 switch (position) {

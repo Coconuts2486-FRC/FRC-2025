@@ -343,10 +343,10 @@ public class ReefTarget extends VirtualSubsystem {
       return new Pose2d();
     }
 
+    // Return the transformed location
     return tagPose
         .get()
         .toPose2d()
-        .rotateBy(new Rotation2d(Math.PI))
         .transformBy(
             new Transform2d(
                 switch (position) {

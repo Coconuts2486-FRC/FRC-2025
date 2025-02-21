@@ -57,7 +57,6 @@ public class ReefTarget extends VirtualSubsystem {
 
   /** Periodic function includes logging and publishing to NT */
   public synchronized void periodic() {
-    getElevatorDelay();
     // Log to AdvantageKit
     Logger.recordOutput("ReefTarget/Post_ALL", convertIntToAlphabet(reefPostAll + 1));
     Logger.recordOutput("ReefTarget/Post_LR", reefPostLR);
@@ -162,16 +161,20 @@ public class ReefTarget extends VirtualSubsystem {
     }
   }
 
-  public void getElevatorDelay() {
-
-    if (reefLevel == 2) {
-      elevatorDelay = .35;
-    } else if (reefLevel == 3) {
-      elevatorDelay = .55;
-    } else if (reefLevel == 4) {
-      elevatorDelay = .85;
-    } else {
-      elevatorDelay = .35;
+  /**
+   * Return the elevator height needed to access the ALGAE based on the currently selected REEF face
+   */
+  public Distance getElevatorAlgae() {
+    switch ((reefPostAll / 2) % 2) {
+      case 0:
+        // Reef Face A/B, E/F, I/J -- ALGAE between L3 and L4
+        return ElevatorConstants.KAlgaeUpper;
+      case 1:
+        // Reef Face C/D, G/H, K/L -- ALGAE between L2 and L3
+        return ElevatorConstants.KAlgaeLower;
+      default:
+        // Shouldn't run, but you know...
+        return ElevatorConstants.kElevatorZeroHeight;
     }
   }
 

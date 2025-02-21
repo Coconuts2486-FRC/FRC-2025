@@ -485,8 +485,8 @@ public class RobotContainer {
             Commands.runEnd(
                 () -> m_climber.twistToPosition(ClimbConstants.startClimb),
                 () -> m_climber.stop(),
-                m_climber).alongWith(
-     .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber))));
+                m_climber));//.alongWith(
+     //.alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0)))));
 
     operatorController
         .b()

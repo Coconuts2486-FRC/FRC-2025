@@ -189,8 +189,8 @@ public final class Constants {
     public static final Distance kElevatorSproketRadius = Inches.of(1.75 / 2.0);
     // These are heights off the ground of the top row of bolts on the elevator 1st stage
     public static final Distance kElevatorZeroHeight = Inches.of(40.375);
-    public static final Distance kL2 = Inches.of(48.125);
-    public static final Distance kL3 = Inches.of(56.25);
+    public static final Distance kL2 = Inches.of(48.125 + 1.0);
+    public static final Distance kL3 = Inches.of(56.25 + 1.0);
     public static final Distance kL4 = Inches.of(68.125);
     public static final Distance KAlgaeLower = Inches.of(58.375);
     public static final Distance KAlgaeUpper = Inches.of(65.75);

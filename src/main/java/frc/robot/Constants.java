@@ -626,12 +626,13 @@ public final class Constants {
 
   public static class DriveToPositionConstatnts {
 
+    // The robot is facing AWAY from the tag, so it's pose angle matches that of the tag
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(-16.0), Units.inchesToMeters(+7.0));
+        new Translation2d(Units.inchesToMeters(16.0), Units.inchesToMeters(-7.0));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(-16.0), Units.inchesToMeters(-7.0));
+        new Translation2d(Units.inchesToMeters(16.0), Units.inchesToMeters(+7.0));
     public static Translation2d kAlgaeGrab =
-        new Translation2d(Units.inchesToMeters(-16.0), Units.inchesToMeters(0.0));
+        new Translation2d(Units.inchesToMeters(16.0), Units.inchesToMeters(0.0));
 
     public static Pose2d k11r = new Pose2d(12.55, 2.71, Rotation2d.fromDegrees(-118.22));
     public static Pose2d k11l = new Pose2d(12.22, 2.94, Rotation2d.fromDegrees(-120.6));

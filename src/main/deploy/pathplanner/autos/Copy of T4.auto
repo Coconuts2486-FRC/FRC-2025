@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start I"
+                  "pathName": "Start K"
                 }
               },
               {
@@ -21,103 +21,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L4"
+                        "name": "L2"
                       }
                     },
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.4
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Bottom"
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Station I"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "CoralDetect"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "deadline",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "sequential",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "CoralDetect"
-                            }
-                          },
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Coral J"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralIntake"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L4"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.4
+                        "waitTime": 0.8
                       }
                     }
                   ]
@@ -143,7 +53,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station J"
+                        "pathName": "Station K"
                       }
                     }
                   ]
@@ -166,7 +76,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Coral K"
+                              "pathName": "Coral L"
                             }
                           }
                         ]
@@ -188,13 +98,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L4"
+                        "name": "L2"
                       }
                     },
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.4
+                        "waitTime": 0.8
                       }
                     }
                   ]
@@ -204,9 +114,29 @@
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "Bottom"
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Bottom"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Station L"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

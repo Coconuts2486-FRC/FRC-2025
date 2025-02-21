@@ -25,7 +25,7 @@
       },
       "nextControl": {
         "x": 5.000520314085312,
-        "y": 0.4523429074746552
+        "y": 0.4523429074746553
       },
       "isLocked": false,
       "linkedName": "Gpoint"
@@ -49,8 +49,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.5,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.25,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

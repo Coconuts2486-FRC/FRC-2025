@@ -24,7 +24,6 @@ import frc.robot.Constants.DriveToPositionConstatnts;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.util.VirtualSubsystem;
 import java.util.Optional;
-import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -64,18 +63,17 @@ public class ReefTarget extends VirtualSubsystem {
     Logger.recordOutput("ReefTarget/Post_LR", reefPostLR);
     Logger.recordOutput("ReefTarget/Level", reefLevel);
     Logger.recordOutput("ReefTarget/ElevatorHeight", getElevatorHeight());
+    Logger.recordOutput("ReefTarget/ScoringPose", getReefPose());
   }
 
   /** Index the desired scoring state up one */
   public void indexUp() {
     reefLevel = Math.min(++reefLevel, 4);
-    System.out.println(reefLevel);
   }
 
   /** Index the desired scoring state down one */
   public void indexDown() {
     reefLevel = Math.max(--reefLevel, 1);
-    System.out.println(reefLevel);
   }
 
   /**
@@ -84,11 +82,11 @@ public class ReefTarget extends VirtualSubsystem {
    * <p>Following standard number line conventions, right is a larger integer.
    */
   public void indexRight() {
-    reefPostLR = Math.min(++reefPostLR, 1);
     // Continuously wrap the A-L designation
     if (++reefPostAll >= 12) {
       reefPostAll -= 12;
     }
+    reefPostLR = reefPostAll % 2;
   }
 
   /**
@@ -97,11 +95,11 @@ public class ReefTarget extends VirtualSubsystem {
    * <p>Following standard number line conventions, left is a smaller integer.
    */
   public void indexLeft() {
-    reefPostLR = Math.max(--reefPostLR, 0);
     // Continuously wrap the A-L designation
     if (--reefPostAll < 0) {
       reefPostAll += 12;
     }
+    reefPostLR = reefPostAll % 2;
   }
 
   /**
@@ -159,7 +157,7 @@ public class ReefTarget extends VirtualSubsystem {
       case 4:
         return ElevatorConstants.kL4;
       default:
-        return ElevatorConstants.kL2;
+        return ElevatorConstants.kElevatorZeroHeight;
     }
   }
 
@@ -185,7 +183,6 @@ public class ReefTarget extends VirtualSubsystem {
   }
 
   /** Return the A-L pose needed to line up with the reef post */
-  @AutoLogOutput(key = "Odometry/ReefScoringPose")
   public Pose2d getReefPose() {
     switch (reefPostAll) {
       case 0:
@@ -297,7 +294,7 @@ public class ReefTarget extends VirtualSubsystem {
             ScoringPosition.RIGHT);
 
       default:
-        // Shouldn't run, but required case
+        // Shouldn't run, but required case and useful for testing
         return new Pose2d();
     }
   }

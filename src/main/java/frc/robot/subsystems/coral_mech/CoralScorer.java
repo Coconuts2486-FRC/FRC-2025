@@ -23,7 +23,7 @@ import org.littletonrobotics.junction.Logger;
 public class CoralScorer extends RBSISubsystem {
   private final CoralScorerIO io;
   private final CoralScorerIOInputsAutoLogged inputs = new CoralScorerIOInputsAutoLogged();
-  private int delaySetup;
+  private int delaySetup = 1;
   private Timer timer = new Timer();
 
   private boolean hasCoral = false;

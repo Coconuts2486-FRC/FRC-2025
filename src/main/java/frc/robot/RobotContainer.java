@@ -386,10 +386,10 @@ public class RobotContainer {
         .onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()).ignoringDisable(true));
 
     // Drive to algae position (Back Left Bottom)
-    // TODO change this to drive to returned command from ReefTarget
     driverController
         .y()
         .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefAlgaePose()));
+
     // Driver Right Bumper :>> Intake from the floor
     driverController
         .rightBumper()
@@ -452,6 +452,7 @@ public class RobotContainer {
         .a()
         .onTrue(Commands.runOnce(() -> m_reefTarget.indexDown()).ignoringDisable(true));
 
+    // Operator Right Bumper :>> Run elevator to position
     operatorController
         .rightBumper()
         .whileTrue(
@@ -462,7 +463,7 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .withTimeout(.36)
+                    .until(m_elevator.isAtPosition())
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 

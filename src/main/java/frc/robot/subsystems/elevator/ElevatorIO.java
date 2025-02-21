@@ -57,6 +57,10 @@ public interface ElevatorIO {
       LinearAcceleration aceleration,
       double jerk) {}
 
+  public default BooleanSupplier isAtPosition() {
+    return () -> false;
+  }
+
   public default void setVoltage(double volts) {}
 
   public default void limit(BooleanSupplier limitSwitch) {}

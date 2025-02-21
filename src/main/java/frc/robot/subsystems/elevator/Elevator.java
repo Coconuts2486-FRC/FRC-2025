@@ -153,6 +153,11 @@ public class Elevator extends RBSISubsystem {
     io.stop();
   }
 
+  /** Return a boolean supplier of whether the elevator is at the requested height */
+  public BooleanSupplier isAtPosition() {
+    return io.isAtPosition();
+  }
+
   /* Configuaration and Setter / Getter Functions ************************** */
   public void configure(
       double Kg,

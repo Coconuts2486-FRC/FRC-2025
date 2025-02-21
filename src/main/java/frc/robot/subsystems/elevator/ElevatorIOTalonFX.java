@@ -33,6 +33,9 @@ import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.CANandPowerPorts;
+import frc.robot.util.MiscFuncs;
+import frc.robot.util.PhoenixUtil;
+import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
 public class ElevatorIOTalonFX implements ElevatorIO {
@@ -54,8 +57,11 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   // Set up the Motion Magic instance
   private final MotionMagicVoltage m_motionMagic = new MotionMagicVoltage(0);
 
+  private Angle m_commandedMotorPosition;
+
   /** Constructor for using a TalonFX to drive the elevator */
   public ElevatorIOTalonFX() {
+    // Set and apply TalonFX Configurations
     var config = new TalonFXConfiguration();
     config.CurrentLimits.SupplyCurrentLimit = 30.0;
     config.CurrentLimits.SupplyCurrentLimitEnable = true;
@@ -64,7 +70,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
           case COAST -> NeutralModeValue.Coast;
           case BRAKE -> NeutralModeValue.Brake;
         };
-    m_elevatorMotor.getConfigurator().apply(config);
+    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(config, 0.25));
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, elevatorPosition, elevatorVelocity, elevatorAppliedVolts, elevatorCurrent);
@@ -87,6 +93,9 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   /**
    * Set the position of the elevator based on the coral mech's position above ground
    *
+   * <p>This method requests FOC control of the Motion Magic, but if the motor is unlicensed, the
+   * controller will default to non-FOC mode.
+   *
    * @param position The height of the coral mechanism above the ground
    */
   @Override
@@ -94,7 +103,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
 
     // This is the conversion from Elevator height in inches to motor rotations
     // (commanded position - zero_height) /  sproket_radius * gear ratio / 2π
-    Angle motorPosition =
+    m_commandedMotorPosition =
         position
             .minus(kElevatorZeroHeight) // Delta y
             .div(kElevatorSproketRadius) // into angle
@@ -102,8 +111,9 @@ public class ElevatorIOTalonFX implements ElevatorIO {
             .times(Radians.of(1.0)); // this is in radians
 
     // Log the value and send the rotation position to the motor
-    Logger.recordOutput("Mechanism/Elevator/CommandPos", motorPosition.in(Rotations));
-    m_elevatorMotor.setControl(m_motionMagic.withPosition(motorPosition.in(Rotations)));
+    Logger.recordOutput("Mechanism/Elevator/CommandPos", m_commandedMotorPosition.in(Rotations));
+    m_elevatorMotor.setControl(
+        m_motionMagic.withPosition(m_commandedMotorPosition.in(Rotations)).withEnableFOC(true));
   }
 
   /** Stop the elevator */
@@ -179,6 +189,22 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   @Override
   public void setVoltage(double volts) {
     m_elevatorMotor.setControl(new VoltageOut(volts));
+  }
+
+  /**
+   * Return a boolean supplier of whether the elevator is at the requested height
+   *
+   * <p>Realtive tolerance is 1% Absolute tolerance is 1" in elevator height ~ 10 revolutions of the
+   * motor
+   */
+  @Override
+  public BooleanSupplier isAtPosition() {
+    return () ->
+        MiscFuncs.isclose(
+            m_commandedMotorPosition.in(Rotations),
+            m_elevatorMotor.getPosition().getValueAsDouble(),
+            0.01,
+            10.);
   }
 
   /** Return the value of the bottom stop switch at the bottom of the elevator */

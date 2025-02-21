@@ -127,6 +127,9 @@ public final class Constants {
 
     // Wheel coefficient of friction
     public static final double kWheelCOF = 1.2;
+
+    // Measured Wheel Radius
+    public static final Distance kWheelRadius = Inches.of(2.033);
   }
 
   /** Power Distribution Constants ********************************** */

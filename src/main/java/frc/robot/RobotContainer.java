@@ -262,8 +262,8 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(1)
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+                .withTimeout(0.8)
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.70), m_coralScorer))));
     NamedCommands.registerCommand("L3", Commands.print("L3")); // Just print commands for right now.
     NamedCommands.registerCommand("L2", Commands.print("L2"));
     NamedCommands

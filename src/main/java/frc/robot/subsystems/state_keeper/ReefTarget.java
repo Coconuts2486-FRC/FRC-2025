@@ -63,7 +63,8 @@ public class ReefTarget extends VirtualSubsystem {
     Logger.recordOutput("ReefTarget/Post_LR", reefPostLR);
     Logger.recordOutput("ReefTarget/Level", reefLevel);
     Logger.recordOutput("ReefTarget/ElevatorHeight", getElevatorHeight());
-    Logger.recordOutput("ReefTarget/ScoringPose", getReefPose());
+    Logger.recordOutput("ReefTarget/CoralPose", getReefCoralPose());
+    Logger.recordOutput("ReefTarget/AlgaePose", getReefAlgaePose());
   }
 
   /** Index the desired scoring state up one */
@@ -174,16 +175,8 @@ public class ReefTarget extends VirtualSubsystem {
     }
   }
 
-  /** Return the L-R pose needed to line up with the reef post */
-  public Pose2d getReefPose(Pose2d currentPose) {
-
-    // TODO: Use the current pose plus L-R information to determine which Pose2d() to return
-
-    return new Pose2d();
-  }
-
   /** Return the A-L pose needed to line up with the reef post */
-  public Pose2d getReefPose() {
+  public Pose2d getReefCoralPose() {
     switch (reefPostAll) {
       case 0:
         // Post A
@@ -292,6 +285,69 @@ public class ReefTarget extends VirtualSubsystem {
               case Blue -> 19;
             },
             ScoringPosition.RIGHT);
+
+      default:
+        // Shouldn't run, but required case and useful for testing
+        return new Pose2d();
+    }
+  }
+
+  /** Return the face-centered pose needed to line up with the algae */
+  public Pose2d getReefAlgaePose() {
+    switch (reefPostAll / 2) {
+      case 0:
+        // Reef Face A/B
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 7;
+              case Blue -> 18;
+            },
+            ScoringPosition.CENTER);
+
+      case 1:
+        // Reef Face C/D
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 8;
+              case Blue -> 17;
+            },
+            ScoringPosition.CENTER);
+
+      case 2:
+        // Reef Face E/F
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 9;
+              case Blue -> 22;
+            },
+            ScoringPosition.CENTER);
+
+      case 3:
+        // Reef Face G/H
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 10;
+              case Blue -> 21;
+            },
+            ScoringPosition.CENTER);
+
+      case 4:
+        // Reef Face I/J
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 11;
+              case Blue -> 20;
+            },
+            ScoringPosition.CENTER);
+
+      case 5:
+        // Reef Face K/L
+        return computeReefPose(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 6;
+              case Blue -> 19;
+            },
+            ScoringPosition.CENTER);
 
       default:
         // Shouldn't run, but required case and useful for testing

@@ -41,7 +41,7 @@ public interface ElevatorIO {
     return false;
   }
 
-  public default double getElevatorHeight(){
+  public default double getElevatorHeight() {
     return 0.0;
   }
 

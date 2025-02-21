@@ -457,14 +457,15 @@ public class RobotContainer {
         .rightBumper()
         .whileTrue(
             Commands.parallel(
-                    new ElevatorCommand(
-                        m_reefTarget::getElevatorHeight, // Send height as supplier
-                        ElevatorConstants.kAcceleration,
-                        ElevatorConstants.kVelocity,
-                        m_elevator),
-                    Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                        .withTimeout(.35))
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer)));
+                new ElevatorCommand(
+                    m_reefTarget::getElevatorHeight, // Send height as supplier
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
+                    m_elevator),
+                Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+                    .withTimeout(.35)
+                    .andThen(
+                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 
     operatorController
         .start()
@@ -473,54 +474,58 @@ public class RobotContainer {
                 () -> m_climber.twistToPosition(ClimbConstants.startClimb),
                 () -> m_climber.stop(),
                 m_climber));
+    // .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(1), m_climber)));
 
     operatorController
-        .x()
+        .b()
         .whileTrue(
             Commands.runEnd(
                 () -> m_climber.goUntilPosition(-.5, ClimbConstants.completeClimb),
                 () -> m_climber.stop(),
                 m_climber));
+    // .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber)));
 
-    operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber));
+    operatorController.back().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber));
+
+    operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(1), m_climber));
 
     // Operator Y Button :>> Elevator to Lower Algae
-    operatorController
-        .y()
-        .whileTrue(
-            Commands.parallel(
-                new ElevatorCommand(
-                    () -> ElevatorConstants.KAlgae1,
-                    ElevatorConstants.kAcceleration,
-                    ElevatorConstants.kVelocity,
-                    m_elevator),
-                Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
-                    .withTimeout(.35)
-                    .andThen(
-                        Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
-                            .alongWith(Commands.run(() -> m_algaeMech.setPercent(.6)))
-                            .alongWith(Commands.runOnce(() -> m_algaeMech.toggleUp(false))))));
+    // operatorController
+    //     .y()
+    //     .whileTrue(
+    //         Commands.parallel(
+    //             new ElevatorCommand(
+    //                 () -> ElevatorConstants.KAlgae1,
+    //                 ElevatorConstants.kAcceleration,
+    //                 ElevatorConstants.kVelocity,
+    //                 m_elevator),
+    //             Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+    //                 .withTimeout(.35)
+    //                 .andThen(
+    //                     Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+    //                         .alongWith(Commands.run(() -> m_algaeMech.setPercent(.6)))
+    //                         .alongWith(Commands.runOnce(() -> m_algaeMech.toggleUp(false))))));
 
     // Release Operator X Button :>> Pivot AlgaeMech to horizontal
-    operatorController
-        .y()
-        .onFalse(
-            Commands.runOnce(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
-                .alongWith(Commands.runOnce(() -> m_algaeMech.setPercent(0))));
+    // operatorController
+    //     .y()
+    //     .onFalse(
+    //         Commands.runOnce(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+    //             .alongWith(Commands.runOnce(() -> m_algaeMech.setPercent(0))));
 
     // Operator Right Bumper :>> Spit out algae ball
-    operatorController
-        .rightBumper()
-        .whileTrue(
-            Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(-1))));
+    // operatorController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+    //             .alongWith(Commands.run(() -> m_algaeMech.setPercent(-1))));
 
-    // Release Operator Right Bumper :>> Turn off algae rollers
-    operatorController
-        .rightBumper()
-        .onFalse(
-            Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
+    // // Release Operator Right Bumper :>> Turn off algae rollers
+    // operatorController
+    //     .rightBumper()
+    //     .onFalse(
+    //         Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+    //             .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
 
     // Operator Left Bumper :>> Move the AlgaeMech to stow position
     operatorController

@@ -27,7 +27,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.4
+                        "waitTime": 1.2
                       }
                     }
                   ]
@@ -51,9 +51,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "Station I"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Station I"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "CoralDetect"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

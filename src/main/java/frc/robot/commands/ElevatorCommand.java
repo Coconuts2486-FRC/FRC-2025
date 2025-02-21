@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 
 public class ElevatorCommand extends Command {
 
-  private final Distance position;
+  private final Supplier<Distance> position;
   private final LinearAcceleration acceleration;
   private final LinearVelocity velocity;
   private final Elevator elevator;
@@ -35,7 +35,7 @@ public class ElevatorCommand extends Command {
       LinearAcceleration acceleration,
       LinearVelocity velocity,
       Elevator elevator) {
-    this.position = position.get();
+    this.position = position;
     this.acceleration = acceleration;
     this.velocity = velocity;
     this.elevator = elevator;
@@ -61,7 +61,7 @@ public class ElevatorCommand extends Command {
   @Override
   public void execute() {
 
-    elevator.setPosistion(position);
+    elevator.setPosistion(position.get());
   }
 
   @Override

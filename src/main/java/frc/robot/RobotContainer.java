@@ -36,6 +36,7 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -52,6 +53,7 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.commands.DriveToPose;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.PickUpAlgaeFromReef;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.algae_mech.AlgaeMech;
@@ -292,7 +294,10 @@ public class RobotContainer {
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
     NamedCommands.registerCommand( // Ends once coral is detected
         "CoralDetect",
-        new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+        (Commands.run(() -> m_algaeMech.toggleUp(!m_algaeMech.getToggleStow()), m_algaeMech)).until(() -> m_coralScorer.getLightStop() == false));
+    NamedCommands.registerCommand( // Ends once coral is detected
+        "Timer",
+        new IntakeCommand(m_intake, 0.9, 0).withTimeout(14.6));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include

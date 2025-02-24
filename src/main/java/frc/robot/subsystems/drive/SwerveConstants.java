@@ -113,12 +113,8 @@ public class SwerveConstants {
         kCoupleRatio = TunerConstants.FrontLeft.CouplingGearRatio;
         kDriveGearRatio = TunerConstants.FrontLeft.DriveMotorGearRatio;
         kSteerGearRatio = TunerConstants.FrontLeft.SteerMotorGearRatio;
-        // kWheelRadiusMeters = TunerConstants.FrontLeft.WheelRadius;
-        // kWheelRadiusInches = Units.metersToInches(kWheelRadiusMeters);
-
-        kWheelRadiusInches = TunerConstants.FrontLeft.WheelRadius;
-        kWheelRadiusMeters = Units.inchesToMeters(kWheelRadiusInches);
-
+        kWheelRadiusMeters = TunerConstants.FrontLeft.WheelRadius;
+        kWheelRadiusInches = Units.metersToInches(kWheelRadiusMeters);
         kCANbusName = TunerConstants.DrivetrainConstants.CANBusName;
         kPigeonId = TunerConstants.DrivetrainConstants.Pigeon2Id;
         kSteerInertia = TunerConstants.FrontLeft.SteerInertia;

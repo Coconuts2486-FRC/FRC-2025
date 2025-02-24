@@ -529,15 +529,15 @@ public final class Constants {
     public static Transform3d robotToCameraEL =
         new Transform3d(
             Units.inchesToMeters(-12.3),
-            Units.inchesToMeters(-9.23),
-            Units.inchesToMeters(10.1),
+            Units.inchesToMeters(-(9.23 - 0.375)),
+            Units.inchesToMeters(10.1 - 1.0),
             new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 + 20.0))
                 .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
     public static Transform3d robotToCameraER =
         new Transform3d(
             Units.inchesToMeters(-12.3),
-            Units.inchesToMeters(9.23),
-            Units.inchesToMeters(10.1),
+            Units.inchesToMeters(9.23 - 0.375),
+            Units.inchesToMeters(10.1 - 1.0),
             new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 - 20.0))
                 .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
     public static Transform3d robotToCameraIU =

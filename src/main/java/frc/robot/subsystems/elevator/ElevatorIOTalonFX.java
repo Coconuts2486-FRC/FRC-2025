@@ -38,12 +38,14 @@ import frc.robot.util.PhoenixUtil;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
+/** ELEVATOR hardware class for TalonFX */
 public class ElevatorIOTalonFX implements ElevatorIO {
 
   // Define the motor and the limit switch at the bottom of the elevator
   private final TalonFX m_elevatorMotor =
       new TalonFX(CANandPowerPorts.ELEVATOR.getDeviceNumber(), CANandPowerPorts.ELEVATOR.getBus());
   private final DigitalInput m_elevatorStop = new DigitalInput(0);
+  private final TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
 
   // Status signals from CTRE for logging
   private final StatusSignal<Angle> elevatorPosition = m_elevatorMotor.getPosition();
@@ -58,8 +60,6 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   private final MotionMagicVoltage m_motionMagic = new MotionMagicVoltage(0);
 
   private Angle m_commandedMotorPosition = Rotations.of(0.);
-
-  private final TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
 
   /** Constructor for using a TalonFX to drive the elevator */
   public ElevatorIOTalonFX() {

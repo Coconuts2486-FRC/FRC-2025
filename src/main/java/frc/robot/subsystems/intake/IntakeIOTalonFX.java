@@ -31,25 +31,27 @@ import frc.robot.Constants.CANandPowerPorts;
 import frc.robot.Constants.PowerConstants;
 import frc.robot.util.PhoenixUtil;
 
+/** INTAKE hardware class for TalonFX */
 public class IntakeIOTalonFX implements IntakeIO {
 
-  private final TalonFX intakeRoller =
+  private final TalonFX m_intakeRoller =
       new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
-  private final TalonFX intakePivot = new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
-  private final CANcoder encoderActual =
+  private final TalonFX m_intakePivot =
+      new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
+  private final CANcoder m_intakeEncoder =
       new CANcoder(CANandPowerPorts.INTAKE_ENCODER.getDeviceNumber());
   private final TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
 
   PIDController pivotPID = new PIDController(1.5, 0, 0);
 
-  public final int[] powerPorts = {
+  private final int[] powerPorts = {
     CANandPowerPorts.INTAKE_PIVOT.getPowerPort(), CANandPowerPorts.INTAKE_ROLLER.getPowerPort()
   };
 
-  private final StatusSignal<Angle> pivotPosition = encoderActual.getAbsolutePosition();
-  private final StatusSignal<AngularVelocity> pivotVelocity = intakePivot.getVelocity();
-  private final StatusSignal<Voltage> pivotAppliedVolts = intakePivot.getMotorVoltage();
-  private final StatusSignal<Current> pivotCurrent = intakePivot.getSupplyCurrent();
+  private final StatusSignal<Angle> pivotPosition = m_intakeEncoder.getAbsolutePosition();
+  private final StatusSignal<AngularVelocity> pivotVelocity = m_intakePivot.getVelocity();
+  private final StatusSignal<Voltage> pivotAppliedVolts = m_intakePivot.getMotorVoltage();
+  private final StatusSignal<Current> pivotCurrent = m_intakePivot.getSupplyCurrent();
 
   /** Constructor */
   public IntakeIOTalonFX() {
@@ -63,7 +65,7 @@ public class IntakeIOTalonFX implements IntakeIO {
     pivotConfig.CurrentLimits.StatorCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
     pivotConfig.CurrentLimits.StatorCurrentLimitEnable = true;
     pivotConfig.ClosedLoopRamps.TorqueClosedLoopRampPeriod = Constants.loopPeriodSecs;
-    PhoenixUtil.tryUntilOk(5, () -> intakePivot.getConfigurator().apply(pivotConfig, 0.25));
+    PhoenixUtil.tryUntilOk(5, () -> m_intakePivot.getConfigurator().apply(pivotConfig, 0.25));
   }
 
   /**
@@ -92,7 +94,7 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void setPivotVolts(double volts) {
-    intakePivot.setVoltage(volts);
+    m_intakePivot.setVoltage(volts);
   }
 
   /**
@@ -105,14 +107,14 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void setRollerVolts(double volts) {
-    intakeRoller.setVoltage(volts);
+    m_intakeRoller.setVoltage(volts);
   }
 
   /** Stop the intake pivot and rollers */
   @Override
   public void stop() {
-    intakeRoller.stopMotor();
-    intakePivot.stopMotor();
+    m_intakeRoller.stopMotor();
+    m_intakePivot.stopMotor();
   }
 
   /**
@@ -122,7 +124,7 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void setPivotPosition(double position) {
-    intakePivot.set(-pivotPID.calculate(pivotPosition.getValueAsDouble(), position));
+    m_intakePivot.set(-pivotPID.calculate(pivotPosition.getValueAsDouble(), position));
   }
 
   /**
@@ -132,7 +134,7 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void rollerDutyCycle(double dutyCycle) {
-    intakeRoller.set(dutyCycle);
+    m_intakeRoller.set(dutyCycle);
   }
 
   /**

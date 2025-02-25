@@ -15,6 +15,8 @@ package frc.robot.subsystems.coral_mech;
 
 import static frc.robot.Constants.CoralMechConstants.*;
 
+import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
@@ -22,6 +24,11 @@ import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.CANandPowerPorts;
 import frc.robot.Constants.PowerConstants;
@@ -32,8 +39,14 @@ public class CoralScorerIOTalonFX implements CoralScorerIO {
 
   private final DigitalInput m_lightStop = new DigitalInput(CANandPowerPorts.CORAL_LIGHT_STOP);
   private final TalonFX m_coralIndexer = new TalonFX(CANandPowerPorts.CORAL_MECH.getDeviceNumber());
-  public final int[] powerPorts = {CANandPowerPorts.CORAL_MECH.getPowerPort()};
-  TalonFXConfiguration coralConfig = new TalonFXConfiguration();
+  private final int[] powerPorts = {CANandPowerPorts.CORAL_MECH.getPowerPort()};
+  private final TalonFXConfiguration coralConfig = new TalonFXConfiguration();
+
+  // Status signals from CTRE for logging
+  private final StatusSignal<Angle> coralPosition = m_coralIndexer.getPosition();
+  private final StatusSignal<AngularVelocity> coralVelocity = m_coralIndexer.getVelocity();
+  private final StatusSignal<Voltage> coralAppliedVolts = m_coralIndexer.getMotorVoltage();
+  private final StatusSignal<Current> coralCurrent = m_coralIndexer.getSupplyCurrent();
 
   /** Constructor */
   public CoralScorerIOTalonFX() {
@@ -44,6 +57,18 @@ public class CoralScorerIOTalonFX implements CoralScorerIO {
     coralConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
     coralConfig.Slot0 = new Slot0Configs().withKP(kPReal).withKI(kIReal).withKD(kDReal);
     PhoenixUtil.tryUntilOk(5, () -> m_coralIndexer.getConfigurator().apply(coralConfig, 0.25));
+  }
+
+  /** Update the inputs for / from logs */
+  @Override
+  public void updateInputs(CoralScorerIOInputs inputs) {
+    BaseStatusSignal.refreshAll(coralPosition, coralVelocity, coralAppliedVolts, coralCurrent);
+    inputs.positionRad =
+        Units.rotationsToRadians(coralPosition.getValueAsDouble()) / kCoralGearRatio;
+    inputs.velocityRadPerSec =
+        Units.rotationsToRadians(coralVelocity.getValueAsDouble()) / kCoralGearRatio;
+    inputs.appliedVolts = coralAppliedVolts.getValueAsDouble();
+    inputs.currentAmps = new double[] {coralCurrent.getValueAsDouble()};
   }
 
   /** Return the value of the digital input from the light stop */

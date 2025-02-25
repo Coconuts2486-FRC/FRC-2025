@@ -130,8 +130,6 @@ public class RobotContainer {
   public final OverrideSwitches overrides = new OverrideSwitches(2); // Console toggle switches
 
   // Define Triggers
-  private Trigger leftBumper = driverController.leftBumper();
-  private Trigger rightBumper = driverController.rightBumper();
   private final Trigger elevatorDisable = overrides.Switch(OperatorConstants.ELEVATOR_OVERRIDE);
   private final Trigger intakePivotDisable = overrides.Switch(OperatorConstants.INTAKE_OVERRIDE);
   private final Trigger algaePivotDisable = overrides.Switch(OperatorConstants.ALGAE_OVERRIDE);

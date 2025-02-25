@@ -50,7 +50,7 @@ public class Module {
 
   // static {
   //   switch (Constants.getRobot()) {
-  //     case COMPBOT, GEORGE -> {
+  //     case LEONARDO, GEORGE -> {
   //       // Multiplied by desired wheelTorqueNm
   //       drivekP.initDefault(35.0);
   //       drivekD.initDefault(0);

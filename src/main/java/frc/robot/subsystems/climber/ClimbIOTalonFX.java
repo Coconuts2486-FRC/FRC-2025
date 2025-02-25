@@ -15,21 +15,27 @@ package frc.robot.subsystems.climber;
 
 import static frc.robot.Constants.ClimbConstants.*;
 
+import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Servo;
 import frc.robot.Constants.CANandPowerPorts;
 import frc.robot.Constants.PowerConstants;
 import frc.robot.util.PhoenixUtil;
 
-/** Climb hardware class for TalonFX */
+/** CLIMB hardware class for TalonFX */
 public class ClimbIOTalonFX implements ClimbIO {
   private final Servo ratchetServo = new Servo(CANandPowerPorts.CLIMB_SERVO);
   private final TalonFX m_climbMotor = new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber());
@@ -37,8 +43,14 @@ public class ClimbIOTalonFX implements ClimbIO {
       new DutyCycleEncoder(CANandPowerPorts.CLIMB_PIVOT_ENCODER);
   private final TalonFXConfiguration climbConfig = new TalonFXConfiguration();
 
+  // Status signals from CTRE for logging
+  private final StatusSignal<Angle> climbPosition = m_climbMotor.getPosition();
+  private final StatusSignal<AngularVelocity> climbVelocity = m_climbMotor.getVelocity();
+  private final StatusSignal<Voltage> climbAppliedVolts = m_climbMotor.getMotorVoltage();
+  private final StatusSignal<Current> climbCurrent = m_climbMotor.getSupplyCurrent();
+
   // Power port
-  public final int[] powerPorts = {CANandPowerPorts.CLIMB.getPowerPort()};
+  private final int[] powerPorts = {CANandPowerPorts.CLIMB.getPowerPort()};
 
   // Set up the Motion Magic instance
   // private final MotionMagicVoltage m_motionMagic = new MotionMagicVoltage(0);
@@ -51,7 +63,28 @@ public class ClimbIOTalonFX implements ClimbIO {
     // Neutral mode is BRAKE
     climbConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     climbConfig.Slot0 = new Slot0Configs().withKP(kPReal).withKI(kIReal).withKD(kDReal);
+
+    // // TODO: When we move the REV encoder onto the CANdi, these will be used to fuse the encoder
+    // onto the motor controller
+    // climbConfig.Feedback.FeedbackRemoteSensorID = CANDI_PWM;
+    // // When not Pro-licensed, FusedCANcoder/SyncCANcoder automatically fall back to
+    // RemoteCANcoder
+    // climbConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.FusedCANdiPWM2;
+    // climbConfig.Feedback.RotorToSensorRatio = kClimbGearRatio;
+
     PhoenixUtil.tryUntilOk(5, () -> m_climbMotor.getConfigurator().apply(climbConfig, 0.25));
+  }
+
+  /** Update the inputs for / from logs */
+  @Override
+  public void updateInputs(ClimbIOInputs inputs) {
+    BaseStatusSignal.refreshAll(climbPosition, climbVelocity, climbAppliedVolts, climbCurrent);
+    inputs.positionRad =
+        Units.rotationsToRadians(climbPosition.getValueAsDouble()) / kClimbGearRatio;
+    inputs.velocityRadPerSec =
+        Units.rotationsToRadians(climbVelocity.getValueAsDouble()) / kClimbGearRatio;
+    inputs.appliedVolts = climbAppliedVolts.getValueAsDouble();
+    inputs.currentAmps = new double[] {climbCurrent.getValueAsDouble()};
   }
 
   /**
@@ -73,9 +106,10 @@ public class ClimbIOTalonFX implements ClimbIO {
    */
   @Override
   public void twistMotorToPosition(double position) {
-    PIDController pid = new PIDController(kPReal, kIReal, kDReal);
-    m_climbMotor.setControl(new DutyCycleOut(-pid.calculate(m_climbEncoder.get(), position)));
-    // m_climbMotor.setControl(m_motionMagic.withPosition(position).withEnableFOC(true));
+    try (PIDController pid = new PIDController(kPReal, kIReal, kDReal)) {
+      m_climbMotor.setControl(new DutyCycleOut(-pid.calculate(m_climbEncoder.get(), position)));
+      // m_climbMotor.setControl(m_motionMagic.withPosition(position).withEnableFOC(true));
+    }
   }
 
   /** Get the climb encoder pose */

@@ -157,9 +157,9 @@ public class AlgaeMech extends RBSISubsystem {
   public void holdToggle() {
     if (!disableSupplier.getAsBoolean()) {
       if (toggleStow == true) {
-        io.pivotToPosition(.209);
+        io.pivotToPosition(kStowPos);
       } else {
-        io.pivotToPosition(.35);
+        io.pivotToPosition(kHorizPos);
       }
     }
   }
@@ -192,16 +192,16 @@ public class AlgaeMech extends RBSISubsystem {
     if (!disableSupplier.getAsBoolean()) {
       switch (pivotIndex) {
         case 3:
-          io.pivotToPosition(.209);
+          io.pivotToPosition(kStowPos);
           break;
         case 2:
-          io.pivotToPosition(.35);
+          io.pivotToPosition(kHorizPos);
           break;
         case 1:
-          io.pivotToPosition(.45);
+          io.pivotToPosition(kOtherPos);
           break;
         default:
-          io.pivotToPosition(.35);
+          io.pivotToPosition(kHorizPos);
       }
     }
   }
@@ -211,22 +211,22 @@ public class AlgaeMech extends RBSISubsystem {
   /** Pivot the mechanism up */
   public void pivotUp() {
     if (!disableSupplier.getAsBoolean()) {
-      io.pivotToPosition(.209);
+      io.pivotToPosition(kStowPos);
     }
   }
 
   /** Pivots to position to pick up off floor */
   public void pivotHorizontal() {
     if (!disableSupplier.getAsBoolean()) {
-      // io.pivotToPosition(.45);
-      io.pivotToPosition(.35);
+      // io.pivotToPosition(kOtherPos);
+      io.pivotToPosition(kHorizPos);
     }
   }
 
   /** Pivots to remove algae from reef */
   public void pivotOffReef() {
     if (!disableSupplier.getAsBoolean()) {
-      io.pivotToPosition(.521);
+      io.pivotToPosition(kReefPos);
     }
   }
 

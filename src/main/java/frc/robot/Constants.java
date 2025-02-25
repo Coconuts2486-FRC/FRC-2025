@@ -71,10 +71,10 @@ public final class Constants {
 
   /***************************************************************************/
   /**
-   * Define the various multiple robots that use this same code (e.g., COMPBOT, DEVBOT, SIMBOT,
+   * Define the various multiple robots that use this same code (e.g., LEONARDO, DEVBOT, SIMBOT,
    * etc.) and the operating modes of the code (REAL, SIM, or REPLAY)
    */
-  private static RobotType robotType = RobotType.COMPBOT;
+  private static RobotType robotType = RobotType.LEONARDO;
 
   // Define swerve, auto, and vision types being used
   // NOTE: Only PHOENIX6 swerve base has been tested at this point!!!
@@ -88,8 +88,8 @@ public final class Constants {
 
   /** Enumerate the robot types (name your robots here) */
   public static enum RobotType {
-    GEORGE, // Development / Alpha / Practice Bot
-    COMPBOT, // Competition robot
+    GEORGE, // Development / Alpha / Practice Bot, a.k.a. "George"
+    LEONARDO, // Competition robot, a.k.a. "Leonardo de Pinchy"
     SIMBOT // Simulated robot
   }
 
@@ -304,38 +304,32 @@ public final class Constants {
     public static final MotorIdleMode kAlgaeRollerIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
     // Gear Ratio
+    // TODO: Get ACTUAL GEAR RATIOS from Eugene
     public static final double kAlgaePivotGearRatio = 10.0;
     public static final double kAlgaeRollerGearRatio = 10.0;
 
-    // mode real/replay
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
-    // motor configs
-    public static final double kGReal = 0.3375;
-    public static final double kSReal = 0.075;
-    public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
-    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    // Pivot Gains
+    public static final double kPPivot = 10.0;
+    public static final double kIPivot = 0.0;
+    public static final double kDPivot = 0.0;
 
-    // mode sim
-    public static final double kStaticGainSim = 0.1;
-    public static final double kVelocityGainSim = 0.05;
-    // motor configs
-    public static final double kGSim = 0;
-    public static final double kSSim = 0;
-    public static final double kVSim = 0;
-    public static final double kASim = 0;
-    public static final double kPSim = 0;
-    public static final double kISim = 0;
-    public static final double kDSim = 0;
+    // Roller Gains
+    public static final double kPRoller = 1.0;
+    public static final double kIRoller = 0.0;
+    public static final double kDRoller = 0.0;
 
-    // Motion Magic constants
-    public static final double kVelocity = 1.4;
-    public static final double kAcceleration = 2.8;
-    public static final double kJerk = 0;
+    // Algae Mech Positions
+    // TODO: Put these in ACTUAL DEGREES with an offset
+    public static final double kStowPos = .209;
+    public static final double kHorizPos = .35;
+    public static final double kOtherPos = .45;
+    public static final double kReefPos = .521;
+    // public static final Angle kStowPos = Degrees.of(90.0);
+    // public static final Angle kHorizPos = Degrees.of(0.0);
+    // public static final Angle kOtherPos = Degrees.of(-10.0);
+    // public static final Angle kReefPos = Degrees.of(-35.0);
+    // public static final Angle kPivotOffset = Rotations.of(0.43);
+
   }
 
   /** Climb Subsystem Constants ******************************************** */
@@ -393,14 +387,14 @@ public final class Constants {
     // NOTE: It is assumed that both the Rio and the IMU are mounted such that +Z is UP
     public static final Rotation2d kRioOrientation =
         switch (getRobot()) {
-          case COMPBOT -> Rotation2d.fromDegrees(90.);
+          case LEONARDO -> Rotation2d.fromDegrees(90.);
           case GEORGE -> Rotation2d.fromDegrees(0.);
           default -> Rotation2d.fromDegrees(0.);
         };
     // IMU can be one of Pigeon2 or NavX
     public static final Rotation2d kIMUOrientation =
         switch (getRobot()) {
-          case COMPBOT -> Rotation2d.fromDegrees(0.);
+          case LEONARDO -> Rotation2d.fromDegrees(0.);
           case GEORGE -> Rotation2d.fromDegrees(0.);
           default -> Rotation2d.fromDegrees(0.);
         };
@@ -414,7 +408,7 @@ public final class Constants {
     public static final boolean kDriveLeftTurnRight =
         switch (getRobot()) {
           case GEORGE -> true; // Testing
-          case COMPBOT -> false; // Kate's preference
+          case LEONARDO -> false; // Kate's preference
           case SIMBOT -> true; // Default
         };
 
@@ -699,7 +693,7 @@ public final class Constants {
     if (!disableHAL && RobotBase.isReal() && robotType == RobotType.SIMBOT) {
       new Alert("Invalid robot selected, using competition robot as default.", AlertType.ERROR)
           .set(true);
-      robotType = RobotType.COMPBOT;
+      robotType = RobotType.LEONARDO;
     }
     return robotType;
   }
@@ -707,7 +701,7 @@ public final class Constants {
   /** Get the current robot mode */
   public static Mode getMode() {
     return switch (robotType) {
-      case GEORGE, COMPBOT -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
+      case GEORGE, LEONARDO -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
       case SIMBOT -> Mode.SIM;
     };
   }

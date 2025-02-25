@@ -19,10 +19,13 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface ClimbIO {
 
-  public final int[] powerPorts = {};
-
   @AutoLog
-  public static class ClimbIOInputs {}
+  public static class ClimbIOInputs {
+    public double positionRad = 0.0;
+    public double velocityRadPerSec = 0.0;
+    public double appliedVolts = 0.0;
+    public double[] currentAmps = new double[] {};
+  }
 
   public default void updateInputs(ClimbIOInputs inputs) {}
 

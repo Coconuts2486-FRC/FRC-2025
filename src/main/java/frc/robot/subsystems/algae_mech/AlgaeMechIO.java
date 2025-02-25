@@ -17,14 +17,16 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface AlgaeMechIO {
 
-  public final int[] powerPorts = {};
-
   @AutoLog
   public static class AlgaeMechIOInputs {
-    public double positionRad = 0.0;
-    public double velocityRadPerSec = 0.0;
-    public double appliedVolts = 0.0;
-    public double[] currentAmps = new double[] {};
+    public double rollerPositionRad = 0.0;
+    public double rollerVelocityRadPerSec = 0.0;
+    public double rollerAppliedVolts = 0.0;
+    public double[] rollerCurrentAmps = new double[] {};
+    public double pivotPositionRad = 0.0;
+    public double pivotVelocityRadPerSec = 0.0;
+    public double pivotAppliedVolts = 0.0;
+    public double[] pivotCurrentAmps = new double[] {};
   }
 
   public default void updateInputs(AlgaeMechIOInputs inputs) {}
@@ -49,9 +51,6 @@ public interface AlgaeMechIO {
 
   /** Run closed loop at the specified velocity. */
   public default void setRollerVelocity(double velocityRadPerSec, double ffVolts) {}
-
-  /** Set velocity PID constants. */
-  public default void configurePID(double kP, double kI, double kD) {}
 
   public default double getRollerCurrent() {
     return 0.0;

@@ -17,8 +17,6 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface IntakeIO {
 
-  public final int[] powerPorts = {};
-
   @AutoLog
   public static class IntakeIOInputs {
     public double positionRad = 0.0;

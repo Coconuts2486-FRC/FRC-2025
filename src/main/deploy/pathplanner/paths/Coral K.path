@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1722988252698805,
-        "y": 6.529942053835605
+        "x": 2.1575934910554384,
+        "y": 6.545474398526379
       },
       "isLocked": false,
       "linkedName": "Station Top"
@@ -20,8 +20,8 @@
         "y": 5.28
       },
       "prevControl": {
-        "x": 3.4853861807561963,
-        "y": 5.603379093764833
+        "x": 3.482622260411045,
+        "y": 5.580197083900154
       },
       "nextControl": null,
       "isLocked": false,

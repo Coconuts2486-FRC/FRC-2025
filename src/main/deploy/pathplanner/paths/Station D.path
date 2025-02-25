@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.96,
-        "y": 2.77
+        "x": 3.94,
+        "y": 2.72
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.201432719933539,
-        "y": 2.2375885735416072
+        "x": 3.181432719933539,
+        "y": 2.1875885735416074
       },
       "isLocked": false,
       "linkedName": "Coral D"
     },
     {
       "anchor": {
-        "x": 1.32,
-        "y": 0.9199999999999999
+        "x": 1.31,
+        "y": 0.9
       },
       "prevControl": {
-        "x": 1.8576593966010582,
-        "y": 1.304430986138938
+        "x": 1.8476593966010582,
+        "y": 1.284430986138938
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.7,
+    "maxAcceleration": 3.6,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -48,7 +48,7 @@
   "folder": "Matrix Station",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": -119.99999999999999
+    "rotation": -118.00000000000001
   },
   "useDefaultConstraints": true
 }

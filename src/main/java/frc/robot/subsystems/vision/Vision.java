@@ -37,6 +37,12 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * Vision control class
+ *
+ * <p>This vision subsystem is based on the VirtualSubsystem, which runs all the time regardless of
+ * enabled state of the robot.
+ */
 public class Vision extends VirtualSubsystem {
   private final VisionConsumer consumer;
   private final VisionIO[] io;
@@ -45,6 +51,7 @@ public class Vision extends VirtualSubsystem {
 
   private BooleanSupplier disableSupplier;
 
+  /** Constructor */
   public Vision(VisionConsumer consumer, VisionIO... io) {
     this.consumer = consumer;
     this.io = io;
@@ -78,6 +85,7 @@ public class Vision extends VirtualSubsystem {
     disableSupplier = () -> disableOverride.getAsBoolean();
   }
 
+  /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
     // Log the execution time
@@ -218,6 +226,7 @@ public class Vision extends VirtualSubsystem {
     Logger.recordOutput("LoggedRobot/VisionCodeMS", (double) timeElapsed / 1.e6);
   }
 
+  /** Vision Consumer */
   @FunctionalInterface
   public static interface VisionConsumer {
     public void accept(

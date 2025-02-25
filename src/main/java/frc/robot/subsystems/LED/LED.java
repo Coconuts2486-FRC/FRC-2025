@@ -28,6 +28,12 @@ import frc.robot.util.VirtualSubsystem;
 import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * LED control class
+ *
+ * <p>This LED subsystem is based on the VirtualSubsystem, which runs all the time regardless of
+ * enabled state of the robot.
+ */
 public class LED extends VirtualSubsystem {
   private CANdle candle = new CANdle(CANandPowerPorts.LED.getDeviceNumber());
   private CANdleConfiguration config = new CANdleConfiguration();
@@ -80,6 +86,7 @@ public class LED extends VirtualSubsystem {
 
   private static LED instance;
 
+  /** Return an instance of this class */
   public static LED getInstance() {
     if (instance == null) {
       instance = new LED();
@@ -96,6 +103,7 @@ public class LED extends VirtualSubsystem {
     candle.configAllSettings(config);
   }
 
+  /** Periodic function called every robot cycle */
   public synchronized void periodic() {
     // Log the execution time
     long start = System.nanoTime();
@@ -159,6 +167,7 @@ public class LED extends VirtualSubsystem {
     Logger.recordOutput("LoggedRobot/LEDCodeMS", (double) timeElapsed / 1.e6);
   }
 
+  /** Return something about the reset of the lights */
   private boolean getLightReset() {
     boolean reset;
     if (candle.getCurrent() < .2 && lightReset > .7) {
@@ -170,6 +179,7 @@ public class LED extends VirtualSubsystem {
     return reset;
   }
 
+  /** Run the lights in a raimbow twinkle pattern */
   public void rainbowTwinkle() {
     double rand = Math.random();
 
@@ -193,6 +203,7 @@ public class LED extends VirtualSubsystem {
     // candle.animate(rainbowAnim);
   }
 
+  /** Run the lights in a random 2-color twinkle */
   public void pickTwoTwinkle() {
 
     double randLightSet = Math.random();
@@ -204,20 +215,24 @@ public class LED extends VirtualSubsystem {
     }
   }
 
+  /** Turn the lights off */
   private void off() {
     candle.clearAnimation(0);
     candle.setLEDs(0, 0, 0, 0, 0, LEDConstants.nLED);
   }
 
+  /** Set the lights to a specific RGB color */
   private void setRGB(int r, int g, int b) {
     candle.clearAnimation(0);
     candle.setLEDs(r, g, b, 0, 0, LEDConstants.nLED);
   }
 
+  /** Get the current consumed by the CANdle */
   private double getCurrent() {
     return candle.getCurrent();
   }
 
+  /** Set the lights to a solid color */
   private void solid(Color color) {
     candle.clearAnimation(0);
     if (color != null) {
@@ -231,46 +246,72 @@ public class LED extends VirtualSubsystem {
     }
   }
 
+  /** Set the lights to the color of a CORAL */
   private void coralLarson(Color allianceColor) {
     candle.clearAnimation(0);
 
     candle.setLEDs(255, 255, 255, 0, 0, LEDConstants.nLED);
   }
 
+  /** Indicate that the robot is ready to score */
   private void scoreReady() {
     candle.clearAnimation(0);
     candle.setLEDs(255, 165, 0, 0, 0, LEDConstants.nLED);
   }
 
+  /** Indicate that the robot is not ready to score */
   private void scoreNotReady() {
     candle.clearAnimation(0);
     candle.setLEDs(0, 0, 255, 0, 0, LEDConstants.nLED);
   }
 
+  /** Get the ELEVATOR E-STOP status */
   public static boolean getElevatorEStop() {
     return elevatorEstopped;
   }
 
+  /** Get the INTAKE E-STOP status */
   public static boolean getIntakeEStop() {
     return intakeEstopped;
   }
 
+  /* Get the ALGAE E-STOP status */
   public static boolean getAgaeMechEStop() {
     return algaemechEstopped;
   }
 
+  /**
+   * Set the ELEVATOR E-STOP status
+   *
+   * @param eStopSwitch The boolean value of the e-stop switch
+   */
   public static void setElevatorEStop(boolean eStopSwitch) {
     elevatorEstopped = eStopSwitch;
   }
 
+  /**
+   * Set the INTAKE E-STOP status
+   *
+   * @param eStopSwitch The boolean value of the e-stop switch
+   */
   public static void setIntakeEStop(boolean eStopSwitch) {
     intakeEstopped = eStopSwitch;
   }
 
+  /**
+   * Set the ALGAE E-STOP status
+   *
+   * @param eStopSwitch The boolean value of the e-stop switch
+   */
   public static void setAgaeMechEStop(boolean eStopSwitch) {
     algaemechEstopped = eStopSwitch;
   }
 
+  /**
+   * Set the CORAL score ready status
+   *
+   * @param coralScoreReady The boolean value of the CORAL score-ready indicator
+   */
   public static void setCoralReady(boolean coralScoreReady) {
     coralReady = coralScoreReady;
   }

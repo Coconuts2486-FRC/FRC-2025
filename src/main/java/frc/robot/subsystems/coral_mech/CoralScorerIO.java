@@ -50,4 +50,8 @@ public interface CoralScorerIO {
   public default void setCoast() {}
 
   public default void setBrake() {}
+
+  public default int[] getPowerPorts() {
+    return new int[1];
+  }
 }

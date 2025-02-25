@@ -60,4 +60,8 @@ public interface AlgaeMechIO {
   public default double getPivotEncoderPose() {
     return .209;
   }
+
+  public default int[] getPowerPorts() {
+    return new int[1];
+  }
 }

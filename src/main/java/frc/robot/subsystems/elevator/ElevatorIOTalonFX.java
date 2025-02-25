@@ -51,8 +51,8 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   private final StatusSignal<Voltage> elevatorAppliedVolts = m_elevatorMotor.getMotorVoltage();
   private final StatusSignal<Current> elevatorCurrent = m_elevatorMotor.getSupplyCurrent();
 
-  // Power port
-  public final int[] powerPorts = {CANandPowerPorts.ELEVATOR.getPowerPort()};
+  // Power port(s)
+  private final int[] powerPorts = {CANandPowerPorts.ELEVATOR.getPowerPort()};
 
   // Set up the Motion Magic instance
   private final MotionMagicVoltage m_motionMagic = new MotionMagicVoltage(0);
@@ -150,16 +150,17 @@ public class ElevatorIOTalonFX implements ElevatorIO {
       LinearVelocity velocity,
       LinearAcceleration acceleration,
       double jerk) {
-    var talonSlot0Configs = elevatorConfig.Slot0;
-    var motionMagicConfigs = elevatorConfig.MotionMagic;
-
-    talonSlot0Configs.kG = Kg;
-    talonSlot0Configs.kS = Ks;
-    talonSlot0Configs.kV = Kv;
-    talonSlot0Configs.kA = Ka;
-    talonSlot0Configs.kP = Kp;
-    talonSlot0Configs.kI = Ki;
-    talonSlot0Configs.kD = Kd;
+    // Update the Slot0 configuration
+    elevatorConfig.Slot0 =
+        elevatorConfig
+            .Slot0
+            .withKG(Kg)
+            .withKS(Ks)
+            .withKV(Kv)
+            .withKA(Ka)
+            .withKP(Kp)
+            .withKI(Ki)
+            .withKD(Kd);
 
     // Angular Velocity and Acceleration for Motion Magic in rot/s and rot/s/s
     double angularVerlocity =
@@ -173,9 +174,9 @@ public class ElevatorIOTalonFX implements ElevatorIO {
             * kElevatorGearRatio
             / (2 * Math.PI);
 
-    motionMagicConfigs.MotionMagicCruiseVelocity = angularVerlocity;
-    motionMagicConfigs.MotionMagicAcceleration = angularAcceleration;
-    motionMagicConfigs.MotionMagicJerk = jerk;
+    elevatorConfig.MotionMagic.MotionMagicCruiseVelocity = angularVerlocity;
+    elevatorConfig.MotionMagic.MotionMagicAcceleration = angularAcceleration;
+    elevatorConfig.MotionMagic.MotionMagicJerk = jerk;
 
     PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(elevatorConfig, 0.25));
   }
@@ -235,5 +236,11 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   @Override
   public void setBrake() {
     m_elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
+  }
+
+  /** Return the list of PDH power ports used for this mechanism */
+  @Override
+  public int[] getPowerPorts() {
+    return powerPorts;
   }
 }

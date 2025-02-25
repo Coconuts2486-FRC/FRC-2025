@@ -44,7 +44,8 @@ public class Climb extends RBSISubsystem {
   /** Constructor */
   public Climb(ClimbIO io) {
     this.io = io;
-    io.configPID(kPReal, kIReal, kDReal);
+    // NOTE: At the moment, only PID are actually used!
+    io.configPID(kSReal, kVReal, kAReal, kPReal, kIReal, kDReal, kVelocity, kAcceleration);
 
     // Configure SysId
     sysId =
@@ -133,6 +134,6 @@ public class Climb extends RBSISubsystem {
   /** Return the power ports used by this mechanism */
   @Override
   public int[] getPowerPorts() {
-    return io.powerPorts;
+    return io.getPowerPorts();
   }
 }

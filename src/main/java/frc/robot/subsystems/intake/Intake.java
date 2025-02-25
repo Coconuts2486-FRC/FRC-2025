@@ -160,6 +160,6 @@ public class Intake extends RBSISubsystem {
   /** Return the power ports used by this mechanism */
   @Override
   public int[] getPowerPorts() {
-    return io.powerPorts;
+    return io.getPowerPorts();
   }
 }

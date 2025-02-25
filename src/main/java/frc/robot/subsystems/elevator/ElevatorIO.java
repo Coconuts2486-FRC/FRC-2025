@@ -21,8 +21,6 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface ElevatorIO {
 
-  public final int[] powerPorts = {};
-
   @AutoLog
   public static class ElevatorIOInputs {
     public double positionRad = 0.0;
@@ -76,4 +74,8 @@ public interface ElevatorIO {
   public default void setCoast() {}
 
   public default void setBrake() {}
+
+  public default int[] getPowerPorts() {
+    return new int[1];
+  }
 }

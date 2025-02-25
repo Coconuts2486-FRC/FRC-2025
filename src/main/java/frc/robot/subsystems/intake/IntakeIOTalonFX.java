@@ -154,4 +154,10 @@ public class IntakeIOTalonFX implements IntakeIO {
   public double getEncoderValue() {
     return pivotPosition.getValueAsDouble();
   }
+
+  /** Return the list of PDH power ports used for this mechanism */
+  @Override
+  public int[] getPowerPorts() {
+    return powerPorts;
+  }
 }

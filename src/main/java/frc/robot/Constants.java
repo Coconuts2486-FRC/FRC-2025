@@ -35,6 +35,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.LinearVelocity;
@@ -352,9 +354,9 @@ public final class Constants {
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
     public static final double kAReal = 0.0;
-    public static final double kPReal = 1.0;
+    public static final double kPReal = 4.0;
     public static final double kIReal = 0.0;
-    public static final double kDReal = 0.0;
+    public static final double kDReal = 0.5;
 
     // mode sim
     public static final double kStaticGainSim = 0.1;
@@ -369,13 +371,17 @@ public final class Constants {
     public static final double kDSim = 0;
 
     // Motion Magic constants
-    public static final double kVelocity = 1.4;
-    public static final double kAcceleration = 2.8;
-    public static final double kJerk = 0;
+    public static final AngularVelocity kVelocity = RotationsPerSecond.of(1.4);
+    public static final AngularAcceleration kAcceleration = RotationsPerSecondPerSecond.of(2.8);
 
+    // Put these in terms of ACTUAL PROTRACTOR ANGLES ON THE ROBOT AND A ZERO OFFSET!!!
     public static final double startClimb = .46;
     public static final double stowClimb = .72;
     public static final double completeClimb = .82;
+    // public static final Angle startClimb = Degrees.of(90.0);
+    // public static final Angle stowClimb = Degrees.of(180.0);
+    // public static final Angle completeClimb = Degrees.of(270.0);
+    // public static final Angle kClimbOffset = Rotations.of(0.50);
   }
 
   /** Accelerometer Constants ********************************************** */

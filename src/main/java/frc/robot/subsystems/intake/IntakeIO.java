@@ -44,4 +44,8 @@ public interface IntakeIO {
   public default double getEncoderValue() {
     return 0.0;
   }
+
+  public default int[] getPowerPorts() {
+    return new int[1];
+  }
 }

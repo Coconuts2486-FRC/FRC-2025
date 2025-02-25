@@ -85,4 +85,10 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
     config.kD = kD;
     // leader.getConfigurator().apply(config);
   }
+
+  /** Return the list of PDH power ports used for this mechanism */
+  @Override
+  public int[] getPowerPorts() {
+    return powerPorts;
+  }
 }

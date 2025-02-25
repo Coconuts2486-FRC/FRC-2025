@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.302160809491131,
-        "y": 2.9596810005806584
+        "x": 5.35,
+        "y": 2.91
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.698738281250001,
-        "y": 2.5428476562499998
+        "x": 4.843635961671097,
+        "y": 2.6153482058750206
       },
       "isLocked": false,
       "linkedName": "Coral F"
     },
     {
       "anchor": {
-        "x": 1.32,
-        "y": 0.9199999999999999
+        "x": 1.31,
+        "y": 0.9
       },
       "prevControl": {
-        "x": 1.7649355763806067,
-        "y": 1.1448575679304396
+        "x": 1.8615473570623928,
+        "y": 1.1878241621556223
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,5 +55,5 @@
     "velocity": 0.0,
     "rotation": -59.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

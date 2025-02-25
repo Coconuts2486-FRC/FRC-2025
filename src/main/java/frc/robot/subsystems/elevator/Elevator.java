@@ -85,7 +85,7 @@ public class Elevator extends RBSISubsystem {
 
     setDefaultCommand(
         new ElevatorCommand(
-            () -> ElevatorConstants.kElevatorZeroHeight,
+            () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
             ElevatorConstants.kAcceleration.div(2), // Go slower on the way down
             ElevatorConstants.kVelocity.div(2), // Go slower on the way down
             this));

@@ -190,11 +190,11 @@ public final class Constants {
     public static final Distance kElevatorSproketRadius = Inches.of(1.75 / 2.0);
     // These are heights off the ground of the top row of bolts on the elevator 1st stage
     public static final Distance kElevatorZeroHeight = Inches.of(40.375);
-    public static final Distance kL2 = Inches.of(48.125 + 0.5);
-    public static final Distance kL3 = Inches.of(56.25 + 0.5);
+    public static final Distance kL2 = Inches.of(48.125);
+    public static final Distance kL3 = Inches.of(56.25);
     public static final Distance kL4 = Inches.of(68.125);
     public static final Distance KAlgaeLower = Inches.of(58.375);
-    public static final Distance KAlgaeUpper = Inches.of(65.75);
+    public static final Distance KAlgaeUpper = Inches.of(66.5);
     // Motion Magic constants
     public static final LinearVelocity kVelocity = MetersPerSecond.of(1.8);
     public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(2.8);
@@ -634,9 +634,9 @@ public final class Constants {
     public static Translation2d kLeftReefPost =
         new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(-6.5));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(+6.5));
+        new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(+6.5 + .1));
     public static Translation2d kAlgaeGrab =
-        new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(0.0));
+        new Translation2d(Units.inchesToMeters(29.0), Units.inchesToMeters(0.0));
   }
 
   /** AprilTag Field Layout ************************************************ */

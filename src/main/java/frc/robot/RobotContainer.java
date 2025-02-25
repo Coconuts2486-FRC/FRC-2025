@@ -394,10 +394,10 @@ public class RobotContainer {
 
     // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
     driverController
-        .b()
+        .x()
         .onTrue(Commands.runOnce(() -> m_reefTarget.indexLeft()).ignoringDisable(true));
     driverController
-        .x()
+        .b()
         .onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()).ignoringDisable(true));
 
     // Drive to algae position (Back Left Bottom)
@@ -406,19 +406,27 @@ public class RobotContainer {
         .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefAlgaePose()));
 
     // Driver Right Bumper :>> Intake from the floor
-    driverController
-        .rightBumper()
-        .whileTrue(new IntakeCommand(m_intake, 0.25, -0.35))
-        .whileFalse(new IntakeCommand(m_intake, 0.9, 0).until(leftBumper));
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.35));
 
     // Driver Left Bumper :>> Score L1
     driverController
         .leftBumper()
         .whileTrue(
-            new IntakeCommand(m_intake, 0.75, 0)
-                .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)))
-        .whileFalse(new IntakeCommand(m_intake, 0.9, 0).until(rightBumper));
+            Commands.startRun(
+                    () -> m_algaeMech.setIndexPose(1),
+                    () -> m_algaeMech.cyclePositions(),
+                    m_algaeMech)
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(.6))));
+
+    // Release Operator Right Bumper :>> Turn off algae rollers
+    driverController
+        .leftBumper()
+        .onFalse(
+            Commands.startRun(
+                    () -> m_algaeMech.setIndexPose(2),
+                    () -> m_algaeMech.cyclePositions(),
+                    m_algaeMech)
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController
@@ -482,23 +490,28 @@ public class RobotContainer {
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 
-    // operatorController
-    //     .start()
-    //     .whileTrue(Commands.run(() ->
-    // m_climber.rachetToggle(0),m_climber).withTimeout(.2).andThen(
-    //         Commands.runEnd(
-    //             () -> m_climber.twistToPosition(ClimbConstants.startClimb),
-    //             () -> m_climber.stop(),
-    //             m_climber))
-    //         .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0))));
+    operatorController
+        .start()
+        .whileTrue(
+            Commands.run(() -> m_climber.rachetToggle(1), m_climber)
+                .withTimeout(.25)
+                .andThen(
+                    Commands.runEnd(
+                        () -> m_climber.twistToPosition(ClimbConstants.startClimb),
+                        () -> m_climber.stop(),
+                        m_climber))
+                .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(1))));
+
+    operatorController.start().onFalse(new IntakeCommand(m_intake, 0.75, 0));
 
     operatorController
-        .b()
+        .back()
         .whileTrue(
             Commands.runEnd(
-                () -> m_climber.goUntilPosition(-.5, ClimbConstants.completeClimb),
-                () -> m_climber.stop(),
-                m_climber));
+                    () -> m_climber.goUntilPosition(-.5, ClimbConstants.completeClimb),
+                    () -> m_climber.stop(),
+                    m_climber)
+                .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0))));
 
     operatorController
         .x()
@@ -509,14 +522,20 @@ public class RobotContainer {
                     ElevatorConstants.kAcceleration,
                     ElevatorConstants.kVelocity,
                     m_elevator),
-                Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
-                    .withTimeout(.35)
+                Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+                    .withTimeout(.25)
                     .andThen(
                         Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
-                            .alongWith(Commands.run(() -> m_algaeMech.setPercent(.6)))
+                            .alongWith(
+                                Commands.runEnd(
+                                    () -> m_algaeMech.setPercent(.6),
+                                    () -> m_algaeMech.setPercent(0)))
                             .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2)))),
                 DriveCommands.robotRelativeDrive(
-                    m_drivebase, () -> -driveStickY.value(), () -> 0, () -> -turnStickX.value())));
+                    m_drivebase,
+                    () -> (driveStickY.value() / 2),
+                    () -> 0,
+                    () -> -turnStickX.value())));
 
     operatorController
         .povUp()
@@ -527,16 +546,20 @@ public class RobotContainer {
         .onTrue(Commands.runOnce(() -> m_algaeMech.indexPoseDown(), m_algaeMech));
     // .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber)));
 
-    operatorController.back().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber));
+    // operatorController.back().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0),
+    // m_climber));
 
-    operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(1), m_climber));
+    // operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(1),
+    // m_climber));
 
     // Operator Right Bumper :>> Spit out algae ball
     operatorController
         .povLeft()
         .whileTrue(
             Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(-1))));
+                .alongWith(
+                    Commands.runEnd(
+                        () -> m_algaeMech.setPercent(-1), () -> m_algaeMech.setIndexPose(3))));
 
     // Release Operator Right Bumper :>> Turn off algae rollers
     operatorController
@@ -546,17 +569,11 @@ public class RobotContainer {
                 .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
 
     operatorController
-        .povRight()
+        .leftBumper()
         .whileTrue(
-            Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(.6))));
-
-    // Release Operator Right Bumper :>> Turn off algae rollers
-    operatorController
-        .povRight()
-        .onFalse(
-            Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
+            new IntakeCommand(m_intake, 0.75, 0)
+                .withTimeout(0.075)
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)));
 
     // Operator Y Button :>> Elevator to Lower Algae
     // operatorController

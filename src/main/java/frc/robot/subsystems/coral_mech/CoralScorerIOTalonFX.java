@@ -59,17 +59,17 @@ public class CoralScorerIOTalonFX implements CoralScorerIO {
     PhoenixUtil.tryUntilOk(5, () -> m_coralIndexer.getConfigurator().apply(coralConfig, 0.25));
   }
 
-  /** Update the inputs for / from logs */
-  @Override
-  public void updateInputs(CoralScorerIOInputs inputs) {
-    BaseStatusSignal.refreshAll(coralPosition, coralVelocity, coralAppliedVolts, coralCurrent);
-    inputs.positionRad =
-        Units.rotationsToRadians(coralPosition.getValueAsDouble()) / kCoralGearRatio;
-    inputs.velocityRadPerSec =
-        Units.rotationsToRadians(coralVelocity.getValueAsDouble()) / kCoralGearRatio;
-    inputs.appliedVolts = coralAppliedVolts.getValueAsDouble();
-    inputs.currentAmps = new double[] {coralCurrent.getValueAsDouble()};
-  }
+  // /** Update the inputs for / from logs */
+  // @Override
+  // public void updateInputs(CoralScorerIOInputs inputs) {
+  //   BaseStatusSignal.refreshAll(coralPosition, coralVelocity, coralAppliedVolts, coralCurrent);
+  //   inputs.positionRad =
+  //       Units.rotationsToRadians(coralPosition.getValueAsDouble()) / kCoralGearRatio;
+  //   inputs.velocityRadPerSec =
+  //       Units.rotationsToRadians(coralVelocity.getValueAsDouble()) / kCoralGearRatio;
+  //   inputs.appliedVolts = coralAppliedVolts.getValueAsDouble();
+  //   inputs.currentAmps = new double[] {coralCurrent.getValueAsDouble()};
+  // }
 
   /** Return the value of the digital input from the light stop */
   @Override

@@ -73,16 +73,16 @@ public class IntakeIOTalonFX implements IntakeIO {
    *
    * @param inputs The inputs
    */
-  @Override
-  public void updateInputs(IntakeIOInputs inputs) {
-    BaseStatusSignal.refreshAll(pivotPosition, pivotVelocity, pivotAppliedVolts, pivotCurrent);
-    inputs.positionRad =
-        Units.rotationsToRadians(pivotPosition.getValueAsDouble()); // 21.42857; // gear ratio
-    inputs.velocityRadPerSec =
-        Units.rotationsToRadians(pivotVelocity.getValueAsDouble()); // 21.42857; // gear ratio
-    inputs.appliedVolts = pivotAppliedVolts.getValueAsDouble();
-    inputs.currentAmps = new double[] {pivotCurrent.getValueAsDouble()};
-  }
+  // @Override
+  // public void updateInputs(IntakeIOInputs inputs) {
+  //   BaseStatusSignal.refreshAll(pivotPosition, pivotVelocity, pivotAppliedVolts, pivotCurrent);
+  //   inputs.positionRad =
+  //       Units.rotationsToRadians(pivotPosition.getValueAsDouble()); // 21.42857; // gear ratio
+  //   inputs.velocityRadPerSec =
+  //       Units.rotationsToRadians(pivotVelocity.getValueAsDouble()); // 21.42857; // gear ratio
+  //   inputs.appliedVolts = pivotAppliedVolts.getValueAsDouble();
+  //   inputs.currentAmps = new double[] {pivotCurrent.getValueAsDouble()};
+  // }
 
   /**
    * Make the pivot move with an inidicated voltage

@@ -90,31 +90,31 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
     PhoenixUtil.tryUntilOk(5, () -> m_pivot.getConfigurator().apply(pivotConfig, 0.25));
   }
 
-  /** Update the inputs for / from logs */
-  @Override
-  public void updateInputs(AlgaeMechIOInputs inputs) {
-    BaseStatusSignal.refreshAll(
-        algaeRollerPosition,
-        algaeRollerVelocity,
-        algaeRollerAppliedVolts,
-        algaeRollerCurrent,
-        algaePivotPosition,
-        algaePivotVelocity,
-        algaePivotAppliedVolts,
-        algaePivotCurrent);
-    inputs.rollerPositionRad =
-        Units.rotationsToRadians(algaeRollerPosition.getValueAsDouble()) / kAlgaeRollerGearRatio;
-    inputs.rollerVelocityRadPerSec =
-        Units.rotationsToRadians(algaeRollerVelocity.getValueAsDouble()) / kAlgaeRollerGearRatio;
-    inputs.rollerAppliedVolts = algaeRollerAppliedVolts.getValueAsDouble();
-    inputs.rollerCurrentAmps = new double[] {algaeRollerCurrent.getValueAsDouble()};
-    inputs.pivotPositionRad =
-        Units.rotationsToRadians(algaePivotPosition.getValueAsDouble()) / kAlgaePivotGearRatio;
-    inputs.pivotVelocityRadPerSec =
-        Units.rotationsToRadians(algaePivotVelocity.getValueAsDouble()) / kAlgaePivotGearRatio;
-    inputs.pivotAppliedVolts = algaePivotAppliedVolts.getValueAsDouble();
-    inputs.pivotCurrentAmps = new double[] {algaePivotCurrent.getValueAsDouble()};
-  }
+  // /** Update the inputs for / from logs */
+  // @Override
+  // public void updateInputs(AlgaeMechIOInputs inputs) {
+  //   BaseStatusSignal.refreshAll(
+  //       algaeRollerPosition,
+  //       algaeRollerVelocity,
+  //       algaeRollerAppliedVolts,
+  //       algaeRollerCurrent,
+  //       algaePivotPosition,
+  //       algaePivotVelocity,
+  //       algaePivotAppliedVolts,
+  //       algaePivotCurrent);
+  //   inputs.rollerPositionRad =
+  //       Units.rotationsToRadians(algaeRollerPosition.getValueAsDouble()) / kAlgaeRollerGearRatio;
+  //   inputs.rollerVelocityRadPerSec =
+  //       Units.rotationsToRadians(algaeRollerVelocity.getValueAsDouble()) / kAlgaeRollerGearRatio;
+  //   inputs.rollerAppliedVolts = algaeRollerAppliedVolts.getValueAsDouble();
+  //   inputs.rollerCurrentAmps = new double[] {algaeRollerCurrent.getValueAsDouble()};
+  //   inputs.pivotPositionRad =
+  //       Units.rotationsToRadians(algaePivotPosition.getValueAsDouble()) / kAlgaePivotGearRatio;
+  //   inputs.pivotVelocityRadPerSec =
+  //       Units.rotationsToRadians(algaePivotVelocity.getValueAsDouble()) / kAlgaePivotGearRatio;
+  //   inputs.pivotAppliedVolts = algaePivotAppliedVolts.getValueAsDouble();
+  //   inputs.pivotCurrentAmps = new double[] {algaePivotCurrent.getValueAsDouble()};
+  // }
 
   /**
    * Set the pivot to a specified voltage

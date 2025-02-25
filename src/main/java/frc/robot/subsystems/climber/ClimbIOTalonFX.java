@@ -75,17 +75,17 @@ public class ClimbIOTalonFX implements ClimbIO {
     PhoenixUtil.tryUntilOk(5, () -> m_climbMotor.getConfigurator().apply(climbConfig, 0.25));
   }
 
-  /** Update the inputs for / from logs */
-  @Override
-  public void updateInputs(ClimbIOInputs inputs) {
-    BaseStatusSignal.refreshAll(climbPosition, climbVelocity, climbAppliedVolts, climbCurrent);
-    inputs.positionRad =
-        Units.rotationsToRadians(climbPosition.getValueAsDouble()) / kClimbGearRatio;
-    inputs.velocityRadPerSec =
-        Units.rotationsToRadians(climbVelocity.getValueAsDouble()) / kClimbGearRatio;
-    inputs.appliedVolts = climbAppliedVolts.getValueAsDouble();
-    inputs.currentAmps = new double[] {climbCurrent.getValueAsDouble()};
-  }
+  // /** Update the inputs for / from logs */
+  // @Override
+  // public void updateInputs(ClimbIOInputs inputs) {
+  //   BaseStatusSignal.refreshAll(climbPosition, climbVelocity, climbAppliedVolts, climbCurrent);
+  //   inputs.positionRad =
+  //       Units.rotationsToRadians(climbPosition.getValueAsDouble()) / kClimbGearRatio;
+  //   inputs.velocityRadPerSec =
+  //       Units.rotationsToRadians(climbVelocity.getValueAsDouble()) / kClimbGearRatio;
+  //   inputs.appliedVolts = climbAppliedVolts.getValueAsDouble();
+  //   inputs.currentAmps = new double[] {climbCurrent.getValueAsDouble()};
+  // }
 
   /**
    * Set the position of the ratchet servo

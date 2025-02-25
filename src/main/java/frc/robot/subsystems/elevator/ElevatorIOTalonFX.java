@@ -59,18 +59,20 @@ public class ElevatorIOTalonFX implements ElevatorIO {
 
   private Angle m_commandedMotorPosition = Rotations.of(0.);
 
+  private final TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
+
   /** Constructor for using a TalonFX to drive the elevator */
   public ElevatorIOTalonFX() {
+
     // Set and apply TalonFX Configurations
-    var config = new TalonFXConfiguration();
-    config.CurrentLimits.SupplyCurrentLimit = 30.0;
-    config.CurrentLimits.SupplyCurrentLimitEnable = true;
-    config.MotorOutput.NeutralMode =
+    elevatorConfig.CurrentLimits.SupplyCurrentLimit = 30.0;
+    elevatorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    elevatorConfig.MotorOutput.NeutralMode =
         switch (kElevatorIdle) {
           case COAST -> NeutralModeValue.Coast;
           case BRAKE -> NeutralModeValue.Brake;
         };
-    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(config, 0.25));
+    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(elevatorConfig, 0.25));
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, elevatorPosition, elevatorVelocity, elevatorAppliedVolts, elevatorCurrent);
@@ -148,9 +150,8 @@ public class ElevatorIOTalonFX implements ElevatorIO {
       LinearVelocity velocity,
       LinearAcceleration acceleration,
       double jerk) {
-    var talonFXConfigs = new TalonFXConfiguration();
-    var talonSlot0Configs = talonFXConfigs.Slot0;
-    var motionMagicConfigs = talonFXConfigs.MotionMagic;
+    var talonSlot0Configs = elevatorConfig.Slot0;
+    var motionMagicConfigs = elevatorConfig.MotionMagic;
 
     talonSlot0Configs.kG = Kg;
     talonSlot0Configs.kS = Ks;
@@ -176,7 +177,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     motionMagicConfigs.MotionMagicAcceleration = angularAcceleration;
     motionMagicConfigs.MotionMagicJerk = jerk;
 
-    m_elevatorMotor.getConfigurator().apply(talonFXConfigs);
+    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(elevatorConfig, 0.25));
   }
 
   /**

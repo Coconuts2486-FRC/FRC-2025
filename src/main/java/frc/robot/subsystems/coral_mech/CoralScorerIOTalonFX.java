@@ -13,50 +13,72 @@
 
 package frc.robot.subsystems.coral_mech;
 
+import static frc.robot.Constants.CoralMechConstants.*;
+
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.CANandPowerPorts;
+import frc.robot.util.PhoenixUtil;
 
 public class CoralScorerIOTalonFX implements CoralScorerIO {
 
-  private final DigitalInput lightStop = new DigitalInput(2);
-  private final TalonFX coralIndexer = new TalonFX(CANandPowerPorts.CORAL_MECH.getDeviceNumber());
+  private final DigitalInput m_lightStop = new DigitalInput(CANandPowerPorts.CORAL_LIGHT_STOP);
+  private final TalonFX m_coralIndexer = new TalonFX(CANandPowerPorts.CORAL_MECH.getDeviceNumber());
   public final int[] powerPorts = {CANandPowerPorts.CORAL_MECH.getPowerPort()};
 
   public CoralScorerIOTalonFX() {
-    var pid = new Slot0Configs();
-    pid.withKP(1);
-    pid.withKI(0);
-    pid.withKD(0);
-    var config = new TalonFXConfiguration();
-
+    TalonFXConfiguration config = new TalonFXConfiguration();
+    config.CurrentLimits.SupplyCurrentLimit = 30.0;
+    config.CurrentLimits.SupplyCurrentLimitEnable = true;
+    // Coral Mech should always have neutral mode COAST
     config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-    coralIndexer.getConfigurator().apply(pid);
-    coralIndexer.getConfigurator().apply(config);
+
+    PhoenixUtil.tryUntilOk(5, () -> m_coralIndexer.getConfigurator().apply(config, 0.25));
+
+    Slot0Configs pid = new Slot0Configs();
+    pid.withKP(kPReal);
+    pid.withKI(0.0);
+    pid.withKD(kDReal);
+
+    m_coralIndexer.getConfigurator().apply(pid);
+    m_coralIndexer.getConfigurator().apply(config);
   }
 
   @Override
   public boolean getLightStop() {
-    return lightStop.get();
+    return m_lightStop.get();
+  }
+
+  /**
+   * Run the elevator at the provided voltage
+   *
+   * <p>This method is used for development and calibration only, SHOULD NOT BE USED IN COMPETITION
+   *
+   * @param volts The voltage at which to run the elevator
+   */
+  @Override
+  public void setVoltage(double volts) {
+    m_coralIndexer.setControl(new VoltageOut(volts));
   }
 
   public void setPercentOut(double percentOut) {
-    coralIndexer.setControl(new DutyCycleOut(percentOut));
+    m_coralIndexer.setControl(new DutyCycleOut(percentOut));
   }
 
   @Override
   public void setVelocity(double velocity) {
-    coralIndexer.setControl(new VelocityDutyCycle(velocity));
+    m_coralIndexer.setControl(new VelocityDutyCycle(velocity));
   }
 
   /** Get the motor output percent */
   @Override
   public double getPercent() {
-    return coralIndexer.getDutyCycle().getValueAsDouble();
+    return m_coralIndexer.getDutyCycle().getValueAsDouble();
   }
 }

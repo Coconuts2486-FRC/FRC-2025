@@ -28,7 +28,6 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -228,20 +227,19 @@ public final class Constants {
     public static final MotorIdleMode kCoralIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
     // Gear Ratio
+    // TODO: Get the REAL gear ratio
     public static final double kCoralGearRatio = 10.0;
 
     // mode real/replay
     public static final double kStaticGainReal = 0.1;
     public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0.3375;
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
-    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    public static final double kAReal = 0;
+    public static final double kPReal = 1.0;
+    public static final double kIReal = 0.0;
+    public static final double kDReal = 0.0;
 
     // mode sim
     public static final double kStaticGainSim = 0.1;
@@ -254,11 +252,6 @@ public final class Constants {
     public static final double kPSim = 0;
     public static final double kISim = 0;
     public static final double kDSim = 0;
-
-    // Motion Magic constants
-    public static final double kVelocity = 1.4;
-    public static final double kAcceleration = 2.8;
-    public static final double kJerk = 0;
   }
 
   /** Intake Subsystem Constants ******************************************* */
@@ -276,14 +269,12 @@ public final class Constants {
     public static final double kStaticGainReal = 0.1;
     public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0.3375;
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
-    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    public static final double kAReal = 0.0;
+    public static final double kPReal = 1.0;
+    public static final double kIReal = 0.0;
+    public static final double kDReal = 0.0;
 
     // mode sim
     public static final double kStaticGainSim = 0.1;
@@ -358,14 +349,12 @@ public final class Constants {
     public static final double kStaticGainReal = 0.1;
     public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0.3375;
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
-    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    public static final double kAReal = 0.0;
+    public static final double kPReal = 1.0;
+    public static final double kIReal = 0.0;
+    public static final double kDReal = 0.0;
 
     // mode sim
     public static final double kStaticGainSim = 0.1;
@@ -619,6 +608,10 @@ public final class Constants {
     // This is where digital I/O feedback devices are defined
     // Example:
     // public static final int ELEVATOR_BOTTOM_LIMIT = 3;
+    public static final int ELEVATOR_BOTTOM_LIMIT = 0;
+    public static final int ALGAE_PIVOT_ENCODER = 1;
+    public static final int CORAL_LIGHT_STOP = 2;
+    public static final int CLIMB_PIVOT_ENCODER = 3;
 
     /* LINEAR SERVO PWM CHANNELS */
     // This is where PWM-controlled devices (actuators, servos, pneumatics, etc.)
@@ -638,9 +631,6 @@ public final class Constants {
         new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(+6.5));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(0.0));
-
-    public static Pose2d k11r = new Pose2d(12.55, 2.71, Rotation2d.fromDegrees(-118.22));
-    public static Pose2d k11l = new Pose2d(12.22, 2.94, Rotation2d.fromDegrees(-120.6));
   }
 
   /** AprilTag Field Layout ************************************************ */

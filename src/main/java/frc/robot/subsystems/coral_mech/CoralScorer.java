@@ -13,48 +13,33 @@
 
 package frc.robot.subsystems.coral_mech;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
-import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * Coral Scorer control class
+ *
+ * <p>This mechanism subsystem is based on the RBSI Subsystem, which allows for power monitoring in
+ * addition to the underlying WPILib Subsystem functions.
+ *
+ * <p>This subsystem is based on the AdvantageKit model (https://docs.advantagekit.org/). This class
+ * is the generic subsystem container that deals with outward-facing API calls (move to this
+ * position, stop, etc.), while the IO files in this directory define the hardware- specific
+ * function calls that implement the directives from the API.
+ */
 public class CoralScorer extends RBSISubsystem {
   private final CoralScorerIO io;
   private final CoralScorerIOInputsAutoLogged inputs = new CoralScorerIOInputsAutoLogged();
-  private int delaySetup = 1;
-  private Timer timer = new Timer();
 
   private boolean hasCoral = false;
 
   /** Constructor */
   public CoralScorer(CoralScorerIO io) {
     this.io = io;
+
     setDefaultCommand(Commands.run(() -> automaticIntake(), this));
-  }
-
-  /** Initialize the default command for this subsystem */
-  public void initDefaultCommand() {}
-
-  public boolean coralDelay(DoubleSupplier delay) {
-    if (delaySetup == 1) {
-      timer.reset();
-      timer.start();
-      delaySetup = 2;
-    }
-    if (delaySetup == 2) {
-      if (timer.get() - delay.getAsDouble() >= 0) {
-        delaySetup = 1;
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public void resetTimer() {
-    timer.stop();
-    timer.reset();
   }
 
   /** Periodic function called every robot cycle */
@@ -76,14 +61,29 @@ public class CoralScorer extends RBSISubsystem {
     Logger.recordOutput("LoggedRobot/CoralCodeMS", (double) timeElapsed / 1.e6);
   }
 
+  /**
+   * Run the mechanism at a specified voltage
+   *
+   * @param volts The voltage at which to run the mechanism
+   */
   public void runVolts(double volts) {
     io.setVolts(volts);
   }
 
+  /**
+   * Run the motor at the specified velocity
+   *
+   * @param velocity The velocity (presumably in rot/sec) at which to run the motor
+   */
   public void setVelocity(double velocity) {
     io.setVelocity(velocity);
   }
 
+  /**
+   * Automatically intake the coral from the ramp to the mechanism
+   *
+   * <p>This is the default command action that runs unless interrupted
+   */
   public void automaticIntake() {
     if (!io.getLightStop()) {
 
@@ -95,6 +95,11 @@ public class CoralScorer extends RBSISubsystem {
     }
   }
 
+  /**
+   * Set the coral rollers to run at a specified duty cycle percent
+   *
+   * @param percent The duty cycle percent at which to run the mechanism rollers
+   */
   public void setCoralPercent(double percent) {
     io.setPercentOut(percent);
 
@@ -103,14 +108,17 @@ public class CoralScorer extends RBSISubsystem {
     }
   }
 
+  /** Stop the mechanism */
   public void stop() {
     io.stop();
   }
 
+  /** Get the value of the light stop */
   public boolean getLightStop() {
     return io.getLightStop();
   }
 
+  /** Return the power ports used by this mechanism */
   @Override
   public int[] getPowerPorts() {
     return io.powerPorts;

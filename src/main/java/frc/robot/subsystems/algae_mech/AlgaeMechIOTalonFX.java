@@ -13,13 +13,16 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants.CANandPowerPorts;
 
 public class AlgaeMechIOTalonFX implements AlgaeMechIO {
-  private final TalonFX roller = new TalonFX(CANandPowerPorts.ALGAE_ROLLER.getDeviceNumber());
-  private final TalonFX pivot = new TalonFX(CANandPowerPorts.ALGAE_PIVOT.getDeviceNumber());
+  // Define Hardware and controllers
+  private final TalonFX m_roller = new TalonFX(CANandPowerPorts.ALGAE_ROLLER.getDeviceNumber());
+  private final TalonFX m_pivot = new TalonFX(CANandPowerPorts.ALGAE_PIVOT.getDeviceNumber());
   private TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
   private TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
-  private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(1);
+  private final DutyCycleEncoder pivotEncoder =
+      new DutyCycleEncoder(CANandPowerPorts.ALGAE_PIVOT_ENCODER);
   private final PIDController pivotController = new PIDController(10, 0, 0);
 
+  // * Constructor */
   public AlgaeMechIOTalonFX() {
 
     var PIDConfig = new Slot0Configs();
@@ -30,47 +33,47 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
     rollerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     var ramp = new OpenLoopRampsConfigs();
     ramp.withDutyCycleOpenLoopRampPeriod(0.25);
-    roller.getConfigurator().apply(rollerConfig);
-    roller.getConfigurator().apply(PIDConfig);
+    m_roller.getConfigurator().apply(rollerConfig);
+    m_roller.getConfigurator().apply(PIDConfig);
     pivotConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    pivot.getConfigurator().apply(pivotConfig);
+    m_pivot.getConfigurator().apply(pivotConfig);
   }
 
-  // Define the leader / follower motors from the Ports section of RobotContainer
+  @Override
+  public void setPivotVoltage(double volts) {}
 
   @Override
-  public void setVoltage(double volts) {}
+  public void setRollerVoltage(double volts) {}
 
   @Override
-  public void setVelocity(double velocityRadPerSec, double ffVolts) {
-    roller.setControl(
+  public void setRollerVelocity(double velocityRadPerSec, double ffVolts) {
+    m_roller.setControl(
         new VelocityDutyCycle(Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec)));
   }
 
   @Override
-  public void setPercent(double percent) {
-    roller.setControl(new DutyCycleOut(percent));
+  public void setRollerPercent(double percent) {
+    m_roller.setControl(new DutyCycleOut(percent));
   }
 
   @Override
   public void stop() {
-    roller.stopMotor();
-    pivot.stopMotor();
+    m_roller.stopMotor();
+    m_pivot.stopMotor();
   }
 
   @Override
   public void pivotToPosition(double position) {
-    pivot.setControl(new DutyCycleOut(-pivotController.calculate(pivotEncoder.get(), position)));
+    m_pivot.setControl(new DutyCycleOut(-pivotController.calculate(pivotEncoder.get(), position)));
   }
 
   @Override
-  public double getCurrent() {
-
-    return roller.getSupplyCurrent().getValueAsDouble();
+  public double getRollerCurrent() {
+    return m_roller.getSupplyCurrent().getValueAsDouble();
   }
 
   @Override
-  public double getEncoderPose() {
+  public double getPivotEncoderPose() {
     return pivotEncoder.get();
   }
 

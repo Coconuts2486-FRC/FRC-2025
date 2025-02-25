@@ -16,7 +16,6 @@ package frc.robot.subsystems.elevator;
 import static edu.wpi.first.units.Units.*;
 import static frc.robot.Constants.ElevatorConstants.*;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearAcceleration;
@@ -32,8 +31,18 @@ import frc.robot.util.RBSISubsystem;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * Elevator control class
+ *
+ * <p>This elevator subsystem is based on the RBSI Subsystem, which allows for power monitoring in
+ * addition to the underlying WPILib Subsystem functions.
+ *
+ * <p>This subsystem is based on the AdvantageKit model (https://docs.advantagekit.org/). This class
+ * is the generic subsystem container that deals with outward-facing API calls (move to this
+ * position, stop, etc.), while the IO files in this directory define the hardware- specific
+ * function calls that implement the directives from the API.
+ */
 public class Elevator extends RBSISubsystem {
-  private final ElevatorFeedforward ffModel;
   private final ElevatorIO io;
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
   private final SysIdRoutine sysId;
@@ -49,7 +58,6 @@ public class Elevator extends RBSISubsystem {
     switch (Constants.getMode()) {
       case REAL:
       case REPLAY:
-        ffModel = new ElevatorFeedforward(kSReal, kGReal, kVReal, kAReal);
         io.configure(
             kGReal,
             kSReal,
@@ -63,12 +71,10 @@ public class Elevator extends RBSISubsystem {
             kJerk);
         break;
       case SIM:
-        ffModel = new ElevatorFeedforward(kSSim, kGSim, kVSim, kASim);
         io.configure(
             kGSim, kSSim, kVSim, kASim, kPSim, kISim, kDSim, kVelocity, kAcceleration, kJerk);
         break;
       default:
-        ffModel = new ElevatorFeedforward(0.0, 0.0, 0.0, 0.0);
         io.configure(0, 0, 0, 0, 0, 0, 0, MetersPerSecond.of(0), MetersPerSecondPerSecond.of(0), 0);
         break;
     }
@@ -96,9 +102,6 @@ public class Elevator extends RBSISubsystem {
     disableSupplier = () -> disableOverride.getAsBoolean() || DriverStation.isDisabled();
     this.disableOverride = disableOverride;
   }
-
-  /** Initialize the default command for this subsystem */
-  public void initDefaultCommand() {}
 
   /** Periodic function called every robot cycle */
   @Override
@@ -152,6 +155,7 @@ public class Elevator extends RBSISubsystem {
     }
   }
 
+  /** Stop the elevator */
   public void stop() {
     io.stop();
   }
@@ -176,16 +180,25 @@ public class Elevator extends RBSISubsystem {
     io.configure(Kg, Ks, Kv, Ka, Kp, Ki, Kd, velocity, aceleration, jerk);
   }
 
+  /** Return the bottom stop limit switch value */
   public boolean getBottomStop() {
     return io.getBottomStop();
   }
 
+  /** Set the neutral mode for this mechanism to BRAKE */
   public void setCoast() {
     io.setCoast();
   }
 
+  /** Set the neutral mode for this mechanism to BRAKE */
   public void setBrake() {
     io.setBrake();
+  }
+
+  /** Return the power ports used by this mechanism */
+  @Override
+  public int[] getPowerPorts() {
+    return io.powerPorts;
   }
 
   /* SysId Functions ******************************************************* */
@@ -198,10 +211,5 @@ public class Elevator extends RBSISubsystem {
 
   public Command sysIdDynamic(SysIdRoutine.Direction direction) {
     return sysId.dynamic(direction);
-  }
-
-  @Override
-  public int[] getPowerPorts() {
-    return io.powerPorts;
   }
 }

@@ -32,6 +32,8 @@ public interface ClimbIO {
 
   public default void twistMotorVolts(double volts) {}
 
+  public default void setVoltage(double volts) {}
+
   public default void setMotorPercent(double percent) {}
 
   public default double getEncoderPose() {

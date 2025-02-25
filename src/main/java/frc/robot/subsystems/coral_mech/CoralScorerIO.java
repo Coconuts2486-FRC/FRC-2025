@@ -37,6 +37,8 @@ public interface CoralScorerIO {
     return false;
   }
 
+  public default void setVoltage(double volts) {}
+
   public default double getPercent() {
     return 0;
   }

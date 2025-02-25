@@ -40,21 +40,24 @@ public interface AlgaeMechIO {
   /** Updates the set of loggable inputs. */
 
   /** Run open loop at the specified voltage. */
-  public default void setVoltage(double volts) {}
+  public default void setPivotVoltage(double volts) {}
 
-  public default void setPercent(double percent) {}
+  /** Run open loop at the specified voltage. */
+  public default void setRollerVoltage(double volts) {}
+
+  public default void setRollerPercent(double percent) {}
 
   /** Run closed loop at the specified velocity. */
-  public default void setVelocity(double velocityRadPerSec, double ffVolts) {}
+  public default void setRollerVelocity(double velocityRadPerSec, double ffVolts) {}
 
   /** Set velocity PID constants. */
   public default void configurePID(double kP, double kI, double kD) {}
 
-  public default double getCurrent() {
+  public default double getRollerCurrent() {
     return 0.0;
   }
 
-  public default double getEncoderPose() {
+  public default double getPivotEncoderPose() {
     return .209;
   }
 }

@@ -27,7 +27,8 @@ public class ClimbIOTalonFX implements ClimbIO {
   private final Servo climbExtender = new Servo(CANandPowerPorts.CLIMB_SERVO);
   private final TalonFX climber = new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber());
   private final PIDController pid = new PIDController(4, 0, .5);
-  private final DutyCycleEncoder climbEncoder = new DutyCycleEncoder(3);
+  private final DutyCycleEncoder climbEncoder =
+      new DutyCycleEncoder(CANandPowerPorts.CLIMB_PIVOT_ENCODER);
 
   public final int[] powerPorts = {CANandPowerPorts.CLIMB.getPowerPort()};
 

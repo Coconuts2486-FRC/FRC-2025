@@ -13,18 +13,33 @@
 
 package frc.robot.subsystems.algae_mech;
 
+import static edu.wpi.first.units.Units.*;
+import static frc.robot.Constants.AlgaeMechConstants.*;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * Algae Mechanism control class
+ *
+ * <p>This mechanism subsystem is based on the RBSI Subsystem, which allows for power monitoring in
+ * addition to the underlying WPILib Subsystem functions.
+ *
+ * <p>This subsystem is based on the AdvantageKit model (https://docs.advantagekit.org/). This class
+ * is the generic subsystem container that deals with outward-facing API calls (move to this
+ * position, stop, etc.), while the IO files in this directory define the hardware- specific
+ * function calls that implement the directives from the API.
+ */
 public class AlgaeMech extends RBSISubsystem {
 
   private final AlgaeMechIO io;
   private final AlgaeMechIOInputsAutoLogged inputs = new AlgaeMechIOInputsAutoLogged();
-  // private final SysIdRoutine sysId;
+  private final SysIdRoutine sysId;
 
   private BooleanSupplier disableSupplier = DriverStation::isDisabled;
   private BooleanSupplier disableOverride;
@@ -34,17 +49,18 @@ public class AlgaeMech extends RBSISubsystem {
   /** Constructor */
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
-    setDefaultCommand(Commands.run(() -> cyclePositions(), this));
 
-    //   // Configure SysId
-    //   sysId =
-    //       new SysIdRoutine(
-    //           new SysIdRoutine.Config(
-    //               Volts.of(1.0).div(Seconds.of(1.5)), // QuasiStatis
-    //               Volts.of(1.5), // Dynamic
-    //               Seconds.of(2.0),
-    //               (state) -> Logger.recordOutput("Elevator/SysIdState", state.toString())),
-    //           new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Volts)), null, this));
+    // Configure SysId
+    sysId =
+        new SysIdRoutine(
+            new SysIdRoutine.Config(
+                Volts.of(1.0).div(Seconds.of(1.5)), // QuasiStatis
+                Volts.of(1.5), // Dynamic
+                Seconds.of(2.0),
+                (state) -> Logger.recordOutput("Elevator/SysIdState", state.toString())),
+            new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Volts)), null, this));
+
+    setDefaultCommand(Commands.run(() -> holdToggle(), this));
   }
 
   /** Set the override for this subsystem */
@@ -52,8 +68,6 @@ public class AlgaeMech extends RBSISubsystem {
     disableSupplier = () -> disableOverride.getAsBoolean() || DriverStation.isDisabled();
     this.disableOverride = disableOverride;
   }
-
-  /** Initialize the default command for this subsystem */
 
   /** Periodic function called every robot cycle */
   @Override
@@ -78,19 +92,39 @@ public class AlgaeMech extends RBSISubsystem {
     fixIndex();
   }
 
+  /** Stop the mechanism */
   public void stop() {
     io.stop();
   }
 
+  /**
+   * Move the pivot to a specified postion
+   *
+   * @param position The position to which to move the Algae Pivot
+   */
   public void pivotToPosition(double position) {
     if (!disableSupplier.getAsBoolean()) {
       io.pivotToPosition(position);
     }
   }
 
+  /**
+   * Run open loop at the specified voltage
+   *
+   * <p>Does not run when Driver Station is disabled or override switch is thrown
+   *
+   * @param volts The voltage at which to run the elevator
+   */
+  public void runVolts(double volts) {
+    if (!disableSupplier.getAsBoolean()) {
+      io.setPivotVoltage(volts);
+    }
+  }
+
+  /** Run the rollers at the specified duty cycle percentage */
   public void setPercent(double percent) {
     if (!disableSupplier.getAsBoolean()) {
-      io.setPercent(percent);
+      io.setRollerPercent(percent);
     }
   }
 
@@ -103,17 +137,23 @@ public class AlgaeMech extends RBSISubsystem {
   //   return sysId.dynamic(direction);
   // }
 
-  // Pivot to stored position
+  /**
+   * Pivot to stored position
+   *
+   * @param stow The boolean value to which to move
+   */
   public void toggleUp(boolean stow) {
     if (!disableSupplier.getAsBoolean()) {
       this.toggleStow = stow;
     }
   }
 
+  /** Get the stow toggle */
   public boolean getToggleStow() {
     return toggleStow;
   }
 
+  /** Hold the toggle position */
   public void holdToggle() {
     if (!disableSupplier.getAsBoolean()) {
       if (toggleStow == true) {
@@ -168,13 +208,14 @@ public class AlgaeMech extends RBSISubsystem {
 
   // >>>
 
+  /** Pivot the mechanism up */
   public void pivotUp() {
     if (!disableSupplier.getAsBoolean()) {
       io.pivotToPosition(.209);
     }
   }
 
-  // Pivots to position to pick up off floor
+  /** Pivots to position to pick up off floor */
   public void pivotHorizontal() {
     if (!disableSupplier.getAsBoolean()) {
       // io.pivotToPosition(.45);
@@ -182,7 +223,7 @@ public class AlgaeMech extends RBSISubsystem {
     }
   }
 
-  // Pivots to remove algae from reef
+  /** Pivots to remove algae from reef */
   public void pivotOffReef() {
     if (!disableSupplier.getAsBoolean()) {
       io.pivotToPosition(.521);
@@ -195,6 +236,7 @@ public class AlgaeMech extends RBSISubsystem {
   //   //  return Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
   // }
 
+  /** Return the power ports used by this mechanism */
   @Override
   public int[] getPowerPorts() {
     return io.powerPorts;

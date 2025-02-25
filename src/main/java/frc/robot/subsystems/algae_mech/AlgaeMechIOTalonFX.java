@@ -15,7 +15,6 @@ package frc.robot.subsystems.algae_mech;
 
 import static frc.robot.Constants.AlgaeMechConstants.*;
 
-import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;

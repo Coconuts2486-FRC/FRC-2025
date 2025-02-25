@@ -151,16 +151,11 @@ public class ElevatorIOTalonFX implements ElevatorIO {
       LinearAcceleration acceleration,
       double jerk) {
     // Update the Slot0 configuration
-    elevatorConfig.Slot0 =
-        elevatorConfig
-            .Slot0
-            .withKG(Kg)
-            .withKS(Ks)
-            .withKV(Kv)
-            .withKA(Ka)
-            .withKP(Kp)
-            .withKI(Ki)
-            .withKD(Kd);
+    var config = new TalonFXConfiguration();
+    // elevatorConfig.Slot0 =
+    //     elevatorConfig
+    config.Slot0 =
+        config.Slot0.withKG(Kg).withKS(Ks).withKV(Kv).withKA(Ka).withKP(Kp).withKI(Ki).withKD(Kd);
 
     // Angular Velocity and Acceleration for Motion Magic in rot/s and rot/s/s
     double angularVerlocity =
@@ -174,11 +169,16 @@ public class ElevatorIOTalonFX implements ElevatorIO {
             * kElevatorGearRatio
             / (2 * Math.PI);
 
-    elevatorConfig.MotionMagic.MotionMagicCruiseVelocity = angularVerlocity;
-    elevatorConfig.MotionMagic.MotionMagicAcceleration = angularAcceleration;
-    elevatorConfig.MotionMagic.MotionMagicJerk = jerk;
+    // elevatorConfig.MotionMagic.MotionMagicCruiseVelocity = angularVerlocity;
+    // elevatorConfig.MotionMagic.MotionMagicAcceleration = angularAcceleration;
+    // elevatorConfig.MotionMagic.MotionMagicJerk = jerk;
+    config.MotionMagic.MotionMagicCruiseVelocity = angularVerlocity;
+    config.MotionMagic.MotionMagicAcceleration = angularAcceleration;
+    config.MotionMagic.MotionMagicJerk = jerk;
 
-    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(elevatorConfig, 0.25));
+    // PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(elevatorConfig,
+    // 0.25));
+    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(config, 0.25));
   }
 
   /**

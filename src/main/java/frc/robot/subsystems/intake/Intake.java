@@ -71,6 +71,10 @@ public class Intake extends RBSISubsystem {
   /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
+
+    // Log the execution time
+    long start = System.nanoTime();
+
     io.updateInputs(inputs);
     Logger.processInputs("Intake", inputs);
     Logger.recordOutput("Overrides/IntakePivot", !disableOverride.getAsBoolean());
@@ -80,6 +84,11 @@ public class Intake extends RBSISubsystem {
       stop();
       LED.setIntakeEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/IntakeCodeMS", (double) timeElapsed / 1.e6);
   }
 
   /**

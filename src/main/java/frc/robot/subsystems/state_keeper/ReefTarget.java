@@ -57,6 +57,10 @@ public class ReefTarget extends VirtualSubsystem {
 
   /** Periodic function includes logging and publishing to NT */
   public synchronized void periodic() {
+
+    // Log the execution time
+    long start = System.nanoTime();
+
     // Log to AdvantageKit
     Logger.recordOutput("ReefTarget/Post_ALL", convertIntToAlphabet(reefPostAll + 1));
     Logger.recordOutput("ReefTarget/Post_LR", reefPostLR);
@@ -64,6 +68,11 @@ public class ReefTarget extends VirtualSubsystem {
     Logger.recordOutput("ReefTarget/ElevatorHeight", getElevatorHeight());
     Logger.recordOutput("ReefTarget/CoralPose", getReefCoralPose());
     Logger.recordOutput("ReefTarget/AlgaePose", getReefAlgaePose());
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/ReefTargetCodeMS", (double) timeElapsed / 1.e6);
   }
 
   /** Index the desired scoring state up one */

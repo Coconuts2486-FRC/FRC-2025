@@ -72,6 +72,7 @@ public class AlgaeMech extends RBSISubsystem {
   /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
+
     // Log the execution time
     long start = System.nanoTime();
 

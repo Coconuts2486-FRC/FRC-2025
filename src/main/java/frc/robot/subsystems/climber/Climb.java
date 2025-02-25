@@ -60,7 +60,9 @@ public class Climb extends RBSISubsystem {
 
   /** Periodic function called every robot cycle */
   @Override
-  public void periodic() { // Log the execution time
+  public void periodic() {
+
+    // Log the execution time
     long start = System.nanoTime();
 
     io.updateInputs(inputs);

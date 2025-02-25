@@ -105,6 +105,7 @@ public class LED extends VirtualSubsystem {
 
   /** Periodic function called every robot cycle */
   public synchronized void periodic() {
+
     // Log the execution time
     long start = System.nanoTime();
 

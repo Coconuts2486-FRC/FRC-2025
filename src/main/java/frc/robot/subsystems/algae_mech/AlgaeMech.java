@@ -29,11 +29,12 @@ public class AlgaeMech extends RBSISubsystem {
   private BooleanSupplier disableSupplier = DriverStation::isDisabled;
   private BooleanSupplier disableOverride;
   private boolean toggleStow = true;
+  private int pivotIndex = 3;
 
   /** Constructor */
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
-    setDefaultCommand(Commands.run(() -> holdToggle(), this));
+    setDefaultCommand(Commands.run(() -> cyclePositions(), this));
 
     //   // Configure SysId
     //   sysId =
@@ -74,6 +75,7 @@ public class AlgaeMech extends RBSISubsystem {
     long finish = System.nanoTime();
     long timeElapsed = finish - start;
     Logger.recordOutput("LoggedRobot/AlgaeCodeMS", (double) timeElapsed / 1.e6);
+    fixIndex();
   }
 
   public void stop() {
@@ -121,6 +123,50 @@ public class AlgaeMech extends RBSISubsystem {
       }
     }
   }
+
+  // Toggles between the three pivot positions
+  // <<<
+  public void indexPoseUp() {
+    pivotIndex = pivotIndex + 1;
+  }
+
+  public void indexPoseDown() {
+    pivotIndex = pivotIndex - 1;
+    if (pivotIndex < 1) {}
+  }
+
+  private void fixIndex() {
+    if (pivotIndex < 1) {
+      pivotIndex = 1;
+    }
+    if (pivotIndex > 3) {
+      pivotIndex = 3;
+    }
+  }
+
+  public void setIndexPose(int index) {
+    pivotIndex = index;
+  }
+
+  public void cyclePositions() {
+    if (!disableSupplier.getAsBoolean()) {
+      switch (pivotIndex) {
+        case 3:
+          io.pivotToPosition(.209);
+          break;
+        case 2:
+          io.pivotToPosition(.35);
+          break;
+        case 1:
+          io.pivotToPosition(.45);
+          break;
+        default:
+          io.pivotToPosition(.35);
+      }
+    }
+  }
+
+  // >>>
 
   public void pivotUp() {
     if (!disableSupplier.getAsBoolean()) {

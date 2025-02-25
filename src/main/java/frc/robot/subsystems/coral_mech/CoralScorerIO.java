@@ -17,6 +17,8 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface CoralScorerIO {
 
+  public final int[] powerPorts = {};
+
   @AutoLog
   public static class CoralScorerIOInputs {
     public double positionRad = 0.0;
@@ -35,8 +37,6 @@ public interface CoralScorerIO {
     return false;
   }
 
-  public default void setVoltage(double volts) {}
-
   public default double getPercent() {
     return 0;
   }
@@ -48,8 +48,4 @@ public interface CoralScorerIO {
   public default void setCoast() {}
 
   public default void setBrake() {}
-
-  public default int[] getPowerPorts() {
-    return new int[1];
-  }
 }

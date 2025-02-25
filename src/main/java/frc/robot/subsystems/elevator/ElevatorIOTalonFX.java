@@ -38,14 +38,12 @@ import frc.robot.util.PhoenixUtil;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.Logger;
 
-/** ELEVATOR hardware class for TalonFX */
 public class ElevatorIOTalonFX implements ElevatorIO {
 
   // Define the motor and the limit switch at the bottom of the elevator
   private final TalonFX m_elevatorMotor =
       new TalonFX(CANandPowerPorts.ELEVATOR.getDeviceNumber(), CANandPowerPorts.ELEVATOR.getBus());
   private final DigitalInput m_elevatorStop = new DigitalInput(0);
-  private final TalonFXConfiguration elevatorConfig = new TalonFXConfiguration();
 
   // Status signals from CTRE for logging
   private final StatusSignal<Angle> elevatorPosition = m_elevatorMotor.getPosition();
@@ -53,8 +51,8 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   private final StatusSignal<Voltage> elevatorAppliedVolts = m_elevatorMotor.getMotorVoltage();
   private final StatusSignal<Current> elevatorCurrent = m_elevatorMotor.getSupplyCurrent();
 
-  // Power port(s)
-  private final int[] powerPorts = {CANandPowerPorts.ELEVATOR.getPowerPort()};
+  // Power port
+  public final int[] powerPorts = {CANandPowerPorts.ELEVATOR.getPowerPort()};
 
   // Set up the Motion Magic instance
   private final MotionMagicVoltage m_motionMagic = new MotionMagicVoltage(0);
@@ -63,16 +61,16 @@ public class ElevatorIOTalonFX implements ElevatorIO {
 
   /** Constructor for using a TalonFX to drive the elevator */
   public ElevatorIOTalonFX() {
-
     // Set and apply TalonFX Configurations
-    elevatorConfig.CurrentLimits.SupplyCurrentLimit = 30.0;
-    elevatorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-    elevatorConfig.MotorOutput.NeutralMode =
+    var config = new TalonFXConfiguration();
+    config.CurrentLimits.SupplyCurrentLimit = 30.0;
+    config.CurrentLimits.SupplyCurrentLimitEnable = true;
+    config.MotorOutput.NeutralMode =
         switch (kElevatorIdle) {
           case COAST -> NeutralModeValue.Coast;
           case BRAKE -> NeutralModeValue.Brake;
         };
-    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(elevatorConfig, 0.25));
+    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(config, 0.25));
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, elevatorPosition, elevatorVelocity, elevatorAppliedVolts, elevatorCurrent);
@@ -150,12 +148,17 @@ public class ElevatorIOTalonFX implements ElevatorIO {
       LinearVelocity velocity,
       LinearAcceleration acceleration,
       double jerk) {
-    // Update the Slot0 configuration
-    var config = new TalonFXConfiguration();
-    // elevatorConfig.Slot0 =
-    //     elevatorConfig
-    config.Slot0 =
-        config.Slot0.withKG(Kg).withKS(Ks).withKV(Kv).withKA(Ka).withKP(Kp).withKI(Ki).withKD(Kd);
+    var talonFXConfigs = new TalonFXConfiguration();
+    var talonSlot0Configs = talonFXConfigs.Slot0;
+    var motionMagicConfigs = talonFXConfigs.MotionMagic;
+
+    talonSlot0Configs.kG = Kg;
+    talonSlot0Configs.kS = Ks;
+    talonSlot0Configs.kV = Kv;
+    talonSlot0Configs.kA = Ka;
+    talonSlot0Configs.kP = Kp;
+    talonSlot0Configs.kI = Ki;
+    talonSlot0Configs.kD = Kd;
 
     // Angular Velocity and Acceleration for Motion Magic in rot/s and rot/s/s
     double angularVerlocity =
@@ -169,16 +172,11 @@ public class ElevatorIOTalonFX implements ElevatorIO {
             * kElevatorGearRatio
             / (2 * Math.PI);
 
-    // elevatorConfig.MotionMagic.MotionMagicCruiseVelocity = angularVerlocity;
-    // elevatorConfig.MotionMagic.MotionMagicAcceleration = angularAcceleration;
-    // elevatorConfig.MotionMagic.MotionMagicJerk = jerk;
-    config.MotionMagic.MotionMagicCruiseVelocity = angularVerlocity;
-    config.MotionMagic.MotionMagicAcceleration = angularAcceleration;
-    config.MotionMagic.MotionMagicJerk = jerk;
+    motionMagicConfigs.MotionMagicCruiseVelocity = angularVerlocity;
+    motionMagicConfigs.MotionMagicAcceleration = angularAcceleration;
+    motionMagicConfigs.MotionMagicJerk = jerk;
 
-    // PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(elevatorConfig,
-    // 0.25));
-    PhoenixUtil.tryUntilOk(5, () -> m_elevatorMotor.getConfigurator().apply(config, 0.25));
+    m_elevatorMotor.getConfigurator().apply(talonFXConfigs);
   }
 
   /**
@@ -236,11 +234,5 @@ public class ElevatorIOTalonFX implements ElevatorIO {
   @Override
   public void setBrake() {
     m_elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
-  }
-
-  /** Return the list of PDH power ports used for this mechanism */
-  @Override
-  public int[] getPowerPorts() {
-    return powerPorts;
   }
 }

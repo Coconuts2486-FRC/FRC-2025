@@ -196,8 +196,8 @@ public final class Constants {
     public static final Distance KAlgaeLower = Inches.of(58.375);
     public static final Distance KAlgaeUpper = Inches.of(66.5);
     // Motion Magic constants
-    public static final LinearVelocity kVelocity = MetersPerSecond.of(1.8);
-    public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(2.8);
+    public static final LinearVelocity kVelocity = MetersPerSecond.of(2);
+    public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(3);
     public static final double kJerk = 0;
 
     // mode real/replay

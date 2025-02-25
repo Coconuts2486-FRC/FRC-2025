@@ -260,7 +260,7 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(1)
+                .withTimeout(0.9)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.60), m_coralScorer))));
     NamedCommands.registerCommand("L3", Commands.print("L3")); // Just print commands for right now.
     NamedCommands.registerCommand(
@@ -273,7 +273,7 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(0.6)
+                .withTimeout(0.55)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.60), m_coralScorer))));
 
     NamedCommands
@@ -290,10 +290,10 @@ public class RobotContainer {
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
     NamedCommands.registerCommand( // Ends once coral is detected
         "CoralDetect",
-        (Commands.run(() -> m_algaeMech.toggleUp(!m_algaeMech.getToggleStow()), m_algaeMech))
+        (Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech))
             .until(() -> m_coralScorer.getLightStop() == false));
-    NamedCommands.registerCommand( // Ends once coral is detected
-        "Timer", new IntakeCommand(m_intake, 0.9, 0).withTimeout(14.6));
+    NamedCommands.registerCommand( // Ends once coral is detecte
+        "Timer", new IntakeCommand(m_intake, 0.9, 0).withTimeout(14.7));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include

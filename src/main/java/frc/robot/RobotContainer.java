@@ -392,10 +392,10 @@ public class RobotContainer {
 
     // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
     driverController
-        .x()
+        .b()
         .onTrue(Commands.runOnce(() -> m_reefTarget.indexLeft()).ignoringDisable(true));
     driverController
-        .b()
+        .x()
         .onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()).ignoringDisable(true));
 
     // Drive to algae position (Back Left Bottom)
@@ -408,7 +408,7 @@ public class RobotContainer {
 
     // Driver Left Bumper :>> Score L1
     driverController
-        .leftBumper()
+        .rightTrigger(.1)
         .whileTrue(
             Commands.startRun(
                     () -> m_algaeMech.setIndexPose(1),
@@ -418,13 +418,20 @@ public class RobotContainer {
 
     // Release Operator Right Bumper :>> Turn off algae rollers
     driverController
-        .leftBumper()
+        .rightTrigger(.1)
         .onFalse(
             Commands.startRun(
                     () -> m_algaeMech.setIndexPose(2),
                     () -> m_algaeMech.cyclePositions(),
                     m_algaeMech)
                 .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
+
+    driverController
+        .leftBumper()
+        .whileTrue(
+            new IntakeCommand(m_intake, 0.75, 0)
+                .withTimeout(0.075)
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController
@@ -565,13 +572,6 @@ public class RobotContainer {
         .onFalse(
             Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
                 .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
-
-    operatorController
-        .leftBumper()
-        .whileTrue(
-            new IntakeCommand(m_intake, 0.75, 0)
-                .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)));
 
     // Operator Y Button :>> Elevator to Lower Algae
     // operatorController

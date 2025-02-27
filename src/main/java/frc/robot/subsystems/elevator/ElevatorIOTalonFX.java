@@ -152,6 +152,8 @@ public class ElevatorIOTalonFX implements ElevatorIO {
     var talonSlot0Configs = talonFXConfigs.Slot0;
     var motionMagicConfigs = talonFXConfigs.MotionMagic;
 
+    talonFXConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
     talonSlot0Configs.kG = Kg;
     talonSlot0Configs.kS = Ks;
     talonSlot0Configs.kV = Kv;

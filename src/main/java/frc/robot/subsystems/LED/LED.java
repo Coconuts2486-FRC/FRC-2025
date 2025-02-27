@@ -71,7 +71,7 @@ public class LED extends VirtualSubsystem {
           .01,
           LEDConstants.nLED,
           TwinkleOffPercent.Percent100);
-  private TwinkleOffAnimation col1 = twinkleB;
+  private TwinkleOffAnimation col1 = twinkleO;
   private TwinkleOffAnimation col2 = twinkleP;
 
   private Optional<Alliance> alliance = Optional.empty();

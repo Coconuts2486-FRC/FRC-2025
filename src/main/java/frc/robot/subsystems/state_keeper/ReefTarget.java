@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AprilTagConstants;
 import frc.robot.Constants.DriveToPositionConstatnts;
 import frc.robot.Constants.ElevatorConstants;
@@ -39,7 +40,7 @@ import org.littletonrobotics.junction.Logger;
 public class ReefTarget extends VirtualSubsystem {
   private int reefPostAll = 0;
   private int reefPostLR = 0;
-  private int reefLevel = 1;
+  private int reefLevel = 2;
   public double elevatorDelay = 0;
 
   private static ReefTarget instance;
@@ -57,6 +58,8 @@ public class ReefTarget extends VirtualSubsystem {
 
   /** Periodic function includes logging and publishing to NT */
   public synchronized void periodic() {
+
+    SmartDashboard.putNumber("Reef Level", reefLevel);
 
     // Log the execution time
     long start = System.nanoTime();
@@ -82,7 +85,7 @@ public class ReefTarget extends VirtualSubsystem {
 
   /** Index the desired scoring state down one */
   public void indexDown() {
-    reefLevel = Math.max(--reefLevel, 1);
+    reefLevel = Math.max(--reefLevel, 2);
   }
 
   /**

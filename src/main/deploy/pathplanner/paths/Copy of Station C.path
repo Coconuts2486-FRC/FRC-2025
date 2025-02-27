@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.915378705541322,
-        "y": 2.2437930667900483
+        "x": 2.8882976971943375,
+        "y": 2.034082375823425
       },
       "isLocked": false,
       "linkedName": "Coral C"
     },
     {
       "anchor": {
-        "x": 1.31,
-        "y": 0.9
+        "x": 1.65,
+        "y": 0.66
       },
       "prevControl": {
-        "x": 1.8587113337196366,
-        "y": 1.3440543701104581
+        "x": 2.1808779425867733,
+        "y": 1.2047104056419218
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Station Bottom"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

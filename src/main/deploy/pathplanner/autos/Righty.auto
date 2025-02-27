@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -202,29 +202,30 @@
                           }
                         ]
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Bottom"
-                      }
                     }
                   ]
                 }
               },
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "Timer"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Bottom"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Copy of Station C"
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Bottom"
           }
         }
       ]

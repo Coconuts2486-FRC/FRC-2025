@@ -13,14 +13,20 @@
 
 package frc.robot.subsystems.climber;
 
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface ClimbIO {
 
-  public final int[] powerPorts = {};
-
   @AutoLog
-  public static class ClimbIOInputs {}
+  public static class ClimbIOInputs {
+    public double positionRad = 0.0;
+    public double velocityRadPerSec = 0.0;
+    public double appliedVolts = 0.0;
+    public double[] currentAmps = new double[] {};
+    public double pivotEncoder = 0.0;
+  }
 
   public default void updateInputs(ClimbIOInputs inputs) {}
 
@@ -28,9 +34,19 @@ public interface ClimbIO {
 
   public default void twistMotorToPosition(double positionInRotations) {}
 
-  public default void configPID(double kP, double kI, double kD) {}
+  public default void configPID(
+      double Ks,
+      double Kv,
+      double Ka,
+      double Kp,
+      double Ki,
+      double Kd,
+      AngularVelocity velocity,
+      AngularAcceleration acceleration) {}
 
   public default void twistMotorVolts(double volts) {}
+
+  public default void setVoltage(double volts) {}
 
   public default void setMotorPercent(double percent) {}
 
@@ -41,4 +57,8 @@ public interface ClimbIO {
   public default void setCoast() {}
 
   public default void setBrake() {}
+
+  public default int[] getPowerPorts() {
+    return new int[1];
+  }
 }

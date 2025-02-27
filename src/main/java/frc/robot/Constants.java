@@ -190,7 +190,7 @@ public final class Constants {
     public static final Distance kElevatorSproketRadius = Inches.of(1.75 / 2.0);
     // These are heights off the ground of the top row of bolts on the elevator 1st stage
     public static final Distance kElevatorZeroHeight = Inches.of(40.375);
-    public static final Distance kL2 = Inches.of(48.125);
+    public static final Distance kL2 = Inches.of(48.125); // Maybe 48.5
     public static final Distance kL3 = Inches.of(56.25);
     public static final Distance kL4 = Inches.of(68.125);
     public static final Distance KAlgaeLower = Inches.of(58.375);
@@ -533,7 +533,7 @@ public final class Constants {
             Units.inchesToMeters(-13.818),
             Units.inchesToMeters(0.0),
             Units.inchesToMeters(6.122),
-            new Rotation3d(0.0, Units.degreesToRadians(25.0), 180.0));
+            new Rotation3d(0.0, Units.degreesToRadians(25.0), Units.degreesToRadians(180.0)));
     public static Transform3d robotToCameraID =
         new Transform3d(
             Units.inchesToMeters(12.95),
@@ -625,9 +625,9 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(-6.5 - .1));
+        new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(+6.5));
+        new Translation2d(Units.inchesToMeters(21.0), Units.inchesToMeters(+6.75));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(29.0), Units.inchesToMeters(0.0));
   }

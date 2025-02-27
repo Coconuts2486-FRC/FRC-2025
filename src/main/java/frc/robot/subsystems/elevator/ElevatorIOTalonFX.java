@@ -88,6 +88,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
         Units.rotationsToRadians(elevatorVelocity.getValueAsDouble()) / kElevatorGearRatio;
     inputs.appliedVolts = elevatorAppliedVolts.getValueAsDouble();
     inputs.currentAmps = new double[] {elevatorCurrent.getValueAsDouble()};
+    inputs.bottomLimit = m_elevatorStop.get();
   }
 
   /**

@@ -29,6 +29,7 @@ public interface ElevatorIO {
     public double velocityRadPerSec = 0.0;
     public double appliedVolts = 0.0;
     public double[] currentAmps = new double[] {};
+    public boolean bottomLimit = false;
   }
 
   public default void updateInputs(ElevatorIOInputs inputs) {}

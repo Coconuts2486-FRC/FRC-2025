@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -15,7 +15,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Start F"
+                        "pathName": "Start I"
                       }
                     },
                     {
@@ -54,7 +54,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "Station F"
+                                    "pathName": "Station I"
                                   }
                                 },
                                 {
@@ -86,7 +86,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "Coral D"
+                                    "pathName": "Coral K"
                                   }
                                 }
                               ]
@@ -137,7 +137,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "Station D"
+                                    "pathName": "Station K"
                                   }
                                 },
                                 {
@@ -169,7 +169,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "Coral C"
+                                    "pathName": "Coral L"
                                   }
                                 }
                               ]
@@ -231,6 +231,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "F",
+  "folder": "L",
   "choreoAuto": false
 }

@@ -1,0 +1,43 @@
+{
+Camera 1.67 
+Tape 1.80
+}
+{
+camera 2.74
+tape 2.67
+}
+{
+  camera 2.94
+  tape 2.90
+}
+
+
+{
+  camera 1.35
+  tape 1.36
+}
+
+
+elevator heights
+
+
+
+{
+  Ground
+  40.375
+}
+
+{
+  l2
+  48.5
+}
+
+{
+  l3
+  56 7/8
+}
+
+{
+  l4
+  66.5
+}

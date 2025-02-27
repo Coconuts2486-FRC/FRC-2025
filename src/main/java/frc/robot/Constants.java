@@ -509,12 +509,11 @@ public final class Constants {
     // Camera names, must match names configured on coprocessor
     public static String cameraElevatorL = "Photon_BW6"; // On left side of elevator
     public static String cameraElevatorR = "Photon_BW3"; // On right side of elevator
-    public static String cameraIntakeUp = "Photon_BW4"; // On intake churro, looking up
+    public static String cameraElevatorC = "Photon_BW4"; // On center of elevator
     public static String cameraIntakeDown = "Photon_BW5"; // On intake churro, looking down
     // ... And more, if needed
 
     // Robot to camera transforms
-    // (ONLY USED FOR PHOTONVISION -- Limelight: configure in web UI instead)
     public static Transform3d robotToCameraEL =
         new Transform3d(
             Units.inchesToMeters(-12.3),
@@ -529,12 +528,12 @@ public final class Constants {
             Units.inchesToMeters(10.1 - 1.0),
             new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 - 20.0))
                 .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
-    public static Transform3d robotToCameraIU =
+    public static Transform3d robotToCameraEC =
         new Transform3d(
-            Units.inchesToMeters(12.95 - 0.25),
-            Units.inchesToMeters(11.375 + 1.75),
-            Units.inchesToMeters(23.4),
-            new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0));
+            Units.inchesToMeters(-13.818),
+            Units.inchesToMeters(0.0),
+            Units.inchesToMeters(6.122),
+            new Rotation3d(0.0, Units.degreesToRadians(25.0), 180.0));
     public static Transform3d robotToCameraID =
         new Transform3d(
             Units.inchesToMeters(12.95),

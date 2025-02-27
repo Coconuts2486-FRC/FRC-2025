@@ -21,6 +21,7 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Inches;
 import static frc.robot.Constants.Cameras.*;
 
 import choreo.auto.AutoChooser;
@@ -197,7 +198,7 @@ public class RobotContainer {
                       m_drivebase::addVisionMeasurement,
                       new VisionIOPhotonVision(cameraElevatorL, robotToCameraEL),
                       new VisionIOPhotonVision(cameraElevatorR, robotToCameraER),
-                      new VisionIOPhotonVision(cameraIntakeUp, robotToCameraIU),
+                      new VisionIOPhotonVision(cameraElevatorC, robotToCameraEC),
                       new VisionIOPhotonVision(cameraIntakeDown, robotToCameraID));
               case LIMELIGHT ->
                   new Vision(
@@ -226,7 +227,7 @@ public class RobotContainer {
                 m_drivebase::addVisionMeasurement,
                 new VisionIOPhotonVisionSim(cameraElevatorL, robotToCameraEL, m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(cameraElevatorR, robotToCameraER, m_drivebase::getPose),
-                new VisionIOPhotonVisionSim(cameraIntakeUp, robotToCameraIU, m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(cameraElevatorC, robotToCameraEC, m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(
                     cameraIntakeDown, robotToCameraID, m_drivebase::getPose));
         m_accel = new Accelerometer(m_drivebase.getGyro());
@@ -280,7 +281,7 @@ public class RobotContainer {
         .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
             "Bottom",
             new ElevatorCommand(
-                    () -> ElevatorConstants.kElevatorZeroHeight,
+                    () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
                     ElevatorConstants.kAcceleration.div(
                         2.0), // Lowering both of these increases elevator drop speed
                     ElevatorConstants.kVelocity.div(2.0),
@@ -293,7 +294,7 @@ public class RobotContainer {
         (Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech))
             .until(() -> m_coralScorer.getLightStop() == false));
     NamedCommands.registerCommand( // Ends once coral is detecte
-        "Timer", new IntakeCommand(m_intake, 0.9, 0).withTimeout(14.7));
+        "Timer", new IntakeCommand(m_intake, 0.9, 0));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
@@ -510,6 +511,15 @@ public class RobotContainer {
     operatorController.start().onFalse(new IntakeCommand(m_intake, 0.75, 0));
 
     operatorController
+        .b()
+        .whileTrue(
+            new ElevatorCommand(
+                () -> ElevatorConstants.kL2, // Send height as supplier
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator));
+
+    operatorController
         .back()
         .whileTrue(
             Commands.runEnd(
@@ -559,7 +569,7 @@ public class RobotContainer {
 
     // Operator Right Bumper :>> Spit out algae ball
     operatorController
-        .povLeft()
+        .leftBumper()
         .whileTrue(
             Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
                 .alongWith(

@@ -80,6 +80,7 @@ import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
 import frc.robot.util.GetJoystickValue;
 import frc.robot.util.LoggedTunableNumber;
+import frc.robot.util.MiscFuncs.ScoringPosition;
 import frc.robot.util.OverrideSwitches;
 import frc.robot.util.PowerMonitoring;
 import frc.robot.util.RBSIEnum;
@@ -388,22 +389,27 @@ public class RobotContainer {
     // a (back right button) Drive To Position Command
     // TODO: change this to drive to returned command from ReefTarget
     //
-    // driverController
     //     .a()
     //     .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefCoralPose()));
 
     // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
     driverController
         .b()
-        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(0)));
+        .whileTrue(
+            new DriveToPose(
+                m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT)));
     driverController
         .x()
-        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(1)));
+        .whileTrue(
+            new DriveToPose(
+                m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT)));
 
     // Drive to algae position (Back Left Bottom)
     driverController
         .y()
-        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(2)));
+        .whileTrue(
+            new DriveToPose(
+                m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
 
     // Driver Right Bumper :>> Intake from the floor
     driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.35));

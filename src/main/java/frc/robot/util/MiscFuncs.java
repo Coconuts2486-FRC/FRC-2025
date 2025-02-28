@@ -19,4 +19,11 @@ public class MiscFuncs {
   public static boolean isclose(double a, double b, double rtol, double atol) {
     return Math.abs(a - b) <= Math.max(atol, rtol * Math.abs(b));
   }
+
+  /** The scoring position at any one REEF face */
+  public static enum ScoringPosition {
+    LEFT, // Left reef post (coral)
+    RIGHT, // Right reef post (coral)
+    CENTER // Center position (algae grab)
+  }
 }

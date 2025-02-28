@@ -25,8 +25,10 @@ import frc.robot.Constants.AprilTagConstants;
 import frc.robot.Constants.DriveToPositionConstatnts;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.util.MiscFuncs.ScoringPosition;
 import frc.robot.util.VirtualSubsystem;
 import java.util.Optional;
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -314,9 +316,10 @@ public class ReefTarget extends VirtualSubsystem {
   /**
    * Return the L-R pose needed to line up with the nearest reef face
    *
-   * @param scoringPosition Integer 0 = LEFT, 1 = RIGHT, 2 = CENTER
+   * @param position Enum LEFT, RIGHT, CENTER
    */
-  public Pose2d getReefFaceCoralPose(int scoringPosition) {
+  @AutoLogOutput(key = "ReefTarget/ReefFacePose")
+  public Pose2d getReefFaceCoralPose(ScoringPosition position) {
 
     Pose2d thisPose = m_drive.getPose();
 
@@ -341,17 +344,102 @@ public class ReefTarget extends VirtualSubsystem {
       }
     }
 
-    // TODO: With the `wantedTag` and ScoringPosition, set the A-L post designation.  This will be
-    // usedby the Algae height function.
+    // Determine which A-L post we are going for based on out `wantedTag`
+    switch (wantedTag) {
+      case 6:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 10;
+              case RIGHT -> 11;
+              case CENTER -> 10;
+            };
+        break;
+      case 7:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 0;
+              case RIGHT -> 1;
+              case CENTER -> 0;
+            };
+        break;
+      case 8:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 2;
+              case RIGHT -> 3;
+              case CENTER -> 2;
+            };
+        break;
+      case 9:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 4;
+              case RIGHT -> 5;
+              case CENTER -> 4;
+            };
+        break;
+      case 10:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 6;
+              case RIGHT -> 7;
+              case CENTER -> 6;
+            };
+        break;
+      case 11:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 8;
+              case RIGHT -> 9;
+              case CENTER -> 8;
+            };
+        break;
+      case 17:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 2;
+              case RIGHT -> 3;
+              case CENTER -> 2;
+            };
+        break;
+      case 18:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 0;
+              case RIGHT -> 1;
+              case CENTER -> 0;
+            };
+        break;
+      case 19:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 10;
+              case RIGHT -> 11;
+              case CENTER -> 10;
+            };
+        break;
+      case 20:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 8;
+              case RIGHT -> 9;
+              case CENTER -> 8;
+            };
+        break;
+      case 21:
+        reefPostAll =
+            switch (position) {
+              case LEFT -> 6;
+              case RIGHT -> 7;
+              case CENTER -> 6;
+            };
+        break;
+      default:
+        reefPostAll = 0;
+    }
 
-    return computeReefPose(
-        wantedTag,
-        switch (scoringPosition) {
-          case 0 -> ScoringPosition.LEFT;
-          case 1 -> ScoringPosition.RIGHT;
-          case 2 -> ScoringPosition.CENTER;
-          default -> ScoringPosition.LEFT;
-        });
+    // Return the pose computed from the wanted tag and the LR position
+    return computeReefPose(wantedTag, position);
   }
 
   /** Return the face-centered pose needed to line up with the algae */
@@ -433,12 +521,6 @@ public class ReefTarget extends VirtualSubsystem {
   }
 
   /* Utility Functions ***************************************************** */
-  /** The scoring position at any one REEF face */
-  private enum ScoringPosition {
-    LEFT, // Left reef post (coral)
-    RIGHT, // Right reef post (coral)
-    CENTER // Center position (algae grab)
-  }
 
   /**
    * Compute the pose of the robot to score at the specified REEF station

@@ -13,16 +13,18 @@
 
 package frc.robot.subsystems.state_keeper;
 
+import static edu.wpi.first.units.Units.Meters;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AprilTagConstants;
 import frc.robot.Constants.DriveToPositionConstatnts;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.subsystems.drive.Drive;
 import frc.robot.util.VirtualSubsystem;
 import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
@@ -40,26 +42,28 @@ import org.littletonrobotics.junction.Logger;
 public class ReefTarget extends VirtualSubsystem {
   private int reefPostAll = 0;
   private int reefPostLR = 0;
-  private int reefLevel = 2;
+  private int reefLevel = 1;
   public double elevatorDelay = 0;
+
+  private Drive m_drive;
 
   private static ReefTarget instance;
 
   /** Return an instance of this class */
-  public static ReefTarget getInstance() {
+  public static ReefTarget getInstance(Drive drive) {
     if (instance == null) {
-      instance = new ReefTarget();
+      instance = new ReefTarget(drive);
     }
     return instance;
   }
 
   /** Constructor */
-  private ReefTarget() {}
+  private ReefTarget(Drive drive) {
+    this.m_drive = drive;
+  }
 
   /** Periodic function includes logging and publishing to NT */
   public synchronized void periodic() {
-
-    SmartDashboard.putNumber("Reef Level", reefLevel);
 
     // Log the execution time
     long start = System.nanoTime();
@@ -85,7 +89,7 @@ public class ReefTarget extends VirtualSubsystem {
 
   /** Index the desired scoring state down one */
   public void indexDown() {
-    reefLevel = Math.max(--reefLevel, 2);
+    reefLevel = Math.max(--reefLevel, 1);
   }
 
   /**
@@ -305,6 +309,49 @@ public class ReefTarget extends VirtualSubsystem {
         // Shouldn't run, but required case and useful for testing
         return new Pose2d();
     }
+  }
+
+  /**
+   * Return the L-R pose needed to line up with the nearest reef face
+   *
+   * @param scoringPosition Integer 0 = LEFT, 1 = RIGHT, 2 = CENTER
+   */
+  public Pose2d getReefFaceCoralPose(int scoringPosition) {
+
+    Pose2d thisPose = m_drive.getPose();
+
+    int baseTag =
+        switch (DriverStation.getAlliance().get()) {
+          case Red -> 6;
+          case Blue -> 17;
+        };
+    double mindist = 100.0; // meters
+    int wantedTag = 0;
+
+    for (int i = 0; i < 6; i++) {
+      Transform2d relPose =
+          thisPose.minus(AprilTagConstants.aprilTagLayout.getTagPose(baseTag + i).get().toPose2d());
+      double absDist =
+          Math.sqrt(
+              Math.pow(relPose.getMeasureX().in(Meters), 2.0)
+                  + Math.pow(relPose.getMeasureY().in(Meters), 2.0));
+      if (absDist < mindist) {
+        wantedTag = baseTag + i;
+        mindist = Math.min(absDist, mindist);
+      }
+    }
+
+    // TODO: With the `wantedTag` and ScoringPosition, set the A-L post designation.  This will be
+    // usedby the Algae height function.
+
+    return computeReefPose(
+        wantedTag,
+        switch (scoringPosition) {
+          case 0 -> ScoringPosition.LEFT;
+          case 1 -> ScoringPosition.RIGHT;
+          case 2 -> ScoringPosition.CENTER;
+          default -> ScoringPosition.LEFT;
+        });
   }
 
   /** Return the face-centered pose needed to line up with the algae */

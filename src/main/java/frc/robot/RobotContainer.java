@@ -155,7 +155,7 @@ public class RobotContainer {
 
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
-  private final ReefTarget m_reefTarget = ReefTarget.getInstance();
+  private final ReefTarget m_reefTarget;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
   private final LED m_led = LED.getInstance();
@@ -289,14 +289,17 @@ public class RobotContainer {
                 .until(m_elevator::getBottomStop));
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
-        NamedCommands.registerCommand( // Ends once coral is detected
-        "CoralDetect", new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+    NamedCommands.registerCommand( // Ends once coral is detected
+        "CoralDetect",
+        new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
     // NamedCommands.registerCommand(
     //     "Timer", new IntakeCommand(m_intake, 0.9, 0));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
+    m_reefTarget = ReefTarget.getInstance(m_drivebase);
+
     m_power =
         new PowerMonitoring(
             batteryCapacity, m_elevator, m_coralScorer, m_intake, m_algaeMech, m_climber);
@@ -385,22 +388,22 @@ public class RobotContainer {
     // a (back right button) Drive To Position Command
     // TODO: change this to drive to returned command from ReefTarget
     //
-    driverController
-        .a()
-        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefCoralPose()));
+    // driverController
+    //     .a()
+    //     .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefCoralPose()));
 
     // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
     driverController
         .b()
-        .onTrue(Commands.runOnce(() -> m_reefTarget.indexLeft()).ignoringDisable(true));
+        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(0)));
     driverController
         .x()
-        .onTrue(Commands.runOnce(() -> m_reefTarget.indexRight()).ignoringDisable(true));
+        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(1)));
 
     // Drive to algae position (Back Left Bottom)
     driverController
         .y()
-        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefAlgaePose()));
+        .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(2)));
 
     // Driver Right Bumper :>> Intake from the floor
     driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.35));

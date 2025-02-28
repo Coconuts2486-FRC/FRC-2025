@@ -17,17 +17,14 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface AlgaeMechIO {
 
+  public final int[] powerPorts = {};
+
   @AutoLog
   public static class AlgaeMechIOInputs {
-    public double rollerPositionRad = 0.0;
-    public double rollerVelocityRadPerSec = 0.0;
-    public double rollerAppliedVolts = 0.0;
-    public double[] rollerCurrentAmps = new double[] {};
-    public double pivotPositionRad = 0.0;
-    public double pivotVelocityRadPerSec = 0.0;
-    public double pivotAppliedVolts = 0.0;
-    public double[] pivotCurrentAmps = new double[] {};
-    public double pivotEncoder = 0.0;
+    public double positionRad = 0.0;
+    public double velocityRadPerSec = 0.0;
+    public double appliedVolts = 0.0;
+    public double[] currentAmps = new double[] {};
   }
 
   public default void updateInputs(AlgaeMechIOInputs inputs) {}
@@ -43,25 +40,21 @@ public interface AlgaeMechIO {
   /** Updates the set of loggable inputs. */
 
   /** Run open loop at the specified voltage. */
-  public default void setPivotVoltage(double volts) {}
+  public default void setVoltage(double volts) {}
 
-  /** Run open loop at the specified voltage. */
-  public default void setRollerVoltage(double volts) {}
-
-  public default void setRollerPercent(double percent) {}
+  public default void setPercent(double percent) {}
 
   /** Run closed loop at the specified velocity. */
-  public default void setRollerVelocity(double velocityRadPerSec, double ffVolts) {}
+  public default void setVelocity(double velocityRadPerSec, double ffVolts) {}
 
-  public default double getRollerCurrent() {
+  /** Set velocity PID constants. */
+  public default void configurePID(double kP, double kI, double kD) {}
+
+  public default double getCurrent() {
     return 0.0;
   }
 
-  public default double getPivotEncoderPose() {
+  public default double getEncoderPose() {
     return .209;
-  }
-
-  public default int[] getPowerPorts() {
-    return new int[1];
   }
 }

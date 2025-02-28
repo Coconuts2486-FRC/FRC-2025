@@ -274,7 +274,7 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(0.55)
+                .withTimeout(0.56)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.60), m_coralScorer))));
 
     NamedCommands
@@ -289,12 +289,10 @@ public class RobotContainer {
                 .until(m_elevator::getBottomStop));
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
-    NamedCommands.registerCommand( // Ends once coral is detected
-        "CoralDetect",
-        (Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech))
-            .until(() -> m_coralScorer.getLightStop() == false));
-    NamedCommands.registerCommand( // Ends once coral is detecte
-        "Timer", new IntakeCommand(m_intake, 0.9, 0));
+        NamedCommands.registerCommand( // Ends once coral is detected
+        "CoralDetect", new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+    // NamedCommands.registerCommand(
+    //     "Timer", new IntakeCommand(m_intake, 0.9, 0));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include

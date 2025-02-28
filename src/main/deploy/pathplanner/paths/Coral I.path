@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.31,
+        "x": 1.35,
         "y": 7.1
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.16205807777724,
+        "x": 2.202058077777239,
         "y": 6.513224638889406
       },
       "isLocked": false,
@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 5.35,
+        "x": 5.3500000000000005,
         "y": 5.09
       },
       "prevControl": {
-        "x": 5.1026610103237315,
+        "x": 5.102661010323732,
         "y": 5.2492184773432315
       },
       "nextControl": null,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 62.0
   },
   "reversed": false,
   "folder": "Matrix Coral",

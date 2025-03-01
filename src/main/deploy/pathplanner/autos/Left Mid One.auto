@@ -7,26 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start G"
+            "pathName": "Start H"
           }
         },
         {
-          "type": "race",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "L4"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.4
-                }
-              }
-            ]
+            "name": "L4"
           }
         },
         {
@@ -39,6 +26,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "F",
+  "folder": "L",
   "choreoAuto": false
 }

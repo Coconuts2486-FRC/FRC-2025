@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.3500000000000005,
-        "y": 5.09
+        "x": 5.163,
+        "y": 4.9
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.897383759756536,
-        "y": 5.345652175315125
+        "x": 4.710383759756536,
+        "y": 5.155652175315126
       },
       "isLocked": false,
       "linkedName": "Coral I"
@@ -53,7 +53,7 @@
   "folder": "Matrix Station",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": 62.0
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": false
 }

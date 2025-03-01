@@ -27,12 +27,6 @@
                             "data": {
                               "name": "L4"
                             }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.31
-                            }
                           }
                         ]
                       }
@@ -110,12 +104,6 @@
                             "data": {
                               "name": "L4"
                             }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.31
-                            }
                           }
                         ]
                       }
@@ -192,12 +180,6 @@
                             "type": "named",
                             "data": {
                               "name": "L4"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.31
                             }
                           }
                         ]

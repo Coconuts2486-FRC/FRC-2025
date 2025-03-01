@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.819968723606419,
-        "y": 3.8592499999999994
+        "x": 5.566000000000001,
+        "y": 3.859
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.03177028346706,
-        "y": 3.1140651789484792
+        "x": 5.7778015598606425,
+        "y": 3.11381517894848
       },
       "isLocked": false,
       "linkedName": "Coral G"
@@ -50,7 +50,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.6,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

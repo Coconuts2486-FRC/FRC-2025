@@ -23,12 +23,6 @@
                       "data": {
                         "name": "L4"
                       }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.4
-                      }
                     }
                   ]
                 }
@@ -111,12 +105,6 @@
                       "type": "named",
                       "data": {
                         "name": "L4"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.4
                       }
                     }
                   ]

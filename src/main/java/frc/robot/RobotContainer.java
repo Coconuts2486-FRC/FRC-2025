@@ -36,6 +36,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -197,8 +199,8 @@ public class RobotContainer {
               case PHOTON ->
                   new Vision(
                       m_drivebase::addVisionMeasurement,
-                      new VisionIOPhotonVision(cameraElevatorL, robotToCameraEL),
-                      new VisionIOPhotonVision(cameraElevatorR, robotToCameraER),
+                      //   new VisionIOPhotonVision(cameraElevatorL, robotToCameraEL),
+                      //   new VisionIOPhotonVision(cameraElevatorR, robotToCameraER),
                       new VisionIOPhotonVision(cameraElevatorC, robotToCameraEC),
                       new VisionIOPhotonVision(cameraIntakeDown, robotToCameraID));
               case LIMELIGHT ->
@@ -226,8 +228,10 @@ public class RobotContainer {
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
-                new VisionIOPhotonVisionSim(cameraElevatorL, robotToCameraEL, m_drivebase::getPose),
-                new VisionIOPhotonVisionSim(cameraElevatorR, robotToCameraER, m_drivebase::getPose),
+                // new VisionIOPhotonVisionSim(cameraElevatorL, robotToCameraEL,
+                // m_drivebase::getPose),
+                // new VisionIOPhotonVisionSim(cameraElevatorR, robotToCameraER,
+                // m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(cameraElevatorC, robotToCameraEC, m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(
                     cameraIntakeDown, robotToCameraID, m_drivebase::getPose));
@@ -262,8 +266,8 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(0.9)
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.60), m_coralScorer))));
+                .withTimeout(1)
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
     NamedCommands.registerCommand("L3", Commands.print("L3")); // Just print commands for right now.
     NamedCommands.registerCommand(
         "L2",
@@ -275,8 +279,8 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(0.56)
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.60), m_coralScorer))));
+                .until(m_elevator.isAtPosition())
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
 
     NamedCommands
         .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
@@ -394,12 +398,12 @@ public class RobotContainer {
 
     // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
     driverController
-        .b()
+        .x()
         .whileTrue(
             new DriveToPose(
                 m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT)));
     driverController
-        .x()
+        .b()
         .whileTrue(
             new DriveToPose(
                 m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT)));
@@ -474,7 +478,46 @@ public class RobotContainer {
                     m_drivebase.resetPose(
                         new Pose2d(m_drivebase.getPose().getTranslation(), new Rotation2d())),
                 m_drivebase));
-    // .ignoringDisable(true));
+
+    driverController
+        .povLeft()
+        .whileTrue(
+            Commands.run(
+                () -> {
+                  m_drivebase.runVelocity(
+                      new ChassisSpeeds(Units.inchesToMeters(0), Units.inchesToMeters(-8), 0));
+                },
+                m_drivebase));
+
+    driverController
+        .povRight()
+        .whileTrue(
+            Commands.run(
+                () -> {
+                  m_drivebase.runVelocity(
+                      new ChassisSpeeds(Units.inchesToMeters(0), Units.inchesToMeters(8), 0));
+                },
+                m_drivebase));
+
+    driverController
+        .povUp()
+        .whileTrue(
+            Commands.run(
+                () -> {
+                  m_drivebase.runVelocity(
+                      new ChassisSpeeds(Units.inchesToMeters(-8), Units.inchesToMeters(0), 0));
+                },
+                m_drivebase));
+
+    driverController
+        .povDown()
+        .whileTrue(
+            Commands.run(
+                () -> {
+                  m_drivebase.runVelocity(
+                      new ChassisSpeeds(Units.inchesToMeters(8), Units.inchesToMeters(0), 0));
+                },
+                m_drivebase));
 
     /* ================================================== */
 
@@ -501,7 +544,12 @@ public class RobotContainer {
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                     .until(m_elevator.isAtPosition())
                     .andThen(
-                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer)
+                            .withTimeout(0.35))));
+
+    operatorController
+        .rightTrigger(.1)
+        .whileTrue(Commands.run(() -> m_coralScorer.setCoralPercent(0.5), m_coralScorer));
 
     operatorController
         .start()
@@ -585,7 +633,7 @@ public class RobotContainer {
 
     // Release Operator Right Bumper :>> Turn off algae rollers
     operatorController
-        .povLeft()
+        .leftBumper()
         .onFalse(
             Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
                 .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));

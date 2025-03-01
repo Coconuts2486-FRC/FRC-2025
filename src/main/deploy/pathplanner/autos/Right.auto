@@ -31,7 +31,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 1.31
+                              "waitTime": 1.34
                             }
                           }
                         ]
@@ -114,7 +114,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 1.31
+                              "waitTime": 1.33
                             }
                           }
                         ]
@@ -197,7 +197,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 1.31
+                              "waitTime": 1.33
                             }
                           }
                         ]
@@ -225,6 +225,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "F",
+  "folder": "R",
   "choreoAuto": false
 }

@@ -191,7 +191,7 @@ public final class Constants {
     // These are heights off the ground of the top row of bolts on the elevator 1st stage
     public static final Distance kElevatorZeroHeight = Inches.of(40.375);
     public static final Distance kL2 = Inches.of(48.125); // Maybe 48.5
-    public static final Distance kL3 = Inches.of(56.25);
+    public static final Distance kL3 = Inches.of(55.25);
     public static final Distance kL4 = Inches.of(68.125);
     public static final Distance KAlgaeLower = Inches.of(58.375);
     public static final Distance KAlgaeUpper = Inches.of(66.5);
@@ -507,9 +507,9 @@ public final class Constants {
   /** Vision Camera Posses ************************************************* */
   public static class Cameras {
     // Camera names, must match names configured on coprocessor
-    public static String cameraElevatorL = "Photon_BW6"; // On left side of elevator
-    public static String cameraElevatorR = "Photon_BW3"; // On right side of elevator
-    public static String cameraElevatorC = "Photon_BW4"; // On center of elevator
+    // public static String cameraElevatorL = "Photon_BW6"; // On left side of elevator
+    // public static String cameraElevatorR = "Photon_BW3"; // On right side of elevator
+    public static String cameraElevatorC = "Photon_BW3"; // On center of elevator
     public static String cameraIntakeDown = "Photon_BW5"; // On intake churro, looking down
     // ... And more, if needed
 
@@ -547,7 +547,7 @@ public final class Constants {
         new double[] {
           1.0, // Camera EL
           1.0, // Camera ER
-          1.0, // Camera IU
+          0.2, // Camera EC
           1.0 // Camera ID
         };
   }
@@ -625,9 +625,9 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(11.0), Units.inchesToMeters(-6.75));
+        new Translation2d(Units.inchesToMeters(11.5), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(11.0), Units.inchesToMeters(+6.75));
+        new Translation2d(Units.inchesToMeters(11.5), Units.inchesToMeters(+6.75));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(19.0), Units.inchesToMeters(0.0));
   }

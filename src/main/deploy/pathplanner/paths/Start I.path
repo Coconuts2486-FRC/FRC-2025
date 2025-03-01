@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.902788312560469,
-        "y": 5.2005256453502815
+        "x": 5.806719547492629,
+        "y": 5.100641929016396
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.36,
-        "y": 5.09
+        "x": 5.163,
+        "y": 4.9
       },
       "prevControl": {
-        "x": 6.560643706346231,
-        "y": 4.987102726785402
+        "x": 6.469460463890925,
+        "y": 4.894583821525747
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 62.0
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Matrix Start",

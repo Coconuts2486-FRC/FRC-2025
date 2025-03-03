@@ -2,16 +2,8 @@
   "robotWidth": 0.876,
   "robotLength": 0.876,
   "holonomicMode": true,
-  "pathFolders": [
-    "Crazy 2",
-    "Matrix Coral",
-    "Matrix Start",
-    "Matrix Station"
-  ],
-  "autoFolders": [
-    "F",
-    "L"
-  ],
+  "pathFolders": [],
+  "autoFolders": [],
   "defaultMaxVel": 3.5,
   "defaultMaxAccel": 3.6,
   "defaultMaxAngVel": 720.0,

@@ -255,6 +255,7 @@ public class RobotContainer {
         // m_coralState = new CoralState();
         break;
     }
+    m_reefTarget = ReefTarget.getInstance(m_drivebase);
     // Named Commands For Pathplanner
     NamedCommands.registerCommand( // Runs elevator and coral scorer to score coral on L4.
         "L4",
@@ -268,6 +269,19 @@ public class RobotContainer {
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                 .withTimeout(0.95)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
+
+    NamedCommands.registerCommand(
+        "E4",
+        new ElevatorCommand(
+            () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
+            ElevatorConstants.kAcceleration,
+            ElevatorConstants.kVelocity,
+            m_elevator));
+
+    NamedCommands.registerCommand(
+        "Score",
+        Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer).withTimeout(0.3));
+
     NamedCommands
         .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
             "Bottom",
@@ -278,18 +292,33 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity.div(2.0),
                     m_elevator)
                 .until(m_elevator::getBottomStop));
+
+    DriveToPose driveR =
+        new DriveToPose(
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT));
+
+    DriveToPose driveL =
+        new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
+
+    NamedCommands.registerCommand( // Auto intake from source to desired position
+        "AlignR", driveR.until(driveR::atGoal));
+
+    NamedCommands.registerCommand( // Auto intake from source to desired position
+        "AlignL", driveL.until(driveL::atGoal));
+
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
+
     NamedCommands.registerCommand( // Ends once coral is detected
         "CoralDetect",
         new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+
     // NamedCommands.registerCommand(
     //     "Timer", new IntakeCommand(m_intake, 0.9, 0));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
-    m_reefTarget = ReefTarget.getInstance(m_drivebase);
 
     m_power =
         new PowerMonitoring(

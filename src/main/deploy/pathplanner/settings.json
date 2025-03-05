@@ -3,9 +3,10 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
+    "Matrix Coral",
     "Matrix Start",
     "Matrix Station",
-    "Matrix Coral"
+    "Align"
   ],
   "autoFolders": [
     "R",

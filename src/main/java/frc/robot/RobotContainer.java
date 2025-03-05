@@ -266,8 +266,8 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(1)
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+                .withTimeout(1.1)
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
     NamedCommands.registerCommand("L3", Commands.print("L3")); // Just print commands for right now.
     NamedCommands.registerCommand(
         "L2",
@@ -280,7 +280,7 @@ public class RobotContainer {
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                 .until(m_elevator.isAtPosition())
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
 
     NamedCommands
         .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
@@ -415,6 +415,11 @@ public class RobotContainer {
             new DriveToPose(
                 m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
 
+    // Drive to BARGE ALGAE scoring position
+    // driverController
+    //     .a()
+    //     .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getBargeScorePose()));
+
     // Driver Right Bumper :>> Intake from the floor
     driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.35));
 
@@ -544,12 +549,30 @@ public class RobotContainer {
                 Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                     .until(m_elevator.isAtPosition())
                     .andThen(
-                        Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer)
+                        Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer)
                             .withTimeout(0.35))));
 
     operatorController
+        .leftTrigger(0.1)
+        .whileTrue(
+            Commands.parallel(
+                new ElevatorCommand(
+                    () -> ElevatorConstants.kL4,
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
+                    m_elevator),
+                Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
+                    .alongWith(Commands.run(() -> m_algaeMech.setPercent(0.1)))
+                    .withTimeout(.5)
+                    .andThen(Commands.run(() -> m_algaeMech.setPercent(-1)))));
+
+    operatorController
+        .leftTrigger(0.1)
+        .onFalse(Commands.runOnce(() -> m_algaeMech.setPercent(0), m_algaeMech));
+
+    operatorController
         .rightTrigger(.1)
-        .whileTrue(Commands.run(() -> m_coralScorer.setCoralPercent(0.5), m_coralScorer));
+        .whileTrue(Commands.run(() -> m_coralScorer.setCoralPercent(0.33), m_coralScorer));
 
     operatorController
         .start()

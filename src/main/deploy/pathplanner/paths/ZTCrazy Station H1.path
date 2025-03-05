@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 5.566,
-        "y": 4.2
+        "y": 4.15
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.792892690280202,
-        "y": 4.304974792676204
+        "x": 5.754098360655737,
+        "y": 3.765215163934426
       },
       "isLocked": false,
       "linkedName": "H Coral"
     },
     {
       "anchor": {
-        "x": 5.50875,
-        "y": 7.0865
+        "x": 6.449385245901639,
+        "y": 1.8732069672131149
       },
       "prevControl": {
-        "x": 5.509612878613873,
-        "y": 6.83650148912344
+        "x": 6.293545081967213,
+        "y": 2.388678278688524
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Crazy H"
+      "linkedName": "Crazy G"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": -126.0
   },
   "reversed": false,
   "folder": "Crazy 2",

@@ -5,21 +5,47 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "Start H"
+            "waitTime": 7.0
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "L4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Bottom"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Start H"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L4"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.4
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
+                }
+              }
+            ]
           }
         }
       ]

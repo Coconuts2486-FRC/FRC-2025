@@ -174,6 +174,12 @@ public class AlgaeMech extends RBSISubsystem {
     }
   }
 
+  public void pivotShoot() {
+    if (!disableSupplier.getAsBoolean()) {
+      io.pivotToPosition(.3);
+    }
+  }
+
   // Pivots to position to pick up off floor
   public void pivotHorizontal() {
     if (!disableSupplier.getAsBoolean()) {

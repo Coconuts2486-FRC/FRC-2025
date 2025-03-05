@@ -19,8 +19,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AprilTagConstants;
 import frc.robot.Constants.DriveToPositionConstatnts;
 import frc.robot.Constants.ElevatorConstants;
@@ -44,7 +46,7 @@ import org.littletonrobotics.junction.Logger;
 public class ReefTarget extends VirtualSubsystem {
   private int reefPostAll = 0;
   private int reefPostLR = 0;
-  private int reefLevel = 1;
+  private int reefLevel = 2;
   public double elevatorDelay = 0;
 
   private Drive m_drive;
@@ -77,6 +79,7 @@ public class ReefTarget extends VirtualSubsystem {
     Logger.recordOutput("ReefTarget/ElevatorHeight", getElevatorHeight());
     Logger.recordOutput("ReefTarget/CoralPose", getReefCoralPose());
     Logger.recordOutput("ReefTarget/AlgaePose", getReefAlgaePose());
+    SmartDashboard.putNumber("Reef level", reefLevel);
 
     // Quick logging to see how long this periodic takes
     long finish = System.nanoTime();
@@ -91,7 +94,7 @@ public class ReefTarget extends VirtualSubsystem {
 
   /** Index the desired scoring state down one */
   public void indexDown() {
-    reefLevel = Math.max(--reefLevel, 1);
+    reefLevel = Math.max(--reefLevel, 2);
   }
 
   /**
@@ -552,5 +555,22 @@ public class ReefTarget extends VirtualSubsystem {
                   case CENTER -> DriveToPositionConstatnts.kAlgaeGrab;
                 },
                 new Rotation2d()));
+  }
+
+  public Pose2d getBargeScorePose() {
+    Pose2d thisPose = m_drive.getPose();
+
+    return new Pose2d(
+        switch (DriverStation.getAlliance().get()) {
+          case Red -> Units.inchesToMeters(491. - 10.);
+          case Blue ->
+              Units.inchesToMeters(270. + 10.); // This is the 10" vision offset used for the REEF
+        },
+        thisPose.getY(),
+        new Rotation2d(
+            switch (DriverStation.getAlliance().get()) {
+              case Red -> 0.0;
+              case Blue -> Math.PI;
+            }));
   }
 }

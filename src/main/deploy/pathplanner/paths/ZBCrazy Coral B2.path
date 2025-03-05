@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.507,
-        "y": 3.0304999999999995
+        "x": 3.4,
+        "y": 3.839
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7062500000000003,
-        "y": 3.0402499999999986
+        "x": 4.59925,
+        "y": 3.848749999999999
       },
       "isLocked": false,
       "linkedName": "Crazy B"

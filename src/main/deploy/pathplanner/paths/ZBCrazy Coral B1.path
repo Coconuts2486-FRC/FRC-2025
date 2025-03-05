@@ -8,20 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.6684572132526466,
-        "y": 1.6191788490554673
+        "x": 0.5154713114754097,
+        "y": 3.407633196721311
       },
       "isLocked": false,
       "linkedName": "Crazy GB"
     },
     {
       "anchor": {
-        "x": 0.507,
-        "y": 3.0304999999999995
+        "x": 1.2023580942622951,
+        "y": 3.121836321721311
       },
       "prevControl": {
-        "x": 0.4387500000000001,
-        "y": 2.0067499999999994
+        "x": 0.8406255483329342,
+        "y": 3.035101716474998
+      },
+      "nextControl": {
+        "x": 1.5943647540983608,
+        "y": 3.215829918032787
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.4,
+        "y": 3.839
+      },
+      "prevControl": {
+        "x": 1.6497950819672136,
+        "y": 3.1796762295081966
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.6233463035019446,
+      "waypointRelativePos": 0.3,
       "rotationDegrees": 180.0
     }
   ],

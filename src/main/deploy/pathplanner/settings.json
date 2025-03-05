@@ -3,10 +3,9 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
-    "Crazy 2",
-    "Matrix Coral",
     "Matrix Start",
-    "Matrix Station"
+    "Matrix Station",
+    "Matrix Coral"
   ],
   "autoFolders": [
     "R",

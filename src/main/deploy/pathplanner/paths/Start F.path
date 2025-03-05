@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.12,
-        "y": 3.04
+        "x": 7.15,
+        "y": 2.2568135245901635
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.061569923869347,
-        "y": 2.9674546854403556
+        "x": 6.094564513594491,
+        "y": 2.3032374542002203
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.13,
-        "y": 3.1700000000000004
+        "x": 5.322540983606557,
+        "y": 2.62843237704918
       },
       "prevControl": {
-        "x": 6.290763879581922,
-        "y": 3.1177346716100542
+        "x": 6.23860219522461,
+        "y": 2.4526982228000667
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Coral F"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,15 +34,15 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.25,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -57.00000000000001
+    "velocity": 0.0,
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Matrix Start",

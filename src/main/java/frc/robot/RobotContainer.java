@@ -266,22 +266,8 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(1.1)
+                .withTimeout(0.95)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
-    NamedCommands.registerCommand("L3", Commands.print("L3")); // Just print commands for right now.
-    NamedCommands.registerCommand(
-        "L2",
-        Commands.parallel( // Needs to be canceled with a race group right now, the race group wait
-            // timer is at 0.8 seconds.
-            new ElevatorCommand(
-                () -> ElevatorConstants.kL2, // Change this to kL4 or kL3 for those levels
-                ElevatorConstants.kAcceleration,
-                ElevatorConstants.kVelocity,
-                m_elevator),
-            Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .until(m_elevator.isAtPosition())
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
-
     NamedCommands
         .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
             "Bottom",

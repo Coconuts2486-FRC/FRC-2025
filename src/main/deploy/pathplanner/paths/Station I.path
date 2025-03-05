@@ -3,43 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.163,
-        "y": 4.9
+        "x": 5.1786885245901635,
+        "y": 4.858145491803278
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.710383759756536,
-        "y": 5.155652175315126
+        "x": 4.735143442622951,
+        "y": 5.625358606557377
       },
       "isLocked": false,
       "linkedName": "Coral I"
     },
     {
       "anchor": {
-        "x": 1.35,
-        "y": 7.1
+        "x": 1.44,
+        "y": 7.17
       },
       "prevControl": {
-        "x": 2.1958541884057867,
-        "y": 6.703438971495995
+        "x": 2.2387783705955555,
+        "y": 6.642669507205549
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Station Top"
+      "linkedName": "Left Station"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.17066446940104169,
-      "rotationDegrees": 59.99999999999999
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.7,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 125.00000000000001
   },
   "reversed": false,
   "folder": "Matrix Station",
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 59.99999999999999
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

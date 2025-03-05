@@ -409,6 +409,7 @@ public final class Constants {
     public static final boolean kDriveLeftTurnRight =
         switch (getRobot()) {
           case GEORGE -> true; // Testing
+          //  case LEONARDO -> true;
           case LEONARDO -> false; // Kate's preference
           case SIMBOT -> true; // Default
         };
@@ -626,9 +627,9 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(11.5), Units.inchesToMeters(-6.75));
+        new Translation2d(Units.inchesToMeters(11), Units.inchesToMeters(-6.5));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(11.5), Units.inchesToMeters(+6.75));
+        new Translation2d(Units.inchesToMeters(11), Units.inchesToMeters(+6.5));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(19.0), Units.inchesToMeters(0.0));
   }

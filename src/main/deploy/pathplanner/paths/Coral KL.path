@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.726229508196721,
-        "y": 7.086
+        "x": 1.9,
+        "y": 6.84
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0546736742372564,
-        "y": 6.843967394974926
+        "x": 2.2284441660405356,
+        "y": 6.597967394974925
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LStation"
     },
     {
       "anchor": {
-        "x": 3.6802254098360656,
-        "y": 5.396
+        "x": 3.64,
+        "y": 5.42
       },
       "prevControl": {
-        "x": 3.299143081772895,
-        "y": 5.708475845190862
+        "x": 3.2589176719368296,
+        "y": 5.732475845190862
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Coral LK"
     }
   ],
   "rotationTargets": [],

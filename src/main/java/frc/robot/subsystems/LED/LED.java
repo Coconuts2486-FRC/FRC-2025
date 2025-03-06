@@ -15,8 +15,11 @@ package frc.robot.subsystems.LED;
 
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
+import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix.led.RgbFadeAnimation;
 import com.ctre.phoenix.led.TwinkleOffAnimation;
 import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -134,8 +137,11 @@ public class LED extends VirtualSubsystem {
       // When disabled
       pickTwoTwinkle();
     } else if (DriverStation.isAutonomous()) {
-      // Autonomous Mode
-      solid(Color.kBrown);
+      if(coralReady){
+        new LarsonAnimation(255,255,255,0,.5,LEDConstants.nLED,BounceMode.Back,13);
+      } else {
+        new RgbFadeAnimation(.5,.5,LEDConstants.nLED);
+      }
     } else {
       // Teleop Enabled
       if (coralReady) {

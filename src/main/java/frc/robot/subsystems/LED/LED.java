@@ -138,7 +138,7 @@ public class LED extends VirtualSubsystem {
       pickTwoTwinkle();
     } else if (DriverStation.isAutonomous()) {
       if(coralReady){
-        new LarsonAnimation(255,255,255,0,.5,LEDConstants.nLED,BounceMode.Back,13);
+        new RainbowAnimation(.5,1.5,LEDConstants.nLED);
       } else {
         new RgbFadeAnimation(.5,.5,LEDConstants.nLED);
       }

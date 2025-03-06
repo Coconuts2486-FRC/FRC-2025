@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Istanbull Start"
+                  "pathName": "Istanbulr Start"
                 }
               },
               {
@@ -53,6 +53,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "L",
+  "folder": "R",
   "choreoAuto": false
 }

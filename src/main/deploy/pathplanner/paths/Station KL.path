@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 3.6802254098360656,
-        "y": 2.604456967213115
+        "y": 5.396
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.819120989766369,
-        "y": 1.8879818656891363
+        "x": 3.4180400198266003,
+        "y": 5.591455113591687
       },
       "isLocked": false,
-      "linkedName": "Coral CD"
+      "linkedName": null
     },
     {
       "anchor": {
         "x": 1.92,
-        "y": 1.19
+        "y": 6.82
       },
       "prevControl": {
-        "x": 2.3457758117481253,
-        "y": 1.5568148563550062
+        "x": 2.116364750123808,
+        "y": 6.66527157692003
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 125.00000000000001
   },
   "reversed": false,
   "folder": "Matrix Station",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": false
 }

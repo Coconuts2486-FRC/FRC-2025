@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.3,
-        "y": 2.96
+        "x": 1.726229508196721,
+        "y": 7.086
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.191928364817261,
-        "y": 2.2123157530633146
+        "x": 2.0546736742372564,
+        "y": 6.843967394974926
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.6303278688524592,
-        "y": 0.722387295081968
+        "x": 3.6802254098360656,
+        "y": 5.396
       },
       "prevControl": {
-        "x": 2.22568362206726,
-        "y": 1.1250533882769616
+        "x": 3.299143081772895,
+        "y": 5.708475845190862
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Matrix Station",
+  "folder": "Matrix Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 125.00000000000001
   },
   "useDefaultConstraints": true
 }

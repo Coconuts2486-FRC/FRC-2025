@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.735143442622951,
-        "y": 5.625358606557377
+        "x": 4.699180327868852,
+        "y": 5.457530737704917
       },
       "isLocked": false,
-      "linkedName": "Coral I"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.44,
-        "y": 7.17
+        "x": 1.726,
+        "y": 7.086
       },
       "prevControl": {
-        "x": 2.2387783705955555,
-        "y": 6.642669507205549
+        "x": 2.6635420873719813,
+        "y": 6.457026265828645
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 59.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

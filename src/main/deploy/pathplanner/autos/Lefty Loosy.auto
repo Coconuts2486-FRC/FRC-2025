@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start EF"
+            "pathName": "Start IJ"
           }
         },
         {
@@ -59,7 +59,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station E"
+                        "pathName": "Station I"
                       }
                     },
                     {
@@ -97,7 +97,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Coral CD"
+                        "pathName": "Coral KL"
                       }
                     }
                   ]
@@ -161,7 +161,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station CD"
+                        "pathName": "Station KL"
                       }
                     },
                     {
@@ -199,7 +199,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Coral CD"
+                        "pathName": "Coral KL"
                       }
                     }
                   ]
@@ -262,6 +262,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "R",
+  "folder": "L",
   "choreoAuto": false
 }

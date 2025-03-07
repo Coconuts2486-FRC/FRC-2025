@@ -193,7 +193,7 @@ public final class Constants {
     public static final Distance kL2 = Inches.of(48.125); // Maybe 48.5
     public static final Distance kL3 = Inches.of(55.25);
     public static final Distance kL4 = Inches.of(68.125);
-    public static final Distance KAlgaeLower = Inches.of(58.375);
+    public static final Distance KAlgaeLower = Inches.of(56.375);
     public static final Distance KAlgaeUpper = Inches.of(66.5);
     public static final Distance KAlgaeShoot = Inches.of(60);
     // Motion Magic constants

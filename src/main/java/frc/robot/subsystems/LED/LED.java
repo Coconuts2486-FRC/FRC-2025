@@ -96,7 +96,7 @@ public class LED extends VirtualSubsystem {
 
   /** Constructor */
   private LED() {
-
+    coralReady = true;
     red = false;
     config.stripType = LEDStripType.RGB; // set the strip type to RGB
     config.brightnessScalar = 0.5; // dim the LEDs to half brightness

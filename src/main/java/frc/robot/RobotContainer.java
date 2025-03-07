@@ -305,6 +305,48 @@ public class RobotContainer {
 
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "AlignL", driveL.until(driveL::atGoal));
+    NamedCommands.registerCommand(
+        "Algae",
+        new DriveToPose(
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
+    NamedCommands.registerCommand(
+        "deAlgae",
+        Commands.parallel(
+            new ElevatorCommand(
+                m_reefTarget::getElevatorAlgae,
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator),
+            Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+                .withTimeout(.25)
+                .andThen(
+                    Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+                        .alongWith(
+                            Commands.runEnd(
+                                () -> m_algaeMech.setPercent(.6), () -> m_algaeMech.setPercent(0)))
+                        .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2))))));
+
+    NamedCommands.registerCommand(
+        "shootAlgae",
+        Commands.parallel(
+            new ElevatorCommand(
+                () -> ElevatorConstants.kL4,
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator),
+            Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0.1)))
+                .withTimeout(.5)
+                .andThen(Commands.run(() -> m_algaeMech.setPercent(-1)))));
+
+    NamedCommands.registerCommand(
+        "resetAlgae",
+        Commands.runOnce(() -> m_algaeMech.setIndexPose(3))
+            .alongWith(Commands.run(() -> m_algaeMech.setPercent(0)))
+            .alongWith(Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)));
+
+    NamedCommands.registerCommand(
+        "ToeKnee", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech));
 
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));

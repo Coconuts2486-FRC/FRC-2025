@@ -4,16 +4,18 @@
   "holonomicMode": true,
   "pathFolders": [
     "Bottom Start",
+    "D Auto",
+    "Unaligned",
+    "On Your",
     "Top Coral",
     "Top Start",
     "Top Station"
   ],
   "autoFolders": [
-    "Left",
-    "Right"
+    "Left"
   ],
   "defaultMaxVel": 4.5,
-  "defaultMaxAccel": 7.0,
+  "defaultMaxAccel": 7.5,
   "defaultMaxAngVel": 720.0,
   "defaultMaxAngAccel": 1000.0,
   "defaultNominalVoltage": 12.0,

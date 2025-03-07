@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start I"
+            "pathName": "Start J"
           }
         },
         {
@@ -52,7 +52,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station I"
+                        "pathName": "Station J"
                       }
                     }
                   ]
@@ -116,7 +116,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station K"
+                        "pathName": "Station L"
                       }
                     }
                   ]
@@ -180,71 +180,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station L"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Coral J"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "CoralIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Bottom"
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station J"
+                        "pathName": "Station K"
                       }
                     }
                   ]

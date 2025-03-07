@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.15,
-        "y": 5.014595630787037
+        "x": 0.6828399884259246,
+        "y": 6.6347862413194445
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.892683386662225,
-        "y": 5.267809168922897
+        "x": 1.303011429398147,
+        "y": 5.825826461226852
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "D Station"
     },
     {
       "anchor": {
-        "x": 5.467943070023148,
-        "y": 5.314316044560185
+        "x": 3.8184617332175916,
+        "y": 5.484237196180556
       },
       "prevControl": {
-        "x": 6.542080589955015,
-        "y": 5.084225552944044
+        "x": 2.7952662037037026,
+        "y": 5.307328197337963
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Top Start",
+  "folder": "D Auto",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 126.0
   },
   "useDefaultConstraints": true
 }

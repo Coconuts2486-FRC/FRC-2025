@@ -488,7 +488,7 @@ public class RobotContainer {
                     () -> m_algaeMech.setIndexPose(1),
                     () -> m_algaeMech.cyclePositions(),
                     m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(.6))));
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(.33))));
 
     // Release Operator Right Bumper :>> Turn off algae rollers
     driverController
@@ -608,6 +608,15 @@ public class RobotContainer {
                     .andThen(
                         Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer)
                             .withTimeout(0.35))));
+    // Un-Comment to make elevator go up without scoringa/
+    // operatorController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         new ElevatorCommand(
+    //             m_reefTarget::getElevatorHeight, // Send height as supplier
+    //             ElevatorConstants.kAcceleration,
+    //             ElevatorConstants.kVelocity,
+    //             m_elevator));
 
     operatorController
         .leftTrigger(0.1)

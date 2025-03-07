@@ -523,6 +523,7 @@ public final class Constants {
             Units.inchesToMeters(10.1 - 1.0), // before adding these...
             new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 + 20.0))
                 .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
+
     public static Transform3d robotToCameraER =
         new Transform3d(
             Units.inchesToMeters(-12.3),
@@ -530,6 +531,22 @@ public final class Constants {
             Units.inchesToMeters(10.1 - 1.0),
             new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 - 20.0))
                 .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
+
+    // For the double camera mount in the center * Right side
+    public static Transform3d robotToCameraECR =
+        new Transform3d(
+            Units.inchesToMeters(-13.818 + .8125),
+            Units.inchesToMeters(0.0 + .875),
+            Units.inchesToMeters(6.122),
+            new Rotation3d(0.0, Units.degreesToRadians(10.0), Units.degreesToRadians(180.0)));
+    // For the double camera mount in the center * Left side
+    public static Transform3d robotToCameraECL =
+        new Transform3d(
+            Units.inchesToMeters(-13.818 + .8125),
+            Units.inchesToMeters(0.0 - .875),
+            Units.inchesToMeters(6.122),
+            new Rotation3d(0.0, Units.degreesToRadians(10.0), Units.degreesToRadians(180.0)));
+
     public static Transform3d robotToCameraEC =
         new Transform3d(
             Units.inchesToMeters(-13.818),
@@ -549,7 +566,7 @@ public final class Constants {
         new double[] {
           1.0, // Camera EL
           1.0, // Camera ER
-          0.2, // Camera EC
+          1.0, // Camera EC
           1.0 // Camera ID
         };
   }

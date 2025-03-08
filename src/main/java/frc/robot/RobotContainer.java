@@ -490,7 +490,7 @@ public class RobotContainer {
                     () -> m_algaeMech.setIndexPose(1),
                     () -> m_algaeMech.cyclePositions(),
                     m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(.33))));
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(-0.33))));
 
     // Release Operator Right Bumper :>> Turn off algae rollers
     driverController
@@ -630,9 +630,9 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
-                    .alongWith(Commands.run(() -> m_algaeMech.setPercent(0.1)))
+                    .alongWith(Commands.run(() -> m_algaeMech.setPercent(-0.1)))
                     .withTimeout(.5)
-                    .andThen(Commands.run(() -> m_algaeMech.setPercent(-1)))));
+                    .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
 
     operatorController
         .leftTrigger(0.1)
@@ -689,7 +689,7 @@ public class RobotContainer {
                         Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
                             .alongWith(
                                 Commands.runEnd(
-                                    () -> m_algaeMech.setPercent(.6),
+                                    () -> m_algaeMech.setPercent(-0.6),
                                     () -> m_algaeMech.setPercent(0)))
                             .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2)))),
                 DriveCommands.robotRelativeDrive(
@@ -720,7 +720,7 @@ public class RobotContainer {
             Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
                 .alongWith(
                     Commands.runEnd(
-                        () -> m_algaeMech.setPercent(-1), () -> m_algaeMech.setIndexPose(3))));
+                        () -> m_algaeMech.setPercent(1), () -> m_algaeMech.setIndexPose(3))));
 
     // Release Operator Right Bumper :>> Turn off algae rollers
     operatorController

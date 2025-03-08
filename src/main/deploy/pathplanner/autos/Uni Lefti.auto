@@ -35,9 +35,9 @@
                             }
                           },
                           {
-                            "type": "wait",
+                            "type": "named",
                             "data": {
-                              "waitTime": 0.6
+                              "name": "Timer"
                             }
                           }
                         ]
@@ -126,9 +126,9 @@
                                         }
                                       },
                                       {
-                                        "type": "wait",
+                                        "type": "named",
                                         "data": {
-                                          "waitTime": 0.6
+                                          "name": "Timer"
                                         }
                                       }
                                     ]
@@ -229,9 +229,9 @@
                                         }
                                       },
                                       {
-                                        "type": "wait",
+                                        "type": "named",
                                         "data": {
-                                          "waitTime": 0.6
+                                          "name": "Timer"
                                         }
                                       }
                                     ]
@@ -332,9 +332,9 @@
                                         }
                                       },
                                       {
-                                        "type": "wait",
+                                        "type": "named",
                                         "data": {
-                                          "waitTime": 0.6
+                                          "name": "Timer"
                                         }
                                       }
                                     ]

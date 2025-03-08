@@ -356,6 +356,9 @@ public class RobotContainer {
     NamedCommands.registerCommand( // Ends once coral is detected
         "CoralDetect",
         new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+    NamedCommands.registerCommand( // Ends once coral is detected
+        "Timer",
+        Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.6));
 
     // NamedCommands.registerCommand(
     //     "Timer", new IntakeCommand(m_intake, 0.9, 0));

@@ -13,6 +13,7 @@
 
 package frc.robot.subsystems.climber;
 
+import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
 
 public class Climb extends RBSISubsystem {
@@ -30,6 +31,7 @@ public class Climb extends RBSISubsystem {
 
   public void twistToPosition(double position) {
     io.twistMotorToPosition(position);
+    LED.setClimbed(false);
   }
 
   public void goUntilPosition(double percent, double position) {
@@ -38,6 +40,7 @@ public class Climb extends RBSISubsystem {
     } else {
       io.setMotorPercent(percent);
     }
+    LED.setClimbed(true);
   }
 
   public void manualControl(double controlVolts) {

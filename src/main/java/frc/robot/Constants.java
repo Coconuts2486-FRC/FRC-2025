@@ -511,54 +511,59 @@ public final class Constants {
     // Camera names, must match names configured on coprocessor
     // public static String cameraElevatorL = "Photon_BW6"; // On left side of elevator
     // public static String cameraElevatorR = "Photon_BW3"; // On right side of elevator
-    public static String cameraElevatorC = "Photon_BW3"; // On center of elevator
-    public static String cameraIntakeDown = "Photon_BW5"; // On intake churro, looking down
+    // public static String cameraElevatorC = "Photon_BW3"; // On center of elevator
+    // public static String cameraIntakeDown = "Photon_BW5"; // On intake churro, looking down
+
+    public static String cameraCL = "Photon_BW1"; //  Camera in the double mount in center *Left
+    public static String cameraCR = "Photon_BW2"; //  Camera in the double mount in center *Right
+    public static String cameraIntake = "Photon_BW4"; // Camera facing up from the ground intake
+
     // ... And more, if needed
 
     // Robot to camera transforms
-    public static Transform3d robotToCameraEL =
-        new Transform3d(
-            Units.inchesToMeters(-12.3),
-            Units.inchesToMeters(-(9.23 - 0.375)), // Waiting for actual mounts
-            Units.inchesToMeters(10.1 - 1.0), // before adding these...
-            new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 + 20.0))
-                .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
+    // public static Transform3d robotToCameraEL =
+    //     new Transform3d(
+    //         Units.inchesToMeters(-12.3),
+    //         Units.inchesToMeters(-(9.23 - 0.375)), // Waiting for actual mounts
+    //         Units.inchesToMeters(10.1 - 1.0), // before adding these...
+    //         new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 + 20.0))
+    //             .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
 
-    public static Transform3d robotToCameraER =
-        new Transform3d(
-            Units.inchesToMeters(-12.3),
-            Units.inchesToMeters(9.23 - 0.375),
-            Units.inchesToMeters(10.1 - 1.0),
-            new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 - 20.0))
-                .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
+    // public static Transform3d robotToCameraER =
+    //     new Transform3d(
+    //         Units.inchesToMeters(-12.3),
+    //         Units.inchesToMeters(9.23 - 0.375),
+    //         Units.inchesToMeters(10.1 - 1.0),
+    //         new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 - 20.0))
+    //             .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
 
     // For the double camera mount in the center * Right side
-    public static Transform3d robotToCameraECR =
+    public static Transform3d robotToCameraECL =
         new Transform3d(
             Units.inchesToMeters(-13.818 + .8125),
             Units.inchesToMeters(0.0 + .875),
             Units.inchesToMeters(6.122),
             new Rotation3d(0.0, Units.degreesToRadians(10.0), Units.degreesToRadians(180.0)));
     // For the double camera mount in the center * Left side
-    public static Transform3d robotToCameraECL =
+    public static Transform3d robotToCameraECR =
         new Transform3d(
             Units.inchesToMeters(-13.818 + .8125),
             Units.inchesToMeters(0.0 - .875),
             Units.inchesToMeters(6.122),
             new Rotation3d(0.0, Units.degreesToRadians(10.0), Units.degreesToRadians(180.0)));
 
-    public static Transform3d robotToCameraEC =
+    // public static Transform3d robotToCameraEC =
+    //     new Transform3d(
+    //         Units.inchesToMeters(-13.818),
+    //         Units.inchesToMeters(0.0),
+    //         Units.inchesToMeters(6.122),
+    //         new Rotation3d(0.0, Units.degreesToRadians(25.0), Units.degreesToRadians(180.0)));
+    public static Transform3d robotToCameraIntake =
         new Transform3d(
-            Units.inchesToMeters(-13.818),
-            Units.inchesToMeters(0.0),
+            Units.inchesToMeters(13.613),
+            Units.inchesToMeters(3.5),
             Units.inchesToMeters(6.122),
-            new Rotation3d(0.0, Units.degreesToRadians(25.0), Units.degreesToRadians(180.0)));
-    public static Transform3d robotToCameraID =
-        new Transform3d(
-            Units.inchesToMeters(12.95),
-            Units.inchesToMeters(11.375),
-            Units.inchesToMeters(23.4),
-            new Rotation3d(0.0, Units.degreesToRadians(-10.0), 0.0));
+            new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0));
 
     // Standard deviation multipliers for each camera
     // (Adjust to trust some cameras more than others)

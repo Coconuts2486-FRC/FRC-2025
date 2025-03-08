@@ -16,6 +16,8 @@ package frc.robot.subsystems.LED;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.LarsonAnimation;
+import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.TwinkleOffAnimation;
 import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
@@ -83,6 +85,7 @@ public class LED extends VirtualSubsystem {
   private static boolean intakeEstopped = false;
   private static boolean algaemechEstopped = false;
   private static boolean coralReady = true;
+  private static boolean climbed = false;
 
   private static LED instance;
 
@@ -135,14 +138,25 @@ public class LED extends VirtualSubsystem {
       pickTwoTwinkle();
     } else if (DriverStation.isAutonomous()) {
       if (coralReady) {
-
-        candle.animate(new RainbowAnimation(.5, 1, LEDConstants.nLED));
+        // new RainbowAnimation(.5, 1, LEDConstants.nLED)
+        candle.animate(
+            new LarsonAnimation(
+                (int) (allianceColor.red * 255),
+                (int) (allianceColor.green * 255),
+                (int) (allianceColor.blue * 255),
+                0,
+                9,
+                LEDConstants.nLED,
+                BounceMode.Back,
+                12));
       } else {
         solid(allianceColor);
       }
     } else {
       // Teleop Enabled
-      if (coralReady) {
+      if (climbed) {
+        new RainbowAnimation(.5, 1, LEDConstants.nLED);
+      } else if (coralReady) {
         solid(Color.kWhite);
       } else {
         solid(allianceColor);
@@ -319,5 +333,9 @@ public class LED extends VirtualSubsystem {
    */
   public static void setCoralReady(boolean coralScoreReady) {
     coralReady = coralScoreReady;
+  }
+
+  public static void setClimbed(boolean climbedDone) {
+    climbed = climbedDone;
   }
 }

@@ -201,8 +201,9 @@ public class RobotContainer {
                       m_drivebase::addVisionMeasurement,
                       //   new VisionIOPhotonVision(cameraElevatorL, robotToCameraEL),
                       //   new VisionIOPhotonVision(cameraElevatorR, robotToCameraER),
-                      new VisionIOPhotonVision(cameraElevatorC, robotToCameraEC),
-                      new VisionIOPhotonVision(cameraIntakeDown, robotToCameraID));
+                      new VisionIOPhotonVision(cameraCL, robotToCameraECL),
+                      new VisionIOPhotonVision(cameraCR, robotToCameraECR),
+                      new VisionIOPhotonVision(cameraIntake, robotToCameraIntake));
               case LIMELIGHT ->
                   new Vision(
                       m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
@@ -232,9 +233,10 @@ public class RobotContainer {
                 // m_drivebase::getPose),
                 // new VisionIOPhotonVisionSim(cameraElevatorR, robotToCameraER,
                 // m_drivebase::getPose),
-                new VisionIOPhotonVisionSim(cameraElevatorC, robotToCameraEC, m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(cameraCR, robotToCameraECR, m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(cameraCL, robotToCameraECL, m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(
-                    cameraIntakeDown, robotToCameraID, m_drivebase::getPose));
+                    cameraIntake, robotToCameraIntake, m_drivebase::getPose));
         m_accel = new Accelerometer(m_drivebase.getGyro());
         // m_coralState = new CoralState();
         break;
@@ -594,29 +596,29 @@ public class RobotContainer {
         .onTrue(Commands.runOnce(() -> m_reefTarget.indexDown()).ignoringDisable(true));
 
     // Operator Right Bumper :>> Run elevator to position
-    operatorController
-        .rightBumper()
-        .whileTrue(
-            Commands.parallel(
-                new ElevatorCommand(
-                    m_reefTarget::getElevatorHeight, // Send height as supplier
-                    ElevatorConstants.kAcceleration,
-                    ElevatorConstants.kVelocity,
-                    m_elevator),
-                Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                    .until(m_elevator.isAtPosition())
-                    .andThen(
-                        Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer)
-                            .withTimeout(0.35))));
-    // Un-Comment to make elevator go up without scoringa/
     // operatorController
     //     .rightBumper()
     //     .whileTrue(
-    //         new ElevatorCommand(
-    //             m_reefTarget::getElevatorHeight, // Send height as supplier
-    //             ElevatorConstants.kAcceleration,
-    //             ElevatorConstants.kVelocity,
-    //             m_elevator));
+    //         Commands.parallel(
+    //             new ElevatorCommand(
+    //                 m_reefTarget::getElevatorHeight, // Send height as supplier
+    //                 ElevatorConstants.kAcceleration,
+    //                 ElevatorConstants.kVelocity,
+    //                 m_elevator),
+    //             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+    //                 .until(m_elevator.isAtPosition())
+    //                 .andThen(
+    //                     Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer)
+    //                         .withTimeout(0.35))));
+    // Un-Comment to make elevator go up without scoringa/
+    operatorController
+        .rightBumper()
+        .whileTrue(
+            new ElevatorCommand(
+                m_reefTarget::getElevatorHeight, // Send height as supplier
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator));
 
     operatorController
         .leftTrigger(0.1)

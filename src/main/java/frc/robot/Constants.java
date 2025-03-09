@@ -193,8 +193,8 @@ public final class Constants {
     public static final Distance kL2 = Inches.of(48.125); // Maybe 48.5
     public static final Distance kL3 = Inches.of(55.25);
     public static final Distance kL4 = Inches.of(68.125);
-    public static final Distance KAlgaeLower = Inches.of(56.375);
-    public static final Distance KAlgaeUpper = Inches.of(66.5);
+    public static final Distance KAlgaeLower = Inches.of(56.8);
+    public static final Distance KAlgaeUpper = Inches.of(65);
     public static final Distance KAlgaeShoot = Inches.of(60);
     // Motion Magic constants
     public static final LinearVelocity kVelocity = MetersPerSecond.of(2);
@@ -649,11 +649,11 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(11), Units.inchesToMeters(-6.5));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-6.5));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(11), Units.inchesToMeters(+6.5));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+6.5));
     public static Translation2d kAlgaeGrab =
-        new Translation2d(Units.inchesToMeters(19.0), Units.inchesToMeters(0.0));
+        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
   }
 
   /** AprilTag Field Layout ************************************************ */

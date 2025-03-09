@@ -49,7 +49,7 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
 
   @Override
   public void setPercent(double percent) {
-    roller.setControl(new DutyCycleOut(percent));
+    roller.set(percent);
   }
 
   @Override

@@ -325,7 +325,8 @@ public class RobotContainer {
                     Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
                         .alongWith(
                             Commands.runEnd(
-                                () -> m_algaeMech.setPercent(.6), () -> m_algaeMech.setPercent(0)))
+                                () -> m_algaeMech.setPercent(-0.6),
+                                () -> m_algaeMech.setPercent(0)))
                         .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2))))));
 
     NamedCommands.registerCommand(
@@ -337,9 +338,8 @@ public class RobotContainer {
                 ElevatorConstants.kVelocity,
                 m_elevator),
             Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0.1)))
-                .withTimeout(.5)
-                .andThen(Commands.run(() -> m_algaeMech.setPercent(-1)))));
+                .withTimeout(.6)
+                .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
 
     NamedCommands.registerCommand(
         "resetAlgae",
@@ -357,8 +357,7 @@ public class RobotContainer {
         "CoralDetect",
         new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
     NamedCommands.registerCommand( // Ends once coral is detected
-        "Timer",
-        Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.6));
+        "Timer", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.6));
 
     // NamedCommands.registerCommand(
     //     "Timer", new IntakeCommand(m_intake, 0.9, 0));
@@ -633,8 +632,7 @@ public class RobotContainer {
                     ElevatorConstants.kVelocity,
                     m_elevator),
                 Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
-                    .alongWith(Commands.run(() -> m_algaeMech.setPercent(-0.1)))
-                    .withTimeout(.5)
+                    .withTimeout(.6)
                     .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
 
     operatorController
@@ -697,7 +695,7 @@ public class RobotContainer {
                             .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2)))),
                 DriveCommands.robotRelativeDrive(
                     m_drivebase,
-                    () -> (driveStickY.value() / 2),
+                    () -> (driveStickY.value() * 0.75),
                     () -> 0,
                     () -> -turnStickX.value())));
 

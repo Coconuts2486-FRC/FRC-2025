@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.9,
-        "y": 6.84
+        "x": 1.755,
+        "y": 7.1255
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2284441660405356,
-        "y": 6.597967394974925
+        "x": 2.083444166040536,
+        "y": 6.883467394974925
       },
       "isLocked": false,
       "linkedName": "LStation"

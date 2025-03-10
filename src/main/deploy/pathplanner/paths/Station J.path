@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.890983606557377,
-        "y": 5.025973360655737
+        "x": 4.953,
+        "y": 5.16575
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.411475409836066,
-        "y": 5.625358606557376
+        "x": 4.473491803278689,
+        "y": 5.765135245901639
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.7,
-        "y": 7.1
+        "x": 1.7355,
+        "y": 7.2132499999999995
       },
       "prevControl": {
-        "x": 2.6375420873719824,
-        "y": 6.471026265828645
+        "x": 2.6730420873719805,
+        "y": 6.5842762658286444
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Huh"
     }
   ],
   "rotationTargets": [],

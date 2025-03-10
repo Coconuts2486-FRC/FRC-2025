@@ -656,6 +656,8 @@ public final class Constants {
         new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-6.5));
     public static Translation2d kRightReefPost =
         new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+6.5));
+    public static Translation2d kRightReefPostCloser =
+        new Translation2d(Units.inchesToMeters(16.5), Units.inchesToMeters(+6.5));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
   }

@@ -304,7 +304,8 @@ public class RobotContainer {
 
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "AlignR", driveR.until(driveR::atGoal));
-
+    NamedCommands.registerCommand( // Auto intake from source to desired position
+        "AlignRC", driveR.until(driveR::atGoal));
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "AlignL", driveL.until(driveL::atGoal));
     NamedCommands.registerCommand(

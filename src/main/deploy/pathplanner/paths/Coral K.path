@@ -3,47 +3,33 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.44,
-        "y": 7.17
+        "x": 1.5795,
+        "y": 7.262
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0404160909942535,
-        "y": 6.70602560477169
+        "x": 2.0370477228444073,
+        "y": 6.891374027229241
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LStation"
     },
     {
       "anchor": {
-        "x": 4.08780737704918,
-        "y": 5.025973360655737
+        "x": 3.692213114754098,
+        "y": 5.445543032786884
       },
       "prevControl": {
-        "x": 3.514033191819658,
-        "y": 5.466765633847244
+        "x": 3.21055276094861,
+        "y": 5.85154586933218
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Coral LK"
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.8507765023632692,
-      "maxWaypointRelativePos": 1.0,
-      "constraints": {
-        "maxVelocity": 3.5,
-        "maxAcceleration": 1.5,
-        "maxAngularVelocity": 720.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -64,5 +50,5 @@
     "velocity": 0,
     "rotation": 125.00000000000001
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

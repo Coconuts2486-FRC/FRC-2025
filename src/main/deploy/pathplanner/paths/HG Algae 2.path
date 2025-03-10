@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 6.58125,
+        "x": 6.32950819672131,
         "y": 4.015249999999999
       },
       "prevControl": {
-        "x": 6.106522032387508,
+        "x": 5.854780229108818,
         "y": 4.0216523253826395
       },
       "nextControl": null,
@@ -31,22 +31,10 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "deAlgae",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": 0.4981006647673351,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "deAlgae"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

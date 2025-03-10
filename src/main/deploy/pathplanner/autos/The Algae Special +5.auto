@@ -121,12 +121,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "deAlgae"
-                }
               }
             ]
           }

@@ -24,6 +24,7 @@ public class MiscFuncs {
   public static enum ScoringPosition {
     LEFT, // Left reef post (coral)
     RIGHT, // Right reef post (coral)
-    CENTER // Center position (algae grab)
+    CENTER, // Center position (algae grab)
+    RightClose // Auto Stuff
   }
 }

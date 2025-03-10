@@ -179,6 +179,10 @@ public class Vision extends VirtualSubsystem {
         }
 
         // Send vision observation
+        // TODO: This is where the vision poses are sent ONE BY ONE!!!!
+        //       We need to build our own vision combiner that sends ONE
+        //       pose to the odometry from a combination of the vision
+        //       of the vision measurements!!!!!!
         if (!disableSupplier.getAsBoolean()) {
           consumer.accept(
               observation.pose().toPose2d(),

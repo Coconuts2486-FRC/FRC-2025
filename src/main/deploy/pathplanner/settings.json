@@ -10,8 +10,7 @@
     "Una Auto"
   ],
   "autoFolders": [
-    "R",
-    "L"
+    "North"
   ],
   "defaultMaxVel": 3.5,
   "defaultMaxAccel": 3.5,

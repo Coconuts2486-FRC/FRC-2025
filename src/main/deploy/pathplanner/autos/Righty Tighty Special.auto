@@ -21,7 +21,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.4
+                        "waitTime": 1.35
                       }
                     },
                     {
@@ -42,7 +42,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignL"
+                  "name": "AlignR"
                 }
               }
             ]
@@ -144,7 +144,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignL"
+                  "name": "AlignR"
                 }
               }
             ]
@@ -246,7 +246,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignR"
+                  "name": "AlignL"
                 }
               }
             ]
@@ -262,6 +262,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "R",
+  "folder": "North",
   "choreoAuto": false
 }

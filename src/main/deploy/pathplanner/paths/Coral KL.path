@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.755,
-        "y": 7.1255
+        "x": 1.5795,
+        "y": 7.262
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.083444166040536,
-        "y": 6.883467394974925
+        "x": 1.907944166040536,
+        "y": 7.019967394974925
       },
       "isLocked": false,
       "linkedName": "LStation"
@@ -25,10 +25,15 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Coral LK"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

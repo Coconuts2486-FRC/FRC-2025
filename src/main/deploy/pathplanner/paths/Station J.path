@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.7355,
-        "y": 7.2132499999999995
+        "x": 1.5795,
+        "y": 7.262
       },
       "prevControl": {
-        "x": 2.6730420873719805,
-        "y": 6.5842762658286444
+        "x": 2.5170420873719808,
+        "y": 6.6330262658286445
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Huh"
+      "linkedName": "LStation"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
+    "maxVelocity": 0.5,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,

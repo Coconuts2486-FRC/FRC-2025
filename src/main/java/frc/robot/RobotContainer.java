@@ -1,3 +1,5 @@
+// Copyright (c) 2025 FRC 2486
+// http://github.com/Coconuts2486-FRC
 // Copyright (c) 2024-2025 Az-FIRST
 // http://github.com/AZ-First
 // Copyright (c) 2021-2025 FRC 6328
@@ -19,6 +21,7 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Inches;
 import static frc.robot.Constants.Cameras.*;
 
 import choreo.auto.AutoChooser;
@@ -26,8 +29,15 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,47 +45,123 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
+import frc.robot.Constants.ClimbConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.DriveToPose;
+import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.subsystems.LED.LED;
 import frc.robot.subsystems.accelerometer.Accelerometer;
+import frc.robot.subsystems.algae_mech.AlgaeMech;
+import frc.robot.subsystems.algae_mech.AlgaeMechIO;
+import frc.robot.subsystems.algae_mech.AlgaeMechIOTalonFX;
+import frc.robot.subsystems.climber.Climb;
+import frc.robot.subsystems.climber.ClimbIO;
+import frc.robot.subsystems.climber.ClimbIOTalonFX;
+import frc.robot.subsystems.coral_mech.CoralScorer;
+import frc.robot.subsystems.coral_mech.CoralScorerIO;
+import frc.robot.subsystems.coral_mech.CoralScorerIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.flywheel_example.Flywheel;
-import frc.robot.subsystems.flywheel_example.FlywheelIO;
-import frc.robot.subsystems.flywheel_example.FlywheelIOSim;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOTalonFX;
+import frc.robot.subsystems.state_keeper.ReefTarget;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
-import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVision;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
 import frc.robot.util.GetJoystickValue;
 import frc.robot.util.LoggedTunableNumber;
+import frc.robot.util.MiscFuncs.ScoringPosition;
 import frc.robot.util.OverrideSwitches;
 import frc.robot.util.PowerMonitoring;
 import frc.robot.util.RBSIEnum;
+import java.util.List;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
 
+  // **** This is a Pathplanner On-the-Fly Command ****/
+  // Create a list of waypoints from poses. Each pose represents one waypoint.
+  // The rotation component of the pose should be the direction of travel. Do not use
+  // holonomic rotation.
+  List<Waypoint> woahpoints =
+      PathPlannerPath.waypointsFromPoses(
+          new Pose2d(8.180, 6.184, Rotation2d.fromDegrees(0)),
+          new Pose2d(9.4, 6.184, Rotation2d.fromDegrees(0)));
+
+  PathConstraints constraints =
+      new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+  // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can
+  // also use unlimited constraints, only limited by motor torque and nominal battery
+  // voltage
+
+  // Create the path using the waypoints created above
+  PathPlannerPath woah =
+      new PathPlannerPath(
+          woahpoints,
+          constraints,
+          null, // The ideal starting state, this is only relevant for pre-planned paths,
+          // so
+          // can be null for on-the-fly paths.
+          new GoalEndState(
+              0.0,
+              Rotation2d.fromDegrees(
+                  180)) // Goal end state. You can set a holonomic rotation here. If
+          // using a
+          // differential drivetrain, the rotation will have no effect.
+          );
+
+  // Prevent the path from being flipped if the coordinates are already correct
+
   /** Define the Driver and, optionally, the Operator/Co-Driver Controllers */
   // Replace with ``CommandPS4Controller`` or ``CommandJoystick`` if needed
-  final CommandXboxController driverController = new CommandXboxController(0); // Main Driver
+  public final CommandXboxController driverController = new CommandXboxController(0); // Main Driver
 
-  final CommandXboxController operatorController = new CommandXboxController(1); // Second Operator
-  final OverrideSwitches overrides = new OverrideSwitches(2); // Console toggle switches
+  public final CommandXboxController operatorController =
+      new CommandXboxController(1); // Second Operator
+  public final OverrideSwitches overrides = new OverrideSwitches(2); // Console toggle switches
+
+  // Define Triggers
+  private final Trigger elevatorDisable = overrides.Switch(OperatorConstants.ELEVATOR_OVERRIDE);
+  private final Trigger intakePivotDisable = overrides.Switch(OperatorConstants.INTAKE_OVERRIDE);
+  private final Trigger algaePivotDisable = overrides.Switch(OperatorConstants.ALGAE_OVERRIDE);
+  private final Trigger visionOdometryDisable = overrides.Switch(OperatorConstants.VISION_OVERRIDE);
+
+  //   private final Alert driverDisconnected =
+  //       new Alert("Driver controller disconnected (port 0).", AlertType.kWarning);
+  //   private final Alert operatorDisconnected =
+  //       new Alert("Operator controller disconnected (port 1).", AlertType.kWarning);
+  //   private final Alert overrideDisconnected =
+  //       new Alert("Override controller disconnected (port 5).", AlertType.kInfo);
 
   /** Declare the robot subsystems here ************************************ */
   // These are the "Active Subsystems" that the robot controlls
   private final Drive m_drivebase;
 
-  private final Flywheel m_flywheel;
+  private final Elevator m_elevator;
+  private final CoralScorer m_coralScorer;
+  private final Intake m_intake;
+  private final AlgaeMech m_algaeMech;
+  private final Climb m_climber;
+
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
+  private final ReefTarget m_reefTarget;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
+  private final LED m_led = LED.getInstance();
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -86,9 +172,6 @@ public class RobotContainer {
   // Input estimated battery capacity (if full, use printed value)
   private final LoggedTunableNumber batteryCapacity =
       new LoggedTunableNumber("Battery Amp-Hours", 18.0);
-  // EXAMPLE TUNABLE FLYWHEEL SPEED INPUT FROM DASHBOARD
-  private final LoggedTunableNumber flywheelSpeedInput =
-      new LoggedTunableNumber("Flywheel Speed", 1500.0);
 
   // Alerts
   private final Alert aprilTagLayoutAlert = new Alert("", AlertType.INFO);
@@ -98,60 +181,194 @@ public class RobotContainer {
    * devices, and commands.
    */
   public RobotContainer() {
-
+    woah.preventFlipping = true;
     // Instantiate Robot Subsystems based on RobotType
     switch (Constants.getMode()) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
-        // YAGSL drivebase, get config from deploy directory
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIOSim()); // new Flywheel(new FlywheelIOTalonFX());
+        m_elevator = new Elevator(new ElevatorIOTalonFX());
+        m_coralScorer = new CoralScorer(new CoralScorerIOTalonFX());
+        m_intake = new Intake(new IntakeIOTalonFX());
+        m_algaeMech = new AlgaeMech(new AlgaeMechIOTalonFX());
+        m_climber = new Climb(new ClimbIOTalonFX());
+
+        // Virtual Subsystems
         m_vision =
             switch (Constants.getVisionType()) {
               case PHOTON ->
                   new Vision(
                       m_drivebase::addVisionMeasurement,
-                      new VisionIOPhotonVision(camera0Name, robotToCamera0),
-                      new VisionIOPhotonVision(camera1Name, robotToCamera1));
+                      //   new VisionIOPhotonVision(cameraElevatorL, robotToCameraEL),
+                      //   new VisionIOPhotonVision(cameraElevatorR, robotToCameraER),
+                      new VisionIOPhotonVision(cameraCL, robotToCameraECL),
+                      new VisionIOPhotonVision(cameraCR, robotToCameraECR),
+                      new VisionIOPhotonVision(cameraIntake, robotToCameraIntake));
               case LIMELIGHT ->
                   new Vision(
-                      m_drivebase::addVisionMeasurement,
-                      new VisionIOLimelight(camera0Name, m_drivebase::getRotation),
-                      new VisionIOLimelight(camera1Name, m_drivebase::getRotation));
+                      m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
               case NONE ->
                   new Vision(
                       m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
               default -> null;
             };
         m_accel = new Accelerometer(m_drivebase.getGyro());
+        // m_coralState = new CoralState();
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIOSim() {});
+        m_elevator = new Elevator(new ElevatorIO() {}); // make elevator Io sim
+        m_coralScorer = new CoralScorer(new CoralScorerIO() {});
+        m_intake = new Intake(new IntakeIO() {});
+        m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
+        m_climber = new Climb(new ClimbIO() {});
+
+        // Virtual Subsystems
         m_vision =
             new Vision(
                 m_drivebase::addVisionMeasurement,
-                new VisionIOPhotonVisionSim(camera0Name, robotToCamera0, m_drivebase::getPose),
-                new VisionIOPhotonVisionSim(camera1Name, robotToCamera1, m_drivebase::getPose));
+                // new VisionIOPhotonVisionSim(cameraElevatorL, robotToCameraEL,
+                // m_drivebase::getPose),
+                // new VisionIOPhotonVisionSim(cameraElevatorR, robotToCameraER,
+                // m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(cameraCR, robotToCameraECR, m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(cameraCL, robotToCameraECL, m_drivebase::getPose),
+                new VisionIOPhotonVisionSim(
+                    cameraIntake, robotToCameraIntake, m_drivebase::getPose));
         m_accel = new Accelerometer(m_drivebase.getGyro());
+        // m_coralState = new CoralState();
         break;
 
       default:
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
-        m_flywheel = new Flywheel(new FlywheelIO() {});
+        m_elevator = new Elevator(new ElevatorIO() {});
+        m_coralScorer = new CoralScorer(new CoralScorerIO() {});
+        m_intake = new Intake(new IntakeIO() {});
+        m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
+        m_climber = new Climb(new ClimbIO() {});
+
+        // Virtual Subsystems
         m_vision =
             new Vision(m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
         m_accel = new Accelerometer(m_drivebase.getGyro());
+        // m_coralState = new CoralState();
         break;
     }
+    m_reefTarget = ReefTarget.getInstance(m_drivebase);
+    // Named Commands For Pathplanner
+    NamedCommands.registerCommand( // Runs elevator and coral scorer to score coral on L4.
+        "L4",
+        Commands.parallel( // Needs to be canceled with a race group right now, the race group wait
+            // timer is at 1.4 seconds.
+            new ElevatorCommand(
+                () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator),
+            Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+                .withTimeout(0.95)
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
+
+    NamedCommands.registerCommand(
+        "E4",
+        new ElevatorCommand(
+            () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
+            ElevatorConstants.kAcceleration,
+            ElevatorConstants.kVelocity,
+            m_elevator));
+
+    NamedCommands.registerCommand(
+        "Score",
+        Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer).withTimeout(0.3));
+
+    NamedCommands
+        .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
+            "Bottom",
+            new ElevatorCommand(
+                    () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
+                    ElevatorConstants.kAcceleration.div(
+                        2.0), // Lowering both of these increases elevator drop speed
+                    ElevatorConstants.kVelocity.div(2.0),
+                    m_elevator)
+                .until(m_elevator::getBottomStop));
+
+    DriveToPose driveR =
+        new DriveToPose(
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT));
+
+    DriveToPose driveL =
+        new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
+
+    NamedCommands.registerCommand( // Auto intake from source to desired position
+        "AlignR", driveR.until(driveR::atGoal));
+
+    NamedCommands.registerCommand( // Auto intake from source to desired position
+        "AlignL", driveL.until(driveL::atGoal));
+    NamedCommands.registerCommand(
+        "Algae",
+        new DriveToPose(
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
+    NamedCommands.registerCommand(
+        "deAlgae",
+        Commands.parallel(
+            new ElevatorCommand(
+                m_reefTarget::getElevatorAlgae,
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator),
+            Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+                .withTimeout(.25)
+                .andThen(
+                    Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+                        .alongWith(
+                            Commands.runEnd(
+                                () -> m_algaeMech.setPercent(-0.6),
+                                () -> m_algaeMech.setPercent(0)))
+                        .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2))))));
+
+    NamedCommands.registerCommand(
+        "shootAlgae",
+        Commands.parallel(
+            new ElevatorCommand(
+                () -> ElevatorConstants.kL4,
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator),
+            Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
+                .withTimeout(.6)
+                .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
+
+    NamedCommands.registerCommand(
+        "resetAlgae",
+        Commands.runOnce(() -> m_algaeMech.setIndexPose(3))
+            .alongWith(Commands.run(() -> m_algaeMech.setPercent(0)))
+            .alongWith(Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)));
+
+    NamedCommands.registerCommand(
+        "ToeKnee", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech));
+
+    NamedCommands.registerCommand( // Auto intake from source to desired position
+        "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
+
+    NamedCommands.registerCommand( // Ends once coral is detected
+        "CoralDetect",
+        new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+    NamedCommands.registerCommand( // Ends once coral is detected
+        "Timer", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.6));
+
+    // NamedCommands.registerCommand(
+    //     "Timer", new IntakeCommand(m_intake, 0.9, 0));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
     // ``m_drivebase``, as that is automatically monitored.
-    m_power = new PowerMonitoring(batteryCapacity, m_flywheel);
+
+    m_power =
+        new PowerMonitoring(
+            batteryCapacity, m_elevator, m_coralScorer, m_intake, m_algaeMech, m_climber);
 
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
@@ -185,6 +402,12 @@ public class RobotContainer {
             "Incorrect AUTO type selected in Constants: " + Constants.getAutoType());
     }
 
+    // Set up subsystem overrides
+    m_elevator.setOverrides(elevatorDisable);
+    m_intake.setOverrides(intakePivotDisable);
+    m_algaeMech.setOverrides(algaePivotDisable);
+    m_vision.setOverrides(visionOdometryDisable);
+
     // Define Auto commands
     defineAutoCommands();
     // Define SysIs Routines
@@ -193,37 +416,8 @@ public class RobotContainer {
     configureBindings();
   }
 
-  //   // Create a list of waypoints from poses. Each pose represents one waypoint.
-  // // The rotation component of the pose should be the direction of travel. Do not use holonomic
-  // rotation.
-  // List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-  //   new Pose2d(1.0, 1.0, Rotation2d.fromDegrees(0)),
-  //   new Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90))
-  // );
-
-  // PathConstraints constraints = new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI); // The
-  // constraints for this path.
-  // // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also
-  // use unlimited constraints, only limited by motor torque and nominal battery voltage
-
-  // // Create the path using the waypoints created above
-  // PathPlannerPath path = new PathPlannerPath(
-  //   waypoints,
-  //   constraints,
-  //   null, // The ideal starting state, this is only relevant for pre-planned paths, so can be
-  // null for on-the-fly paths.
-  //   new GoalEndState(0.0, Rotation2d.fromDegrees(-90)) // Goal end state. You can set a holonomic
-  // rotation here. If using a differential drivetrain, the rotation will have no effect.
-  // );
-
-  // // Prevent the path from being flipped if the coordinates are already correct
-  // path.preventFlipping = true;
-
   /** Use this method to define your Autonomous commands for use with PathPlanner / Choreo */
-  private void defineAutoCommands() {
-
-    // NamedCommands.registerCommand("Zero", Commands.runOnce(() -> m_drivebase.zero()));
-  }
+  private void defineAutoCommands() {}
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -255,51 +449,389 @@ public class RobotContainer {
             () -> -driveStickX.value(),
             () -> -turnStickX.value()));
 
-    // ** Example Commands -- Remap, remove, or change as desired **
-    // Press B button while driving --> ROBOT-CENTRIC
+    /*  Driver Controls =================================== */
+
+    // a (back right button) Drive To Position Command
+    // TODO: change this to drive to returned command from ReefTarget
+    //
+    //     .a()
+    //     .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getReefCoralPose()));
+
+    // Driver X & B (Top back buttons) :>> Change the intended reef coral score location L-R
+    driverController
+        .x()
+        .whileTrue(
+            new DriveToPose(
+                m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT)));
     driverController
         .b()
-        .onTrue(
-            Commands.runOnce(
-                () ->
-                    DriveCommands.robotRelativeDrive(
-                        m_drivebase,
-                        () -> -driveStickY.value(),
-                        () -> -driveStickX.value(),
-                        () -> turnStickX.value()),
-                m_drivebase));
+        .whileTrue(
+            new DriveToPose(
+                m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT)));
 
-    // Press A button -> BRAKE
-    driverController
-        .a()
-        .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
-
-    // Press X button --> Stop with wheels in X-Lock position
-    driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
-
-    // Press Y button --> Manually Re-Zero the Gyro
+    // Drive to algae position (Back Left Bottom)
     driverController
         .y()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        m_drivebase.resetPose(
-                            new Pose2d(m_drivebase.getPose().getTranslation(), new Rotation2d())),
-                    m_drivebase)
-                .ignoringDisable(true));
+        .whileTrue(
+            new DriveToPose(
+                m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
+
+    // Drive to BARGE ALGAE scoring position
+    // driverController
+    //     .a()
+    //     .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getBargeScorePose()));
+
+    // Driver Right Bumper :>> Intake from the floor
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.35));
+
+    // Driver Left Bumper :>> Score L1
+    driverController
+        .rightTrigger(.1)
+        .whileTrue(
+            Commands.startRun(
+                    () -> m_algaeMech.setIndexPose(1),
+                    () -> m_algaeMech.cyclePositions(),
+                    m_algaeMech)
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(-0.33))));
+
+    // Release Operator Right Bumper :>> Turn off algae rollers
+    driverController
+        .rightTrigger(.1)
+        .onFalse(
+            Commands.startRun(
+                    () -> m_algaeMech.setIndexPose(2),
+                    () -> m_algaeMech.cyclePositions(),
+                    m_algaeMech)
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
 
     driverController
         .leftBumper()
-        .onTrue(Commands.runOnce(() -> new Pose2d(10.0, 10.0, new Rotation2d())));
+        .whileTrue(
+            new IntakeCommand(m_intake, 0.75, 0)
+                .withTimeout(0.075)
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)));
 
-    // Press RIGHT BUMPER --> Run the example flywheel
+    // Driver B button :>> Drive Robot-Centric
+    // driverController
+    //     .b()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //             () ->
+    //                 DriveCommands.robotRelativeDrive(
+    //                     m_drivebase,
+    //                     () -> -driveStickY.value(),
+    //                     () -> -driveStickX.value(),
+    //                     () -> turnStickX.value()),
+    //             m_drivebase));
+
+    // Driver X button :>> Stop with wheels in X-Lock position
+    // driverController.x().onTrue(Commands.runOnce(m_drivebase::stopWithX, m_drivebase));
+
+    // Driver RightStick :>> Coast the elevator while pressed
+    // driverController
+    //     .rightStick()
+    //     .whileTrue(
+    //         Commands.startEnd(() -> m_elevator.setCoast(), m_elevator::setBrake, m_elevator)
+    //             .ignoringDisable(true));
+
+    // Driver Y button :>> Manually Re-Zero the Gyro (DO NOT USE)
+
     driverController
+        .start()
+        .onTrue(
+            Commands.runOnce(
+                () ->
+                    m_drivebase.resetPose(
+                        new Pose2d(m_drivebase.getPose().getTranslation(), new Rotation2d())),
+                m_drivebase));
+
+    driverController
+        .povLeft()
+        .whileTrue(
+            Commands.run(
+                () -> {
+                  m_drivebase.runVelocity(
+                      new ChassisSpeeds(Units.inchesToMeters(0), Units.inchesToMeters(-8), 0));
+                },
+                m_drivebase));
+
+    driverController
+        .povRight()
+        .whileTrue(
+            Commands.run(
+                () -> {
+                  m_drivebase.runVelocity(
+                      new ChassisSpeeds(Units.inchesToMeters(0), Units.inchesToMeters(8), 0));
+                },
+                m_drivebase));
+
+    driverController
+        .povUp()
+        .whileTrue(
+            Commands.run(
+                () -> {
+                  m_drivebase.runVelocity(
+                      new ChassisSpeeds(Units.inchesToMeters(-8), Units.inchesToMeters(0), 0));
+                },
+                m_drivebase));
+
+    driverController
+        .povDown()
+        .whileTrue(
+            Commands.run(
+                () -> {
+                  m_drivebase.runVelocity(
+                      new ChassisSpeeds(Units.inchesToMeters(8), Units.inchesToMeters(0), 0));
+                },
+                m_drivebase));
+
+    /* ================================================== */
+
+    /* Co-Driver Controls================================ */
+
+    // Operator Y & A Button :>> Index elevator position up & down
+    operatorController
+        .y()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexUp()).ignoringDisable(true));
+    operatorController
+        .a()
+        .onTrue(Commands.runOnce(() -> m_reefTarget.indexDown()).ignoringDisable(true));
+
+    // Operator Right Bumper :>> Run elevator to position
+    // operatorController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         Commands.parallel(
+    //             new ElevatorCommand(
+    //                 m_reefTarget::getElevatorHeight, // Send height as supplier
+    //                 ElevatorConstants.kAcceleration,
+    //                 ElevatorConstants.kVelocity,
+    //                 m_elevator),
+    //             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+    //                 .until(m_elevator.isAtPosition())
+    //                 .andThen(
+    //                     Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer)
+    //                         .withTimeout(0.35))));
+    // Un-Comment to make elevator go up without scoringa/
+    operatorController
         .rightBumper()
         .whileTrue(
-            Commands.startEnd(
-                () -> m_flywheel.runVelocity(flywheelSpeedInput.get()),
-                m_flywheel::stop,
-                m_flywheel));
+            new ElevatorCommand(
+                m_reefTarget::getElevatorHeight, // Send height as supplier
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator));
+
+    operatorController
+        .leftTrigger(0.1)
+        .whileTrue(
+            Commands.parallel(
+                new ElevatorCommand(
+                    () -> ElevatorConstants.kL4,
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
+                    m_elevator),
+                Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
+                    .withTimeout(.6)
+                    .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
+
+    operatorController
+        .leftTrigger(0.1)
+        .onFalse(Commands.runOnce(() -> m_algaeMech.setPercent(0), m_algaeMech));
+
+    operatorController
+        .rightTrigger(.1)
+        .whileTrue(Commands.run(() -> m_coralScorer.setCoralPercent(0.33), m_coralScorer));
+
+    operatorController
+        .start()
+        .whileTrue(
+            Commands.run(() -> m_climber.rachetToggle(1), m_climber)
+                .withTimeout(.25)
+                .andThen(
+                    Commands.runEnd(
+                        () -> m_climber.twistToPosition(ClimbConstants.startClimb),
+                        () -> m_climber.stop(),
+                        m_climber))
+                .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(1))));
+
+    operatorController.start().onFalse(new IntakeCommand(m_intake, 0.75, 0));
+
+    operatorController
+        .b()
+        .whileTrue(
+            new ElevatorCommand(
+                () -> ElevatorConstants.kL2, // Send height as supplier
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator));
+
+    operatorController
+        .back()
+        .whileTrue(
+            Commands.runEnd(
+                    () -> m_climber.goUntilPosition(-.5, ClimbConstants.completeClimb),
+                    () -> m_climber.stop(),
+                    m_climber)
+                .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0))));
+
+    operatorController
+        .x()
+        .whileTrue(
+            Commands.parallel(
+                new ElevatorCommand(
+                    m_reefTarget::getElevatorAlgae,
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
+                    m_elevator),
+                Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+                    .withTimeout(.25)
+                    .andThen(
+                        Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+                            .alongWith(
+                                Commands.runEnd(
+                                    () -> m_algaeMech.setPercent(-0.6),
+                                    () -> m_algaeMech.setPercent(0)))
+                            .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2)))),
+                DriveCommands.robotRelativeDrive(
+                    m_drivebase,
+                    () -> (driveStickY.value() * 0.75),
+                    () -> 0,
+                    () -> -turnStickX.value())));
+
+    operatorController
+        .povUp()
+        .onTrue(Commands.runOnce(() -> m_algaeMech.indexPoseUp(), m_algaeMech));
+
+    operatorController
+        .povDown()
+        .onTrue(Commands.runOnce(() -> m_algaeMech.indexPoseDown(), m_algaeMech));
+    // .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber)));
+
+    // operatorController.back().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0),
+    // m_climber));
+
+    // operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(1),
+    // m_climber));
+
+    // Operator Right Bumper :>> Spit out algae ball
+    operatorController
+        .leftBumper()
+        .whileTrue(
+            Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
+                .alongWith(
+                    Commands.runEnd(
+                        () -> m_algaeMech.setPercent(1), () -> m_algaeMech.setIndexPose(3))));
+
+    // Release Operator Right Bumper :>> Turn off algae rollers
+    operatorController
+        .leftBumper()
+        .onFalse(
+            Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
+                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
+
+    // Operator Y Button :>> Elevator to Lower Algae
+    // operatorController
+    //     .y()
+    //     .whileTrue(
+    //         Commands.parallel(
+    //             new ElevatorCommand(
+    //                 () -> ElevatorConstants.KAlgae1,
+    //                 ElevatorConstants.kAcceleration,
+    //                 ElevatorConstants.kVelocity,
+    //                 m_elevator),
+    //             Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+    //                 .withTimeout(.35)
+    //                 .andThen(
+    //                     Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+    //                         .alongWith(Commands.run(() -> m_algaeMech.setPercent(.6)))
+    // .alongWith(Commands.runOnce(() -> m_algaeMech.toggleUp(false))))));
+
+    // Release Operator X Button :>> Pivot AlgaeMech to horizontal
+    // operatorController
+    //     .y()
+    //     .onFalse(
+    //         Commands.runOnce(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+    //             .alongWith(Commands.runOnce(() -> m_algaeMech.setPercent(0))));
+
+    // Operator Right Bumper :>> Spit out algae ball
+    // operatorController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+    //             .alongWith(Commands.run(() -> m_algaeMech.setPercent(-1))));
+
+    // // Release Operator Right Bumper :>> Turn off algae rollers
+    // operatorController
+    //     .rightBumper()
+    //     .onFalse(
+    //         Commands.run(() -> m_algaeMech.pivotHorizontal(), m_algaeMech)
+    //             .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
+
+    // Operator Left Bumper :>> Move the AlgaeMech to stow position
+    // operatorController
+    //     .leftBumper()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //             () -> m_algaeMech.toggleUp(!m_algaeMech.getToggleStow()), m_algaeMech));
+
+    // These commands can run when disabled
+    // Operator POV U-D :>> Change the intended reef coral score location L-R
+
+    /* ================================================== */
+
+    // .alongWith(Commands.run(() -> m_coralScorer.setCoralPercent(0), m_algaeMech))
+    // .withTimeout(1)
+    // .andThen(
+    //     new ElevatorCommand(
+    //             Inches.of(38),
+    //             RotationsPerSecondPerSecond.of(40),
+    //             RotationsPerSecond.of(80),
+    //             m_elevator)
+    //         .alongWith(
+    //             Commands.run(() -> m_coralScorer.setCoralPercent(.50), m_coralScorer))));
+    // driverController
+    //     .a()
+    //     .whileFalse(new ElevatorCommand(    Inches.of(10.9),
+    //     MetersPerSecondPerSecond.of(10),
+    //     MetersPerSecond.of(10), m_elevator));
+
+    // operatorController.leftBumper().whileTrue(new ElevatorCommand(Inches.of(12),
+    // MetersPerSecondPerSecond.of(), MetersPerSecond.of(), m_elevator));
+
+    // m_CoralScorer.setDefaultCommand(
+    //     Commands.run(
+    //         () ->
+    //             m_CoralScorer.runVolts(
+    //                 driverController.getRightTriggerAxis() -
+    // driverController.getLeftTriggerAxis()),
+    //         m_CoralScorer));
+
+    // ** Example Commands -- Remap, remove, or change as desired **
+    // Press B button while driving --> ROBOT-CENTRIC
+
+    // driverController
+    //     .rightBumper()
+    //     .onTrue(
+    //         new LEDCommand(m_led, m_coralScorer::getLightStop)
+    //             .ignoringDisable(true)
+    //             .until(driverController.leftBumper()));
+    // driverController.a().onTrue(Commands.run(() -> m_coralState.indexL()));
+    // driverController.y().onTrue(Commands.run(() -> m_coralState.indexR()));
+
+    // Press A button -> BRAKE
+    // driverController
+    //     .a()
+    //     .whileTrue(Commands.runOnce(() -> m_drivebase.setMotorBrake(true), m_drivebase));
+
+    // driverController.a().whileTrue(new IntakeCommand(m_intake, 0));
+
+    // m_elevator.setDefaultCommand(
+    //     Commands.run(
+    //         () -> m_elevator.runVolts(driverController.getRightTriggerAxis()), m_elevator));
+
+    // the two driver controller bumpers below make it so when you let go of either button the
+    // intake pivot will go to a resting posistion
   }
 
   /**
@@ -310,6 +842,8 @@ public class RobotContainer {
   public Command getAutonomousCommandPathPlanner() {
     // Use the ``autoChooser`` to define your auto path from the SmartDashboard
     return autoChooserPathPlanner.get();
+    // return new PathPlannerAuto("Consistancy Test");
+    // return AutoBuilder.followPath(woah);
   }
 
   /**
@@ -351,38 +885,39 @@ public class RobotContainer {
   private void definesysIdRoutines() {
     if (Constants.getAutoType() == RBSIEnum.AutoType.PATHPLANNER) {
       // Drivebase characterization
-      // autoChooserPathPlanner.addOption(
-      //     "Drive Wheel Radius Characterization",
-      //     DriveCommands.wheelRadiusCharacterization(m_drivebase));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive Simple FF Characterization",
-      //     DriveCommands.feedforwardCharacterization(m_drivebase));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Quasistatic Forward)",
-      //     m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Quasistatic Reverse)",
-      //     m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Dynamic Forward)",
-      //     m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Drive SysId (Dynamic Reverse)",
-      //     m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+      autoChooserPathPlanner.addOption(
+          "Drive Wheel Radius Characterization",
+          DriveCommands.wheelRadiusCharacterization(m_drivebase));
+      autoChooserPathPlanner.addOption(
+          "Drive Simple FF Characterization",
+          DriveCommands.feedforwardCharacterization(m_drivebase));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Quasistatic Forward)",
+          m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Quasistatic Reverse)",
+          m_drivebase.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Dynamic Forward)",
+          m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      autoChooserPathPlanner.addOption(
+          "Drive SysId (Dynamic Reverse)",
+          m_drivebase.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-      // // Example Flywheel SysId Characterization
-      // autoChooserPathPlanner.addOption(
-      //     "Flywheel SysId (Quasistatic Forward)",
-      //     m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Flywheel SysId (Quasistatic Reverse)",
-      //     m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      // autoChooserPathPlanner.addOption(
-      //     "Flywheel SysId (Dynamic Forward)",
-      //     m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      // autoChooserPathPlanner.addOption(
-      //     "Flywheel SysId (Dynamic Reverse)",
-      //     m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+      //   // Example Flywheel SysId Characterization
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Quasistatic Forward)",
+      //       m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Quasistatic Reverse)",
+      //       m_flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Dynamic Forward)",
+      //       m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      //   autoChooserPathPlanner.addOption(
+      //       "Flywheel SysId (Dynamic Reverse)",
+      //       m_flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
     }
   }
 

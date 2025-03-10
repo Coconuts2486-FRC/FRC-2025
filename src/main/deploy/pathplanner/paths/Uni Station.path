@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.1786885245901635,
+        "y": 4.864139344262295
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.68719262295082,
+        "y": 5.5714139344262295
+      },
+      "isLocked": false,
+      "linkedName": "Uni"
+    },
+    {
+      "anchor": {
+        "x": 1.5795,
+        "y": 7.262
+      },
+      "prevControl": {
+        "x": 2.512111401424933,
+        "y": 6.706638991580367
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LStation"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.8513770180436834,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 1.5,
+        "maxAngularVelocity": 720.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 7.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 125.00000000000001
+  },
+  "reversed": false,
+  "folder": "Una Auto",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 59.99999999999999
+  },
+  "useDefaultConstraints": false
+}

@@ -1,0 +1,39 @@
+A map of all controls
+
+Change these controls based on how back buttons are bound
+
+    Driver Controls:
+A:    Drive to selected Position
+B:    Change score index Left
+X:    Change score index Right
+Y:    drive to Algae position
+D-Pad Up/Down:
+D-Pad Left/right: 
+Right Bumper:   Intake l1 coral
+Left Bumper:   Intake algae from floor
+Right Trigger:  Intake l1 Score
+Left Trigger: 
+Start: 
+Back:
+Right Stick:   Rotate
+Left Stick:    Strafe
+Right Stick Button:
+Left Stick Button:
+
+    Co-Driver Controls:
+A:  Set up Score algae in net
+B:  Set up Score algae in processor
+X:  Score algae
+Y:
+D-Pad Up/Down:    Change score index Up/Down
+D-Pad Left/Right:
+Right Bumper:   Score coral
+Left Bumper:
+Right Trigger:
+Left Trigger:
+Start:
+Back:
+Right Stick:
+Left Stick:
+Right Stick Button:
+Left Stick Button:

@@ -49,7 +49,7 @@ public class DriveCommands {
   // DO NOT ADJUST
   private static final double FF_START_DELAY = 2.0; // Secs
   private static final double FF_RAMP_RATE = 0.1; // Volts/Sec
-  private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.25; // Rad/Sec
+  private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.5; // Rad/Sec
   private static final double WHEEL_RADIUS_RAMP_RATE = 0.05; // Rad/Sec^2
 
   private DriveCommands() {}
@@ -64,6 +64,8 @@ public class DriveCommands {
       DoubleSupplier omegaSupplier) {
     return Commands.run(
         () -> {
+          // Pose2d pose = drive.getPose();
+          // System.out.println(pose);
           // Get the Linear Velocity & Omega from inputs
           Translation2d linearVelocity =
               getLinearVelocity(xSupplier.getAsDouble(), ySupplier.getAsDouble());

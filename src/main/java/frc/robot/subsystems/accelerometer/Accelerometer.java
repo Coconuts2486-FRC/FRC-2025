@@ -82,7 +82,6 @@ public class Accelerometer extends VirtualSubsystem {
 
   /** Get accelerations, compute jerks, log everything */
   public void periodic() {
-
     // Log the execution time
     long start = System.nanoTime();
 

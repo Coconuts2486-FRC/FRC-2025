@@ -31,7 +31,7 @@ public interface IntakeIO {
 
   public default void setPivotPosition(double position) {}
 
-  public default void rollerSpeed(double speed) {}
+  public default void rollerDutyCycle(double speed) {}
 
   public default void stop() {}
 
@@ -41,7 +41,7 @@ public interface IntakeIO {
 
   public default void setRollerVolts(double volts) {}
 
-  public default double getEncoder() {
+  public default double getEncoderValue() {
     return 0.0;
   }
 }

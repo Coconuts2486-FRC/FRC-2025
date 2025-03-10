@@ -14,6 +14,8 @@
 package frc.robot.subsystems.elevator;
 
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLog;
 
@@ -27,6 +29,7 @@ public interface ElevatorIO {
     public double velocityRadPerSec = 0.0;
     public double appliedVolts = 0.0;
     public double[] currentAmps = new double[] {};
+    public boolean bottomLimit = false;
   }
 
   public default void updateInputs(ElevatorIOInputs inputs) {}
@@ -39,6 +42,10 @@ public interface ElevatorIO {
     return false;
   }
 
+  public default double getElevatorHeight() {
+    return 0.0;
+  }
+
   public default void configure(
       double Kg,
       double Ks,
@@ -47,9 +54,21 @@ public interface ElevatorIO {
       double Kp,
       double Ki,
       double Kd,
-      double velocity,
-      double aceleration,
+      LinearVelocity velocity,
+      LinearAcceleration aceleration,
       double jerk) {}
+
+  public default BooleanSupplier isAtPosition() {
+    return () -> false;
+  }
+
+  public default double getMotorPosition() {
+    return 0;
+  }
+
+  public default double getCommandedPosition() {
+    return 0;
+  }
 
   public default void setVoltage(double volts) {}
 

@@ -31,9 +31,15 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
@@ -65,10 +71,10 @@ public final class Constants {
 
   /***************************************************************************/
   /**
-   * Define the various multiple robots that use this same code (e.g., COMPBOT, DEVBOT, SIMBOT,
+   * Define the various multiple robots that use this same code (e.g., LEONARDO, DEVBOT, SIMBOT,
    * etc.) and the operating modes of the code (REAL, SIM, or REPLAY)
    */
-  private static RobotType robotType = RobotType.GEORGE;
+  private static RobotType robotType = RobotType.LEONARDO;
 
   // Define swerve, auto, and vision types being used
   // NOTE: Only PHOENIX6 swerve base has been tested at this point!!!
@@ -82,8 +88,8 @@ public final class Constants {
 
   /** Enumerate the robot types (name your robots here) */
   public static enum RobotType {
-    GEORGE, // Development / Alpha / Practice Bot
-    COMPBOT, // Competition robot
+    GEORGE, // Development / Alpha / Practice Bot, a.k.a. "George"
+    LEONARDO, // Competition robot, a.k.a. "Leonardo de Pinchy"
     SIMBOT // Simulated robot
   }
 
@@ -108,7 +114,7 @@ public final class Constants {
   /** General Constants **************************************************** */
   public static final double loopPeriodSecs = 0.02;
 
-  public static final boolean tuningMode = false;
+  public static final boolean tuningMode = true;
 
   /** Physical Constants for Robot Operation ******************************* */
   public static final class PhysicalConstants {
@@ -118,10 +124,13 @@ public final class Constants {
         new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), kRobotMassKg);
     // Robot moment of intertial; this can be obtained from a CAD model of your drivetrain. Usually,
     // this is between 3 and 8 kg*m^2.
-    public static final double kRobotMOI = 6.8;
+    public static final double kRobotMOI = 6.94;
 
     // Wheel coefficient of friction
     public static final double kWheelCOF = 1.2;
+
+    // Measured Wheel Radius
+    public static final Distance kWheelRadius = Inches.of(2.033);
   }
 
   /** Power Distribution Constants ********************************** */
@@ -160,14 +169,14 @@ public final class Constants {
 
     // Default TalonFX Gains (Replaces what's in Phoenix X's Tuner Constants)
     // NOTE: Default values from 6328's 2025 Public Code
-    public static final double kDriveP = 1.0;
-    public static final double kDriveD = 0.001;
+    public static final double kDriveP = 40.0;
+    public static final double kDriveD = 0.03;
     public static final double kDriveV = 0.83;
     public static final double kDriveS = 0.21;
     public static final double kDriveT =
         SwerveConstants.kDriveGearRatio / DCMotor.getKrakenX60Foc(1).KtNMPerAmp;
-    public static final double kSteerP = 100.0;
-    public static final double kSteerD = 1.0;
+    public static final double kSteerP = 400.0;
+    public static final double kSteerD = 20.0;
   }
 
   /** Elevator Subsystem Constants ***************************************** */
@@ -176,38 +185,42 @@ public final class Constants {
     // Idle Mode
     public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // Gear Ratio
-    public static final double kElevatorGearRatio = 10.0;
+    // Physical Things on the Robot
+    public static final double kElevatorGearRatio = (60.0 / 20.0) * (40.0 / 14.0);
+    public static final Distance kElevatorSproketRadius = Inches.of(1.75 / 2.0);
+    // These are heights off the ground of the top row of bolts on the elevator 1st stage
+    public static final Distance kElevatorZeroHeight = Inches.of(40.375);
+    public static final Distance kL2 = Inches.of(48.125); // Maybe 48.5
+    public static final Distance kL3 = Inches.of(55.25);
+    public static final Distance kL4 = Inches.of(68.125);
+    public static final Distance KAlgaeLower = Inches.of(56.8);
+    public static final Distance KAlgaeUpper = Inches.of(65);
+    public static final Distance KAlgaeShoot = Inches.of(60);
+    // Motion Magic constants
+    public static final LinearVelocity kVelocity = MetersPerSecond.of(2);
+    public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(3);
+    public static final double kJerk = 0;
 
     // mode real/replay
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0.3375;
+    public static final double kGReal = 0.65;
     public static final double kSReal = 0.075;
-    public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
+    public static final double kVReal = 0.18629;
+    public static final double kAReal = 0.01; // 0.000070378;
     // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    public static final double kPReal = 18.0;
+    public static final double kIReal = 0.0;
+    public static final double kDReal = 0.01;
 
     // mode sim
-    public static final double kStaticGainSim = 0.1;
-    public static final double kVelocityGainSim = 0.05;
     // motor configs
     public static final double kGSim = 0;
-    public static final double kSSim = 0;
-    public static final double kVSim = 0;
+    public static final double kSSim = 0.1;
+    public static final double kVSim = 0.05;
     public static final double kASim = 0;
     public static final double kPSim = 0;
     public static final double kISim = 0;
     public static final double kDSim = 0;
-
-    // Motion Magic constants
-    public static final double kVelocity = 1.4;
-    public static final double kAcceleration = 2.8;
-    public static final double kJerk = 0;
   }
 
   /** Coral Mechanism Subsystem Constants ********************************** */
@@ -217,20 +230,19 @@ public final class Constants {
     public static final MotorIdleMode kCoralIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
     // Gear Ratio
+    // TODO: Get the REAL gear ratio
     public static final double kCoralGearRatio = 10.0;
 
     // mode real/replay
     public static final double kStaticGainReal = 0.1;
     public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0.3375;
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
-    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    public static final double kAReal = 0;
+    public static final double kPReal = 1.0;
+    public static final double kIReal = 0.0;
+    public static final double kDReal = 0.0;
 
     // mode sim
     public static final double kStaticGainSim = 0.1;
@@ -243,11 +255,6 @@ public final class Constants {
     public static final double kPSim = 0;
     public static final double kISim = 0;
     public static final double kDSim = 0;
-
-    // Motion Magic constants
-    public static final double kVelocity = 1.4;
-    public static final double kAcceleration = 2.8;
-    public static final double kJerk = 0;
   }
 
   /** Intake Subsystem Constants ******************************************* */
@@ -265,14 +272,12 @@ public final class Constants {
     public static final double kStaticGainReal = 0.1;
     public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0.3375;
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
-    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    public static final double kAReal = 0.0;
+    public static final double kPReal = 1.0;
+    public static final double kIReal = 0.0;
+    public static final double kDReal = 0.0;
 
     // mode sim
     public static final double kStaticGainSim = 0.1;
@@ -300,38 +305,32 @@ public final class Constants {
     public static final MotorIdleMode kAlgaeRollerIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
     // Gear Ratio
+    // TODO: Get ACTUAL GEAR RATIOS from Eugene
     public static final double kAlgaePivotGearRatio = 10.0;
     public static final double kAlgaeRollerGearRatio = 10.0;
 
-    // mode real/replay
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
-    // motor configs
-    public static final double kGReal = 0.3375;
-    public static final double kSReal = 0.075;
-    public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
-    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    // Pivot Gains
+    public static final double kPPivot = 10.0;
+    public static final double kIPivot = 0.0;
+    public static final double kDPivot = 0.0;
 
-    // mode sim
-    public static final double kStaticGainSim = 0.1;
-    public static final double kVelocityGainSim = 0.05;
-    // motor configs
-    public static final double kGSim = 0;
-    public static final double kSSim = 0;
-    public static final double kVSim = 0;
-    public static final double kASim = 0;
-    public static final double kPSim = 0;
-    public static final double kISim = 0;
-    public static final double kDSim = 0;
+    // Roller Gains
+    public static final double kPRoller = 1.0;
+    public static final double kIRoller = 0.0;
+    public static final double kDRoller = 0.0;
 
-    // Motion Magic constants
-    public static final double kVelocity = 1.4;
-    public static final double kAcceleration = 2.8;
-    public static final double kJerk = 0;
+    // Algae Mech Positions
+    // TODO: Put these in ACTUAL DEGREES with an offset
+    public static final double kStowPos = .209;
+    public static final double kHorizPos = .35;
+    public static final double kOtherPos = .45;
+    public static final double kReefPos = .521;
+    // public static final Angle kStowPos = Degrees.of(90.0);
+    // public static final Angle kHorizPos = Degrees.of(0.0);
+    // public static final Angle kOtherPos = Degrees.of(-10.0);
+    // public static final Angle kReefPos = Degrees.of(-35.0);
+    // public static final Angle kPivotOffset = Rotations.of(0.43);
+
   }
 
   /** Climb Subsystem Constants ******************************************** */
@@ -347,14 +346,12 @@ public final class Constants {
     public static final double kStaticGainReal = 0.1;
     public static final double kVelocityGainReal = 0.05;
     // motor configs
-    public static final double kGReal = 0.3375;
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
-    public static final double kAReal = 0; // 0.000070378;
-    // ka kv values found from putting elevator at a perfect 90 degree and running sys id
-    public static final double kPReal = 17.983;
-    public static final double kIReal = 0;
-    public static final double kDReal = 0;
+    public static final double kAReal = 0.0;
+    public static final double kPReal = 4.0;
+    public static final double kIReal = 0.0;
+    public static final double kDReal = 0.5;
 
     // mode sim
     public static final double kStaticGainSim = 0.1;
@@ -369,9 +366,17 @@ public final class Constants {
     public static final double kDSim = 0;
 
     // Motion Magic constants
-    public static final double kVelocity = 1.4;
-    public static final double kAcceleration = 2.8;
-    public static final double kJerk = 0;
+    public static final AngularVelocity kVelocity = RotationsPerSecond.of(1.4);
+    public static final AngularAcceleration kAcceleration = RotationsPerSecondPerSecond.of(2.8);
+
+    // Put these in terms of ACTUAL PROTRACTOR ANGLES ON THE ROBOT AND A ZERO OFFSET!!!
+    public static final double startClimb = .46;
+    public static final double stowClimb = .72;
+    public static final double completeClimb = .82;
+    // public static final Angle startClimb = Degrees.of(90.0);
+    // public static final Angle stowClimb = Degrees.of(180.0);
+    // public static final Angle completeClimb = Degrees.of(270.0);
+    // public static final Angle kClimbOffset = Rotations.of(0.50);
   }
 
   /** Accelerometer Constants ********************************************** */
@@ -383,14 +388,14 @@ public final class Constants {
     // NOTE: It is assumed that both the Rio and the IMU are mounted such that +Z is UP
     public static final Rotation2d kRioOrientation =
         switch (getRobot()) {
-          case COMPBOT -> Rotation2d.fromDegrees(90.);
+          case LEONARDO -> Rotation2d.fromDegrees(90.);
           case GEORGE -> Rotation2d.fromDegrees(0.);
           default -> Rotation2d.fromDegrees(0.);
         };
     // IMU can be one of Pigeon2 or NavX
     public static final Rotation2d kIMUOrientation =
         switch (getRobot()) {
-          case COMPBOT -> Rotation2d.fromDegrees(0.);
+          case LEONARDO -> Rotation2d.fromDegrees(0.);
           case GEORGE -> Rotation2d.fromDegrees(0.);
           default -> Rotation2d.fromDegrees(0.);
         };
@@ -404,7 +409,8 @@ public final class Constants {
     public static final boolean kDriveLeftTurnRight =
         switch (getRobot()) {
           case GEORGE -> true; // Testing
-          case COMPBOT -> false; // Kate's preference
+          //  case LEONARDO -> true;
+          case LEONARDO -> false; // Kate's preference
           case SIMBOT -> true; // Default
         };
 
@@ -429,9 +435,9 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(15.0, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(10, 0.0, 0.0);
     // new PIDConstants(DrivebaseConstants.kDriveP, 0.0, DrivebaseConstants.kDriveD);
-    public static final PIDConstants kPPsteerPID = new PIDConstants(15.0, 0.0, 0.0);
+    public static final PIDConstants kPPsteerPID = new PIDConstants(4, 0.0, 0.0);
     // new PIDConstants(DrivebaseConstants.kSteerP, 0.0, DrivebaseConstants.kSteerD);
     // 1 Cordinate = 1 meter
     // *** 1 meter = 39.3701 inches
@@ -471,7 +477,7 @@ public final class Constants {
   public static class LEDConstants {
 
     // Number of LEDS
-    public static final int nLED = 67;
+    public static final int nLED = 128;
   }
 
   /** Vision Constants (Assuming PhotonVision) ***************************** */
@@ -503,31 +509,70 @@ public final class Constants {
   /** Vision Camera Posses ************************************************* */
   public static class Cameras {
     // Camera names, must match names configured on coprocessor
-    public static String camera0Name = "Photon_BW1";
-    public static String camera1Name = "Photon_BW2";
+    // public static String cameraElevatorL = "Photon_BW6"; // On left side of elevator
+    // public static String cameraElevatorR = "Photon_BW3"; // On right side of elevator
+    // public static String cameraElevatorC = "Photon_BW3"; // On center of elevator
+    // public static String cameraIntakeDown = "Photon_BW5"; // On intake churro, looking down
+
+    public static String cameraCL = "Photon_BW1"; //  Camera in the double mount in center *Left
+    public static String cameraCR = "Photon_BW2"; //  Camera in the double mount in center *Right
+    public static String cameraIntake = "Photon_BW4"; // Camera facing up from the ground intake
+
     // ... And more, if needed
 
     // Robot to camera transforms
-    // (ONLY USED FOR PHOTONVISION -- Limelight: configure in web UI instead)
-    public static Transform3d robotToCamera0 =
+    // public static Transform3d robotToCameraEL =
+    //     new Transform3d(
+    //         Units.inchesToMeters(-12.3),
+    //         Units.inchesToMeters(-(9.23 - 0.375)), // Waiting for actual mounts
+    //         Units.inchesToMeters(10.1 - 1.0), // before adding these...
+    //         new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 + 20.0))
+    //             .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
+
+    // public static Transform3d robotToCameraER =
+    //     new Transform3d(
+    //         Units.inchesToMeters(-12.3),
+    //         Units.inchesToMeters(9.23 - 0.375),
+    //         Units.inchesToMeters(10.1 - 1.0),
+    //         new Rotation3d(0.0, 0.0, Units.degreesToRadians(180.0 - 20.0))
+    //             .rotateBy(new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0)));
+
+    // For the double camera mount in the center * Right side
+    public static Transform3d robotToCameraECL =
         new Transform3d(
-            Units.inchesToMeters(14),
-            0.0,
-            Units.inchesToMeters(4.25),
-            new Rotation3d(0.0, Units.degreesToRadians(+30), 0.0));
-    public static Transform3d robotToCamera1 =
+            Units.inchesToMeters(-13.818 + .8125),
+            Units.inchesToMeters(0.0 + .875),
+            Units.inchesToMeters(6.122),
+            new Rotation3d(0.0, Units.degreesToRadians(10.0), Units.degreesToRadians(180.0)));
+    // For the double camera mount in the center * Left side
+    public static Transform3d robotToCameraECR =
         new Transform3d(
-            Units.inchesToMeters(-14),
-            0.0,
-            Units.inchesToMeters(4.25),
-            new Rotation3d(0.0, 0.0, Math.PI));
+            Units.inchesToMeters(-13.818 + .8125),
+            Units.inchesToMeters(0.0 - .875),
+            Units.inchesToMeters(6.122),
+            new Rotation3d(0.0, Units.degreesToRadians(10.0), Units.degreesToRadians(180.0)));
+
+    // public static Transform3d robotToCameraEC =
+    //     new Transform3d(
+    //         Units.inchesToMeters(-13.818),
+    //         Units.inchesToMeters(0.0),
+    //         Units.inchesToMeters(6.122),
+    //         new Rotation3d(0.0, Units.degreesToRadians(25.0), Units.degreesToRadians(180.0)));
+    public static Transform3d robotToCameraIntake =
+        new Transform3d(
+            Units.inchesToMeters(13.613),
+            Units.inchesToMeters(3.5),
+            Units.inchesToMeters(6.122),
+            new Rotation3d(0.0, Units.degreesToRadians(25.0), 0.0));
 
     // Standard deviation multipliers for each camera
     // (Adjust to trust some cameras more than others)
     public static double[] cameraStdDevFactors =
         new double[] {
-          1.0, // Camera 0
-          1.0 // Camera 1
+          1.0, // Camera EL
+          1.0, // Camera ER
+          1.0, // Camera EC
+          1.0 // Camera ID
         };
   }
 
@@ -572,24 +617,43 @@ public final class Constants {
     /* SUBSYSTEM CAN DEVICE IDS */
     public static final RobotDeviceId ELEVATOR = new RobotDeviceId(11, "", 18);
     public static final RobotDeviceId CORAL_MECH = new RobotDeviceId(16, "", 19);
-    public static final RobotDeviceId INTAKE_PIVOT = new RobotDeviceId(21, "", 0);
-    public static final RobotDeviceId INTAKE_ROLLER = new RobotDeviceId(22, "", 1);
+    public static final RobotDeviceId INTAKE_PIVOT = new RobotDeviceId(22, "", 0);
+    public static final RobotDeviceId INTAKE_ROLLER = new RobotDeviceId(21, "", 1);
     public static final RobotDeviceId INTAKE_ENCODER = new RobotDeviceId(23, "", null);
     public static final RobotDeviceId ALGAE_PIVOT = new RobotDeviceId(26, "", 10);
     public static final RobotDeviceId ALGAE_ROLLER = new RobotDeviceId(27, "", 11);
     public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "", 8);
     public static final RobotDeviceId LED = new RobotDeviceId(36, "", null);
 
+    public static final RobotDeviceId Coral_Scorer = new RobotDeviceId(16, "", 9);
+
     /* BEAM BREAK and/or LIMIT SWITCH DIO CHANNELS */
     // This is where digital I/O feedback devices are defined
     // Example:
     // public static final int ELEVATOR_BOTTOM_LIMIT = 3;
+    public static final int ELEVATOR_BOTTOM_LIMIT = 0;
+    public static final int ALGAE_PIVOT_ENCODER = 1;
+    public static final int CORAL_LIGHT_STOP = 2;
+    public static final int CLIMB_PIVOT_ENCODER = 3;
 
     /* LINEAR SERVO PWM CHANNELS */
     // This is where PWM-controlled devices (actuators, servos, pneumatics, etc.)
     // are defined
     // Example:
-    public static final int CLIMB_SERVO = 4;
+    public static final int CLIMB_SERVO = 0;
+  }
+
+  public static class DriveToPositionConstatnts {
+
+    // The robot is facing AWAY from the tag, so its pose angle matches that of the tag.
+    // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
+    // robot pose is 21" from the tag.
+    public static Translation2d kLeftReefPost =
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-6.5));
+    public static Translation2d kRightReefPost =
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+6.5));
+    public static Translation2d kAlgaeGrab =
+        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
   }
 
   /** AprilTag Field Layout ************************************************ */
@@ -652,7 +716,7 @@ public final class Constants {
     if (!disableHAL && RobotBase.isReal() && robotType == RobotType.SIMBOT) {
       new Alert("Invalid robot selected, using competition robot as default.", AlertType.ERROR)
           .set(true);
-      robotType = RobotType.COMPBOT;
+      robotType = RobotType.LEONARDO;
     }
     return robotType;
   }
@@ -660,7 +724,7 @@ public final class Constants {
   /** Get the current robot mode */
   public static Mode getMode() {
     return switch (robotType) {
-      case GEORGE, COMPBOT -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
+      case GEORGE, LEONARDO -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
       case SIMBOT -> Mode.SIM;
     };
   }

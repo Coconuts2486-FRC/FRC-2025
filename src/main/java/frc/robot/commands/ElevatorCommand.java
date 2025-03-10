@@ -13,23 +13,25 @@
 
 package frc.robot.commands;
 
-import static edu.wpi.first.units.Units.*;
+import static frc.robot.Constants.ElevatorConstants.*;
 
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.elevator.Elevator;
+import java.util.function.Supplier;
 
 public class ElevatorCommand extends Command {
 
-  private final Distance position;
+  private final Supplier<Distance> position;
   private final LinearAcceleration acceleration;
   private final LinearVelocity velocity;
   private final Elevator elevator;
 
   public ElevatorCommand(
-      Distance position,
+      Supplier<Distance> position,
       LinearAcceleration acceleration,
       LinearVelocity velocity,
       Elevator elevator) {
@@ -37,32 +39,34 @@ public class ElevatorCommand extends Command {
     this.acceleration = acceleration;
     this.velocity = velocity;
     this.elevator = elevator;
+    addRequirements(elevator);
   }
 
   @Override
   public void initialize() {
 
-    elevator.configure(
-        0.3375,
-        0.075,
-        0.18629,
-        0.01,
-        18,
-        0,
-        0.01,
-        velocity.in(MetersPerSecond),
-        acceleration.in(MetersPerSecondPerSecond),
-        0);
+    switch (Constants.getMode()) {
+      case REAL:
+      case REPLAY:
+        elevator.configure(
+            kGReal, kSReal, kVReal, kAReal, kPReal, kIReal, kDReal, velocity, acceleration, 0.);
+        break;
+      case SIM:
+        elevator.configure(
+            kGSim, kSSim, kVSim, kASim, kPSim, kISim, kDSim, velocity, acceleration, 0.);
+        break;
+    }
   }
 
   @Override
   public void execute() {
 
-    elevator.setPosistion(position);
+    elevator.setPosistion(position.get());
   }
 
   @Override
   public void end(boolean interrupted) {
     elevator.stop();
+    System.out.println("Done");
   }
 }

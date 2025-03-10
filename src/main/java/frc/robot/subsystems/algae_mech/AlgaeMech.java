@@ -13,9 +13,8 @@
 
 package frc.robot.subsystems.algae_mech;
 
-import static edu.wpi.first.units.Units.*;
-
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
 import java.util.function.BooleanSupplier;
@@ -29,9 +28,13 @@ public class AlgaeMech extends RBSISubsystem {
 
   private BooleanSupplier disableSupplier = DriverStation::isDisabled;
   private BooleanSupplier disableOverride;
+  private boolean toggleStow = true;
+  private int pivotIndex = 3;
 
+  /** Constructor */
   public AlgaeMech(AlgaeMechIO io) {
     this.io = io;
+    setDefaultCommand(Commands.run(() -> cyclePositions(), this));
 
     //   // Configure SysId
     //   sysId =
@@ -50,18 +53,29 @@ public class AlgaeMech extends RBSISubsystem {
     this.disableOverride = disableOverride;
   }
 
+  /** Initialize the default command for this subsystem */
+
+  /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
+    // Log the execution time
+    long start = System.nanoTime();
+
     io.updateInputs(inputs);
     Logger.processInputs("AlgaeMech", inputs);
     Logger.recordOutput("Overrides/AlgaeMechPivot", !disableOverride.getAsBoolean());
 
     // Check if disabled
-    if (disableSupplier.getAsBoolean()) {
+    if (disableOverride.getAsBoolean()) {
       stop();
-      LED.getInstance().algaemechEstopped =
-          disableSupplier.getAsBoolean() && DriverStation.isEnabled();
+      LED.setAgaeMechEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/AlgaeCodeMS", (double) timeElapsed / 1.e6);
+    fixIndex();
   }
 
   public void stop() {
@@ -69,7 +83,15 @@ public class AlgaeMech extends RBSISubsystem {
   }
 
   public void pivotToPosition(double position) {
-    io.pivotToPosition(position);
+    if (!disableSupplier.getAsBoolean()) {
+      io.pivotToPosition(position);
+    }
+  }
+
+  public void setPercent(double percent) {
+    if (!disableSupplier.getAsBoolean()) {
+      io.setPercent(percent);
+    }
   }
 
   // public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
@@ -82,19 +104,95 @@ public class AlgaeMech extends RBSISubsystem {
   // }
 
   // Pivot to stored position
+  public void toggleUp(boolean stow) {
+    if (!disableSupplier.getAsBoolean()) {
+      this.toggleStow = stow;
+    }
+  }
+
+  public boolean getToggleStow() {
+    return toggleStow;
+  }
+
+  public void holdToggle() {
+    if (!disableSupplier.getAsBoolean()) {
+      if (toggleStow == true) {
+        io.pivotToPosition(.209);
+      } else {
+        io.pivotToPosition(.35);
+      }
+    }
+  }
+
+  // Toggles between the three pivot positions
+  // <<<
+  public void indexPoseUp() {
+    pivotIndex = pivotIndex + 1;
+  }
+
+  public void indexPoseDown() {
+    pivotIndex = pivotIndex - 1;
+    if (pivotIndex < 1) {}
+  }
+
+  private void fixIndex() {
+    if (pivotIndex < 1) {
+      pivotIndex = 1;
+    }
+    if (pivotIndex > 3) {
+      pivotIndex = 3;
+    }
+  }
+
+  public void setIndexPose(int index) {
+    pivotIndex = index;
+  }
+
+  public void cyclePositions() {
+    if (!disableSupplier.getAsBoolean()) {
+      switch (pivotIndex) {
+        case 3:
+          io.pivotToPosition(.209);
+          break;
+        case 2:
+          io.pivotToPosition(.35);
+          break;
+        case 1:
+          io.pivotToPosition(.45);
+          break;
+        default:
+          io.pivotToPosition(.35);
+      }
+    }
+  }
+
+  // >>>
+
   public void pivotUp() {
-    io.pivotToPosition(.209);
+    if (!disableSupplier.getAsBoolean()) {
+      io.pivotToPosition(.209);
+    }
+  }
+
+  public void pivotShoot() {
+    if (!disableSupplier.getAsBoolean()) {
+      io.pivotToPosition(.3);
+    }
   }
 
   // Pivots to position to pick up off floor
   public void pivotHorizontal() {
-    // io.pivotToPosition(.45);
-    io.pivotToPosition(.45);
+    if (!disableSupplier.getAsBoolean()) {
+      // io.pivotToPosition(.45);
+      io.pivotToPosition(.35);
+    }
   }
 
-  // Pivots to remove coral from reef
+  // Pivots to remove algae from reef
   public void pivotOffReef() {
-    io.pivotToPosition(.521);
+    if (!disableSupplier.getAsBoolean()) {
+      io.pivotToPosition(.521);
+    }
   }
 
   // /** Returns the current velocity in RPM. */

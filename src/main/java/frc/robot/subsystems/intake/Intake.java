@@ -18,6 +18,7 @@ import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
@@ -32,8 +33,11 @@ public class Intake extends RBSISubsystem {
   private BooleanSupplier disableSupplier = DriverStation::isDisabled;
   private BooleanSupplier disableOverride;
 
+  /** Mechanism Constructor */
   public Intake(IntakeIO io) {
     this.io = io;
+
+    setDefaultCommand(Commands.run(() -> setPivotPosition(0.9), this));
 
     sysId =
         new SysIdRoutine(
@@ -59,10 +63,9 @@ public class Intake extends RBSISubsystem {
     Logger.recordOutput("Overrides/IntakePivot", !disableOverride.getAsBoolean());
 
     // Check if disabled
-    if (disableSupplier.getAsBoolean()) {
+    if (disableOverride.getAsBoolean()) {
       stop();
-      LED.getInstance().intakeEstopped =
-          disableSupplier.getAsBoolean() && DriverStation.isEnabled();
+      LED.setIntakeEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
   }
 
@@ -88,7 +91,7 @@ public class Intake extends RBSISubsystem {
    */
   public void rollerSpeed(double speed) {
     if (!disableSupplier.getAsBoolean()) {
-      io.rollerSpeed(speed);
+      io.rollerDutyCycle(speed);
     }
   }
 
@@ -129,7 +132,7 @@ public class Intake extends RBSISubsystem {
   ;
 
   public double getEncoder() {
-    return io.getEncoder();
+    return io.getEncoderValue();
   }
 
   @Override

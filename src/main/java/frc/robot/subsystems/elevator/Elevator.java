@@ -13,17 +13,20 @@
 
 package frc.robot.subsystems.elevator;
 
-import static edu.wpi.first.units.Units.Seconds;
-import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.*;
 import static frc.robot.Constants.ElevatorConstants.*;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.commands.ElevatorCommand;
 import frc.robot.subsystems.LED.LED;
 import frc.robot.util.RBSISubsystem;
 import java.util.function.BooleanSupplier;
@@ -38,7 +41,9 @@ public class Elevator extends RBSISubsystem {
   private BooleanSupplier disableSupplier = DriverStation::isDisabled;
   private BooleanSupplier disableOverride;
 
+  /** Constructor */
   public Elevator(ElevatorIO io) {
+
     this.io = io;
 
     switch (Constants.getMode()) {
@@ -64,7 +69,7 @@ public class Elevator extends RBSISubsystem {
         break;
       default:
         ffModel = new ElevatorFeedforward(0.0, 0.0, 0.0, 0.0);
-        io.configure(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        io.configure(0, 0, 0, 0, 0, 0, 0, MetersPerSecond.of(0), MetersPerSecondPerSecond.of(0), 0);
         break;
     }
 
@@ -77,6 +82,13 @@ public class Elevator extends RBSISubsystem {
                 Seconds.of(2.0),
                 (state) -> Logger.recordOutput("Elevator/SysIdState", state.toString())),
             new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Units.Volts)), null, this));
+
+    setDefaultCommand(
+        new ElevatorCommand(
+            () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
+            ElevatorConstants.kAcceleration.div(2), // Go slower on the way down
+            ElevatorConstants.kVelocity.div(2), // Go slower on the way down
+            this));
   }
 
   /** Set the override for this subsystem */
@@ -85,20 +97,33 @@ public class Elevator extends RBSISubsystem {
     this.disableOverride = disableOverride;
   }
 
+  /** Initialize the default command for this subsystem */
+  public void initDefaultCommand() {}
+
   /** Periodic function called every robot cycle */
   @Override
   public void periodic() {
+    // Log the execution time
+    long start = System.nanoTime();
+
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
     Logger.recordOutput("Overrides/Elevator", !disableOverride.getAsBoolean());
+    Logger.recordOutput("Mechanism/Elevator/isAtPosition", isAtPosition().getAsBoolean());
+    Logger.recordOutput("Mechanism/Elevator/ElevatorMotorPosition", io.getMotorPosition());
+    Logger.recordOutput("Mechanism/Elevator/ElevatorCommandedPosition", io.getCommandedPosition());
 
     // Check if disabled
-    if (disableSupplier.getAsBoolean()) {
+    if (disableOverride.getAsBoolean()) {
       stop();
       setCoast();
-      LED.getInstance().elevatorEstopped =
-          disableSupplier.getAsBoolean() && DriverStation.isEnabled();
+      LED.setElevatorEStop(disableOverride.getAsBoolean() && DriverStation.isEnabled());
     }
+
+    // Quick logging to see how long this periodic takes
+    long finish = System.nanoTime();
+    long timeElapsed = finish - start;
+    Logger.recordOutput("LoggedRobot/ElevatorCodeMS", (double) timeElapsed / 1.e6);
   }
 
   /**
@@ -131,6 +156,11 @@ public class Elevator extends RBSISubsystem {
     io.stop();
   }
 
+  /** Return a boolean supplier of whether the elevator is at the requested height */
+  public BooleanSupplier isAtPosition() {
+    return io.isAtPosition();
+  }
+
   /* Configuaration and Setter / Getter Functions ************************** */
   public void configure(
       double Kg,
@@ -140,8 +170,8 @@ public class Elevator extends RBSISubsystem {
       double Kp,
       double Ki,
       double Kd,
-      double velocity,
-      double aceleration,
+      LinearVelocity velocity,
+      LinearAcceleration aceleration,
       double jerk) {
     io.configure(Kg, Ks, Kv, Ka, Kp, Ki, Kd, velocity, aceleration, jerk);
   }

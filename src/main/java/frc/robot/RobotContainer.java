@@ -201,9 +201,9 @@ public class RobotContainer {
                       m_drivebase::addVisionMeasurement,
                       //   new VisionIOPhotonVision(cameraElevatorL, robotToCameraEL),
                       //   new VisionIOPhotonVision(cameraElevatorR, robotToCameraER),
-                      new VisionIOPhotonVision(cameraCL, robotToCameraECL),
-                      new VisionIOPhotonVision(cameraCR, robotToCameraECR),
-                      new VisionIOPhotonVision(cameraIntake, robotToCameraIntake));
+                      new VisionIOPhotonVision(cameraCL, robotToCameraECL, BW1Stretch),
+                      new VisionIOPhotonVision(cameraCR, robotToCameraECR, BW2Stretch),
+                      new VisionIOPhotonVision(cameraIntake, robotToCameraIntake, BW4Stretch));
               case LIMELIGHT ->
                   new Vision(
                       m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});

@@ -518,6 +518,11 @@ public final class Constants {
     public static String cameraCR = "Photon_BW2"; //  Camera in the double mount in center *Right
     public static String cameraIntake = "Photon_BW4"; // Camera facing up from the ground intake
 
+    // Incorrect distance measurement factor
+    public static double BW1Stretch = 1.02;
+    public static double BW2Stretch = 1.01;
+    public static double BW4Stretch = 1.06;
+
     // ... And more, if needed
 
     // Robot to camera transforms
@@ -571,8 +576,7 @@ public final class Constants {
         new double[] {
           1.0, // Camera EL
           1.0, // Camera ER
-          1.0, // Camera EC
-          1.0 // Camera ID
+          2.0 // Camera ID
         };
   }
 

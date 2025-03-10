@@ -30,6 +30,7 @@ import org.photonvision.PhotonCamera;
 public class VisionIOPhotonVision implements VisionIO {
   protected final PhotonCamera camera;
   protected final Transform3d robotToCamera;
+  protected final double cameraDistStretch;
 
   /**
    * Creates a new VisionIOPhotonVision.
@@ -37,9 +38,10 @@ public class VisionIOPhotonVision implements VisionIO {
    * @param name The configured name of the camera.
    * @param rotationSupplier The 3D position of the camera relative to the robot.
    */
-  public VisionIOPhotonVision(String name, Transform3d robotToCamera) {
+  public VisionIOPhotonVision(String name, Transform3d robotToCamera, double cameraDistStretch) {
     camera = new PhotonCamera(name);
     this.robotToCamera = robotToCamera;
+    this.cameraDistStretch = cameraDistStretch;
   }
 
   @Override
@@ -75,7 +77,8 @@ public class VisionIOPhotonVision implements VisionIO {
         // Calculate average tag distance
         double totalTagDistance = 0.0;
         for (var target : result.targets) {
-          totalTagDistance += target.bestCameraToTarget.getTranslation().getNorm();
+          totalTagDistance +=
+              target.bestCameraToTarget.times(cameraDistStretch).getTranslation().getNorm();
         }
 
         // Add tag IDs
@@ -99,7 +102,7 @@ public class VisionIOPhotonVision implements VisionIO {
         if (tagPose.isPresent()) {
           Transform3d fieldToTarget =
               new Transform3d(tagPose.get().getTranslation(), tagPose.get().getRotation());
-          Transform3d cameraToTarget = target.bestCameraToTarget;
+          Transform3d cameraToTarget = target.bestCameraToTarget.times(cameraDistStretch);
           Transform3d fieldToCamera = fieldToTarget.plus(cameraToTarget.inverse());
           Transform3d fieldToRobot = fieldToCamera.plus(robotToCamera.inverse());
           Pose3d robotPose = new Pose3d(fieldToRobot.getTranslation(), fieldToRobot.getRotation());

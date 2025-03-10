@@ -78,7 +78,7 @@ public class VisionIOPhotonVision implements VisionIO {
         double totalTagDistance = 0.0;
         for (var target : result.targets) {
           totalTagDistance +=
-              target.bestCameraToTarget.times(cameraDistStretch).getTranslation().getNorm();
+              target.bestCameraToTarget.getTranslation().times(cameraDistStretch).getNorm();
         }
 
         // Add tag IDs
@@ -102,7 +102,13 @@ public class VisionIOPhotonVision implements VisionIO {
         if (tagPose.isPresent()) {
           Transform3d fieldToTarget =
               new Transform3d(tagPose.get().getTranslation(), tagPose.get().getRotation());
-          Transform3d cameraToTarget = target.bestCameraToTarget.times(cameraDistStretch);
+          Transform3d cameraToTarget =
+              new Transform3d(
+                  target
+                      .bestCameraToTarget
+                      .getTranslation()
+                      .times(cameraDistStretch), // Stretch Distance
+                  target.bestCameraToTarget.getRotation()); // Do NOT change rotation
           Transform3d fieldToCamera = fieldToTarget.plus(cameraToTarget.inverse());
           Transform3d fieldToRobot = fieldToCamera.plus(robotToCamera.inverse());
           Pose3d robotPose = new Pose3d(fieldToRobot.getTranslation(), fieldToRobot.getRotation());

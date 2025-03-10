@@ -519,9 +519,9 @@ public final class Constants {
     public static String cameraIntake = "Photon_BW4"; // Camera facing up from the ground intake
 
     // Incorrect distance measurement factor
-    public static double BW1Stretch = 1.02;
-    public static double BW2Stretch = 1.01;
-    public static double BW4Stretch = 1.06;
+    public static double BW1Stretch = 1.00; // 1.02;
+    public static double BW2Stretch = 1.00; // 1.01;
+    public static double BW4Stretch = 1.00; // 1.06;
 
     // ... And more, if needed
 

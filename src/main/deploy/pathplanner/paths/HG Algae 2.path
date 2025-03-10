@@ -31,7 +31,19 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "deAlgae",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 0.4981006647673351,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "deAlgae"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 1.0,

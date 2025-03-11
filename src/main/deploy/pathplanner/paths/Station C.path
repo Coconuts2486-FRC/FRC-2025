@@ -3,52 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6802254098360656,
-        "y": 2.604456967213115
+        "x": 3.728318504050925,
+        "y": 3.034297960069444
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.819120989766369,
-        "y": 1.8879818656891363
+        "x": 2.7570048157038824,
+        "y": 1.9703086141562833
       },
       "isLocked": false,
-      "linkedName": "Coral CD"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.92,
-        "y": 1.19
+        "x": 1.65,
+        "y": 0.79
       },
       "prevControl": {
-        "x": 2.3457758117481253,
-        "y": 1.5568148563550062
+        "x": 1.8925639204777567,
+        "y": 1.054847568742484
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "EStation"
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.8507765023632639,
-      "maxWaypointRelativePos": 1.0,
-      "constraints": {
-        "maxVelocity": 1.0,
-        "maxAcceleration": 2.0,
-        "maxAngularVelocity": 720.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 6.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

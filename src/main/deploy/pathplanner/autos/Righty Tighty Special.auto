@@ -21,7 +21,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.35
+                        "waitTime": 1.325
                       }
                     },
                     {
@@ -97,7 +97,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Coral CD"
+                        "pathName": "Coral C"
                       }
                     }
                   ]
@@ -123,7 +123,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.3
+                        "waitTime": 1.325
                       }
                     },
                     {
@@ -161,7 +161,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station CD"
+                        "pathName": "Station C"
                       }
                     },
                     {
@@ -199,7 +199,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Coral CD"
+                        "pathName": "Coral D"
                       }
                     }
                   ]
@@ -225,7 +225,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.3
+                        "waitTime": 1.325
                       }
                     },
                     {

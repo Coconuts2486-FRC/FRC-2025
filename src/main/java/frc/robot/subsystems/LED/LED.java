@@ -138,19 +138,29 @@ public class LED extends VirtualSubsystem {
       pickTwoTwinkle();
     } else if (DriverStation.isAutonomous()) {
       if (coralReady) {
-        // new RainbowAnimation(.5, 1, LEDConstants.nLED)
+        candle.animate(new RainbowAnimation(.5, 1, LEDConstants.nLED));
+        // candle.animate(
+        //     new LarsonAnimation(
+        //         (int) (allianceColor.red * 255),
+        //         (int) (allianceColor.green * 255),
+        //         (int) (allianceColor.blue * 255),
+        //         0,
+        //         9,
+        //         LEDConstants.nLED,
+        //         BounceMode.Back,
+        //         12));
+      } else {
+        // solid(allianceColor);
         candle.animate(
             new LarsonAnimation(
                 (int) (allianceColor.red * 255),
                 (int) (allianceColor.green * 255),
                 (int) (allianceColor.blue * 255),
                 0,
-                9,
+                .42,
                 LEDConstants.nLED,
                 BounceMode.Back,
                 12));
-      } else {
-        solid(allianceColor);
       }
     } else {
       // Teleop Enabled

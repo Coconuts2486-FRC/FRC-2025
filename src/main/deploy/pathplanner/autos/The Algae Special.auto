@@ -21,7 +21,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 2.75
+                        "waitTime": 2.5
                       }
                     },
                     {
@@ -184,6 +184,12 @@
                 "type": "parallel",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Algae 4"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {

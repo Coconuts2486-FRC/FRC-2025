@@ -272,28 +272,28 @@ public class RobotContainer {
                 .withTimeout(0.95)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
 
-    NamedCommands.registerCommand( // This just raises the elevator to L4 without automatically scoring
-        "E4",
-        new ElevatorCommand(
-            () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
-            ElevatorConstants.kAcceleration,
-            ElevatorConstants.kVelocity,
-            m_elevator));
+    NamedCommands
+        .registerCommand( // This just raises the elevator to L4 without automatically scoring
+            "E4",
+            new ElevatorCommand(
+                () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
+                ElevatorConstants.kAcceleration,
+                ElevatorConstants.kVelocity,
+                m_elevator));
 
     NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",
         Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer).withTimeout(0.25));
 
-    NamedCommands
-        .registerCommand( // Brings the elevator to the ground.
-            "Bottom",
-            new ElevatorCommand(
-                    () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
-                    ElevatorConstants.kAcceleration.div(
-                        2.0), // Lowering both of these increases elevator drop speed
-                    ElevatorConstants.kVelocity.div(2.0),
-                    m_elevator)
-                .until(m_elevator::getBottomStop));
+    NamedCommands.registerCommand( // Brings the elevator to the ground.
+        "Bottom",
+        new ElevatorCommand(
+                () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
+                ElevatorConstants.kAcceleration.div(
+                    2.0), // Lowering both of these increases elevator drop speed
+                ElevatorConstants.kVelocity.div(2.0),
+                m_elevator)
+            .until(m_elevator::getBottomStop));
 
     DriveToPose driveR =
         new DriveToPose(
@@ -306,17 +306,20 @@ public class RobotContainer {
     DriveToPose driveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
 
-    NamedCommands.registerCommand( // Auto aligns to right coral branchs right from the robots point of view
-        "AlignR", driveR.until(driveR::atGoal));
+    NamedCommands
+        .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
+            "AlignR", driveR.until(driveR::atGoal));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
         "AlignRC", driveRC.until(driveRC::atGoal));
-    NamedCommands.registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-        "AlignL", driveL.until(driveL::atGoal));
+    NamedCommands
+        .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
+            "AlignL", driveL.until(driveL::atGoal));
     NamedCommands.registerCommand( // Auto aligns to the algae in the reef
         "Algae",
         new DriveToPose(
             m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
-    NamedCommands.registerCommand( // This raises the elevator to the level of the aglae on the reef automaticlly based on april tags
+    NamedCommands.registerCommand( // This raises the elevator to the level of the aglae on the reef
+        // automaticlly based on april tags
         "deAlgae",
         Commands.parallel(
             new ElevatorCommand(
@@ -352,15 +355,19 @@ public class RobotContainer {
             .alongWith(Commands.run(() -> m_algaeMech.setPercent(0)))
             .alongWith(Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)));
 
-    NamedCommands.registerCommand( // Toeknee makes sure our robot doesn't destroy our algae mech when it comes down. It puts the pivot to algae holding posistion
-        "ToeKnee", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech));
+    NamedCommands
+        .registerCommand( // Toeknee makes sure our robot doesn't destroy our algae mech when it
+            // comes down. It puts the pivot to algae holding posistion
+            "ToeKnee", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech));
 
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
 
-    NamedCommands.registerCommand( // Ends once coral is detected so the robot can start moving before fully intaked
-        "CoralDetect",
-        new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+    NamedCommands
+        .registerCommand( // Ends once coral is detected so the robot can start moving before fully
+            // intaked
+            "CoralDetect",
+            new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
     NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
         "Timer", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.6));
 

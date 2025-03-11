@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7401639344262296,
-        "y": 5.013985655737705
+        "x": 7.024795081967212,
+        "y": 5.481506147540983
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.473671471526677,
-        "y": 5.3000414682602806
+        "x": 6.782521641001642,
+        "y": 5.543179316769609
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Algae 4"
     },
     {
       "anchor": {
-        "x": 1.5943647540983608,
-        "y": 7.285655737704918
+        "x": 5.646209016393443,
+        "y": 7.237704918032787
       },
       "prevControl": {
-        "x": 1.7679017603008875,
-        "y": 7.10569766625975
+        "x": 5.809267113913287,
+        "y": 7.048200150722809
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LStation"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 2.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -45,10 +45,10 @@
     "rotation": 125.00000000000001
   },
   "reversed": false,
-  "folder": "Matrix Station",
+  "folder": "Algae",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": -160.0
   },
   "useDefaultConstraints": false
 }

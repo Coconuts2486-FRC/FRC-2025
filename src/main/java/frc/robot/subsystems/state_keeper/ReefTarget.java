@@ -354,6 +354,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 10;
               case RIGHT -> 11;
+              case RIGHTCLOSE -> 11;
               case CENTER -> 10;
             };
         break;
@@ -362,6 +363,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 0;
               case RIGHT -> 1;
+              case RIGHTCLOSE -> 1;
               case CENTER -> 0;
             };
         break;
@@ -370,6 +372,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 2;
               case RIGHT -> 3;
+              case RIGHTCLOSE -> 3;
               case CENTER -> 2;
             };
         break;
@@ -378,6 +381,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 4;
               case RIGHT -> 5;
+              case RIGHTCLOSE -> 5;
               case CENTER -> 4;
             };
         break;
@@ -386,6 +390,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 6;
               case RIGHT -> 7;
+              case RIGHTCLOSE -> 7;
               case CENTER -> 6;
             };
         break;
@@ -394,6 +399,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 8;
               case RIGHT -> 9;
+              case RIGHTCLOSE -> 9;
               case CENTER -> 8;
             };
         break;
@@ -402,6 +408,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 2;
               case RIGHT -> 3;
+              case RIGHTCLOSE -> 3;
               case CENTER -> 2;
             };
         break;
@@ -410,6 +417,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 0;
               case RIGHT -> 1;
+              case RIGHTCLOSE -> 1;
               case CENTER -> 0;
             };
         break;
@@ -418,6 +426,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 10;
               case RIGHT -> 11;
+              case RIGHTCLOSE -> 11;
               case CENTER -> 10;
             };
         break;
@@ -426,6 +435,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 8;
               case RIGHT -> 9;
+              case RIGHTCLOSE -> 9;
               case CENTER -> 8;
             };
         break;
@@ -434,6 +444,7 @@ public class ReefTarget extends VirtualSubsystem {
             switch (position) {
               case LEFT -> 6;
               case RIGHT -> 7;
+              case RIGHTCLOSE -> 7;
               case CENTER -> 6;
             };
         break;
@@ -552,6 +563,7 @@ public class ReefTarget extends VirtualSubsystem {
                 switch (position) {
                   case LEFT -> DriveToPositionConstatnts.kLeftReefPost;
                   case RIGHT -> DriveToPositionConstatnts.kRightReefPost;
+                  case RIGHTCLOSE -> DriveToPositionConstatnts.kRightReefPostClose;
                   case CENTER -> DriveToPositionConstatnts.kAlgaeGrab;
                 },
                 new Rotation2d()));

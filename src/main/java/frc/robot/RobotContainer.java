@@ -299,13 +299,17 @@ public class RobotContainer {
         new DriveToPose(
             m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT));
 
+    DriveToPose driveRC =
+        new DriveToPose(
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHTCLOSE));
+
     DriveToPose driveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
 
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "AlignR", driveR.until(driveR::atGoal));
     NamedCommands.registerCommand( // Auto intake from source to desired position
-        "AlignRC", driveR.until(driveR::atGoal));
+        "AlignRC", driveRC.until(driveRC::atGoal));
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "AlignL", driveL.until(driveL::atGoal));
     NamedCommands.registerCommand(

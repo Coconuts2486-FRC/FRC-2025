@@ -25,6 +25,7 @@ public class MiscFuncs {
     LEFT, // Left reef post (coral)
     RIGHT, // Right reef post (coral)
     CENTER, // Center position (algae grab)
-    RightClose // Auto Stuff
+    RIGHTCLOSE // It's being weird in auto so this is to fix that its just RIGHT but closer to the
+    // tag
   }
 }

@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of Start H"
+            "pathName": "Start H"
           }
         },
         {
@@ -110,13 +110,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "HG Algae"
+                        "pathName": "Algae"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "HG Algae 2"
+                        "pathName": "Algae 2"
                       }
                     }
                   ]
@@ -136,7 +136,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "HG Algae 3"
+                        "pathName": "Algae 3"
                       }
                     },
                     {

@@ -3,11 +3,10 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
-    "Matrix Coral",
-    "Matrix Start",
     "Matrix Station",
-    "Algae",
-    "Una Auto"
+    "Matrix Start",
+    "Matrix Coral",
+    "Algae"
   ],
   "autoFolders": [
     "North"

@@ -272,7 +272,7 @@ public class RobotContainer {
                 .withTimeout(0.95)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
 
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( // This just raises the elevator to L4 without automatically scoring
         "E4",
         new ElevatorCommand(
             () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
@@ -280,12 +280,12 @@ public class RobotContainer {
             ElevatorConstants.kVelocity,
             m_elevator));
 
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",
         Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer).withTimeout(0.25));
 
     NamedCommands
-        .registerCommand( // Brings the elevator to the ground. Put after the race group to score.
+        .registerCommand( // Brings the elevator to the ground.
             "Bottom",
             new ElevatorCommand(
                     () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
@@ -306,17 +306,17 @@ public class RobotContainer {
     DriveToPose driveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
 
-    NamedCommands.registerCommand( // Auto intake from source to desired position
+    NamedCommands.registerCommand( // Auto aligns to right coral branchs right from the robots point of view
         "AlignR", driveR.until(driveR::atGoal));
-    NamedCommands.registerCommand( // Auto intake from source to desired position
+    NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
         "AlignRC", driveRC.until(driveRC::atGoal));
-    NamedCommands.registerCommand( // Auto intake from source to desired position
+    NamedCommands.registerCommand( // Auto aligns to left coral branchs left from the robots point of view
         "AlignL", driveL.until(driveL::atGoal));
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( // Auto aligns to the algae in the reef
         "Algae",
         new DriveToPose(
             m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( // This raises the elevator to the level of the aglae on the reef automaticlly based on april tags
         "deAlgae",
         Commands.parallel(
             new ElevatorCommand(
@@ -334,7 +334,7 @@ public class RobotContainer {
                                 () -> m_algaeMech.setPercent(0)))
                         .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2))))));
 
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( // This is to shoot the algae into the net
         "shootAlgae",
         Commands.parallel(
             new ElevatorCommand(
@@ -346,26 +346,23 @@ public class RobotContainer {
                 .withTimeout(.6)
                 .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
 
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( // This brings our algae mech back to starting position
         "resetAlgae",
         Commands.runOnce(() -> m_algaeMech.setIndexPose(3))
             .alongWith(Commands.run(() -> m_algaeMech.setPercent(0)))
             .alongWith(Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)));
 
-    NamedCommands.registerCommand(
+    NamedCommands.registerCommand( // Toeknee makes sure our robot doesn't destroy our algae mech when it comes down. It puts the pivot to algae holding posistion
         "ToeKnee", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech));
 
     NamedCommands.registerCommand( // Auto intake from source to desired position
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
 
-    NamedCommands.registerCommand( // Ends once coral is detected
+    NamedCommands.registerCommand( // Ends once coral is detected so the robot can start moving before fully intaked
         "CoralDetect",
         new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
-    NamedCommands.registerCommand( // Ends once coral is detected
+    NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
         "Timer", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.6));
-
-    // NamedCommands.registerCommand(
-    //     "Timer", new IntakeCommand(m_intake, 0.9, 0));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include

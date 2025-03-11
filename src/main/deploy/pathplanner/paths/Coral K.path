@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5795,
-        "y": 7.262
+        "x": 1.65,
+        "y": 7.21
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0370477228444073,
-        "y": 6.891374027229241
+        "x": 2.107547722844407,
+        "y": 6.839374027229241
       },
       "isLocked": false,
       "linkedName": "LStation"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.75,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

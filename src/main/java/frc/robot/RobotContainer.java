@@ -282,7 +282,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand(
         "Score",
-        Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer).withTimeout(0.3));
+        Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer).withTimeout(0.25));
 
     NamedCommands
         .registerCommand( // Brings the elevator to the ground. Put after the race group to score.

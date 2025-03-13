@@ -202,8 +202,9 @@ public class RobotContainer {
                       //   new VisionIOPhotonVision(cameraElevatorL, robotToCameraEL),
                       //   new VisionIOPhotonVision(cameraElevatorR, robotToCameraER),
                       new VisionIOPhotonVision(cameraCL, robotToCameraECL, BW1Stretch),
-                      new VisionIOPhotonVision(cameraCR, robotToCameraECR, BW2Stretch),
-                      new VisionIOPhotonVision(cameraIntake, robotToCameraIntake, BW4Stretch));
+                      new VisionIOPhotonVision(cameraCR, robotToCameraECR, BW2Stretch)
+                      //   new VisionIOPhotonVision(cameraIntake, robotToCameraIntake, BW4Stretch)
+                      );
               case LIMELIGHT ->
                   new Vision(
                       m_drivebase::addVisionMeasurement, new VisionIO() {}, new VisionIO() {});
@@ -234,9 +235,10 @@ public class RobotContainer {
                 // new VisionIOPhotonVisionSim(cameraElevatorR, robotToCameraER,
                 // m_drivebase::getPose),
                 new VisionIOPhotonVisionSim(cameraCR, robotToCameraECR, m_drivebase::getPose),
-                new VisionIOPhotonVisionSim(cameraCL, robotToCameraECL, m_drivebase::getPose),
-                new VisionIOPhotonVisionSim(
-                    cameraIntake, robotToCameraIntake, m_drivebase::getPose));
+                new VisionIOPhotonVisionSim(cameraCL, robotToCameraECL, m_drivebase::getPose)
+                // new VisionIOPhotonVisionSim(
+                //     cameraIntake, robotToCameraIntake, m_drivebase::getPose)
+                );
         m_accel = new Accelerometer(m_drivebase.getGyro());
         // m_coralState = new CoralState();
         break;
@@ -646,7 +648,9 @@ public class RobotContainer {
 
     operatorController
         .leftTrigger(0.1)
-        .onFalse(Commands.runOnce(() -> m_algaeMech.setPercent(0), m_algaeMech));
+        .onFalse(
+            Commands.runOnce(() -> m_algaeMech.setPercent(0), m_algaeMech)
+                .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(3))));
 
     operatorController
         .rightTrigger(.1)

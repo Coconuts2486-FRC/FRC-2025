@@ -191,7 +191,7 @@ public final class Constants {
     // These are heights off the ground of the top row of bolts on the elevator 1st stage
     public static final Distance kElevatorZeroHeight = Inches.of(40.375);
     public static final Distance kL2 = Inches.of(48.125); // Maybe 48.5
-    public static final Distance kL3 = Inches.of(55.25);
+    public static final Distance kL3 = Inches.of(55.15);
     public static final Distance kL4 = Inches.of(68.125);
     public static final Distance KAlgaeLower = Inches.of(56.8);
     public static final Distance KAlgaeUpper = Inches.of(65);
@@ -629,7 +629,7 @@ public final class Constants {
     public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "", 8);
     public static final RobotDeviceId LED = new RobotDeviceId(36, "", null);
 
-    public static final RobotDeviceId Coral_Scorer = new RobotDeviceId(16, "", 9);
+    // public static final RobotDeviceId Coral_Scorer = new RobotDeviceId(16, "", 9);
 
     /* BEAM BREAK and/or LIMIT SWITCH DIO CHANNELS */
     // This is where digital I/O feedback devices are defined
@@ -653,11 +653,11 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-6.5));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+6.5));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+6.75));
     public static Translation2d kRightReefPostClose =
-        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6.5));
+        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6.75));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
   }

@@ -21,7 +21,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.325
+                        "waitTime": 1.32
                       }
                     },
                     {
@@ -42,7 +42,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignR"
+                  "name": "AlignL"
                 }
               }
             ]
@@ -123,7 +123,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.325
+                        "waitTime": 1.32
                       }
                     },
                     {
@@ -225,7 +225,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.325
+                        "waitTime": 1.32
                       }
                     },
                     {

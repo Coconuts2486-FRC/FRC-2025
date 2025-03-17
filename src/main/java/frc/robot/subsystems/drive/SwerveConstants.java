@@ -13,12 +13,9 @@
 
 package frc.robot.subsystems.drive;
 
-import static edu.wpi.first.units.Units.*;
-
 import com.ctre.phoenix6.CANBus;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
-import frc.robot.Constants.PhysicalConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.util.YagslConstants;
 
@@ -35,8 +32,8 @@ public class SwerveConstants {
   public static final double kCoupleRatio;
   public static final double kDriveGearRatio;
   public static final double kSteerGearRatio;
-  public static final double kWheelRadiusInches = PhysicalConstants.kWheelRadius.in(Inches);
-  public static final double kWheelRadiusMeters = PhysicalConstants.kWheelRadius.in(Meters);
+  public static final double kWheelRadiusInches;
+  public static final double kWheelRadiusMeters;
   public static final String kCANbusName;
   public static final int kPigeonId;
   public static final double kSteerInertia;
@@ -116,8 +113,8 @@ public class SwerveConstants {
         kCoupleRatio = TunerConstants.FrontLeft.CouplingGearRatio;
         kDriveGearRatio = TunerConstants.FrontLeft.DriveMotorGearRatio;
         kSteerGearRatio = TunerConstants.FrontLeft.SteerMotorGearRatio;
-        // kWheelRadiusMeters = TunerConstants.FrontLeft.WheelRadius;
-        // kWheelRadiusInches = Units.metersToInches(kWheelRadiusMeters);
+        kWheelRadiusMeters = TunerConstants.FrontLeft.WheelRadius;
+        kWheelRadiusInches = Units.metersToInches(kWheelRadiusMeters);
         kCANbusName = TunerConstants.DrivetrainConstants.CANBusName;
         kPigeonId = TunerConstants.DrivetrainConstants.Pigeon2Id;
         kSteerInertia = TunerConstants.FrontLeft.SteerInertia;
@@ -201,8 +198,8 @@ public class SwerveConstants {
         kCoupleRatio = YagslConstants.kCoupleRatio;
         kDriveGearRatio = YagslConstants.kDriveGearRatio;
         kSteerGearRatio = YagslConstants.kSteerGearRatio;
-        // kWheelRadiusInches = YagslConstants.kWheelRadiusInches;
-        // kWheelRadiusMeters = Units.inchesToMeters(kWheelRadiusInches);
+        kWheelRadiusInches = YagslConstants.kWheelRadiusInches;
+        kWheelRadiusMeters = Units.inchesToMeters(kWheelRadiusInches);
         kCANbusName = YagslConstants.kCANbusName;
         kPigeonId = YagslConstants.kPigeonId;
         kSteerInertia = YagslConstants.kSteerInertia;

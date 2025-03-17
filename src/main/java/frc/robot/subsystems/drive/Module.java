@@ -35,41 +35,9 @@ public class Module {
   private final Alert turnEncoderDisconnectedAlert;
   private SwerveModulePosition[] odometryPositions = new SwerveModulePosition[] {};
 
-  // private static final LoggedTunableNumber drivekS =
-  //     new LoggedTunableNumber("Drive/Module/DrivekS");
-  // private static final LoggedTunableNumber drivekV =
-  //     new LoggedTunableNumber("Drive/Module/DrivekV");
-  // private static final LoggedTunableNumber drivekP =
-  //     new LoggedTunableNumber("Drive/Module/DrivekP");
-  // private static final LoggedTunableNumber drivekD =
-  //     new LoggedTunableNumber("Drive/Module/DrivekD");
-  // private static final LoggedTunableNumber turnkP = new
-  // LoggedTunableNumber("Drive/Module/TurnkP");
-  // private static final LoggedTunableNumber turnkD = new
-  // LoggedTunableNumber("Drive/Module/TurnkD");
-
-  // static {
-  //   switch (Constants.getRobot()) {
-  //     case LEONARDO, GEORGE -> {
-  //       // Multiplied by desired wheelTorqueNm
-  //       drivekP.initDefault(35.0);
-  //       drivekD.initDefault(0);
-  //       turnkP.initDefault(4000.0);
-  //       turnkD.initDefault(50.0);
-  //     }
-  //     default -> {
-  //       drivekP.initDefault(0.1);
-  //       drivekD.initDefault(0);
-  //       turnkP.initDefault(10.0);
-  //       turnkD.initDefault(0);
-  //     }
-  //   }
-  // }
-
   public Module(ModuleIO io, int index) {
     this.io = io;
     this.index = index;
-
     driveDisconnectedAlert =
         new Alert(
             "Disconnected drive motor on module " + Integer.toString(index) + ".",
@@ -86,16 +54,6 @@ public class Module {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Drive/Module" + Integer.toString(index), inputs);
-
-    // // Update tunable numbers
-    // if (drivekP.hasChanged(hashCode()) || drivekD.hasChanged(hashCode())) {
-    //   System.out.println("Changing Tunable Drive PID");
-    //   io.setDrivePID(drivekP.get(), 0, drivekD.get());
-    // }
-    // if (turnkP.hasChanged(hashCode()) || turnkD.hasChanged(hashCode())) {
-    //   System.out.println("Changing Tunable Steer PID");
-    //   io.setTurnPID(turnkP.get(), 0, turnkD.get());
-    // }
 
     // Calculate positions for odometry
     int sampleCount = inputs.odometryTimestamps.length; // All signals are sampled together
@@ -121,8 +79,6 @@ public class Module {
     // Apply setpoints
     io.setDriveVelocity(state.speedMetersPerSecond / kWheelRadiusMeters);
     io.setTurnPosition(state.angle);
-    Logger.recordOutput(
-        "Thingie/output_radpersec", state.speedMetersPerSecond / kWheelRadiusMeters);
   }
 
   /** Runs the module with the specified output while controlling to zero degrees. */

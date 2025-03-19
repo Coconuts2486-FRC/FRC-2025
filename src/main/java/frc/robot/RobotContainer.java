@@ -272,7 +272,7 @@ public class RobotContainer {
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                 .withTimeout(0.95)
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer)).withTimeout(0.25)));
 
     NamedCommands
         .registerCommand( // This just raises the elevator to L4 without automatically scoring

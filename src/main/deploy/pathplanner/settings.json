@@ -3,13 +3,16 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
+    "Floorin Four",
     "Matrix Station",
     "Matrix Start",
     "Matrix Coral",
+    "Floorin time",
     "Algae"
   ],
   "autoFolders": [
-    "North"
+    "South Florida",
+    "Arizona North"
   ],
   "defaultMaxVel": 3.5,
   "defaultMaxAccel": 3.5,

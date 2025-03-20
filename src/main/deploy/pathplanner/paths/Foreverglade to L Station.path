@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.998872950819672,
-        "y": 2.8142418032786884
+        "x": 3.7401639344262296,
+        "y": 5.019979508196721
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.786091982202088,
-        "y": 2.294804485349664
+        "x": 3.529500221414165,
+        "y": 5.2301966350279585
       },
       "isLocked": false,
-      "linkedName": "Floorin F"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.6370820643538135,
-        "y": 0.6668370133739415
+        "x": 1.67827868852459,
+        "y": 7.369569672131148
       },
       "prevControl": {
-        "x": 2.7742146188501,
-        "y": 1.3876024149217145
+        "x": 2.5276309316372423,
+        "y": 6.4083590995850415
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Floorin Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0.1,
-    "rotation": -126.0
+    "rotation": 126.0
   },
   "reversed": false,
   "folder": "Floorin time",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

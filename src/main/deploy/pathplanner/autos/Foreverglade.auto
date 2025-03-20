@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start Floorin"
+            "pathName": "Foreverglade Start"
           }
         },
         {
@@ -65,7 +65,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Start Floorin to the Station"
+                        "pathName": "Foreverglade Start to Station"
                       }
                     },
                     {
@@ -97,7 +97,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Keep Floorin to C"
+                        "pathName": "Foreverglade to K"
                       }
                     }
                   ]
@@ -167,7 +167,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Four Fourin back from C"
+                        "pathName": "Foreverglade to K Station"
                       }
                     },
                     {
@@ -199,7 +199,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Keep Floorin to D"
+                        "pathName": "Foreverglade to L"
                       }
                     }
                   ]
@@ -269,7 +269,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Keep Floorin back from D"
+                        "pathName": "Foreverglade to L Station"
                       }
                     },
                     {

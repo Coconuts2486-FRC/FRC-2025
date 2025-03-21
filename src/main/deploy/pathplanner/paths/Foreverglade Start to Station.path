@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.67827868852459,
-        "y": 7.369569672131148
+        "x": 1.7022540983606556,
+        "y": 7.357581967213115
       },
       "prevControl": {
-        "x": 2.812804989545193,
-        "y": 6.688822838041977
+        "x": 2.836780399381259,
+        "y": 6.6768351331239435
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Foreverglade Station"
     }
   ],
   "rotationTargets": [],
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.1,
+    "velocity": 0.0,
     "rotation": 126.0
   },
   "reversed": false,

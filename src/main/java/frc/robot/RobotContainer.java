@@ -521,7 +521,7 @@ public class RobotContainer {
         .whileTrue(
             new IntakeCommand(m_intake, 0.75, 0)
                 .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)));
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.5)));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController

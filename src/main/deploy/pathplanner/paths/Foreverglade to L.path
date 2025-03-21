@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.67827868852459,
-        "y": 7.369569672131148
+        "x": 1.7022540983606556,
+        "y": 7.357581967213115
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.250251254736459,
-        "y": 6.752077567194773
+        "x": 2.2742266645725246,
+        "y": 6.740089862276739
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Foreverglade Station"
     },
     {
       "anchor": {
-        "x": 3.5483606557377048,
-        "y": 5.343647540983607
+        "x": 3.35655737704918,
+        "y": 5.679303278688525
       },
       "prevControl": {
-        "x": 3.0997064032093697,
-        "y": 5.809516027604062
+        "x": 2.907903124520845,
+        "y": 6.145171765308979
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.5,
+    "velocity": 0.4,
     "rotation": 119.99999999999999
   },
   "reversed": false,

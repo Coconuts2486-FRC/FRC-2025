@@ -9,12 +9,14 @@
     "Matrix Coral",
     "Matrix Start",
     "Matrix Station",
+    "Posing",
     "Testing"
   ],
   "autoFolders": [
     "Arizona North",
-    "Testing",
-    "South Florida"
+    "Pose For the Camera",
+    "South Florida",
+    "Testing"
   ],
   "defaultMaxVel": 3.5,
   "defaultMaxAccel": 3.5,

@@ -492,23 +492,31 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-6.75));
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(-5.9));
+    // public static Translation2d kLeftReefPostClose =
+    //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+6.75));
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(+6.5));
     public static Translation2d kRightReefPostClose =
-        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6.75));
+        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
 
+    public static Translation2d kProcessor =
+        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(+6.0));
+
+    public static Translation2d kStation =
+        new Translation2d(Units.inchesToMeters(18.0), Units.inchesToMeters(0.0));
+
     // Constants used by the DriveToPose Command
-    public static final double drivekP = 0.8; // AutoConstants.kPPdrivePID.kP; // 0.8;
+    public static final double drivekP = AutoConstants.kPPdrivePID.kP; // 0.8;
     public static final double drivekD = AutoConstants.kPPdrivePID.kD; // 0.0;
     public static final double thetakP = AutoConstants.kPPsteerPID.kP; // 4.0;
     public static final double thetakD = AutoConstants.kPPsteerPID.kD; // 0.0;
 
     // Values in m/s
     public static final double driveMaxVelocity = 3.8;
-    public static final double driveMaxAcceleration = 3.0;
+    public static final double driveMaxAcceleration = 3.5;
     public static final double thetaMaxVelocity = Units.degreesToRadians(360.0);
     public static final double thetaMaxAcceleration = Units.degreesToRadians(480.0);
 
@@ -691,29 +699,6 @@ public final class Constants {
     // are defined
     // Example:
     public static final int CLIMB_SERVO = 0;
-  }
-
-  public static class DriveToPositionConstatnts {
-
-    // The robot is facing AWAY from the tag, so its pose angle matches that of the tag.
-    // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
-    // robot pose is 21" from the tag.
-    public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(-5.9));
-    // public static Translation2d kLeftReefPostClose =
-    //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
-    public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(+6.5));
-    public static Translation2d kRightReefPostClose =
-        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6));
-    public static Translation2d kAlgaeGrab =
-        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
-
-    public static Translation2d kProcessor =
-        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(+6.0));
-
-    public static Translation2d kStation =
-        new Translation2d(Units.inchesToMeters(18.0), Units.inchesToMeters(0.0));
   }
 
   /** AprilTag Field Layout ************************************************ */

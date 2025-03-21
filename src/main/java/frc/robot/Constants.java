@@ -501,25 +501,21 @@ public final class Constants {
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
 
     // Constants used by the DriveToPose Command
-    public static final double drivekP = AutoConstants.kPPdrivePID.kP; // 9.0;
+    public static final double drivekP = 0.8; // AutoConstants.kPPdrivePID.kP; // 0.8;
     public static final double drivekD = AutoConstants.kPPdrivePID.kD; // 0.0;
     public static final double thetakP = AutoConstants.kPPsteerPID.kP; // 4.0;
     public static final double thetakD = AutoConstants.kPPsteerPID.kD; // 0.0;
 
     // Values in m/s
-    public static final double driveMaxVelocity = 3.0;
-    public static final double driveMaxVelocitySlow = 1.0;
-    public static final double driveMaxAcceleration = 2.5;
+    public static final double driveMaxVelocity = 3.8;
+    public static final double driveMaxAcceleration = 3.0;
     public static final double thetaMaxVelocity = Units.degreesToRadians(360.0);
-    public static final double thetaMaxVelocitySlow = Units.degreesToRadians(90.0);
-    public static final double thetaMaxAcceleration = Units.degreesToRadians(720.0);
+    public static final double thetaMaxAcceleration = Units.degreesToRadians(480.0);
 
     public static final double driveTolerance = 0.01;
-    public static final double driveToleranceSlow = 0.06;
     public static final double thetaTolerance = Units.degreesToRadians(1.0);
-    public static final double thetaToleranceSlow = Units.degreesToRadians(3.0);
-    public static final double ffMinRadius = 0.2;
-    public static final double ffMaxRadius = 0.8;
+    public static final double ffMinRadius = 0.05; // 0.2;
+    public static final double ffMaxRadius = 0.1; // 0.8;
   }
 
   /** LED Constants ******************************************************** */

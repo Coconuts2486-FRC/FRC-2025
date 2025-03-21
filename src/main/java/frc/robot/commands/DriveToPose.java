@@ -9,6 +9,8 @@
 
 package frc.robot.commands;
 
+import static frc.robot.Constants.DriveToPositionConstatnts.*;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -16,16 +18,20 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.util.GeomUtil;
-import frc.robot.util.LoggedTunableNumber;
 import java.util.function.Supplier;
 import lombok.Getter;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * Drive to Pose Command
+ *
+ * <p>This command is used in both teleop and auto periods for autonomously driving the robot to a
+ * desired pose.
+ */
 public class DriveToPose extends Command {
   private static final LoggedTunableNumber drivekP = new LoggedTunableNumber("DriveToPose/DrivekP");
   private static final LoggedTunableNumber drivekD = new LoggedTunableNumber("DriveToPose/DrivekD");
@@ -79,6 +85,7 @@ public class DriveToPose extends Command {
   private final Drive drive;
   private final Supplier<Pose2d> target;
 
+  // Profiled PID controllers to run trapezoidal motion from current to desired pose
   private final ProfiledPIDController driveController =
       new ProfiledPIDController(
           0, 0.0, 0.0, new TrapezoidProfile.Constraints(0.0, 0.0), Constants.loopPeriodSecs);
@@ -86,11 +93,13 @@ public class DriveToPose extends Command {
       new ProfiledPIDController(
           0, 0.0, 0.0, new TrapezoidProfile.Constraints(0.0, 0.0), Constants.loopPeriodSecs);
 
+  // Various other values
   private Translation2d lastSetpointTranslation = new Translation2d();
   private double driveErrorAbs = 0.0;
   private double thetaErrorAbs = 0.0;
   @Getter private boolean running = false;
 
+  /** Constructor */
   public DriveToPose(Drive drive, Supplier<Pose2d> target) {
     this.drive = drive;
     this.target = target;
@@ -98,9 +107,11 @@ public class DriveToPose extends Command {
     // Enable continuous input for theta controller
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
+    // Lock-out Drive from other commands
     addRequirements(drive);
   }
 
+  /** Initialize the Command */
   @Override
   public void initialize() {
     Pose2d currentPose = drive.getPose();
@@ -127,36 +138,10 @@ public class DriveToPose extends Command {
     lastSetpointTranslation = currentPose.getTranslation();
   }
 
+  /** Execute the command */
   @Override
   public void execute() {
     running = true;
-
-    // Update from tunable numbers
-    if (driveMaxVelocity.hasChanged(hashCode())
-        || driveMaxVelocitySlow.hasChanged(hashCode())
-        || driveMaxAcceleration.hasChanged(hashCode())
-        || driveTolerance.hasChanged(hashCode())
-        || driveToleranceSlow.hasChanged(hashCode())
-        || thetaMaxVelocity.hasChanged(hashCode())
-        || thetaMaxVelocitySlow.hasChanged(hashCode())
-        || thetaMaxAcceleration.hasChanged(hashCode())
-        || thetaTolerance.hasChanged(hashCode())
-        || thetaToleranceSlow.hasChanged(hashCode())
-        || drivekP.hasChanged(hashCode())
-        || drivekD.hasChanged(hashCode())
-        || thetakP.hasChanged(hashCode())
-        || thetakD.hasChanged(hashCode())) {
-      driveController.setP(drivekP.get());
-      driveController.setD(drivekD.get());
-      driveController.setConstraints(
-          new TrapezoidProfile.Constraints(driveMaxVelocity.get(), driveMaxAcceleration.get()));
-      driveController.setTolerance(driveTolerance.get());
-      thetaController.setP(thetakP.get());
-      thetaController.setD(thetakD.get());
-      thetaController.setConstraints(
-          new TrapezoidProfile.Constraints(thetaMaxVelocity.get(), thetaMaxAcceleration.get()));
-      thetaController.setTolerance(thetaTolerance.get());
-    }
 
     // Get current pose and target pose
     Pose2d currentPose = drive.getPose();
@@ -165,10 +150,7 @@ public class DriveToPose extends Command {
     // Calculate drive speed
     double currentDistance = currentPose.getTranslation().getDistance(targetPose.getTranslation());
     double ffScaler =
-        MathUtil.clamp(
-            (currentDistance - ffMinRadius.get()) / (ffMaxRadius.get() - ffMinRadius.get()),
-            0.0,
-            1.0);
+        MathUtil.clamp((currentDistance - ffMinRadius) / (ffMaxRadius - ffMinRadius), 0.0, 1.0);
     driveErrorAbs = currentDistance;
     driveController.reset(
         lastSetpointTranslation.getDistance(targetPose.getTranslation()),
@@ -218,6 +200,7 @@ public class DriveToPose extends Command {
     Logger.recordOutput("DriveToPose/Velocity", driveVelocityScalar);
   }
 
+  /** End the command */
   @Override
   public void end(boolean interrupted) {
     drive.stop();

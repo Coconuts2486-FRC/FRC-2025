@@ -36,54 +36,6 @@ import org.littletonrobotics.junction.Logger;
  * desired pose.
  */
 public class DriveToPose extends Command {
-  private static final LoggedTunableNumber drivekP = new LoggedTunableNumber("DriveToPose/DrivekP");
-  private static final LoggedTunableNumber drivekD = new LoggedTunableNumber("DriveToPose/DrivekD");
-  private static final LoggedTunableNumber thetakP = new LoggedTunableNumber("DriveToPose/ThetakP");
-  private static final LoggedTunableNumber thetakD = new LoggedTunableNumber("DriveToPose/ThetakD");
-  private static final LoggedTunableNumber driveMaxVelocity =
-      new LoggedTunableNumber("DriveToPose/DriveMaxVelocity");
-  private static final LoggedTunableNumber driveMaxVelocitySlow =
-      new LoggedTunableNumber("DriveToPose/DriveMaxVelocitySlow");
-  private static final LoggedTunableNumber driveMaxAcceleration =
-      new LoggedTunableNumber("DriveToPose/DriveMaxAcceleration");
-  private static final LoggedTunableNumber thetaMaxVelocity =
-      new LoggedTunableNumber("DriveToPose/ThetaMaxVelocity");
-  private static final LoggedTunableNumber thetaMaxVelocitySlow =
-      new LoggedTunableNumber("DriveToPose/ThetaMaxVelocitySlow");
-  private static final LoggedTunableNumber thetaMaxAcceleration =
-      new LoggedTunableNumber("DriveToPose/ThetaMaxAcceleration");
-  private static final LoggedTunableNumber driveTolerance =
-      new LoggedTunableNumber("DriveToPose/DriveTolerance");
-  private static final LoggedTunableNumber driveToleranceSlow =
-      new LoggedTunableNumber("DriveToPose/DriveToleranceSlow");
-  private static final LoggedTunableNumber thetaTolerance =
-      new LoggedTunableNumber("DriveToPose/ThetaTolerance");
-  private static final LoggedTunableNumber thetaToleranceSlow =
-      new LoggedTunableNumber("DriveToPose/ThetaToleranceSlow");
-  private static final LoggedTunableNumber ffMinRadius =
-      new LoggedTunableNumber("DriveToPose/FFMinRadius");
-  private static final LoggedTunableNumber ffMaxRadius =
-      new LoggedTunableNumber("DriveToPose/FFMinRadius");
-
-  static {
-    drivekP.initDefault(9.0);
-    drivekD.initDefault(0.0);
-    thetakP.initDefault(4.0);
-    thetakD.initDefault(0.0);
-    // Values in m/s
-    driveMaxVelocity.initDefault(4.2);
-    driveMaxVelocitySlow.initDefault(1.33);
-    driveMaxAcceleration.initDefault(2.75);
-    thetaMaxVelocity.initDefault(Units.degreesToRadians(360.0));
-    thetaMaxVelocitySlow.initDefault(Units.degreesToRadians(90.0));
-    thetaMaxAcceleration.initDefault(Units.degreesToRadians(720.0));
-    driveTolerance.initDefault(0.01);
-    driveToleranceSlow.initDefault(0.06);
-    thetaTolerance.initDefault(Units.degreesToRadians(1.0));
-    thetaToleranceSlow.initDefault(Units.degreesToRadians(3.0));
-    ffMinRadius.initDefault(0.2);
-    ffMaxRadius.initDefault(0.8);
-  }
 
   private final Drive drive;
   private final Supplier<Pose2d> target;

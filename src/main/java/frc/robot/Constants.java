@@ -487,14 +487,14 @@ public final class Constants {
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
 
     // Constants used by the DriveToPose Command
-    public static final double drivekP = 0.8; // AutoConstants.kPPdrivePID.kP; // 0.8;
+    public static final double drivekP = AutoConstants.kPPdrivePID.kP; // 0.8;
     public static final double drivekD = AutoConstants.kPPdrivePID.kD; // 0.0;
     public static final double thetakP = AutoConstants.kPPsteerPID.kP; // 4.0;
     public static final double thetakD = AutoConstants.kPPsteerPID.kD; // 0.0;
 
     // Values in m/s
     public static final double driveMaxVelocity = 3.8;
-    public static final double driveMaxAcceleration = 3.0;
+    public static final double driveMaxAcceleration = 3.5;
     public static final double thetaMaxVelocity = Units.degreesToRadians(360.0);
     public static final double thetaMaxAcceleration = Units.degreesToRadians(480.0);
 

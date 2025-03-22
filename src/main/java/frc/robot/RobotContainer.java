@@ -309,14 +309,27 @@ public class RobotContainer {
     DriveToPose driveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
 
+
+
+        DriveToPose fastDriveR =
+        new DriveToPose(
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT));
+
+    DriveToPose fastDriveRC =
+        new DriveToPose(
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHTCLOSE));
+
+    DriveToPose fastDriveL =
+        new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
+
     NamedCommands
         .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
-            "AlignR", driveR.until(driveR::atGoal));
+            "AlignR", fastDriveR.until(driveR::atGoal));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
-        "AlignRC", driveRC.until(driveRC::atGoal));
+        "AlignRC", fastDriveRC.until(driveRC::atGoal));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignL", driveL.until(driveL::atGoal));
+            "AlignL", fastDriveL.until(driveL::atGoal));
     NamedCommands.registerCommand( // Auto aligns to the algae in the reef
         "Algae",
         new DriveToPose(

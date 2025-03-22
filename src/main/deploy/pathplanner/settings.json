@@ -3,13 +3,20 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
-    "Matrix Station",
-    "Matrix Start",
+    "Algae",
+    "Floorin Four",
+    "Floorin time",
     "Matrix Coral",
-    "Algae"
+    "Matrix Start",
+    "Matrix Station",
+    "Posing",
+    "Testing"
   ],
   "autoFolders": [
-    "North"
+    "Arizona North",
+    "Pose For the Camera",
+    "South Florida",
+    "Testing"
   ],
   "defaultMaxVel": 3.5,
   "defaultMaxAccel": 3.5,

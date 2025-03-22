@@ -5,15 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Start H"
+            "pathName": "Foreverglade Start"
           }
         },
         {
@@ -27,26 +21,13 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 2.75
+                        "waitTime": 1.35
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "L4"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.35
-                            }
-                          }
-                        ]
+                        "name": "Score"
                       }
                     }
                   ]
@@ -55,7 +36,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignR"
+                  "name": "E4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignRC"
                 }
               }
             ]
@@ -76,15 +63,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Algae"
+                        "pathName": "Foreverglade Start to Station"
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "named",
                       "data": {
-                        "waitTime": 1.5
+                        "name": "CoralDetect"
                       }
                     }
                   ]
@@ -102,24 +89,62 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
+                      "type": "named",
                       "data": {
-                        "waitTime": 0.75
+                        "name": "CoralDetect"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Algae"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Algae 2"
+                        "pathName": "Foreverglade to K"
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.475
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Score"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "E4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignL"
                 }
               }
             ]
@@ -130,19 +155,51 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
+                }
+              },
+              {
                 "type": "race",
                 "data": {
                   "commands": [
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Algae 3"
+                        "pathName": "Foreverglade to K Station"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "ToeKnee"
+                        "name": "CoralDetect"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Foreverglade to L"
                       }
                     }
                   ]
@@ -151,55 +208,74 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Bottom"
+                  "name": "CoralIntake"
                 }
               }
             ]
           }
         },
         {
-          "type": "sequential",
+          "type": "deadline",
           "data": {
             "commands": [
               {
-                "type": "race",
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "shootAlgae"
+                        "waitTime": 1.427
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "named",
                       "data": {
-                        "waitTime": 1.5
+                        "name": "Score"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "named",
+                "data": {
+                  "name": "E4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignRC"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
+                }
+              },
+              {
+                "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "resetAlgae"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Bottom"
-                      }
-                    },
-                    {
                       "type": "path",
                       "data": {
-                        "pathName": "Algae 4"
+                        "pathName": "Foreverglade to L Station"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
                       }
                     }
                   ]
@@ -212,6 +288,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Arizona North",
+  "folder": "South Florida",
   "choreoAuto": false
 }

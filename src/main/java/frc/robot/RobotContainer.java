@@ -272,7 +272,8 @@ public class RobotContainer {
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                 .withTimeout(0.95)
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer))));
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer))
+                .withTimeout(0.25)));
 
     NamedCommands
         .registerCommand( // This just raises the elevator to L4 without automatically scoring
@@ -520,7 +521,7 @@ public class RobotContainer {
         .whileTrue(
             new IntakeCommand(m_intake, 0.75, 0)
                 .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, 0.45)));
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.5)));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController

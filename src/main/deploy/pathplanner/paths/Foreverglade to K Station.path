@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.027868852459017,
+        "y": 5.163831967213115
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.8588109441911094,
+        "y": 5.383945975960044
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7022540983606556,
+        "y": 7.357581967213115
+      },
+      "prevControl": {
+        "x": 2.642506741445459,
+        "y": 6.476757787272978
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Foreverglade Station"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 126.0
+  },
+  "reversed": false,
+  "folder": "Floorin time",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 119.99999999999999
+  },
+  "useDefaultConstraints": true
+}

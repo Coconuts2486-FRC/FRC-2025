@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.6370820643538135,
+        "y": 0.6668370133739415
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.81237751890901,
+        "y": 0.8450826405637468
+      },
+      "isLocked": false,
+      "linkedName": "Floorin Station"
+    },
+    {
+      "anchor": {
+        "x": 3.7461554058527544,
+        "y": 3.053421279131356
+      },
+      "prevControl": {
+        "x": 3.0782235144612753,
+        "y": 2.2903239551417065
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Floorin C"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.8451436871859299,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 720.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.6,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -119.99999999999999
+  },
+  "reversed": false,
+  "folder": "Floorin Four",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -126.0
+  },
+  "useDefaultConstraints": false
+}

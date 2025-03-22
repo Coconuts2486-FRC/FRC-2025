@@ -73,6 +73,7 @@ import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOTalonFX;
+import frc.robot.subsystems.state_keeper.OtherTargets;
 import frc.robot.subsystems.state_keeper.ReefTarget;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
@@ -159,6 +160,7 @@ public class RobotContainer {
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
   private final ReefTarget m_reefTarget;
+  private final OtherTargets m_otherTargets;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
   private final LED m_led = LED.getInstance();
@@ -260,6 +262,7 @@ public class RobotContainer {
         break;
     }
     m_reefTarget = ReefTarget.getInstance(m_drivebase);
+    m_otherTargets = OtherTargets.getInstance(m_drivebase);
     // Named Commands For Pathplanner
     NamedCommands.registerCommand( // Runs elevator and coral scorer to score coral on L4.
         "L4",
@@ -309,9 +312,7 @@ public class RobotContainer {
     DriveToPose driveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
 
-
-
-        DriveToPose fastDriveR =
+    DriveToPose fastDriveR =
         new DriveToPose(
             m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT));
 
@@ -500,6 +501,8 @@ public class RobotContainer {
         .whileTrue(
             new DriveToPose(
                 m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
+
+    driverController.leftTrigger(.1).whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose()));
 
     // Drive to BARGE ALGAE scoring position
     // driverController

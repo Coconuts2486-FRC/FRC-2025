@@ -502,12 +502,12 @@ public class RobotContainer {
             new DriveToPose(
                 m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
 
-    driverController.leftTrigger(.1).whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose()));
+    driverController.leftTrigger(.1).whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getProcessorPose()));
 
     // Drive to BARGE ALGAE scoring position
-    // driverController
-    //     .a()
-    //     .whileTrue(new DriveToPose(m_drivebase, () -> m_reefTarget.getBargeScorePose()));
+    driverController
+        .a()
+        .whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose()));
 
     // Driver Right Bumper :>> Intake from the floor
     driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.35));

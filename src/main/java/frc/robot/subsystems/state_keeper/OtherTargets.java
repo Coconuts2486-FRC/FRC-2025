@@ -80,6 +80,21 @@ public class OtherTargets {
         .transformBy(new Transform2d(DriveToPositionConstatnts.kStation, new Rotation2d()));
   }
 
+  private Pose2d computeProcessorPose(int tagID) {
+    Optional<Pose3d> tagPose = AprilTagConstants.aprilTagLayout.getTagPose(tagID);
+
+    // For whatever reason, if the specified tag pose doesn't exist, return empty pose
+    if (tagPose.isEmpty()) {
+      return new Pose2d();
+    }
+
+    // Return the transformed location
+    return tagPose
+        .get()
+        .toPose2d()
+        .transformBy(new Transform2d(DriveToPositionConstatnts.kProcessor, new Rotation2d()));
+  }
+
   public Pose2d getPlayerStationPose() {
     switch (playerStation) {
       case 0:
@@ -105,5 +120,13 @@ public class OtherTargets {
               case Blue -> 12;
             });
     }
+  }
+
+  public Pose2d getProcessorPose() {
+    return computeProcessorPose(
+      switch (DriverStation.getAlliance().get()) {
+        case Red -> 3;
+        case Blue -> 16;
+      });
   }
 }

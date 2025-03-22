@@ -285,7 +285,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",
-        Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer).withTimeout(0.25));
+        Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer).withTimeout(0.25));
 
     NamedCommands.registerCommand( // Brings the elevator to the ground.
         "Bottom",
@@ -520,7 +520,7 @@ public class RobotContainer {
         .whileTrue(
             new IntakeCommand(m_intake, 0.75, 0)
                 .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, 0.7)));
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.45)));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController

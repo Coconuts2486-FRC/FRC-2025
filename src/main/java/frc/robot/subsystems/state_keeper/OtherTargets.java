@@ -77,7 +77,7 @@ public class OtherTargets {
     return tagPose
         .get()
         .toPose2d()
-        .transformBy(new Transform2d(DriveToPositionConstatnts.kStation, new Rotation2d()));
+        .transformBy(new Transform2d(DriveToPositionConstatnts.kStation, new Rotation2d(Math.PI)));
   }
 
   private Pose2d computeProcessorPose(int tagID) {
@@ -124,9 +124,9 @@ public class OtherTargets {
 
   public Pose2d getProcessorPose() {
     return computeProcessorPose(
-      switch (DriverStation.getAlliance().get()) {
-        case Red -> 3;
-        case Blue -> 16;
-      });
+        switch (DriverStation.getAlliance().get()) {
+          case Red -> 3;
+          case Blue -> 16;
+        });
   }
 }

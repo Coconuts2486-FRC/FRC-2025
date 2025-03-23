@@ -323,14 +323,20 @@ public class RobotContainer {
     DriveToPose fastDriveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
 
+    DriveToPose station =
+        new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose());
+
     NamedCommands
         .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
-            "AlignR", fastDriveR.until(driveR::atGoal));
+            "AlignR", driveR.until(driveR::atGoal));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
-        "AlignRC", fastDriveRC.until(driveRC::atGoal));
+        "AlignRC", driveRC.until(driveRC::atGoal));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignL", fastDriveL.until(driveL::atGoal));
+            "AlignL", driveL.until(driveL::atGoal));
+    NamedCommands
+        .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
+            "Station", station.until(station::atGoal));
     NamedCommands.registerCommand( // Auto aligns to the algae in the reef
         "Algae",
         new DriveToPose(
@@ -386,7 +392,7 @@ public class RobotContainer {
             "CoralDetect",
             new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
     NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
-        "Timer", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.6));
+        "Timer", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.2));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
@@ -502,7 +508,9 @@ public class RobotContainer {
             new DriveToPose(
                 m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
 
-    driverController.leftTrigger(.1).whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getProcessorPose()));
+    driverController
+        .leftTrigger(.1)
+        .whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getProcessorPose()));
 
     // Drive to BARGE ALGAE scoring position
     driverController
@@ -537,7 +545,7 @@ public class RobotContainer {
         .whileTrue(
             new IntakeCommand(m_intake, 0.75, 0)
                 .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, 0.5)));
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.6)));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController

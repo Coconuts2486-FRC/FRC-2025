@@ -667,7 +667,7 @@ public final class Constants {
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
 
     public static Translation2d kStation =
-        new Translation2d(Units.inchesToMeters(17.0), Units.inchesToMeters(0.0));
+        new Translation2d(Units.inchesToMeters(18.0), Units.inchesToMeters(0.0));
   }
 
   /** AprilTag Field Layout ************************************************ */

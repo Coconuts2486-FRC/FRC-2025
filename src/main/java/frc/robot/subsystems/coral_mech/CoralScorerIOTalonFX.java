@@ -24,8 +24,10 @@ import frc.robot.Constants.CANandPowerPorts;
 
 public class CoralScorerIOTalonFX implements CoralScorerIO {
 
+  // Define hardware
   private final DigitalInput lightStop = new DigitalInput(2);
   private final TalonFX coralIndexer = new TalonFX(CANandPowerPorts.CORAL_MECH.getDeviceNumber());
+
   public final int[] powerPorts = {CANandPowerPorts.CORAL_MECH.getPowerPort()};
 
   public CoralScorerIOTalonFX() {

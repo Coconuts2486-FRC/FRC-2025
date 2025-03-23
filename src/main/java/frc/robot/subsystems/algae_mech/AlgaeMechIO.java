@@ -13,11 +13,10 @@
 
 package frc.robot.subsystems.algae_mech;
 
+import frc.robot.util.RBSIIO;
 import org.littletonrobotics.junction.AutoLog;
 
-public interface AlgaeMechIO {
-
-  public final int[] powerPorts = {};
+public interface AlgaeMechIO extends RBSIIO {
 
   @AutoLog
   public static class AlgaeMechIOInputs {
@@ -25,24 +24,16 @@ public interface AlgaeMechIO {
     public double velocityRadPerSec = 0.0;
     public double appliedVolts = 0.0;
     public double[] currentAmps = new double[] {};
+    public double pivotEncoder = 0.0;
+    public double rollerVelRadPerSec = 0.0;
+    public double rollerVolts = 0.0;
+    public double[] rollerAmps = new double[] {};
   }
 
+  /** Updates the set of loggable inputs. */
   public default void updateInputs(AlgaeMechIOInputs inputs) {}
 
-  public default void stop() {}
-
-  public default void setCoast() {}
-
-  public default void setBrake() {}
-
   public default void pivotToPosition(double position) {}
-
-  /** Updates the set of loggable inputs. */
-
-  /** Run open loop at the specified voltage. */
-  public default void setVoltage(double volts) {}
-
-  public default void setPercent(double percent) {}
 
   /** Run closed loop at the specified velocity. */
   public default void setVelocity(double velocityRadPerSec, double ffVolts) {}

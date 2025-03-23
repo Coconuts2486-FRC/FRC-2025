@@ -13,11 +13,10 @@
 
 package frc.robot.subsystems.intake;
 
+import frc.robot.util.RBSIIO;
 import org.littletonrobotics.junction.AutoLog;
 
-public interface IntakeIO {
-
-  public final int[] powerPorts = {};
+public interface IntakeIO extends RBSIIO {
 
   @AutoLog
   public static class IntakeIOInputs {
@@ -32,8 +31,6 @@ public interface IntakeIO {
   public default void setPivotPosition(double position) {}
 
   public default void rollerDutyCycle(double speed) {}
-
-  public default void stop() {}
 
   public default void setPivotVolts(double volts) {}
 

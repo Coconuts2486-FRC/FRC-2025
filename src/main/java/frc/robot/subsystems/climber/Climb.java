@@ -36,15 +36,15 @@ public class Climb extends RBSISubsystem {
 
   public void goUntilPosition(double percent, double position) {
     if (io.getEncoderPose() > position) {
-      io.setMotorPercent(0);
+      io.setPercent(0);
     } else {
-      io.setMotorPercent(percent);
+      io.setPercent(percent);
     }
     LED.setClimbed(true);
   }
 
   public void manualControl(double controlVolts) {
-    io.twistMotorVolts(controlVolts * 3);
+    io.setVoltage(controlVolts * 3);
   }
 
   public void rachetToggle(double position) {
@@ -53,11 +53,11 @@ public class Climb extends RBSISubsystem {
   }
 
   public void stop() {
-    io.setMotorPercent(0);
+    io.setPercent(0);
   }
 
   @Override
   public int[] getPowerPorts() {
-    return io.powerPorts;
+    return io.getPowerPorts();
   }
 }

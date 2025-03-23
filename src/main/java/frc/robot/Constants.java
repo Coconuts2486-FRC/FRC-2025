@@ -28,6 +28,7 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -312,14 +313,10 @@ public final class Constants {
     public static final double kAlgaeRollerGearRatio = 10.0;
 
     // Pivot Gains
-    public static final double kPPivot = 10.0;
-    public static final double kIPivot = 0.0;
-    public static final double kDPivot = 0.0;
+    public static final PIDController kPivotController = new PIDController(10.0, 0.0, 0.0);
 
     // Roller Gains
-    public static final double kPRoller = 1.0;
-    public static final double kIRoller = 0.0;
-    public static final double kDRoller = 0.0;
+    public static final PIDController kRollerController = new PIDController(1.0, 0.0, 0.0);
 
     // Algae Mech Positions
     // TODO: Put these in ACTUAL DEGREES with an offset
@@ -630,6 +627,7 @@ public final class Constants {
     public static final RobotDeviceId ALGAE_ROLLER = new RobotDeviceId(27, "", 11);
     public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "", 8);
     public static final RobotDeviceId LED = new RobotDeviceId(36, "", null);
+    public static final RobotDeviceId CANDI_ENCODERS = new RobotDeviceId(41, "", null);
 
     // public static final RobotDeviceId Coral_Scorer = new RobotDeviceId(16, "", 9);
 

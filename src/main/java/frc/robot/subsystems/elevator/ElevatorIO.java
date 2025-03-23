@@ -16,12 +16,11 @@ package frc.robot.subsystems.elevator;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.LinearVelocity;
+import frc.robot.util.RBSIIO;
 import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLog;
 
-public interface ElevatorIO {
-
-  public final int[] powerPorts = {};
+public interface ElevatorIO extends RBSIIO {
 
   @AutoLog
   public static class ElevatorIOInputs {
@@ -35,8 +34,6 @@ public interface ElevatorIO {
   public default void updateInputs(ElevatorIOInputs inputs) {}
 
   public default void setPosistion(Distance posistion) {}
-
-  public default void stop() {}
 
   public default boolean getBottomStop() {
     return false;
@@ -73,8 +70,4 @@ public interface ElevatorIO {
   public default void setVoltage(double volts) {}
 
   public default void limit(BooleanSupplier limitSwitch) {}
-
-  public default void setCoast() {}
-
-  public default void setBrake() {}
 }

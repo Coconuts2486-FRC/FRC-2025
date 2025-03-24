@@ -267,7 +267,7 @@ public class RobotContainer {
     NamedCommands.registerCommand( // Runs elevator and coral scorer to score coral on L4.
         "L4",
         Commands.parallel( // Needs to be canceled with a race group right now, the race group wait
-            // timer is at 1.4 seconds.
+            // timer is at 1.35 seconds.
             new ElevatorCommand(
                 () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
                 ElevatorConstants.kAcceleration,
@@ -275,8 +275,7 @@ public class RobotContainer {
                 m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                 .withTimeout(0.95)
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer))
-                .withTimeout(0.25)));
+                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer))));
 
     NamedCommands
         .registerCommand( // This just raises the elevator to L4 without automatically scoring

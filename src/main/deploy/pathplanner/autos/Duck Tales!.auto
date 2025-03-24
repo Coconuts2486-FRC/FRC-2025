@@ -7,45 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start Floorin"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.35
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Score"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "E4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AlignRC"
-                }
-              }
-            ]
+            "pathName": "Life is like a huricane here in Duck - burg"
           }
         },
         {
@@ -63,15 +25,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Start Floorin to the Station"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Race cars, lasers, aeroplanes it's a, duck - blur"
                       }
                     }
                   ]
@@ -95,9 +57,9 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "wait",
                       "data": {
-                        "pathName": "Keep Floorin to C"
+                        "waitTime": 0.2
                       }
                     }
                   ]
@@ -113,41 +75,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.35
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Score"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "E4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AlignL"
-                }
-              }
-            ]
+            "pathName": "Might solve a mystery, or rewrite hist'ry"
           }
         },
         {
@@ -165,15 +95,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Four Fourin back from C"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Duck Tales! oo woo oo"
                       }
                     }
                   ]
@@ -197,9 +127,9 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "wait",
                       "data": {
-                        "pathName": "Keep Floorin to D"
+                        "waitTime": 0.2
                       }
                     }
                   ]
@@ -215,41 +145,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.35
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Score"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "E4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AlignRC"
-                }
-              }
-            ]
+            "pathName": "Every day they're out there making Duck Tales!"
           }
         },
         {
@@ -267,21 +165,59 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Keep Floorin back from D"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Tales of the daring do bad and good luck tales!"
                       }
                     }
                   ]
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.2
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "whooh ooh"
           }
         }
       ]

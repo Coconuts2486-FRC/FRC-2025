@@ -1,0 +1,77 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.4984631147540983,
+        "y": 7.255686475409835
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8235860846930332,
+        "y": 6.933407440364076
+      },
+      "isLocked": false,
+      "linkedName": "little einsteins!"
+    },
+    {
+      "anchor": {
+        "x": 3.7042008196721308,
+        "y": 4.978022540983606
+      },
+      "prevControl": {
+        "x": 3.1212076351811664,
+        "y": 5.570476409735816
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "a mission"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Elevator Up",
+      "waypointRelativePos": 0.7514932753164559,
+      "endWaypointRelativePos": 1.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "E4"
+        }
+      }
+    },
+    {
+      "name": "Score",
+      "waypointRelativePos": 0.9515130537974684,
+      "endWaypointRelativePos": 1.0,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Score"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 126.0
+  },
+  "reversed": false,
+  "folder": "Kate Negitive Energies",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 126.0
+  },
+  "useDefaultConstraints": true
+}

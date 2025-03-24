@@ -4,20 +4,15 @@
   "holonomicMode": true,
   "pathFolders": [
     "Algae",
-    "Floorin Four",
-    "Floorin time",
+    "Kate Positive Energies",
     "Matrix Coral",
     "Matrix Start",
     "Matrix Station",
-    "Kate Positive Energies",
-    "Posing",
-    "Testing"
+    "Kate Negitive Energies"
   ],
   "autoFolders": [
     "Arizona North",
-    "Pose For the Camera",
-    "South Florida",
-    "Testing"
+    "South Florida"
   ],
   "defaultMaxVel": 2.0,
   "defaultMaxAccel": 2.0,

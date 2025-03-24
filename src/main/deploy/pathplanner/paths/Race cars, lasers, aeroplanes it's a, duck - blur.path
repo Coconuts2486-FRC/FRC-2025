@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6370820643538135,
-        "y": 0.6668370133739415
+        "x": 4.95092213114754,
+        "y": 5.157838114754097
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7301344014830509,
-        "y": 1.6735161215572045
+        "x": 4.303828148835732,
+        "y": 5.73746257404142
       },
       "isLocked": false,
-      "linkedName": "Floorin Station"
+      "linkedName": "a trip"
     },
     {
       "anchor": {
-        "x": 2.880168332891949,
-        "y": 3.802003608315678
+        "x": 1.8101434426229508,
+        "y": 7.495440573770491
       },
       "prevControl": {
-        "x": 2.1023921643273304,
-        "y": 3.754267081567796
+        "x": 2.0361690476473893,
+        "y": 7.388611617614697
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "rocket ship"
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.5,
-    "rotation": 180.0
+    "velocity": 0,
+    "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Floorin time",
+  "folder": "Kate Negitive Energies",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

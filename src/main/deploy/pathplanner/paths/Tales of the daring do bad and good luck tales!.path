@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.021632928363347,
-        "y": 2.8931214413400426
+        "x": 3.7042008196721308,
+        "y": 4.978022540983606
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4649921942675985,
-        "y": 2.3826476746411744
+        "x": 2.9665469903949466,
+        "y": 5.606479430761912
       },
       "isLocked": false,
-      "linkedName": "Floorin D"
+      "linkedName": "a mission"
     },
     {
       "anchor": {
-        "x": 1.6370820643538135,
-        "y": 0.6668370133739415
+        "x": 1.2227459016393443,
+        "y": 7.039907786885245
       },
       "prevControl": {
-        "x": 2.2357872094492732,
-        "y": 1.2031479764634434
+        "x": 1.7148589765762667,
+        "y": 6.597405696691765
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Floorin Station"
+      "linkedName": "the countdown"
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.6,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": -126.0
+    "velocity": 0,
+    "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Floorin Four",
+  "folder": "Kate Negitive Energies",
   "idealStartingState": {
-    "velocity": 0.1,
-    "rotation": -119.99999999999999
+    "velocity": 0,
+    "rotation": 126.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

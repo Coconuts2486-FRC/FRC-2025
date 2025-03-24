@@ -77,7 +77,7 @@ public class CoralScorer extends RBSISubsystem {
   }
 
   public void runVolts(double volts) {
-    io.setVolts(volts);
+    io.setVoltage(volts);
   }
 
   public void setVelocity(double velocity) {
@@ -90,13 +90,12 @@ public class CoralScorer extends RBSISubsystem {
       io.setPercentOut(.15);
       hasCoral = true;
     } else {
-
-      io.setPercentOut(0);
+      io.setPercent(0);
     }
   }
 
   public void setCoralPercent(double percent) {
-    io.setPercentOut(percent);
+    io.setPercent(percent);
 
     if (percent > 0) {
       hasCoral = false;

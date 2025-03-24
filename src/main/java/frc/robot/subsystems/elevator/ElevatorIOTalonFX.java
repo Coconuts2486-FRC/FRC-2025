@@ -209,7 +209,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
    */
   @Override
   public void setVoltage(double volts) {
-    m_elevatorMotor.setControl(new VoltageOut(volts));
+    m_elevatorMotor.setControl(new VoltageOut(volts).withEnableFOC(true));
   }
 
   /**

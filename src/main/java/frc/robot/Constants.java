@@ -28,7 +28,6 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -232,13 +231,10 @@ public final class Constants {
     // Idle Mode
     public static final MotorIdleMode kCoralIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // Gear Ratio
-    // TODO: Get the REAL gear ratio
-    public static final double kCoralGearRatio = 10.0;
+    // Physical Things on the Robot
+    public static final double kCoralGearRatio = 3.0;
 
     // mode real/replay
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
     // motor configs
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
@@ -248,12 +244,9 @@ public final class Constants {
     public static final double kDReal = 0.0;
 
     // mode sim
-    public static final double kStaticGainSim = 0.1;
-    public static final double kVelocityGainSim = 0.05;
     // motor configs
-    public static final double kGSim = 0;
-    public static final double kSSim = 0;
-    public static final double kVSim = 0;
+    public static final double kSSim = 0.1;
+    public static final double kVSim = 0.05;
     public static final double kASim = 0;
     public static final double kPSim = 0;
     public static final double kISim = 0;
@@ -267,13 +260,29 @@ public final class Constants {
     public static final MotorIdleMode kIntakePivotIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
     public static final MotorIdleMode kIntakeRollerIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // Gear Ratio
-    public static final double kIntakePivotGearRatio = 10.0;
-    public static final double kIntakeRollerGearRatio = 10.0;
+    // Physical Things on the Robot
+    public static final double kIntakePivotGearRatio = (50. / 12.) * (60. / 20.) * (32. / 16.);
+    public static final double kIntakeRollerGearRatio = (40. / 12.);
 
     // mode real/replay
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
+    // motor configs
+    // public static final double kSReal = 10.0;
+    // public static final double kVReal = 0.0018629;
+    // public static final double kAReal = 0.0;
+    public static final double kPRealRoller = 1.0;
+    public static final double kIRealRoller = 0.0;
+    public static final double kDRealRoller = 0.0;
+
+    // mode real/replay
+    // motor configs
+    // public static final double kSReal = 10.0;
+    // public static final double kVReal = 0.0018629;
+    // public static final double kAReal = 0.0;
+    public static final double kPRealPivot = 1.5;
+    public static final double kIRealPivot = 0.0;
+    public static final double kDRealPivot = 0.0;
+
+    // mode real/replay
     // motor configs
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
@@ -283,12 +292,9 @@ public final class Constants {
     public static final double kDReal = 0.0;
 
     // mode sim
-    public static final double kStaticGainSim = 0.1;
-    public static final double kVelocityGainSim = 0.05;
     // motor configs
-    public static final double kGSim = 0;
-    public static final double kSSim = 0;
-    public static final double kVSim = 0;
+    public static final double kSSim = 0.1;
+    public static final double kVSim = 0.05;
     public static final double kASim = 0;
     public static final double kPSim = 0;
     public static final double kISim = 0;
@@ -307,18 +313,9 @@ public final class Constants {
     public static final MotorIdleMode kAlgaePivotIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
     public static final MotorIdleMode kAlgaeRollerIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // Gear Ratio
-    // TODO: Get ACTUAL GEAR RATIOS from Eugene
+    // Physical Things on the Robot
     public static final double kAlgaePivotGearRatio = 10.0;
     public static final double kAlgaeRollerGearRatio = 10.0;
-
-    // Pivot Gains
-    public static final PIDController kPivotController = new PIDController(10.0, 0.0, 0.0);
-
-    // Roller Gains
-    public static final PIDController kRollerController = new PIDController(1.0, 0.0, 0.0);
-
-    // Algae Mech Positions
     // TODO: Put these in ACTUAL DEGREES with an offset
     public static final double kStowPos = .209;
     public static final double kHorizPos = .35;
@@ -330,6 +327,23 @@ public final class Constants {
     // public static final Angle kReefPos = Degrees.of(-35.0);
     // public static final Angle kPivotOffset = Rotations.of(0.43);
 
+    // mode real/replay
+    // motor configs
+    // public static final double kSReal = 10.0;
+    // public static final double kVReal = 0.0018629;
+    // public static final double kAReal = 0.0;
+    public static final double kPRealRoller = 1.0;
+    public static final double kIRealRoller = 0.0;
+    public static final double kDRealRoller = 0.0;
+
+    // mode real/replay
+    // motor configs
+    // public static final double kSReal = 10.0;
+    // public static final double kVReal = 0.0018629;
+    // public static final double kAReal = 0.0;
+    public static final double kPRealPivot = 10.0;
+    public static final double kIRealPivot = 0.0;
+    public static final double kDRealPivot = 0.0;
   }
 
   /** Climb Subsystem Constants ******************************************** */

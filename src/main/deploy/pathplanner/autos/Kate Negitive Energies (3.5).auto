@@ -21,7 +21,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.66
+                        "waitTime": 0.76
                       }
                     },
                     {
@@ -111,15 +111,15 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.25
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "L4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.25
                 }
               }
             ]

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.95092213114754,
-        "y": 5.157838114754097
+        "x": 4.9822500000000005,
+        "y": 5.22425
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.303828148835732,
-        "y": 5.73746257404142
+        "x": 4.335156017688193,
+        "y": 5.803874459287322
       },
       "isLocked": false,
       "linkedName": "a trip"
     },
     {
       "anchor": {
-        "x": 1.8101434426229508,
-        "y": 7.495440573770491
+        "x": 1.6575,
+        "y": 7.3985
       },
       "prevControl": {
-        "x": 2.0361690476473893,
-        "y": 7.388611617614697
+        "x": 1.8835256050244384,
+        "y": 7.2916710438442065
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.25,
+    "maxAcceleration": 3.25,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

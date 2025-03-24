@@ -24,6 +24,7 @@ public interface CoralScorerIO extends RBSIIO {
     public double velocityRadPerSec = 0.0;
     public double appliedVolts = 0.0;
     public double[] currentAmps = new double[] {};
+    public boolean lightStop = false;
   }
 
   public default void updateInputs(CoralScorerIOInputs inputs) {}

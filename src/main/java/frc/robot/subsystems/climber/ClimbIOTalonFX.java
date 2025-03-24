@@ -20,11 +20,9 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.swerve.SwerveModuleConstants.ClosedLoopOutputType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
@@ -48,15 +46,9 @@ public class ClimbIOTalonFX implements ClimbIO {
   // TODO: Convert this to run on a CANdi; fuse to CLIMB motor
   private final DutyCycleEncoder m_climbEncoder =
       new DutyCycleEncoder(CANandPowerPorts.CLIMB_PIVOT_ENCODER);
-  private final ClosedLoopOutputType m_closedLoopOutput =
-      switch (Constants.getPhoenixPro()) {
-        case LICENSED -> ClosedLoopOutputType.TorqueCurrentFOC;
-        case UNLICENSED -> ClosedLoopOutputType.Voltage;
-      };
 
   // CTRE control requests
   private final VoltageOut voltageRequest = new VoltageOut(0);
-  private final TorqueCurrentFOC torqueCurrentRequest = new TorqueCurrentFOC(0);
 
   // Status signals from CTRE for logging
   private final StatusSignal<Angle> climbPosition = m_climbMotor.getPosition();
@@ -109,6 +101,33 @@ public class ClimbIOTalonFX implements ClimbIO {
     inputs.currentAmps = new double[] {climbCurrent.getValueAsDouble()};
   }
 
+  /** Configure the PID */
+  @Override
+  public void configPID(double kP, double kI, double kD) {
+    Slot0Configs pid = new Slot0Configs();
+    pid.withKP(kP);
+    pid.withKI(kI);
+    pid.withKD(kD);
+    m_climbMotor.getConfigurator().apply(pid);
+  }
+
+  /**
+   * Run the CLIMB motor at a specified voltage
+   *
+   * <p>NOTE: This is only used under MANUAL CONTROL for development and debugging, and should not
+   * be used in competition!!
+   */
+  @Override
+  public void setVoltage(double volts) {
+    m_climbMotor.setControl(voltageRequest.withOutput(volts).withEnableFOC(true));
+  }
+
+  /** Run the CLIMB motor at a specified duty cycle */
+  @Override
+  public void setPercent(double percent) {
+    m_climbMotor.setControl(new DutyCycleOut(percent).withEnableFOC(true));
+  }
+
   /** Set the ratcheting servo position */
   @Override
   public void turnClimbServo(double position) {
@@ -123,40 +142,9 @@ public class ClimbIOTalonFX implements ClimbIO {
         new DutyCycleOut(-pid.calculate(m_climbEncoder.get(), position)).withEnableFOC(true));
   }
 
-  /**
-   * Run the CLIMB motor at a specified voltage
-   *
-   * <p>NOTE: This is only used under MANUAL CONTROL for development and debugging, and should not
-   * be used in competition!!
-   */
-  @Override
-  public void setVoltage(double volts) {
-    m_climbMotor.setControl(
-        switch (m_closedLoopOutput) {
-          case Voltage -> voltageRequest.withOutput(volts);
-          case TorqueCurrentFOC -> torqueCurrentRequest.withOutput(volts);
-        });
-  }
-
-  /** Run the CLIMB motor at a specified duty cycle */
-  @Override
-  public void setPercent(double percent) {
-    m_climbMotor.setControl(new DutyCycleOut(percent).withEnableFOC(true));
-  }
-
   /** Get the CLIMB encoder position */
   @Override
   public double getEncoderPose() {
     return m_climbEncoder.get();
-  }
-
-  /** Configure the PID */
-  @Override
-  public void configPID(double kP, double kI, double kD) {
-    Slot0Configs pid = new Slot0Configs();
-    pid.withKP(kP);
-    pid.withKI(kI);
-    pid.withKD(kD);
-    m_climbMotor.getConfigurator().apply(pid);
   }
 }

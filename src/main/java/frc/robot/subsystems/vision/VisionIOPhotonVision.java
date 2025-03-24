@@ -30,7 +30,6 @@ import org.photonvision.PhotonCamera;
 public class VisionIOPhotonVision implements VisionIO {
   protected final PhotonCamera camera;
   protected final Transform3d robotToCamera;
-  protected final double cameraDistStretch;
 
   /**
    * Creates a new VisionIOPhotonVision.
@@ -38,24 +37,20 @@ public class VisionIOPhotonVision implements VisionIO {
    * @param name The configured name of the camera.
    * @param rotationSupplier The 3D position of the camera relative to the robot.
    */
-  public VisionIOPhotonVision(String name, Transform3d robotToCamera, double cameraDistStretch) {
+  public VisionIOPhotonVision(String name, Transform3d robotToCamera) {
     camera = new PhotonCamera(name);
     this.robotToCamera = robotToCamera;
-    this.cameraDistStretch = cameraDistStretch;
   }
 
   @Override
   public void updateInputs(VisionIOInputs inputs) {
     inputs.connected = camera.isConnected();
 
-    // TODO: Find the expensive function / object, and initialize it on robot/class
-    // initialization!!!
-
     // Read new camera observations
     Set<Short> tagIds = new HashSet<>();
     List<PoseObservation> poseObservations = new LinkedList<>();
     for (var result : camera.getAllUnreadResults()) {
-      // Update latest target observation container
+      // Update latest target observation
       if (result.hasTargets()) {
         inputs.latestTargetObservation =
             new TargetObservation(
@@ -77,14 +72,13 @@ public class VisionIOPhotonVision implements VisionIO {
         // Calculate average tag distance
         double totalTagDistance = 0.0;
         for (var target : result.targets) {
-          totalTagDistance +=
-              target.bestCameraToTarget.getTranslation().times(cameraDistStretch).getNorm();
+          totalTagDistance += target.bestCameraToTarget.getTranslation().getNorm();
         }
 
         // Add tag IDs
         tagIds.addAll(multitagResult.fiducialIDsUsed);
 
-        // Add observation to container
+        // Add observation
         poseObservations.add(
             new PoseObservation(
                 result.getTimestampSeconds(), // Timestamp
@@ -102,13 +96,7 @@ public class VisionIOPhotonVision implements VisionIO {
         if (tagPose.isPresent()) {
           Transform3d fieldToTarget =
               new Transform3d(tagPose.get().getTranslation(), tagPose.get().getRotation());
-          Transform3d cameraToTarget =
-              new Transform3d(
-                  target
-                      .bestCameraToTarget
-                      .getTranslation()
-                      .times(cameraDistStretch), // Stretch Distance
-                  target.bestCameraToTarget.getRotation()); // Do NOT change rotation
+          Transform3d cameraToTarget = target.bestCameraToTarget;
           Transform3d fieldToCamera = fieldToTarget.plus(cameraToTarget.inverse());
           Transform3d fieldToRobot = fieldToCamera.plus(robotToCamera.inverse());
           Pose3d robotPose = new Pose3d(fieldToRobot.getTranslation(), fieldToRobot.getRotation());
@@ -116,7 +104,7 @@ public class VisionIOPhotonVision implements VisionIO {
           // Add tag ID
           tagIds.add((short) target.fiducialId);
 
-          // Add observation to container
+          // Add observation
           poseObservations.add(
               new PoseObservation(
                   result.getTimestampSeconds(), // Timestamp

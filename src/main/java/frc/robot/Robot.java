@@ -13,9 +13,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.commands.FollowPathCommand;
-import com.pathplanner.lib.pathfinding.LocalADStar;
-import com.pathplanner.lib.pathfinding.Pathfinding;
 import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -97,12 +94,6 @@ public class Robot extends LoggedRobot {
     // Create a timer to disable motor brake a few seconds after disable. This will let the robot
     // stop immediately when disabled, but then also let it be pushed more
     m_disabledTimer = new Timer();
-  }
-
-  // You need this for pathfinding in teleOp
-  public void robootInit() {
-    Pathfinding.setPathfinder(new LocalADStar());
-    FollowPathCommand.warmupCommand().schedule();
   }
 
   /** This function is called periodically during all modes. */

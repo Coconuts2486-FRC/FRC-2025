@@ -28,7 +28,7 @@ import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
  * value not in dashboard.
  */
 public class LoggedTunableNumber implements DoubleSupplier {
-  private static final String tableKey = "/Tuning";
+  private static final String tableKey = "TunableNumbers";
 
   private final String key;
   private boolean hasDefault = false;
@@ -66,7 +66,7 @@ public class LoggedTunableNumber implements DoubleSupplier {
       hasDefault = true;
       this.defaultValue = defaultValue;
       if (Constants.tuningMode) {
-        dashboardNumber = new LoggedNetworkNumber(key, defaultValue);
+        dashboardNumber = new LoggedNetworkNumber("SmartDashboard/" + key, defaultValue);
       }
     }
   }

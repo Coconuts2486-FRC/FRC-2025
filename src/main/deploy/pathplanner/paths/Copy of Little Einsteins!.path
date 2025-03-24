@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9799180327868857,
-        "y": 5.133862704918033
+        "x": 4.021982783564814,
+        "y": 5.170599320023148
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.410644448583243,
-        "y": 5.6308353337937485
+        "x": 3.4527091993611716,
+        "y": 5.667571948898863
       },
       "isLocked": false,
       "linkedName": "the sky"
@@ -48,7 +48,7 @@
   "folder": "Kate Negitive Energies",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": false
 }

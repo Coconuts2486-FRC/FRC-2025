@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.979905382566311,
-        "y": 7.259168099938551
+        "x": 1.982947938446042,
+        "y": 7.285896826859436
       },
       "isLocked": false,
       "linkedName": "rocket ship"
     },
     {
       "anchor": {
-        "x": 3.9799180327868857,
-        "y": 5.133862704918033
+        "x": 4.021982783564814,
+        "y": 5.170599320023148
       },
       "prevControl": {
-        "x": 3.789629866663197,
-        "y": 5.350256340998327
+        "x": 3.7641444328585867,
+        "y": 5.451617540229753
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Kate Negitive Energies",

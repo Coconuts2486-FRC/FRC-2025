@@ -1,3 +1,16 @@
+// Copyright (c) 2025 FRC 2486
+// http://github.com/Coconuts2486-FRC
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// version 3 as published by the Free Software Foundation or
+// available in the root directory of this project.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+
 package frc.robot.subsystems.algae_mech;
 
 import static edu.wpi.first.units.Units.*;
@@ -5,15 +18,16 @@ import static frc.robot.Constants.AlgaeMechConstants.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.ClosedLoopOutputType;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -22,6 +36,8 @@ import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants;
 import frc.robot.Constants.CANandPowerPorts;
+import frc.robot.Constants.PowerConstants;
+import frc.robot.util.PhoenixUtil;
 
 /** Algae Mechanism TalonFX-controlled Hardware Class */
 public class AlgaeMechIOTalonFX implements AlgaeMechIO {
@@ -40,7 +56,7 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
       };
 
   // CTRE control requests
-  // private final VoltageOut voltageRequest = new VoltageOut(0);
+  private final VoltageOut voltageRequest = new VoltageOut(0);
   // private final PositionVoltage positionVoltageRequest = new PositionVoltage(0.0);
   private final VelocityVoltage velocityVoltageRequest = new VelocityVoltage(0.0);
   // private final TorqueCurrentFOC torqueCurrentRequest = new TorqueCurrentFOC(0);
@@ -67,23 +83,48 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
   private TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
   private TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
 
+  private final PIDController pivotController = new PIDController(kPRealPivot, 0, kDRealPivot);
+
   /** Constructor for using a TalonFX to drive the ALGAE mechanism */
   public AlgaeMechIOTalonFX() {
 
-    // TODO: Pull PID values from Constants rather than defining them here
-    var PIDConfig = new Slot0Configs();
-    PIDConfig.kP = 1;
-    PIDConfig.kI = 0;
-    PIDConfig.kD = 0;
+    // Set and apply TalonFX Configurations
+    rollerConfig.Slot0 = new Slot0Configs().withKP(kPRealRoller).withKI(0.0).withKD(kDRealRoller);
+    rollerConfig.TorqueCurrent.PeakForwardTorqueCurrent = PowerConstants.kMotorPortMaxCurrent;
+    rollerConfig.TorqueCurrent.PeakReverseTorqueCurrent = -PowerConstants.kMotorPortMaxCurrent;
+    rollerConfig.CurrentLimits.StatorCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
+    rollerConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    rollerConfig.CurrentLimits.SupplyCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
+    rollerConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    rollerConfig.ClosedLoopRamps.TorqueClosedLoopRampPeriod = Constants.loopPeriodSecs;
+    rollerConfig.MotorOutput.NeutralMode =
+        switch (kAlgaeRollerIdle) {
+          case COAST -> NeutralModeValue.Coast;
+          case BRAKE -> NeutralModeValue.Brake;
+        };
+    PhoenixUtil.tryUntilOk(5, () -> m_rollerMotor.getConfigurator().apply(rollerConfig, 0.25));
 
-    rollerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    var ramp = new OpenLoopRampsConfigs();
-    // TODO: Whis is this used for?
-    ramp.withDutyCycleOpenLoopRampPeriod(0.25);
-    m_rollerMotor.getConfigurator().apply(rollerConfig);
-    m_rollerMotor.getConfigurator().apply(PIDConfig);
-    pivotConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    m_pivotMotor.getConfigurator().apply(pivotConfig);
+    pivotConfig.Slot0 = new Slot0Configs().withKP(kPRealPivot).withKI(0.0).withKD(kDRealPivot);
+    pivotConfig.TorqueCurrent.PeakForwardTorqueCurrent = PowerConstants.kMotorPortMaxCurrent;
+    pivotConfig.TorqueCurrent.PeakReverseTorqueCurrent = -PowerConstants.kMotorPortMaxCurrent;
+    pivotConfig.CurrentLimits.StatorCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
+    pivotConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    pivotConfig.CurrentLimits.SupplyCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
+    pivotConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    pivotConfig.ClosedLoopRamps.TorqueClosedLoopRampPeriod = Constants.loopPeriodSecs;
+    pivotConfig.MotorOutput.NeutralMode =
+        switch (kAlgaeRollerIdle) {
+          case COAST -> NeutralModeValue.Coast;
+          case BRAKE -> NeutralModeValue.Brake;
+        };
+    PhoenixUtil.tryUntilOk(5, () -> m_pivotMotor.getConfigurator().apply(pivotConfig, 0.25));
+
+    BaseStatusSignal.setUpdateFrequencyForAll(
+        50.0, rollerVelocity, rollerAppliedVolts, rollerCurrent);
+    m_rollerMotor.optimizeBusUtilization();
+    BaseStatusSignal.setUpdateFrequencyForAll(
+        50.0, pivotPosition, pivotVelocity, pivotAppliedVolts, pivotCurrent);
+    m_pivotMotor.optimizeBusUtilization();
   }
 
   /** Update the inputs for / from logs */
@@ -104,9 +145,46 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
     inputs.appliedVolts = pivotAppliedVolts.getValueAsDouble();
     inputs.currentAmps = new double[] {pivotCurrent.getValueAsDouble()};
     inputs.pivotEncoder = m_pivotEncoder.get();
-    inputs.rollerVelRadPerSec = Units.rotationsToRadians(rollerVelocity.getValueAsDouble());
+    inputs.rollerVelRadPerSec =
+        Units.rotationsToRadians(rollerVelocity.getValueAsDouble()) / kAlgaeRollerGearRatio;
     inputs.rollerVolts = rollerAppliedVolts.getValueAsDouble();
     inputs.rollerAmps = new double[] {rollerCurrent.getValueAsDouble()};
+  }
+
+  /**
+   * Configure the PID of... the device?
+   *
+   * @param kP The proportional gain of the controller
+   * @param kI The integral error gain of the controller
+   * @param kD The derivative gain of the controller
+   */
+  @Override
+  public void configurePID(double kP, double kI, double kD) {
+    var config = new Slot0Configs();
+    config.kP = kP;
+    config.kI = kI;
+    config.kD = kD;
+    // leader.getConfigurator().apply(config);
+  }
+
+  /**
+   * Set the open-loop voltage at which to run the roller motor
+   *
+   * @param volts The voltage at which to run the roller motor
+   */
+  @Override
+  public void setVoltage(double volts) {
+    m_rollerMotor.setControl(voltageRequest.withOutput(volts).withEnableFOC(true));
+  }
+
+  /**
+   * Set the open-loop duty cycle percentage at which to run the roller motor
+   *
+   * @param percent The percent duty cycle at which to run the roller motor
+   */
+  @Override
+  public void setPercent(double percent) {
+    m_rollerMotor.setControl(new DutyCycleOut(percent).withEnableFOC(true));
   }
 
   /**
@@ -126,18 +204,6 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
         });
   }
 
-  /**
-   * Set the open-loop duty cycle percentage at which to run the roller motor
-   *
-   * <p>NOTE: This method is quite primitive and does not allow for FOC control of the motor!!!
-   *
-   * @param percent The percent duty cycle at which to run the roller motor
-   */
-  @Override
-  public void setPercent(double percent) {
-    m_rollerMotor.set(percent);
-  }
-
   /** Stop all motion of the mechanism */
   @Override
   public void stop() {
@@ -153,7 +219,7 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
   @Override
   public void pivotToPosition(double position) {
     m_pivotMotor.setControl(
-        new DutyCycleOut(-kPivotController.calculate(m_pivotEncoder.get(), position))
+        new DutyCycleOut(-pivotController.calculate(m_pivotEncoder.get(), position))
             .withEnableFOC(true));
   }
 
@@ -172,21 +238,5 @@ public class AlgaeMechIOTalonFX implements AlgaeMechIO {
   @Override
   public double getEncoderPose() {
     return m_pivotEncoder.get();
-  }
-
-  /**
-   * Configure the PID of... the device?
-   *
-   * @param kP The proportional gain of the controller
-   * @param kI The integral error gain of the controller
-   * @param kD The derivative gain of the controller
-   */
-  @Override
-  public void configurePID(double kP, double kI, double kD) {
-    var config = new Slot0Configs();
-    config.kP = kP;
-    config.kI = kI;
-    config.kD = kD;
-    // leader.getConfigurator().apply(config);
   }
 }

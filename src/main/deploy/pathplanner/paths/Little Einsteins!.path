@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9877499999999997,
-        "y": 5.2145
+        "x": 3.9311990017361103,
+        "y": 5.210080656828703
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.418476415796357,
-        "y": 5.711472628875716
+        "x": 3.3619254175324675,
+        "y": 5.7070532857044185
       },
       "isLocked": false,
       "linkedName": "the sky"
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -48,7 +48,7 @@
   "folder": "Kate Positive Energies",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 126.0
   },
   "useDefaultConstraints": true
 }

@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.9877499999999997,
-        "y": 5.2145
+        "x": 3.9311990017361103,
+        "y": 5.210080656828703
       },
       "prevControl": {
-        "x": 3.797461833876311,
-        "y": 5.430893636080294
+        "x": 3.7409108356124214,
+        "y": 5.426474292908997
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 126.0
   },
   "reversed": false,
   "folder": "Kate Positive Energies",

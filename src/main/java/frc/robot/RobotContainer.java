@@ -272,7 +272,7 @@ public class RobotContainer {
                 () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
                 ElevatorConstants.kAcceleration,
                 ElevatorConstants.kVelocity,
-                m_elevator),
+                m_elevator), 
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                 .withTimeout(0.95)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer))));
@@ -288,7 +288,10 @@ public class RobotContainer {
 
     NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",
-        Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer).withTimeout(0.25));
+        Commands.run(() -> m_coralScorer.setCoralPercent(.35), m_coralScorer).withTimeout(0.2));
+    // NamedCommands.registerCommand( // Coral rollers go brrrr
+    //     "Score",
+    //     Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer).withTimeout(0.25));
 
     NamedCommands.registerCommand( // Brings the elevator to the ground.
         "Bottom",

@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Copy of We're going on a trip"
+                  "pathName": "1 Lost but marching on"
                 }
               },
               {
@@ -21,7 +21,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.76
+                        "waitTime": 0.77
                       }
                     },
                     {
@@ -65,7 +65,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of In our favorite rocket ship"
+                        "pathName": "2 Like we've always known the trail"
                       }
                     }
                   ]
@@ -91,7 +91,26 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of Zooming Through the sky"
+                        "pathName": "3 Searching for the ending"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.09
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "E4"
                       }
                     }
                   ]
@@ -107,22 +126,9 @@
           }
         },
         {
-          "type": "race",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "L4"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.25
-                }
-              }
-            ]
+            "name": "Score"
           }
         },
         {
@@ -148,7 +154,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of Little Einsteins!"
+                        "pathName": "4 To our fairytale"
                       }
                     }
                   ]
@@ -174,7 +180,26 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of We're going on a mission"
+                        "pathName": "5 Sometimes even shooting stars"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.08
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "E4"
                       }
                     }
                   ]
@@ -190,22 +215,9 @@
           }
         },
         {
-          "type": "race",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.25
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "L4"
-                }
-              }
-            ]
+            "name": "Score"
           }
         },
         {
@@ -231,7 +243,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of Start the countdown"
+                        "pathName": "6 Find wishes that miss their mark"
                       }
                     }
                   ]
@@ -241,7 +253,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -257,7 +269,26 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of Five! Four! Three! Two! One!"
+                        "pathName": "7 but when the night gets too dark"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.2
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "E4"
                       }
                     }
                   ]
@@ -273,19 +304,38 @@
           }
         },
         {
-          "type": "race",
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "L4"
+                  "name": "Bottom"
                 }
               },
               {
-                "type": "wait",
+                "type": "race",
                 "data": {
-                  "waitTime": 1.25
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "8 And the road home seems too far"
+                      }
+                    }
+                  ]
                 }
               }
             ]

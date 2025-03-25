@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.65625,
-        "y": 5.0195
+        "x": 3.2726434426229503,
+        "y": 4.198821721311475
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.918596170722816,
-        "y": 5.647956889778306
+        "x": 2.7011216499266633,
+        "y": 4.958972553691236
       },
       "isLocked": false,
-      "linkedName": "a mission"
+      "linkedName": "Two One"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 7.039907786885245
       },
       "prevControl": {
-        "x": 1.7148589765762667,
-        "y": 6.597405696691765
+        "x": 1.5641654605275683,
+        "y": 6.576435320242703
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -45,10 +45,10 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Duck Tales",
+  "folder": "Dragonhearted",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8452627376152904,
-        "y": 7.195707365711143
+        "x": 1.8272619399433603,
+        "y": 7.16222752616806
       },
       "isLocked": false,
       "linkedName": "rocket ship"
     },
     {
       "anchor": {
-        "x": 3.9877499999999997,
-        "y": 5.2145
+        "x": 3.9311990017361103,
+        "y": 5.210080656828703
       },
       "prevControl": {
-        "x": 3.727911640038493,
-        "y": 5.472327630977429
+        "x": 3.7409108356124214,
+        "y": 5.426474292908997
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,12 +29,26 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.55,
+      "maxWaypointRelativePos": 0.6,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 720.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.25,
-    "maxAcceleration": 3.25,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,10 +56,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Kate Negitive Energies",
+  "folder": "Dragonhearted",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 126.0

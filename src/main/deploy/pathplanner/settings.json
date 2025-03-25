@@ -3,20 +3,19 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
-    "Algae",
-    "Kate Negitive Energies",
-    "Kate Positive Energies",
-    "Matrix Coral",
-    "Matrix Start",
+    "Dragonhearted",
     "Matrix Station",
-    "Duck Tales"
+    "Matrix Start",
+    "Matrix Coral",
+    "Kate Positive Energies",
+    "Algae"
   ],
   "autoFolders": [
     "Arizona North",
     "South Florida"
   ],
-  "defaultMaxVel": 2.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 720.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,

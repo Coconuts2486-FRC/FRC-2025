@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.65625,
-        "y": 5.0195
+        "x": 3.7161885245901636,
+        "y": 5.061936475409836
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.918596170722816,
-        "y": 5.647956889778306
+        "x": 2.9785346953129794,
+        "y": 5.690393365188142
       },
       "isLocked": false,
       "linkedName": "a mission"
@@ -48,7 +48,7 @@
   "folder": "Kate Positive Energies",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

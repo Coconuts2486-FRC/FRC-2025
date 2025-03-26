@@ -272,7 +272,7 @@ public class RobotContainer {
                 () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
                 ElevatorConstants.kAcceleration,
                 ElevatorConstants.kVelocity,
-                m_elevator), 
+                m_elevator),
             Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
                 .withTimeout(0.95)
                 .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.4), m_coralScorer))));
@@ -288,10 +288,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",
-        Commands.run(() -> m_coralScorer.setCoralPercent(.35), m_coralScorer).withTimeout(0.2));
-    // NamedCommands.registerCommand( // Coral rollers go brrrr
-    //     "Score",
-    //     Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer).withTimeout(0.25));
+        Commands.run(() -> m_coralScorer.setCoralPercent(.35), m_coralScorer).withTimeout(0.15));
 
     NamedCommands.registerCommand( // Brings the elevator to the ground.
         "Bottom",
@@ -331,6 +328,9 @@ public class RobotContainer {
     NamedCommands
         .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
             "AlignR", driveR.until(driveR::atGoal));
+    NamedCommands
+        .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
+            "AlignRF", fastDriveR.until(fastDriveR::atGoal));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
         "AlignRC", driveRC.until(driveRC::atGoal));
     NamedCommands
@@ -394,7 +394,7 @@ public class RobotContainer {
             "CoralDetect",
             new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
     NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
-        "Timer", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech).withTimeout(0.2));
+        "Timer", new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include

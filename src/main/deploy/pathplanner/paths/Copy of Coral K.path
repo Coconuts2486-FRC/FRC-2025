@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7161885245901636,
-        "y": 5.061936475409836
+        "x": 1.58,
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9785346953129794,
-        "y": 5.690393365188142
+        "x": 1.9185886915276305,
+        "y": 7.0679864124526794
       },
       "isLocked": false,
-      "linkedName": "a mission"
+      "linkedName": "LStation"
     },
     {
       "anchor": {
-        "x": 1.2227459016393443,
-        "y": 7.039907786885245
+        "x": 3.560348360655738,
+        "y": 5.841137295081967
       },
       "prevControl": {
-        "x": 1.7148589765762667,
-        "y": 6.597405696691765
+        "x": 2.7742503744077203,
+        "y": 6.406590903975243
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "the countdown"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.75,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Dragonhearted",
+  "folder": "Matrix Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 125.00000000000001
   },
   "useDefaultConstraints": false
 }

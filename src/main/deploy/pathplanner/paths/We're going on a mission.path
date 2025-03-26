@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8235860846930332,
-        "y": 6.933407440364076
+        "x": 1.851595067022281,
+        "y": 6.943541499539174
       },
       "isLocked": false,
       "linkedName": "little einsteins!"
     },
     {
       "anchor": {
-        "x": 3.65625,
-        "y": 5.0195
+        "x": 3.7161885245901636,
+        "y": 5.061936475409836
       },
       "prevControl": {
-        "x": 3.0732568155090356,
-        "y": 5.61195386875221
+        "x": 3.0775989396267622,
+        "y": 5.695504512058398
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Kate Positive Energies",

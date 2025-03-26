@@ -131,7 +131,7 @@ public final class Constants {
 
     // Measured Wheel Radius
     public static final Distance kWheelRadius = Inches.of(1.87);
-    //public static final Distance kWheelRadius = Inches.of(2.033);
+    // public static final Distance kWheelRadius = Inches.of(2.033);
 
   }
 

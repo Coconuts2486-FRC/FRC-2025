@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.65625,
-        "y": 5.0195
+        "x": 3.7161885245901636,
+        "y": 5.061936475409836
       },
       "prevControl": {
-        "x": 3.0732568155090356,
-        "y": 5.61195386875221
+        "x": 3.133195340099199,
+        "y": 5.654390344162047
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Dragonhearted",

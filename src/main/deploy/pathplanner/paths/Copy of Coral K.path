@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4984631147540983,
-        "y": 7.255686475409835
+        "x": 1.58,
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.851595067022281,
-        "y": 6.943541499539174
+        "x": 1.9185886915276305,
+        "y": 7.0679864124526794
       },
       "isLocked": false,
-      "linkedName": "little einsteins!"
+      "linkedName": "LStation"
     },
     {
       "anchor": {
-        "x": 3.723926491659135,
-        "y": 5.034844052318788
+        "x": 3.560348360655738,
+        "y": 5.841137295081967
       },
       "prevControl": {
-        "x": 3.1409333071681704,
-        "y": 5.627297921070999
+        "x": 2.7742503744077203,
+        "y": 6.406590903975243
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "a mission"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.75,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -45,10 +45,10 @@
     "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Kate Positive Energies",
+  "folder": "Matrix Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 125.00000000000001
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

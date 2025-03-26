@@ -5,16 +5,14 @@
       "anchor": {
         "x": 3.723926491659135,
         "y": 5.034844052318788
-        "x": 3.7161885245901636,
-        "y": 5.061936475409836
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9785346953129794,
-        "y": 5.690393365188142
+        "x": 2.9978000995493264,
+        "y": 5.634857150966679
       },
       "isLocked": false,
-      "linkedName": "a mission"
+      "linkedName": "phantom zone"
     },
     {
       "anchor": {
@@ -22,12 +20,12 @@
         "y": 7.039907786885245
       },
       "prevControl": {
-        "x": 1.7148589765762667,
-        "y": 6.597405696691765
+        "x": 1.7435007867862387,
+        "y": 6.609699280390108
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "the countdown"
     }
   ],
   "rotationTargets": [],
@@ -35,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
@@ -47,7 +45,7 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Dragonhearted",
+  "folder": "Escaping Gravity",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 119.99999999999999

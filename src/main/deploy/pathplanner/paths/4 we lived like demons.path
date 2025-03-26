@@ -20,7 +20,7 @@
         "y": 7.255686475409835
       },
       "prevControl": {
-        "x": 2.1156064552785945,
+        "x": 2.115606455278594,
         "y": 6.754020170286883
       },
       "nextControl": null,
@@ -45,7 +45,7 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Dragonhearted",
+  "folder": "Escaping Gravity",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 119.99999999999999

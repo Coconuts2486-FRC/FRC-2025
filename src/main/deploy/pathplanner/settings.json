@@ -3,12 +3,11 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
-    "Dragonhearted",
-    "Matrix Station",
-    "Matrix Start",
+    "Algae",
+    "Escaping Gravity",
     "Matrix Coral",
-    "Kate Positive Energies",
-    "Algae"
+    "Matrix Start",
+    "Matrix Station"
   ],
   "autoFolders": [
     "Arizona North",

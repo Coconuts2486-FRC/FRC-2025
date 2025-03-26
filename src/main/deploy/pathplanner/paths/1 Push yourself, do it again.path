@@ -3,38 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.973156767731553,
-        "y": 5.221380628067707
+        "x": 7.1,
+        "y": 5.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.40388318352791,
-        "y": 5.718353256943423
+        "x": 6.074791035215886,
+        "y": 5.652517019709042
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.5381231792902543,
-        "y": 7.237726347325212
+        "x": 4.9822500000000005,
+        "y": 5.22425
       },
       "prevControl": {
-        "x": 2.15526651981475,
-        "y": 6.73606004220226
+        "x": 6.030312540152223,
+        "y": 5.582962797850628
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "little einsteins!"
+      "linkedName": "a trip"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5004278931095409,
+      "rotationDegrees": 59.99999999999999
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.6,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Escaping Gravity",
+  "folder": "Undefeated",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 0.0
   },
   "useDefaultConstraints": false
 }

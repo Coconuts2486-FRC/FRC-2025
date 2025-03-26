@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.973156767731553,
-        "y": 5.221380628067707
+        "x": 1.6003355899099576,
+        "y": 7.138476976297669
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.40388318352791,
-        "y": 5.718353256943423
+        "x": 1.9365003204893516,
+        "y": 6.819875103817051
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "bleed out"
     },
     {
       "anchor": {
-        "x": 1.5381231792902543,
-        "y": 7.237726347325212
+        "x": 3.723926491659135,
+        "y": 5.034844052318788
       },
       "prevControl": {
-        "x": 2.15526651981475,
-        "y": 6.73606004220226
+        "x": 3.0574851899864366,
+        "y": 5.677790716036184
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "little einsteins!"
+      "linkedName": "phantom zone"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.6,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Escaping Gravity",
+  "folder": "Undefeated",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 126.0
   },
   "useDefaultConstraints": false
 }

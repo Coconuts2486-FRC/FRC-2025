@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.973156767731553,
-        "y": 5.221380628067707
+        "x": 4.9822500000000005,
+        "y": 5.22425
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.40388318352791,
-        "y": 5.718353256943423
+        "x": 4.347656033268576,
+        "y": 5.7056434649115975
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "a trip"
     },
     {
       "anchor": {
-        "x": 1.5381231792902543,
-        "y": 7.237726347325212
+        "x": 1.7681880627648305,
+        "y": 7.295871954449152
       },
       "prevControl": {
-        "x": 2.15526651981475,
-        "y": 6.73606004220226
+        "x": 2.0585362279691495,
+        "y": 7.118761109437628
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "little einsteins!"
+      "linkedName": "It again"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -45,10 +45,10 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Escaping Gravity",
+  "folder": "Undefeated",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": false
 }

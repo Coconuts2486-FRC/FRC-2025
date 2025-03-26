@@ -3,11 +3,12 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
-    "Algae",
-    "Escaping Gravity",
-    "Matrix Coral",
+    "Undefeated",
+    "Matrix Station",
     "Matrix Start",
-    "Matrix Station"
+    "Matrix Coral",
+    "Escaping Gravity",
+    "Algae"
   ],
   "autoFolders": [
     "Arizona North",

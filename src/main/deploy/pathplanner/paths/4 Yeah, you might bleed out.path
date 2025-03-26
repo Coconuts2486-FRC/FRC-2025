@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.5381231792902543,
-        "y": 7.237726347325212
+        "x": 1.605128608315678,
+        "y": 7.145835954051907
       },
       "prevControl": {
-        "x": 2.15526651981475,
-        "y": 6.73606004220226
+        "x": 2.2222719488401754,
+        "y": 6.644169648928955
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "little einsteins!"
+      "linkedName": "bleed out"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -45,7 +45,7 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": "Escaping Gravity",
+  "folder": "Undefeated",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 119.99999999999999

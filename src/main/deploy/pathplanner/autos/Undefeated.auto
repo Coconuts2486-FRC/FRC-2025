@@ -5,9 +5,73 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "Start IJ"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "1 Push yourself, do it again"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.79
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "E4"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "2 You might break down, do it again"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -19,85 +83,15 @@
                 "data": {
                   "commands": [
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Score"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "E4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AlignRC"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station J"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Bottom"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Copy of Coral L"
+                        "waitTime": 0.25
                       }
                     }
                   ]
@@ -117,89 +111,25 @@
           "data": {
             "commands": [
               {
+                "type": "path",
+                "data": {
+                  "pathName": "3 You gotta make this cout, do it again"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.4
+                        "waitTime": 0.89
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Score"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "E4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AlignRC"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Station L"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Bottom"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Copy of Coral K"
+                        "name": "E4"
                       }
                     }
                   ]
@@ -215,7 +145,77 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "4 Yeah, you might bleed out"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -225,13 +225,13 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.4
+                        "waitTime": 0.88
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Score"
+                        "name": "E4"
                       }
                     }
                   ]
@@ -240,16 +240,22 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "E4"
+                  "name": "CoralIntake"
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "AlignL"
+                  "pathName": "5 but do it again"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
           }
         },
         {
@@ -257,19 +263,51 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
+                }
+              },
+              {
                 "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Station K"
+                        "name": "CoralDetect"
                       }
                     },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "6 Do you wanna be remembered"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
                     {
                       "type": "named",
                       "data": {
                         "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
                       }
                     }
                   ]
@@ -278,7 +316,83 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "CoralIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "7 Live forever"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.11
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "E4"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
                   "name": "Bottom"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "8 Well, the whole world's watching"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -288,6 +402,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Arizona North",
+  "folder": "South Florida",
   "choreoAuto": false
 }

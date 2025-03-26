@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9311990017361103,
-        "y": 5.210080656828703
+        "x": 3.973156767731553,
+        "y": 5.221380628067707
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3619254175324675,
-        "y": 5.7070532857044185
+        "x": 3.40388318352791,
+        "y": 5.718353256943423
       },
       "isLocked": false,
       "linkedName": "the sky"
@@ -48,7 +48,7 @@
   "folder": "Kate Positive Energies",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

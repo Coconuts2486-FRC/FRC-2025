@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.65625,
-        "y": 5.0195
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.918596170722816,
-        "y": 5.647956889778306
-      },
-      "isLocked": false,
-      "linkedName": "a mission"
-    },
-    {
-      "anchor": {
         "x": 1.2227459016393443,
         "y": 7.039907786885245
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.312319867126782,
+        "y": 6.8065057631004136
+      },
+      "isLocked": false,
+      "linkedName": "the countdown"
+    },
+    {
+      "anchor": {
+        "x": 3.2726434426229503,
+        "y": 4.198821721311475
+      },
       "prevControl": {
-        "x": 1.7148589765762667,
-        "y": 6.597405696691765
+        "x": 3.0925887770026237,
+        "y": 4.458700379542609
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "the countdown"
+      "linkedName": "Two One"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Dragonhearted",

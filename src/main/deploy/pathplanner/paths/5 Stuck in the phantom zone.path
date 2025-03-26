@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9311990017361103,
-        "y": 5.210080656828703
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 3.3619254175324675,
-        "y": 5.7070532857044185
-      },
-      "isLocked": false,
-      "linkedName": "the sky"
-    },
-    {
-      "anchor": {
         "x": 1.4984631147540983,
         "y": 7.255686475409835
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8346278453334923,
+        "y": 6.937084602929216
+      },
+      "isLocked": false,
+      "linkedName": "little einsteins!"
+    },
+    {
+      "anchor": {
+        "x": 3.723926491659135,
+        "y": 5.034844052318788
+      },
       "prevControl": {
-        "x": 2.1156064552785945,
-        "y": 6.754020170286883
+        "x": 3.0574851899864366,
+        "y": 5.677790716036184
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "little einsteins!"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Dragonhearted",

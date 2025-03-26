@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "1 Lost but marching on"
+                  "pathName": "1 Walk in the shadowland"
                 }
               },
               {
@@ -21,7 +21,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.77
+                        "waitTime": 0.93
                       }
                     },
                     {
@@ -65,7 +65,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "2 Like we've always known the trail"
+                        "pathName": "2 nobody's innocent"
                       }
                     }
                   ]
@@ -89,12 +89,31 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "wait",
                       "data": {
-                        "pathName": "3 Searching for the ending"
+                        "waitTime": 0.25
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3 Hand to mouth"
                 }
               },
               {
@@ -104,7 +123,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.09
+                        "waitTime": 0.93
                       }
                     },
                     {
@@ -154,7 +173,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "4 To our fairytale"
+                        "pathName": "4 we lived like demons"
                       }
                     }
                   ]
@@ -178,28 +197,9 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5 Sometimes even shooting stars"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.08
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "E4"
+                        "waitTime": 0.25
                       }
                     }
                   ]
@@ -209,44 +209,6 @@
                 "type": "named",
                 "data": {
                   "name": "CoralIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Score"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Bottom"
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CoralDetect"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "6 Find wishes that miss their mark"
-                      }
-                    }
-                  ]
                 }
               }
             ]
@@ -261,6 +223,56 @@
                 "data": {
                   "commands": [
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.92
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "E4"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "5 Stuck in the phantom zone"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Bottom"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
                       "type": "named",
                       "data": {
                         "name": "CoralDetect"
@@ -269,10 +281,55 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "7 but when the night gets too dark"
+                        "pathName": "6 lost in the thunder dome"
                       }
                     }
                   ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CoralDetect"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "7 We found the impossible"
                 }
               },
               {
@@ -282,7 +339,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.2
+                        "waitTime": 1.14
                       }
                     },
                     {
@@ -332,7 +389,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "8 And the road home seems too far"
+                        "pathName": "8 now we're unstoppable"
                       }
                     }
                   ]

@@ -8,42 +8,28 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8272619399433603,
-        "y": 7.16222752616806
+        "x": 1.8564219473359032,
+        "y": 7.169318493115284
       },
       "isLocked": false,
       "linkedName": "rocket ship"
     },
     {
       "anchor": {
-        "x": 3.9311990017361103,
-        "y": 5.210080656828703
+        "x": 3.973156767731553,
+        "y": 5.221380628067707
       },
       "prevControl": {
-        "x": 3.7409108356124214,
-        "y": 5.426474292908997
+        "x": 3.785946396080088,
+        "y": 5.389936091788572
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "the sky"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.55,
-      "maxWaypointRelativePos": 0.6,
-      "constraints": {
-        "maxVelocity": 1.5,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 720.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -56,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Dragonhearted",

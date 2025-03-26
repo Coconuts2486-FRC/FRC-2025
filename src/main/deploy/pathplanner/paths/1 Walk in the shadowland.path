@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6575,
-        "y": 7.3985
+        "x": 7.1,
+        "y": 5.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8272619399433603,
-        "y": 7.16222752616806
+        "x": 6.074791035215886,
+        "y": 5.652517019709042
       },
       "isLocked": false,
-      "linkedName": "rocket ship"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.973156767731553,
-        "y": 5.221380628067707
+        "x": 4.9822500000000005,
+        "y": 5.22425
       },
       "prevControl": {
-        "x": 3.782868601607864,
-        "y": 5.437774264148001
+        "x": 6.030312540152223,
+        "y": 5.582962797850628
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "the sky"
+      "linkedName": "a trip"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5004278931095409,
+      "rotationDegrees": 59.99999999999999
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Kate Positive Energies",
+  "folder": "Dragonhearted",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

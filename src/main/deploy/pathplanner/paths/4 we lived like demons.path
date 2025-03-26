@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.1,
-        "y": 5.85
+        "x": 3.973156767731553,
+        "y": 5.221380628067707
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.074791035215886,
-        "y": 5.652517019709042
+        "x": 3.40388318352791,
+        "y": 5.718353256943423
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.9822500000000005,
-        "y": 5.22425
+        "x": 1.4984631147540983,
+        "y": 7.255686475409835
       },
       "prevControl": {
-        "x": 6.030312540152223,
-        "y": 5.582962797850628
+        "x": 2.1156064552785945,
+        "y": 6.754020170286883
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "a trip"
+      "linkedName": "little einsteins!"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 126.0
   },
   "reversed": false,
   "folder": "Dragonhearted",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": false
 }

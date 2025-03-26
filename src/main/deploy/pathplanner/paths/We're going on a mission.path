@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.65625,
-        "y": 5.0195
+        "x": 3.723926491659135,
+        "y": 5.034844052318788
       },
       "prevControl": {
-        "x": 3.0732568155090356,
-        "y": 5.61195386875221
+        "x": 3.1409333071681704,
+        "y": 5.627297921070999
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Kate Positive Energies",

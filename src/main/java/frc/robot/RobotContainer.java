@@ -55,7 +55,7 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.commands.DriveToPose;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.subsystems.LED.LED;
+import frc.robot.subsystems.LED.LEDPWM;
 import frc.robot.subsystems.accelerometer.Accelerometer;
 import frc.robot.subsystems.algae_mech.AlgaeMech;
 import frc.robot.subsystems.algae_mech.AlgaeMechIO;
@@ -163,7 +163,9 @@ public class RobotContainer {
   private final OtherTargets m_otherTargets;
   private final Vision m_vision;
   private final PowerMonitoring m_power;
-  private final LED m_led = LED.getInstance();
+  // private final LED m_led = LED.getInstance();
+
+  private final LEDPWM m_ledpwm = LEDPWM.getInstance();
 
   /** Dashboard inputs ***************************************************** */
   // AutoChoosers for both supported path planning types
@@ -281,10 +283,11 @@ public class RobotContainer {
         .registerCommand( // This just raises the elevator to L4 without automatically scoring
             "E4",
             new ElevatorCommand(
-                () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
-                ElevatorConstants.kAcceleration,
-                ElevatorConstants.kVelocity,
-                m_elevator));
+                    () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
+                    ElevatorConstants.kAcceleration,
+                    ElevatorConstants.kVelocity,
+                    m_elevator)
+                .unless(() -> m_coralScorer.getLightStop() == false));
 
     NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",
@@ -330,12 +333,16 @@ public class RobotContainer {
             "AlignR", driveR.until(driveR::atGoal));
     NamedCommands
         .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
-            "AlignRF", fastDriveR.until(fastDriveR::atGoal));
+            "AlignRF", fastDriveRC.until(fastDriveRC::atGoal));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
-        "AlignRC", driveRC.until(driveRC::atGoal));
+        "AlignRC", driveRC.until(() -> driveRC.withinTolerance(.065, new Rotation2d(360))));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignL", driveL.until(driveL::atGoal));
+            "AlignL", driveL.until(() -> driveL.withinTolerance(.065, new Rotation2d(360))));
+
+    NamedCommands
+        .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
+            "AlignLF", fastDriveL.until(fastDriveL::atGoal));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
             "Station", station.until(station::atGoal));
@@ -394,7 +401,7 @@ public class RobotContainer {
             "CoralDetect",
             new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
     NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
-        "Timer", new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+        "Timer", new IntakeCommand(m_intake, 0.9, 0).withTimeout(1));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
@@ -520,7 +527,11 @@ public class RobotContainer {
         .whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose()));
 
     // Driver Right Bumper :>> Intake from the floor
-    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.35));
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.75));
+
+    driverController
+        .rightBumper()
+        .onFalse(new IntakeCommand(m_intake, 0.9, -0.75).withTimeout(0.2));
 
     // Driver Left Bumper :>> Score L1
     driverController
@@ -547,7 +558,7 @@ public class RobotContainer {
         .whileTrue(
             new IntakeCommand(m_intake, 0.75, 0)
                 .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, 0.6)));
+                .andThen(new IntakeCommand(m_intake, 0.75, 0.8)));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController

@@ -130,7 +130,7 @@ public final class Constants {
     public static final double kWheelCOF = 1.2;
 
     // Measured Wheel Radius
-    public static final Distance kWheelRadius = Inches.of(1.87);
+    public static final Distance kWheelRadius = Inches.of(1.91);
     // public static final Distance kWheelRadius = Inches.of(2.033);
 
   }
@@ -437,7 +437,7 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(10, 0.1, 0.2);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(10, 0, 0.2);
     // new PIDConstants(DrivebaseConstants.kDriveP, 0.0, DrivebaseConstants.kDriveD);
     public static final PIDConstants kPPsteerPID = new PIDConstants(4, 0.0, 0.0);
     // new PIDConstants(DrivebaseConstants.kSteerP, 0.0, DrivebaseConstants.kSteerD);
@@ -479,7 +479,7 @@ public final class Constants {
   public static class LEDConstants {
 
     // Number of LEDS
-    public static final int nLED = 128;
+    public static final int nLED = 120;
   }
 
   /** Vision Constants (Assuming PhotonVision) ***************************** */

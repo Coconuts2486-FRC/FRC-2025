@@ -335,10 +335,10 @@ public class RobotContainer {
         .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
             "AlignRF", fastDriveRC.until(fastDriveRC::atGoal));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
-        "AlignRC", driveRC.until(() -> driveRC.withinTolerance(.065, new Rotation2d(360))));
+        "AlignRC", driveRC.until(() -> driveRC.withinTolerance(.065, new Rotation2d(3))));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignL", driveL.until(() -> driveL.withinTolerance(.065, new Rotation2d(360))));
+            "AlignL", driveL.until(() -> driveL.withinTolerance(.065, new Rotation2d(3))));
 
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view

@@ -5,15 +5,15 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Start EF"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "1 Walk in the shadowland"
-                }
-              },
               {
                 "type": "sequential",
                 "data": {
@@ -21,25 +21,31 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.93
+                        "waitTime": 1.3
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "E4"
+                        "name": "Score"
                       }
                     }
                   ]
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignLF"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "E4"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Score"
           }
         },
         {
@@ -53,7 +59,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station J"
+                        "pathName": "Station E"
                       }
                     },
                     {
@@ -89,9 +95,15 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "deadline",
                       "data": {
                         "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignR"
+                            }
+                          },
                           {
                             "type": "sequential",
                             "data": {
@@ -99,7 +111,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.55
+                                    "waitTime": 1.2
                                   }
                                 },
                                 {
@@ -109,12 +121,6 @@
                                   }
                                 }
                               ]
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignRC"
                             }
                           }
                         ]
@@ -149,7 +155,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station L"
+                        "pathName": "Station D"
                       }
                     },
                     {
@@ -201,7 +207,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.55
+                                    "waitTime": 1.2
                                   }
                                 },
                                 {
@@ -245,7 +251,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station K"
+                        "pathName": "Station C"
                       }
                     },
                     {
@@ -281,13 +287,19 @@
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
                       "type": "deadline",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Coral A"
+                              "pathName": "Coral B"
                             }
                           },
                           {
@@ -297,7 +309,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.0
+                                    "waitTime": 0.99
                                   }
                                 },
                                 {

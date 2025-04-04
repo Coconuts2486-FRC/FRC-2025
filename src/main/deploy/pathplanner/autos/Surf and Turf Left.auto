@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start IJ"
+            "pathName": "Start and Turf"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Surf and Turf Start IJ"
           }
         },
         {
@@ -36,13 +42,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "E4"
+                  "name": "AlignRF"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignRF"
+                  "name": "E4"
                 }
               }
             ]
@@ -95,9 +101,15 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "deadline",
                       "data": {
                         "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignR"
+                            }
+                          },
                           {
                             "type": "sequential",
                             "data": {
@@ -105,7 +117,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.55
+                                    "waitTime": 1.2
                                   }
                                 },
                                 {
@@ -115,12 +127,6 @@
                                   }
                                 }
                               ]
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignRC"
                             }
                           }
                         ]
@@ -207,7 +213,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.55
+                                    "waitTime": 1.2
                                   }
                                 },
                                 {
@@ -287,6 +293,12 @@
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
                       "type": "deadline",
                       "data": {
                         "commands": [
@@ -303,7 +315,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.0
+                                    "waitTime": 0.99
                                   }
                                 },
                                 {

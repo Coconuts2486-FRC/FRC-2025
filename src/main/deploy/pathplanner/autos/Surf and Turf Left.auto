@@ -42,13 +42,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignRF"
+                  "name": "E4"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "E4"
+                  "name": "AlignRF"
                 }
               }
             ]

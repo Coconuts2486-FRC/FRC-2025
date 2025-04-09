@@ -655,11 +655,11 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(-5.95));
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(-5.9));
     // public static Translation2d kLeftReefPostClose =
     //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(+6.25));
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(+6.5));
     public static Translation2d kRightReefPostClose =
         new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6));
     public static Translation2d kAlgaeGrab =

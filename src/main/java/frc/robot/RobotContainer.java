@@ -697,7 +697,7 @@ public class RobotContainer {
                     m_elevator),
                 Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
                     .withTimeout(.6)
-                    .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
+                    .andThen(Commands.run(() -> m_algaeMech.setPercent(0.95)))));
 
     operatorController
         .leftTrigger(0.1)

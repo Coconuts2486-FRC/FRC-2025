@@ -330,6 +330,9 @@ public class RobotContainer {
     DriveToPose fastDriveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
 
+    DriveToPose algae =
+        new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER));
+
     DriveToPose station =
         new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose());
 
@@ -362,9 +365,8 @@ public class RobotContainer {
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
             "Station", station.until(station::atGoal));
     NamedCommands.registerCommand( // Auto aligns to the algae in the reef
-        "Algae",
-        new DriveToPose(
-            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
+        "Algae",algae.until(
+            () -> algae.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
     NamedCommands.registerCommand( // This raises the elevator to the level of the aglae on the reef
         // automaticlly based on april tags
         "deAlgae",

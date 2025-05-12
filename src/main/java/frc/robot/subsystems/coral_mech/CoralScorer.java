@@ -87,7 +87,7 @@ public class CoralScorer extends RBSISubsystem {
   public void automaticIntake() {
     if (!io.getLightStop()) {
 
-      io.setPercentOut(.15);
+      io.setPercent(.15);
       hasCoral = true;
     } else {
       io.setPercent(0);

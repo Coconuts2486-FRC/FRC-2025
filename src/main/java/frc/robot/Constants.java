@@ -140,7 +140,7 @@ public final class Constants {
 
     // Current Limits
     public static final double kTotalMaxCurrent = 120.;
-    public static final double kMotorPortMaxCurrent = 40.;
+    public static final double kMotorPortMaxCurrent = 80.;
     public static final double kSmallPortMaxCurrent = 20.;
   }
 

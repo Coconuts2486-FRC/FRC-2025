@@ -13,11 +13,10 @@
 
 package frc.robot.subsystems.coral_mech;
 
+import frc.robot.util.RBSIIO;
 import org.littletonrobotics.junction.AutoLog;
 
-public interface CoralScorerIO {
-
-  public final int[] powerPorts = {};
+public interface CoralScorerIO extends RBSIIO {
 
   @AutoLog
   public static class CoralScorerIOInputs {
@@ -25,13 +24,10 @@ public interface CoralScorerIO {
     public double velocityRadPerSec = 0.0;
     public double appliedVolts = 0.0;
     public double[] currentAmps = new double[] {};
+    public boolean lightStop = false;
   }
 
   public default void updateInputs(CoralScorerIOInputs inputs) {}
-
-  public default void setVolts(double volts) {}
-
-  public default void stop() {}
 
   public default boolean getLightStop() {
     return false;
@@ -41,11 +37,5 @@ public interface CoralScorerIO {
     return 0;
   }
 
-  public default void setPercentOut(double percent) {}
-
   public default void setVelocity(double velocity) {}
-
-  public default void setCoast() {}
-
-  public default void setBrake() {}
 }

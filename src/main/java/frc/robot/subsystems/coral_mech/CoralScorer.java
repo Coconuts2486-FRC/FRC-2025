@@ -77,7 +77,7 @@ public class CoralScorer extends RBSISubsystem {
   }
 
   public void runVolts(double volts) {
-    io.setVolts(volts);
+    io.setVoltage(volts);
   }
 
   public void setVelocity(double velocity) {
@@ -87,16 +87,15 @@ public class CoralScorer extends RBSISubsystem {
   public void automaticIntake() {
     if (!io.getLightStop()) {
 
-      io.setPercentOut(.15);
+      io.setPercent(.15);
       hasCoral = true;
     } else {
-
-      io.setPercentOut(0);
+      io.setPercent(0);
     }
   }
 
   public void setCoralPercent(double percent) {
-    io.setPercentOut(percent);
+    io.setPercent(percent);
 
     if (percent > 0) {
       hasCoral = false;
@@ -113,6 +112,6 @@ public class CoralScorer extends RBSISubsystem {
 
   @Override
   public int[] getPowerPorts() {
-    return io.powerPorts;
+    return io.getPowerPorts();
   }
 }

@@ -48,7 +48,8 @@ public class OtherTargets {
 
     for (int i = 0; i < 2; i++) {
       Transform2d relPose =
-          thisPose.minus(AprilTagConstants.aprilTagLayout.getTagPose(baseTag + i).get().toPose2d());
+          thisPose.minus(
+              AprilTagConstants.kAprilTagLayout.getTagPose(baseTag + i).get().toPose2d());
       double absDist =
           Math.sqrt(
               Math.pow(relPose.getMeasureX().in(Meters), 2.0)
@@ -66,7 +67,7 @@ public class OtherTargets {
   }
 
   private Pose2d computePlayerStationPose(int tagID) {
-    Optional<Pose3d> tagPose = AprilTagConstants.aprilTagLayout.getTagPose(tagID);
+    Optional<Pose3d> tagPose = AprilTagConstants.kAprilTagLayout.getTagPose(tagID);
 
     // For whatever reason, if the specified tag pose doesn't exist, return empty pose
     if (tagPose.isEmpty()) {
@@ -81,7 +82,7 @@ public class OtherTargets {
   }
 
   private Pose2d computeProcessorPose(int tagID) {
-    Optional<Pose3d> tagPose = AprilTagConstants.aprilTagLayout.getTagPose(tagID);
+    Optional<Pose3d> tagPose = AprilTagConstants.kAprilTagLayout.getTagPose(tagID);
 
     // For whatever reason, if the specified tag pose doesn't exist, return empty pose
     if (tagPose.isEmpty()) {

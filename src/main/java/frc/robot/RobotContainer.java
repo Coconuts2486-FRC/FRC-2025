@@ -91,6 +91,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 /** This is the location for defining robot hardware, commands, and controller button bindings. */
 public class RobotContainer {
 
+  private static final boolean USE_MAPLESIM = true;
+  public static final boolean MAPLESIM = USE_MAPLESIM && Robot.isSimulation();
+
   // **** This is a Pathplanner On-the-Fly Command ****/
   // Create a list of waypoints from poses. Each pose represents one waypoint.
   // The rotation component of the pose should be the direction of travel. Do not use
@@ -147,7 +150,7 @@ public class RobotContainer {
 
   /** Declare the robot subsystems here ************************************ */
   // These are the "Active Subsystems" that the robot controlls
-  private final Drive m_drivebase;
+  public final Drive m_drivebase;
 
   private final Elevator m_elevator;
   private final CoralScorer m_coralScorer;
@@ -178,11 +181,14 @@ public class RobotContainer {
   // Alerts
   private final Alert aprilTagLayoutAlert = new Alert("", AlertType.INFO);
 
+  public static RobotContainer instance;
+
   /**
    * Constructor for the Robot Container. This container holds subsystems, opertator interface
    * devices, and commands.
    */
   public RobotContainer() {
+    instance = this;
     woah.preventFlipping = true;
     // Instantiate Robot Subsystems based on RobotType
     switch (Constants.getMode()) {

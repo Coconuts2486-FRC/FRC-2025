@@ -3,52 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.998872950819672,
-        "y": 2.8142418032786884
+        "x": 7.4,
+        "y": 5.793
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.786091982202088,
-        "y": 2.294804485349664
+        "x": 7.188893654672204,
+        "y": 5.9269182995797856
       },
       "isLocked": false,
-      "linkedName": "Floorin F"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.6370820643538135,
-        "y": 0.6668370133739415
+        "x": 5.370491803278688,
+        "y": 5.5414446721311466
       },
       "prevControl": {
-        "x": 2.7742146188501,
-        "y": 1.3876024149217145
+        "x": 5.621509476305413,
+        "y": 5.592210987814062
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Floorin Station"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 59.99999999999999
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.1,
-    "rotation": -126.0
+    "velocity": 0,
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Floorin time",
+  "folder": "Matrix Start",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

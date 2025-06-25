@@ -130,7 +130,9 @@ public final class Constants {
     public static final double kWheelCOF = 1.2;
 
     // Measured Wheel Radius
-    public static final Distance kWheelRadius = Inches.of(2.033);
+    public static final Distance kWheelRadius = Inches.of(1.91);
+    // public static final Distance kWheelRadius = Inches.of(2.033);
+
   }
 
   /** Power Distribution Constants ********************************** */
@@ -191,14 +193,14 @@ public final class Constants {
     // These are heights off the ground of the top row of bolts on the elevator 1st stage
     public static final Distance kElevatorZeroHeight = Inches.of(40.375);
     public static final Distance kL2 = Inches.of(48.125); // Maybe 48.5
-    public static final Distance kL3 = Inches.of(55.15);
+    public static final Distance kL3 = Inches.of(56);
     public static final Distance kL4 = Inches.of(68);
     public static final Distance KAlgaeLower = Inches.of(56.8);
     public static final Distance KAlgaeUpper = Inches.of(65);
     public static final Distance KAlgaeShoot = Inches.of(60);
     // Motion Magic constants
-    public static final LinearVelocity kVelocity = MetersPerSecond.of(2);
-    public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(3);
+    public static final LinearVelocity kVelocity = MetersPerSecond.of(2.2);
+    public static final LinearAcceleration kAcceleration = MetersPerSecondPerSecond.of(4);
     public static final double kJerk = 0;
 
     // mode real/replay
@@ -435,7 +437,7 @@ public final class Constants {
   public static final class AutoConstants {
 
     // Drive and Turn PID constants used for PathPlanner
-    public static final PIDConstants kPPdrivePID = new PIDConstants(10, 0.0, 0.0);
+    public static final PIDConstants kPPdrivePID = new PIDConstants(10, 0, 0.2);
     // new PIDConstants(DrivebaseConstants.kDriveP, 0.0, DrivebaseConstants.kDriveD);
     public static final PIDConstants kPPsteerPID = new PIDConstants(4, 0.0, 0.0);
     // new PIDConstants(DrivebaseConstants.kSteerP, 0.0, DrivebaseConstants.kSteerD);
@@ -477,7 +479,7 @@ public final class Constants {
   public static class LEDConstants {
 
     // Number of LEDS
-    public static final int nLED = 128;
+    public static final int nLED = 120;
   }
 
   /** Vision Constants (Assuming PhotonVision) ***************************** */
@@ -653,13 +655,21 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-6.75));
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(-5.9));
+    // public static Translation2d kLeftReefPostClose =
+    //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+6.75));
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(+6.5));
     public static Translation2d kRightReefPostClose =
-        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6.75));
+        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
+
+    public static Translation2d kProcessor =
+        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(+6.0));
+
+    public static Translation2d kStation =
+        new Translation2d(Units.inchesToMeters(18.0), Units.inchesToMeters(0.0));
   }
 
   /** AprilTag Field Layout ************************************************ */

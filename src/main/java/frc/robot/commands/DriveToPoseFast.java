@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 import lombok.Getter;
 import org.littletonrobotics.junction.Logger;
 
-public class DriveToPose extends Command {
+public class DriveToPoseFast extends Command {
   private static final LoggedTunableNumber drivekP = new LoggedTunableNumber("DriveToPose/DrivekP");
   private static final LoggedTunableNumber drivekD = new LoggedTunableNumber("DriveToPose/DrivekD");
   private static final LoggedTunableNumber thetakP = new LoggedTunableNumber("DriveToPose/ThetakP");
@@ -62,9 +62,9 @@ public class DriveToPose extends Command {
     thetakP.initDefault(4.0);
     thetakD.initDefault(0.0);
     // Values in m/s
-    driveMaxVelocity.initDefault(4.2);
-    driveMaxVelocitySlow.initDefault(1.33);
-    driveMaxAcceleration.initDefault(2.75);
+    driveMaxVelocity.initDefault(5);
+    driveMaxVelocitySlow.initDefault(1.5);
+    driveMaxAcceleration.initDefault(3.5);
     thetaMaxVelocity.initDefault(Units.degreesToRadians(360.0));
     thetaMaxVelocitySlow.initDefault(Units.degreesToRadians(90.0));
     thetaMaxAcceleration.initDefault(Units.degreesToRadians(720.0));
@@ -91,7 +91,7 @@ public class DriveToPose extends Command {
   private double thetaErrorAbs = 0.0;
   @Getter private boolean running = false;
 
-  public DriveToPose(Drive drive, Supplier<Pose2d> target) {
+  public DriveToPoseFast(Drive drive, Supplier<Pose2d> target) {
     this.drive = drive;
     this.target = target;
 
@@ -229,7 +229,7 @@ public class DriveToPose extends Command {
 
   /** Checks if the robot is stopped at the final pose. */
   public boolean atGoal() {
-    return running && driveController.atGoal(); // && thetaController.atGoal();
+    return running && driveController.atGoal() && thetaController.atGoal();
   }
 
   /** Checks if the robot pose is within the allowed drive and theta tolerances. */

@@ -3,52 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6370820643538135,
-        "y": 0.6668370133739415
+        "x": 1.5224385245901637,
+        "y": 7.255686475409835
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7301344014830509,
-        "y": 1.6735161215572045
+        "x": 1.6120124900776016,
+        "y": 7.022284451625003
       },
       "isLocked": false,
-      "linkedName": "Floorin Station"
+      "linkedName": "LStation"
     },
     {
       "anchor": {
-        "x": 2.880168332891949,
-        "y": 3.802003608315678
+        "x": 3.19,
+        "y": 4.4
       },
       "prevControl": {
-        "x": 2.1023921643273304,
-        "y": 3.754267081567796
+        "x": 3.0099453343796734,
+        "y": 4.6598786582311345
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Two One"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularAcceleration": 960.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.5,
+    "velocity": 0,
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Floorin time",
+  "folder": "Matrix Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 125.00000000000001
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

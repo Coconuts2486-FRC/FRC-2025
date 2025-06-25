@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7401639344262296,
-        "y": 5.019979508196721
+        "x": 1.5224385245901637,
+        "y": 7.255686475409835
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.529500221414165,
-        "y": 5.2301966350279585
+        "x": 1.861027216117794,
+        "y": 7.0236728878625145
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LStation"
     },
     {
       "anchor": {
-        "x": 1.7022540983606556,
-        "y": 7.357581967213115
+        "x": 3.560348360655738,
+        "y": 5.841137295081967
       },
       "prevControl": {
-        "x": 2.551606341473308,
-        "y": 6.396371394667008
+        "x": 2.7742503744077203,
+        "y": 6.406590903975243
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Foreverglade Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,21 +34,21 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.75,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.1,
-    "rotation": 126.0
-  },
-  "reversed": false,
-  "folder": "Floorin time",
-  "idealStartingState": {
     "velocity": 0,
     "rotation": 119.99999999999999
   },
-  "useDefaultConstraints": true
+  "reversed": false,
+  "folder": "Matrix Coral",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 125.00000000000001
+  },
+  "useDefaultConstraints": false
 }

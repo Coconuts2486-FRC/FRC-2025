@@ -3,37 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.027868852459017,
-        "y": 5.163831967213115
+        "x": 6.32950819672131,
+        "y": 4.015249999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8588109441911094,
-        "y": 5.383945975960044
+        "x": 6.405181259503069,
+        "y": 4.6202293736713544
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Algae 2"
     },
     {
       "anchor": {
-        "x": 1.7022540983606556,
-        "y": 7.357581967213115
+        "x": 7.024795081967212,
+        "y": 5.481506147540983
       },
       "prevControl": {
-        "x": 2.642506741445459,
-        "y": 6.476757787272978
+        "x": 7.009178522652376,
+        "y": 5.2319943781288645
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Foreverglade Station"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7489004398240685,
+      "rotationDegrees": -160.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
@@ -41,14 +46,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 126.0
+    "velocity": 0,
+    "rotation": -160.0
   },
   "reversed": false,
-  "folder": "Floorin time",
+  "folder": "Specialer",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

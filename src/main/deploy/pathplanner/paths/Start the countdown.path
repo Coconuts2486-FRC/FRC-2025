@@ -3,29 +3,31 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.7022540983606556,
-        "y": 7.357581967213115
+        "x": 3.723926491659135,
+        "y": 5.034844052318788
+        "x": 3.7161885245901636,
+        "y": 5.061936475409836
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2742266645725246,
-        "y": 6.740089862276739
+        "x": 2.9862726623819507,
+        "y": 5.663300942097094
       },
       "isLocked": false,
-      "linkedName": "Foreverglade Station"
+      "linkedName": "a mission"
     },
     {
       "anchor": {
-        "x": 3.35655737704918,
-        "y": 5.679303278688525
+        "x": 1.2227459016393443,
+        "y": 7.039907786885245
       },
       "prevControl": {
-        "x": 2.907903124520845,
-        "y": 6.145171765308979
+        "x": 1.7148589765762667,
+        "y": 6.597405696691765
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "the countdown"
     }
   ],
   "rotationTargets": [],
@@ -33,22 +35,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.4,
-    "rotation": 119.99999999999999
-  },
-  "reversed": false,
-  "folder": "Floorin time",
-  "idealStartingState": {
     "velocity": 0,
     "rotation": 126.0
+  },
+  "reversed": false,
+  "folder": "Kate Positive Energies",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

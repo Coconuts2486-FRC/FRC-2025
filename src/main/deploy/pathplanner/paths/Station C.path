@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 1.6,
-        "y": 0.73
+        "x": 1.4624999999999997,
+        "y": 0.8182889344262299
       },
       "prevControl": {
-        "x": 1.8425639204777569,
-        "y": 0.994847568742484
+        "x": 1.7050639204777565,
+        "y": 1.083136503168714
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 2.5,
+    "maxAcceleration": 2.65,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": -126.0
   },
   "reversed": false,
   "folder": "Matrix Station",

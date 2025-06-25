@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.998872950819672,
-        "y": 2.8142418032786884
+        "x": 1.5224385245901637,
+        "y": 7.255686475409835
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.786091982202088,
-        "y": 2.294804485349664
+        "x": 1.7373561926832777,
+        "y": 7.076163665531249
       },
       "isLocked": false,
-      "linkedName": "Floorin F"
+      "linkedName": "LStation"
     },
     {
       "anchor": {
-        "x": 1.6370820643538135,
-        "y": 0.6668370133739415
+        "x": 3.308606557377049,
+        "y": 5.7212602459016395
       },
       "prevControl": {
-        "x": 2.7742146188501,
-        "y": 1.3876024149217145
+        "x": 2.9529333633964616,
+        "y": 6.02818792638683
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Floorin Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.1,
-    "rotation": -126.0
+    "velocity": 0,
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Floorin Four",
+  "folder": "Matrix Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 125.00000000000001
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

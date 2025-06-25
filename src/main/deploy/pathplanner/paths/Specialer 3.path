@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6370820643538135,
-        "y": 0.6668370133739415
+        "x": 5.706147540983607,
+        "y": 4.015249999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8248856670676352,
-        "y": 0.8318515788150231
+        "x": 6.357286895219963,
+        "y": 4.028720444131112
       },
       "isLocked": false,
-      "linkedName": "Floorin Station"
+      "linkedName": "Algae"
     },
     {
       "anchor": {
-        "x": 3.7744293730137715,
-        "y": 2.575620282706568
+        "x": 6.32950819672131,
+        "y": 4.015249999999999
       },
       "prevControl": {
-        "x": 2.911243025579391,
-        "y": 1.8278869868463268
+        "x": 5.854780229108818,
+        "y": 4.0216523253826395
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Algae 2"
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.5,
-    "rotation": -119.99999999999999
+    "velocity": 0,
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Floorin time",
+  "folder": "Specialer",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

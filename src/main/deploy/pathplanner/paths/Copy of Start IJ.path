@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.021632928363347,
-        "y": 2.8931214413400426
+        "x": 7.06,
+        "y": 5.793186475409836
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4649921942675985,
-        "y": 2.3826476746411744
+        "x": 6.832795715819153,
+        "y": 5.943620626561063
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.6370820643538135,
-        "y": 0.6668370133739415
+        "x": 5.214651639344262,
+        "y": 5.673309426229508
       },
       "prevControl": {
-        "x": 2.2357872094492732,
-        "y": 1.2031479764634434
+        "x": 5.459666407374879,
+        "y": 5.623632837710339
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Floorin Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": -126.0
+    "velocity": 0,
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Floorin time",
+  "folder": "Matrix Start",
   "idealStartingState": {
-    "velocity": 0.1,
-    "rotation": -119.99999999999999
+    "velocity": 0,
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

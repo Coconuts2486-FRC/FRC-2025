@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Start H"
@@ -21,7 +27,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 2.5
+                        "waitTime": 2.75
                       }
                     },
                     {
@@ -37,7 +43,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 1.35
+                              "waitTime": 1.45
                             }
                           }
                         ]
@@ -115,12 +121,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "deAlgae"
-                }
               }
             ]
           }
@@ -185,12 +185,6 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Algae 4"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "resetAlgae"
@@ -200,6 +194,12 @@
                       "type": "named",
                       "data": {
                         "name": "Bottom"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Algae 4"
                       }
                     }
                   ]
@@ -212,6 +212,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Arizona North",
+  "folder": "Worlds",
   "choreoAuto": false
 }

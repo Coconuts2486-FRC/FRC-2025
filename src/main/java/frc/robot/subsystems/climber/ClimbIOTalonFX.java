@@ -25,7 +25,8 @@ import frc.robot.Constants.CANandPowerPorts;
 
 public class ClimbIOTalonFX implements ClimbIO {
   private final Servo climbExtender = new Servo(CANandPowerPorts.CLIMB_SERVO);
-  private final TalonFX climber = new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber());
+  private final TalonFX climber =
+      new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber(), CANandPowerPorts.CLIMB.getBus());
   private final PIDController pid = new PIDController(4, 0, .5);
   private final DutyCycleEncoder climbEncoder = new DutyCycleEncoder(3);
 

@@ -628,7 +628,7 @@ public final class Constants {
     public static final RobotDeviceId INTAKE_ENCODER = new RobotDeviceId(23, "", null);
     public static final RobotDeviceId ALGAE_PIVOT = new RobotDeviceId(26, "", 10);
     public static final RobotDeviceId ALGAE_ROLLER = new RobotDeviceId(27, "", 11);
-    public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "", 8);
+    public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "DriveTrain", 8);
     public static final RobotDeviceId LED = new RobotDeviceId(36, "", null);
 
     // public static final RobotDeviceId Coral_Scorer = new RobotDeviceId(16, "", 9);

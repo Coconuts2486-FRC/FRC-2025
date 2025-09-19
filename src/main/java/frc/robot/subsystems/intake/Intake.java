@@ -37,7 +37,7 @@ public class Intake extends RBSISubsystem {
   public Intake(IntakeIO io) {
     this.io = io;
 
-    setDefaultCommand(Commands.run(() -> setPivotPosition(0.9), this));
+    setDefaultCommand(Commands.run(() -> setPivotPosition(0.8), this));
 
     sysId =
         new SysIdRoutine(

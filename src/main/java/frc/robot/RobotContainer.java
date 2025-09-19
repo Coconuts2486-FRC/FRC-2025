@@ -546,11 +546,11 @@ public class RobotContainer {
         .whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose()));
 
     // Driver Right Bumper :>> Intake from the floor
-    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.25, -0.75));
+    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.2, -0.75));
 
     driverController
         .rightBumper()
-        .onFalse(new IntakeCommand(m_intake, 0.9, -0.75).withTimeout(0.2));
+        .onFalse(new IntakeCommand(m_intake, 0.8, -0.75).withTimeout(0.2));
 
     // Driver Left Bumper :>> Score L1
     driverController
@@ -575,9 +575,9 @@ public class RobotContainer {
     driverController
         .leftBumper()
         .whileTrue(
-            new IntakeCommand(m_intake, 0.75, 0)
+            new IntakeCommand(m_intake, 0.65, 0)
                 .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.75, .95)));
+                .andThen(new IntakeCommand(m_intake, 0.65, .95)));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController
@@ -725,7 +725,7 @@ public class RobotContainer {
                         m_climber))
                 .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(1))));
 
-    operatorController.start().onFalse(new IntakeCommand(m_intake, 0.75, 0));
+    operatorController.start().onFalse(new IntakeCommand(m_intake, 0.65, 0));
 
     operatorController
         .b()

@@ -42,8 +42,7 @@ public class IntakeCommand extends Command {
     intake.setPivotPosition(wantedPosistion);
     intake.rollerSpeed(rollerSpeed);
 
-    // System.out.println(intake.getEncoder());
-
+    System.out.println(intake.getEncoder());
   }
 
   @Override

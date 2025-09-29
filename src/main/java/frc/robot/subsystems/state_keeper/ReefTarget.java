@@ -189,12 +189,15 @@ public class ReefTarget extends VirtualSubsystem {
     switch ((reefPostAll / 2) % 2) {
       case 0:
         // Reef Face A/B, E/F, I/J -- ALGAE between L3 and L4
+        System.out.println("upper algae");
         return ElevatorConstants.KAlgaeUpper;
       case 1:
         // Reef Face C/D, G/H, K/L -- ALGAE between L2 and L3
+        System.out.println("Lower algae");
         return ElevatorConstants.KAlgaeLower;
       default:
         // Shouldn't run, but you know...
+        System.out.println("this shouldnt happen");
         return ElevatorConstants.kElevatorZeroHeight;
     }
   }

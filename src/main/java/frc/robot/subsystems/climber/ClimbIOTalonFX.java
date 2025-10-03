@@ -41,7 +41,8 @@ public class ClimbIOTalonFX implements ClimbIO {
 
   // Define the hardware
   private final Servo climbExtender = new Servo(CANandPowerPorts.CLIMB_SERVO);
-  private final TalonFX m_climbMotor = new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber());
+  private final TalonFX m_climbMotor =
+      new TalonFX(CANandPowerPorts.CLIMB.getDeviceNumber(), CANandPowerPorts.CLIMB.getBus());
   // TODO: Convert this to run on a CANdi; fuse to CLIMB motor
   private final DutyCycleEncoder m_climbEncoder =
       new DutyCycleEncoder(CANandPowerPorts.CLIMB_PIVOT_ENCODER);

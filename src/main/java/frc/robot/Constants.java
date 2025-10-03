@@ -423,7 +423,7 @@ public final class Constants {
         switch (getRobot()) {
           case GEORGE -> true; // Testing
           //  case LEONARDO -> true;
-          case LEONARDO -> false; // Kate's preference
+          case LEONARDO -> true; // Kate's preference
           case SIMBOT -> true; // Default
         };
 
@@ -679,7 +679,7 @@ public final class Constants {
     public static final RobotDeviceId INTAKE_ENCODER = new RobotDeviceId(23, "", null);
     public static final RobotDeviceId ALGAE_PIVOT = new RobotDeviceId(26, "", 10);
     public static final RobotDeviceId ALGAE_ROLLER = new RobotDeviceId(27, "", 11);
-    public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "", 8);
+    public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "DriveTrain", 8);
     public static final RobotDeviceId LED = new RobotDeviceId(36, "", null);
     public static final RobotDeviceId CANDI_ENCODERS = new RobotDeviceId(41, "", null);
 
@@ -699,6 +699,29 @@ public final class Constants {
     // are defined
     // Example:
     public static final int CLIMB_SERVO = 0;
+  }
+
+  public static class DriveToPositionConstatnts {
+
+    // The robot is facing AWAY from the tag, so its pose angle matches that of the tag.
+    // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
+    // robot pose is 21" from the tag.
+    public static Translation2d kLeftReefPost =
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(-8.9));
+    // public static Translation2d kLeftReefPostClose =
+    //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
+    public static Translation2d kRightReefPost =
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(+11.5));
+    public static Translation2d kRightReefPostClose =
+        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+11));
+    public static Translation2d kAlgaeGrab =
+        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
+
+    public static Translation2d kProcessor =
+        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(+6.0));
+
+    public static Translation2d kStation =
+        new Translation2d(Units.inchesToMeters(18.0), Units.inchesToMeters(0.0));
   }
 
   /** AprilTag Field Layout ************************************************ */

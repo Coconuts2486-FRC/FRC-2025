@@ -13,12 +13,16 @@
 
 package frc.robot.subsystems.intake;
 
+import static frc.robot.Constants.IntakeConstants.*;
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
@@ -31,39 +35,79 @@ import frc.robot.Constants.CANandPowerPorts;
 import frc.robot.Constants.PowerConstants;
 import frc.robot.util.PhoenixUtil;
 
+/** Intake TalonFX-controlled Hardware Class */
 public class IntakeIOTalonFX implements IntakeIO {
 
-  private final TalonFX intakeRoller =
+  // Define the hardware
+  private final TalonFX m_rollerMotor =
       new TalonFX(CANandPowerPorts.INTAKE_ROLLER.getDeviceNumber());
-  private final TalonFX intakePivot = new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
-  private final CANcoder encoderActual =
+  private final TalonFX m_pivotMotor = new TalonFX(CANandPowerPorts.INTAKE_PIVOT.getDeviceNumber());
+  private final CANcoder m_pivotEncoder =
       new CANcoder(CANandPowerPorts.INTAKE_ENCODER.getDeviceNumber());
-  private final TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
 
-  PIDController pivotPID = new PIDController(1.5, 0, 0);
+  // CTRE control requests
+  private final VoltageOut voltageRequest = new VoltageOut(0);
 
+  // Status signals from CTRE for logging
+  private final StatusSignal<Angle> pivotPosition = m_pivotEncoder.getPosition();
+  private final StatusSignal<AngularVelocity> pivotVelocity = m_pivotEncoder.getVelocity();
+  private final StatusSignal<Voltage> pivotAppliedVolts = m_pivotMotor.getMotorVoltage();
+  private final StatusSignal<Current> pivotCurrent = m_pivotMotor.getSupplyCurrent();
+  private final StatusSignal<AngularVelocity> rollerVelocity = m_rollerMotor.getVelocity();
+  private final StatusSignal<Voltage> rollerAppliedVolts = m_rollerMotor.getMotorVoltage();
+  private final StatusSignal<Current> rollerCurrent = m_rollerMotor.getSupplyCurrent();
+
+  // Power ports
   public final int[] powerPorts = {
     CANandPowerPorts.INTAKE_PIVOT.getPowerPort(), CANandPowerPorts.INTAKE_ROLLER.getPowerPort()
   };
 
-  private final StatusSignal<Angle> pivotPosition = encoderActual.getAbsolutePosition();
-  private final StatusSignal<AngularVelocity> pivotVelocity = intakePivot.getVelocity();
-  private final StatusSignal<Voltage> pivotAppliedVolts = intakePivot.getMotorVoltage();
-  private final StatusSignal<Current> pivotCurrent = intakePivot.getSupplyCurrent();
+  // Define the configuration objects
+  private TalonFXConfiguration rollerConfig = new TalonFXConfiguration();
+  private TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
 
-  /** Constructor */
+  private final PIDController pivotController = new PIDController(kPRealPivot, 0, kDRealPivot);
+
+  /** Constructor for using a TalonFX to drive the intake */
   public IntakeIOTalonFX() {
+
     // Set and apply TalonFX Configurations
-    pivotConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    pivotConfig.Feedback.FeedbackRemoteSensorID = CANandPowerPorts.INTAKE_ENCODER.getDeviceNumber();
-    // When not Pro-licensed, FusedCANcoder/SyncCANcoder automatically fall back to RemoteCANcoder
-    pivotConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.FusedCANcoder;
+    rollerConfig.Slot0 = new Slot0Configs().withKP(kPRealRoller).withKI(0.0).withKD(kDRealRoller);
+    rollerConfig.TorqueCurrent.PeakForwardTorqueCurrent = PowerConstants.kMotorPortMaxCurrent;
+    rollerConfig.TorqueCurrent.PeakReverseTorqueCurrent = -PowerConstants.kMotorPortMaxCurrent;
+    rollerConfig.CurrentLimits.StatorCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
+    rollerConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    rollerConfig.CurrentLimits.SupplyCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
+    rollerConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    rollerConfig.ClosedLoopRamps.TorqueClosedLoopRampPeriod = Constants.loopPeriodSecs;
+    rollerConfig.MotorOutput.NeutralMode =
+        switch (kIntakeRollerIdle) {
+          case COAST -> NeutralModeValue.Coast;
+          case BRAKE -> NeutralModeValue.Brake;
+        };
+    PhoenixUtil.tryUntilOk(5, () -> m_rollerMotor.getConfigurator().apply(rollerConfig, 0.25));
+
+    pivotConfig.Slot0 = new Slot0Configs().withKP(kPRealPivot).withKI(0.0).withKD(kDRealPivot);
     pivotConfig.TorqueCurrent.PeakForwardTorqueCurrent = PowerConstants.kMotorPortMaxCurrent;
     pivotConfig.TorqueCurrent.PeakReverseTorqueCurrent = -PowerConstants.kMotorPortMaxCurrent;
     pivotConfig.CurrentLimits.StatorCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
     pivotConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    pivotConfig.CurrentLimits.SupplyCurrentLimit = PowerConstants.kMotorPortMaxCurrent;
+    pivotConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
     pivotConfig.ClosedLoopRamps.TorqueClosedLoopRampPeriod = Constants.loopPeriodSecs;
-    PhoenixUtil.tryUntilOk(5, () -> intakePivot.getConfigurator().apply(pivotConfig, 0.25));
+    pivotConfig.MotorOutput.NeutralMode =
+        switch (kIntakeRollerIdle) {
+          case COAST -> NeutralModeValue.Coast;
+          case BRAKE -> NeutralModeValue.Brake;
+        };
+    PhoenixUtil.tryUntilOk(5, () -> m_pivotMotor.getConfigurator().apply(pivotConfig, 0.25));
+
+    BaseStatusSignal.setUpdateFrequencyForAll(
+        50.0, rollerVelocity, rollerAppliedVolts, rollerCurrent);
+    m_rollerMotor.optimizeBusUtilization();
+    BaseStatusSignal.setUpdateFrequencyForAll(
+        50.0, pivotPosition, pivotVelocity, pivotAppliedVolts, pivotCurrent);
+    m_pivotMotor.optimizeBusUtilization();
   }
 
   /**
@@ -73,13 +117,36 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void updateInputs(IntakeIOInputs inputs) {
-    BaseStatusSignal.refreshAll(pivotPosition, pivotVelocity, pivotAppliedVolts, pivotCurrent);
-    inputs.positionRad =
-        Units.rotationsToRadians(pivotPosition.getValueAsDouble()); // 21.42857; // gear ratio
-    inputs.velocityRadPerSec =
-        Units.rotationsToRadians(pivotVelocity.getValueAsDouble()); // 21.42857; // gear ratio
+    BaseStatusSignal.refreshAll(
+        pivotPosition,
+        pivotVelocity,
+        pivotAppliedVolts,
+        pivotCurrent,
+        rollerVelocity,
+        rollerAppliedVolts,
+        rollerCurrent);
+    inputs.positionRad = Units.rotationsToRadians(pivotPosition.getValueAsDouble()) / 2.0;
+    inputs.velocityRadPerSec = Units.rotationsToRadians(pivotVelocity.getValueAsDouble()) / 2.0;
     inputs.appliedVolts = pivotAppliedVolts.getValueAsDouble();
     inputs.currentAmps = new double[] {pivotCurrent.getValueAsDouble()};
+    inputs.rollerVelRadPerSec =
+        Units.rotationsToRadians(rollerVelocity.getValueAsDouble()) / kIntakeRollerGearRatio;
+    inputs.rollerVolts = rollerAppliedVolts.getValueAsDouble();
+    inputs.rollerAmps = new double[] {rollerCurrent.getValueAsDouble()};
+  }
+
+  /**
+   * Configure the PID for the intake pivot
+   *
+   * @param kP The proportional gain for the PID controller
+   * @param kI The integram gain for the PID controller
+   * @param kD The derivative gain for the PID controller
+   */
+  @Override
+  public void configure(double kP, double kI, double kD) {
+    pivotController.setP(kP);
+    pivotController.setI(kI);
+    pivotController.setD(kD);
   }
 
   /**
@@ -92,7 +159,7 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void setPivotVolts(double volts) {
-    intakePivot.setVoltage(volts);
+    m_pivotMotor.setControl(voltageRequest.withOutput(volts).withEnableFOC(true));
   }
 
   /**
@@ -105,14 +172,7 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void setRollerVolts(double volts) {
-    intakeRoller.setVoltage(volts);
-  }
-
-  /** Stop the intake pivot and rollers */
-  @Override
-  public void stop() {
-    intakeRoller.stopMotor();
-    intakePivot.stopMotor();
+    m_rollerMotor.setControl(voltageRequest.withOutput(volts).withEnableFOC(true));
   }
 
   /**
@@ -122,7 +182,9 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void setPivotPosition(double position) {
-    intakePivot.set(-pivotPID.calculate(pivotPosition.getValueAsDouble(), position));
+    m_pivotMotor.setControl(
+        new DutyCycleOut(-pivotController.calculate(pivotPosition.getValueAsDouble(), position))
+            .withEnableFOC(true));
   }
 
   /**
@@ -132,21 +194,14 @@ public class IntakeIOTalonFX implements IntakeIO {
    */
   @Override
   public void rollerDutyCycle(double dutyCycle) {
-    intakeRoller.set(dutyCycle);
+    m_rollerMotor.setControl(new DutyCycleOut(dutyCycle).withEnableFOC(true));
   }
 
-  /**
-   * Configure the PID for the intake pivot
-   *
-   * @param kP The proportional gain for the PID controller
-   * @param kI The integram gain for the PID controller
-   * @param kD The derivative gain for the PID controller
-   */
+  /** Stop the intake pivot and rollers */
   @Override
-  public void configure(double kP, double kI, double kD) {
-    pivotPID.setP(kP);
-    pivotPID.setI(kI);
-    pivotPID.setD(kD);
+  public void stop() {
+    m_rollerMotor.stopMotor();
+    m_pivotMotor.stopMotor();
   }
 
   /** Return the current encoder value for the intake pivot */

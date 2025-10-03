@@ -140,7 +140,7 @@ public final class Constants {
 
     // Current Limits
     public static final double kTotalMaxCurrent = 120.;
-    public static final double kMotorPortMaxCurrent = 40.;
+    public static final double kMotorPortMaxCurrent = 80.;
     public static final double kSmallPortMaxCurrent = 20.;
   }
 
@@ -231,13 +231,10 @@ public final class Constants {
     // Idle Mode
     public static final MotorIdleMode kCoralIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // Gear Ratio
-    // TODO: Get the REAL gear ratio
-    public static final double kCoralGearRatio = 10.0;
+    // Physical Things on the Robot
+    public static final double kCoralGearRatio = 3.0;
 
     // mode real/replay
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
     // motor configs
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
@@ -247,12 +244,9 @@ public final class Constants {
     public static final double kDReal = 0.0;
 
     // mode sim
-    public static final double kStaticGainSim = 0.1;
-    public static final double kVelocityGainSim = 0.05;
     // motor configs
-    public static final double kGSim = 0;
-    public static final double kSSim = 0;
-    public static final double kVSim = 0;
+    public static final double kSSim = 0.1;
+    public static final double kVSim = 0.05;
     public static final double kASim = 0;
     public static final double kPSim = 0;
     public static final double kISim = 0;
@@ -266,13 +260,29 @@ public final class Constants {
     public static final MotorIdleMode kIntakePivotIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
     public static final MotorIdleMode kIntakeRollerIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // Gear Ratio
-    public static final double kIntakePivotGearRatio = 10.0;
-    public static final double kIntakeRollerGearRatio = 10.0;
+    // Physical Things on the Robot
+    public static final double kIntakePivotGearRatio = (50. / 12.) * (60. / 20.) * (32. / 16.);
+    public static final double kIntakeRollerGearRatio = (40. / 12.);
 
     // mode real/replay
-    public static final double kStaticGainReal = 0.1;
-    public static final double kVelocityGainReal = 0.05;
+    // motor configs
+    // public static final double kSReal = 10.0;
+    // public static final double kVReal = 0.0018629;
+    // public static final double kAReal = 0.0;
+    public static final double kPRealRoller = 1.0;
+    public static final double kIRealRoller = 0.0;
+    public static final double kDRealRoller = 0.0;
+
+    // mode real/replay
+    // motor configs
+    // public static final double kSReal = 10.0;
+    // public static final double kVReal = 0.0018629;
+    // public static final double kAReal = 0.0;
+    public static final double kPRealPivot = 1.5;
+    public static final double kIRealPivot = 0.0;
+    public static final double kDRealPivot = 0.0;
+
+    // mode real/replay
     // motor configs
     public static final double kSReal = 0.075;
     public static final double kVReal = 0.0018629;
@@ -282,12 +292,9 @@ public final class Constants {
     public static final double kDReal = 0.0;
 
     // mode sim
-    public static final double kStaticGainSim = 0.1;
-    public static final double kVelocityGainSim = 0.05;
     // motor configs
-    public static final double kGSim = 0;
-    public static final double kSSim = 0;
-    public static final double kVSim = 0;
+    public static final double kSSim = 0.1;
+    public static final double kVSim = 0.05;
     public static final double kASim = 0;
     public static final double kPSim = 0;
     public static final double kISim = 0;
@@ -306,22 +313,9 @@ public final class Constants {
     public static final MotorIdleMode kAlgaePivotIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
     public static final MotorIdleMode kAlgaeRollerIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
-    // Gear Ratio
-    // TODO: Get ACTUAL GEAR RATIOS from Eugene
+    // Physical Things on the Robot
     public static final double kAlgaePivotGearRatio = 10.0;
     public static final double kAlgaeRollerGearRatio = 10.0;
-
-    // Pivot Gains
-    public static final double kPPivot = 10.0;
-    public static final double kIPivot = 0.0;
-    public static final double kDPivot = 0.0;
-
-    // Roller Gains
-    public static final double kPRoller = 1.0;
-    public static final double kIRoller = 0.0;
-    public static final double kDRoller = 0.0;
-
-    // Algae Mech Positions
     // TODO: Put these in ACTUAL DEGREES with an offset
     public static final double kStowPos = .209;
     public static final double kHorizPos = .35;
@@ -333,6 +327,23 @@ public final class Constants {
     // public static final Angle kReefPos = Degrees.of(-35.0);
     // public static final Angle kPivotOffset = Rotations.of(0.43);
 
+    // mode real/replay
+    // motor configs
+    // public static final double kSReal = 10.0;
+    // public static final double kVReal = 0.0018629;
+    // public static final double kAReal = 0.0;
+    public static final double kPRealRoller = 1.0;
+    public static final double kIRealRoller = 0.0;
+    public static final double kDRealRoller = 0.0;
+
+    // mode real/replay
+    // motor configs
+    // public static final double kSReal = 10.0;
+    // public static final double kVReal = 0.0018629;
+    // public static final double kAReal = 0.0;
+    public static final double kPRealPivot = 10.0;
+    public static final double kIRealPivot = 0.0;
+    public static final double kDRealPivot = 0.0;
   }
 
   /** Climb Subsystem Constants ******************************************** */
@@ -440,7 +451,7 @@ public final class Constants {
     public static final PIDConstants kPPdrivePID = new PIDConstants(10, 0, 0.2);
     // new PIDConstants(DrivebaseConstants.kDriveP, 0.0, DrivebaseConstants.kDriveD);
     public static final PIDConstants kPPsteerPID = new PIDConstants(4, 0.0, 0.0);
-    // new PIDConstants(DrivebaseConstants.kSteerP, 0.0, DrivebaseConstants.kSteerD);
+
     // 1 Cordinate = 1 meter
     // *** 1 meter = 39.3701 inches
     // Pathplanner Maxiums with MK4i L3 with an amp limit of 40 Amps and other robot specifics
@@ -473,6 +484,46 @@ public final class Constants {
     // Drive and Turn PID constants used for Chorep
     public static final PIDConstants kChoreoDrivePID = new PIDConstants(10.0, 0.0, 0.0);
     public static final PIDConstants kChoreoSteerPID = new PIDConstants(7.5, 0.0, 0.0);
+  }
+
+  public static class DriveToPositionConstatnts {
+
+    // The robot is facing AWAY from the tag, so its pose angle matches that of the tag.
+    // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
+    // robot pose is 21" from the tag.
+    public static Translation2d kLeftReefPost =
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(-5.9));
+    // public static Translation2d kLeftReefPostClose =
+    //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
+    public static Translation2d kRightReefPost =
+        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(+6.5));
+    public static Translation2d kRightReefPostClose =
+        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+6));
+    public static Translation2d kAlgaeGrab =
+        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
+
+    public static Translation2d kProcessor =
+        new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(+6.0));
+
+    public static Translation2d kStation =
+        new Translation2d(Units.inchesToMeters(18.0), Units.inchesToMeters(0.0));
+
+    // Constants used by the DriveToPose Command
+    public static final double drivekP = AutoConstants.kPPdrivePID.kP; // 0.8;
+    public static final double drivekD = AutoConstants.kPPdrivePID.kD; // 0.0;
+    public static final double thetakP = AutoConstants.kPPsteerPID.kP; // 4.0;
+    public static final double thetakD = AutoConstants.kPPsteerPID.kD; // 0.0;
+
+    // Values in m/s
+    public static final double driveMaxVelocity = 3.8;
+    public static final double driveMaxAcceleration = 3.5;
+    public static final double thetaMaxVelocity = Units.degreesToRadians(360.0);
+    public static final double thetaMaxAcceleration = Units.degreesToRadians(480.0);
+
+    public static final double driveTolerance = 0.01;
+    public static final double thetaTolerance = Units.degreesToRadians(1.0);
+    public static final double ffMinRadius = 0.05; // 0.2;
+    public static final double ffMaxRadius = 0.1; // 0.8;
   }
 
   /** LED Constants ******************************************************** */
@@ -630,6 +681,7 @@ public final class Constants {
     public static final RobotDeviceId ALGAE_ROLLER = new RobotDeviceId(27, "", 11);
     public static final RobotDeviceId CLIMB = new RobotDeviceId(31, "DriveTrain", 8);
     public static final RobotDeviceId LED = new RobotDeviceId(36, "", null);
+    public static final RobotDeviceId CANDI_ENCODERS = new RobotDeviceId(41, "", null);
 
     // public static final RobotDeviceId Coral_Scorer = new RobotDeviceId(16, "", 9);
 

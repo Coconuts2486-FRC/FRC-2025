@@ -339,7 +339,8 @@ public class ReefTarget extends VirtualSubsystem {
 
     for (int i = 0; i < 6; i++) {
       Transform2d relPose =
-          thisPose.minus(AprilTagConstants.aprilTagLayout.getTagPose(baseTag + i).get().toPose2d());
+          thisPose.minus(
+              AprilTagConstants.kAprilTagLayout.getTagPose(baseTag + i).get().toPose2d());
       double absDist =
           Math.sqrt(
               Math.pow(relPose.getMeasureX().in(Meters), 2.0)
@@ -550,7 +551,7 @@ public class ReefTarget extends VirtualSubsystem {
    *     centered for algae grab)
    */
   private Pose2d computeReefPose(int tagID, ScoringPosition position) {
-    Optional<Pose3d> tagPose = AprilTagConstants.aprilTagLayout.getTagPose(tagID);
+    Optional<Pose3d> tagPose = AprilTagConstants.kAprilTagLayout.getTagPose(tagID);
 
     // For whatever reason, if the specified tag pose doesn't exist, return empty pose
     if (tagPose.isEmpty()) {

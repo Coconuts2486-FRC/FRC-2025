@@ -7,32 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start IJ"
+            "pathName": "Poof Start IJ"
           }
         },
         {
           "type": "deadline",
           "data": {
             "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Score"
-                      }
-                    }
-                  ]
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -49,6 +30,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -59,7 +46,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Poof Station J"
+                        "pathName": "Station J"
                       }
                     },
                     {
@@ -101,7 +88,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignR"
+                              "name": "AlignRF"
                             }
                           },
                           {
@@ -155,7 +142,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station L"
+                        "pathName": "Poof Station L"
                       }
                     },
                     {
@@ -197,7 +184,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignR"
+                              "name": "AlignRF"
                             }
                           },
                           {
@@ -205,9 +192,9 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
+                                  "type": "named",
                                   "data": {
-                                    "waitTime": 1.0
+                                    "name": "CoralDetected"
                                   }
                                 },
                                 {
@@ -251,7 +238,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station L"
+                        "pathName": "Poof Station L"
                       }
                     },
                     {
@@ -293,7 +280,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignL"
+                              "name": "AlignLF"
                             }
                           },
                           {
@@ -301,9 +288,9 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
+                                  "type": "named",
                                   "data": {
-                                    "waitTime": 1.0
+                                    "name": "CoralDetected"
                                   }
                                 },
                                 {

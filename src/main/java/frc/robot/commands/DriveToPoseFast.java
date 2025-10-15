@@ -57,14 +57,14 @@ public class DriveToPoseFast extends Command {
       new LoggedTunableNumber("DriveToPose/FFMinRadius");
 
   static {
-    drivekP.initDefault(9.0);
-    drivekD.initDefault(0.0);
+    drivekP.initDefault(10.0); // 9
+    drivekD.initDefault(0.5); // 0
     thetakP.initDefault(4.0);
     thetakD.initDefault(0.0);
     // Values in m/s
     driveMaxVelocity.initDefault(5);
     driveMaxVelocitySlow.initDefault(1.5);
-    driveMaxAcceleration.initDefault(3.5);
+    driveMaxAcceleration.initDefault(5); // 3.5
     thetaMaxVelocity.initDefault(Units.degreesToRadians(360.0));
     thetaMaxVelocitySlow.initDefault(Units.degreesToRadians(90.0));
     thetaMaxAcceleration.initDefault(Units.degreesToRadians(720.0));
@@ -72,8 +72,8 @@ public class DriveToPoseFast extends Command {
     driveToleranceSlow.initDefault(0.06);
     thetaTolerance.initDefault(Units.degreesToRadians(1.0));
     thetaToleranceSlow.initDefault(Units.degreesToRadians(3.0));
-    ffMinRadius.initDefault(0.2);
-    ffMaxRadius.initDefault(0.8);
+    ffMinRadius.initDefault(0.1); // 0.2
+    ffMaxRadius.initDefault(2); // 0.8
   }
 
   private final Drive drive;
@@ -170,12 +170,13 @@ public class DriveToPoseFast extends Command {
             0.0,
             1.0);
     driveErrorAbs = currentDistance;
-    driveController.reset(
+    /*    driveController.reset(
         lastSetpointTranslation.getDistance(targetPose.getTranslation()),
         driveController.getSetpoint().velocity);
     double driveVelocityScalar =
         driveController.getSetpoint().velocity * ffScaler
-            + driveController.calculate(driveErrorAbs, 0.0);
+            + driveController.calculate(driveErrorAbs, 0.0);*/
+    double driveVelocityScalar = ffScaler + driveController.calculate(driveErrorAbs, 0.0);
     if (currentDistance < driveController.getPositionTolerance()) driveVelocityScalar = 0.0;
     lastSetpointTranslation =
         new Pose2d(

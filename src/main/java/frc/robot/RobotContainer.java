@@ -435,6 +435,10 @@ public class RobotContainer {
             // intaked
             "CoralDetect",
             new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+    NamedCommands.registerCommand( // Should tell the robot when the coral is fully intaked
+        // intaked
+        "CoralDetected",
+        new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == true));
     NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
         "Timer", new IntakeCommand(m_intake, 0.9, 0).withTimeout(1));
 

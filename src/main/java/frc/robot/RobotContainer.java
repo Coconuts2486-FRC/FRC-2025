@@ -293,6 +293,22 @@ public class RobotContainer {
                         ElevatorConstants.kAcceleration,
                         ElevatorConstants.kVelocity,
                         m_elevator)));
+    NamedCommands
+        .registerCommand( // This just raises the elevator to L4 without automatically scoring
+            "E3",
+            new ElevatorCommand(
+                    () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
+                    ElevatorConstants.kAcceleration.times(
+                        0), // Lowering both of these increases elevator drop speed
+                    ElevatorConstants.kVelocity.times(0.0),
+                    m_elevator)
+                .until(() -> m_coralScorer.getLightStop() == true)
+                .andThen(
+                    new ElevatorCommand(
+                        () -> ElevatorConstants.kL3, // Change this to kL2 or kL3 for those levels
+                        ElevatorConstants.kAcceleration,
+                        ElevatorConstants.kVelocity,
+                        m_elevator)));
 
     NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",

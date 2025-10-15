@@ -4,15 +4,16 @@
   "holonomicMode": true,
   "pathFolders": [
     "Specialer",
+    "Poofing",
     "Matrix Station",
     "Matrix Start",
     "Matrix Coral",
     "Algae"
   ],
   "autoFolders": [
-    "Arizona North",
-    "Worlds",
-    "South Florida"
+    "ARL Champs",
+    "South Florida",
+    "Worlds"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

@@ -740,7 +740,7 @@ public class RobotContainer {
         .back()
         .whileTrue(
             Commands.runEnd(
-                    () -> m_climber.goUntilPosition(.5, ClimbConstants.completeClimb),
+                    () -> m_climber.goUntilPosition(-0.5, ClimbConstants.completeClimb),
                     () -> m_climber.stop(),
                     m_climber)
                 .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(-0.5))));

@@ -44,7 +44,7 @@ public class ClimbIOTalonFX implements ClimbIO {
 
   @Override
   public void twistMotorToPosition(double position) {
-    climber.setControl(new DutyCycleOut(pid.calculate(climbEncoder.get(), position)));
+    climber.setControl(new DutyCycleOut(-pid.calculate(climbEncoder.get(), position)));
   }
 
   @Override

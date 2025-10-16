@@ -5,7 +5,7 @@
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
-// version 3 as published by the Free Software Foundation or
+// version 3 as published by the Free Software Foundation orl
 // available in the root directory of this project.
 //
 // This program is distributed in the hope that it will be useful,
@@ -412,7 +412,7 @@ public final class Constants {
         switch (getRobot()) {
           case GEORGE -> true; // Testing
           //  case LEONARDO -> true;
-          case LEONARDO -> true; // Kate's preference
+          case LEONARDO -> false; // Kate's preference
           case SIMBOT -> true; // Default
         };
 
@@ -655,11 +655,11 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(-8.9));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-5));
     // public static Translation2d kLeftReefPostClose =
     //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(17.5), Units.inchesToMeters(+11.5));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+11.5));
     public static Translation2d kRightReefPostClose =
         new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+11));
     public static Translation2d kAlgaeGrab =

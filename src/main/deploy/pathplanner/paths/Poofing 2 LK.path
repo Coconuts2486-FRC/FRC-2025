@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5224385245901637,
-        "y": 7.255686475409835
+        "x": 3.8360655737704916,
+        "y": 5.145850409836064
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.989205687731209,
-        "y": 6.888202388669101
+        "x": 3.6010028408615407,
+        "y": 5.542528793974255
       },
       "isLocked": false,
-      "linkedName": "LStation"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.7822413917824065,
-        "y": 5.476201171875
+        "x": 3.479259982638888,
+        "y": 5.740749421296296
       },
       "prevControl": {
-        "x": 3.168351390620744,
-        "y": 5.96719106396402
+        "x": 3.61740384914275,
+        "y": 5.510544989833735
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Coral LK"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.75,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -45,10 +45,10 @@
     "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Matrix Coral",
+  "folder": "Poofing",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": false
 }

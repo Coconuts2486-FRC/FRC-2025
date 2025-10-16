@@ -293,6 +293,22 @@ public class RobotContainer {
                         ElevatorConstants.kAcceleration,
                         ElevatorConstants.kVelocity,
                         m_elevator)));
+    NamedCommands
+        .registerCommand( // This just raises the elevator to L3 without automatically scoring
+            "E3",
+            new ElevatorCommand(
+                    () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
+                    ElevatorConstants.kAcceleration.times(
+                        0), // Lowering both of these increases elevator drop speed
+                    ElevatorConstants.kVelocity.times(0.0),
+                    m_elevator)
+                .until(() -> m_coralScorer.getLightStop() == true)
+                .andThen(
+                    new ElevatorCommand(
+                        () -> ElevatorConstants.kL3, // Change this to kL2 or kL3 for those levels
+                        ElevatorConstants.kAcceleration,
+                        ElevatorConstants.kVelocity,
+                        m_elevator)));
 
     NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",
@@ -348,7 +364,7 @@ public class RobotContainer {
             fastDriveRC.until(
                 () ->
                     fastDriveRC.withinTolerance(
-                        .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+                        .0575, new Rotation2d(Units.degreesToRadians(2.0)))));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
         "AlignRC",
         driveRC.until(
@@ -357,11 +373,13 @@ public class RobotContainer {
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
             "AlignL",
             driveL.until(
-                () -> driveL.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+                () -> driveL.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(2.0)))));
 
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignLF", fastDriveL.until(fastDriveL::atGoal));
+            "AlignLF", fastDriveL.until(() ->
+            fastDriveRC.withinTolerance(
+                .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
             "Station", station.until(station::atGoal));
@@ -419,6 +437,10 @@ public class RobotContainer {
             // intaked
             "CoralDetect",
             new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
+    NamedCommands.registerCommand( // Should tell the robot when the coral is fully intaked
+        // intaked
+        "CoralDetected",
+        new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == true));
     NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
         "Timer", new IntakeCommand(m_intake, 0.9, 0).withTimeout(1));
 

@@ -3,38 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5224385245901637,
-        "y": 7.255686475409835
+        "x": 7.083824508101851,
+        "y": 5.813481264467592
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.989205687731209,
-        "y": 6.888202388669101
+        "x": 6.598684941587017,
+        "y": 5.901245275220771
       },
       "isLocked": false,
-      "linkedName": "LStation"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.7822413917824065,
-        "y": 5.476201171875
+        "x": 5.514819878472221,
+        "y": 5.740108868634259
       },
       "prevControl": {
-        "x": 3.168351390620744,
-        "y": 5.96719106396402
+        "x": 5.760013073470555,
+        "y": 5.691320579808874
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Coral LK"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8282510080645165,
+      "rotationDegrees": 59.99999999999999
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.75,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Matrix Coral",
+  "folder": "Poofing",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 0.0
   },
   "useDefaultConstraints": false
 }

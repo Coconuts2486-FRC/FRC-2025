@@ -294,7 +294,7 @@ public class RobotContainer {
                         ElevatorConstants.kVelocity,
                         m_elevator)));
     NamedCommands
-        .registerCommand( // This just raises the elevator to L4 without automatically scoring
+        .registerCommand( // This just raises the elevator to L3 without automatically scoring
             "E3",
             new ElevatorCommand(
                     () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
@@ -364,7 +364,7 @@ public class RobotContainer {
             fastDriveRC.until(
                 () ->
                     fastDriveRC.withinTolerance(
-                        .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+                        .0575, new Rotation2d(Units.degreesToRadians(2.0)))));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
         "AlignRC",
         driveRC.until(
@@ -373,11 +373,13 @@ public class RobotContainer {
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
             "AlignL",
             driveL.until(
-                () -> driveL.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+                () -> driveL.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(2.0)))));
 
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignLF", fastDriveL.until(fastDriveL::atGoal));
+            "AlignLF", fastDriveL.until(() ->
+            fastDriveRC.withinTolerance(
+                .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
             "Station", station.until(station::atGoal));

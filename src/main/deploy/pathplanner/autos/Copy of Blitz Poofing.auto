@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Poof Start IJ"
+            "pathName": "Poof Start EF"
           }
         },
         {
@@ -46,7 +46,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Station J"
+                        "pathName": "Poof Station E"
                       }
                     },
                     {
@@ -142,7 +142,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Poof Station L"
+                        "pathName": "Poof Station C"
                       }
                     },
                     {
@@ -238,7 +238,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Poof Station L"
+                        "pathName": "Poof Station C"
                       }
                     },
                     {
@@ -359,13 +359,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Poofing 1 LK"
+                        "pathName": "Poofing 1 CD"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Poofing 2 LK"
+                        "pathName": "Poofing 2  CD"
                       }
                     }
                   ]

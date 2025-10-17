@@ -377,9 +377,11 @@ public class RobotContainer {
 
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignLF", fastDriveL.until(() ->
-            fastDriveRC.withinTolerance(
-                .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+            "AlignLF",
+            fastDriveL.until(
+                () ->
+                    fastDriveRC.withinTolerance(
+                        .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
             "Station", station.until(station::atGoal));

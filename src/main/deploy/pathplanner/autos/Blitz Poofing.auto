@@ -5,25 +5,32 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "Poof Start IJ"
-          }
-        },
-        {
-          "type": "deadline",
+          "type": "sequential",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "AlignR"
+                  "pathName": "Poof Start IJ"
                 }
               },
               {
-                "type": "named",
+                "type": "deadline",
                 "data": {
-                  "name": "E4"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AlignRF"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "E4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -98,7 +105,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.2
+                                    "waitTime": 0.8
                                   }
                                 },
                                 {

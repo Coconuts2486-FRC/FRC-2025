@@ -62,9 +62,9 @@ public class DriveToPoseFast extends Command {
     thetakP.initDefault(4.0);
     thetakD.initDefault(0.0);
     // Values in m/s
-    driveMaxVelocity.initDefault(5);
+    driveMaxVelocity.initDefault(4);
     driveMaxVelocitySlow.initDefault(1.5);
-    driveMaxAcceleration.initDefault(5); // 3.5
+    driveMaxAcceleration.initDefault(3.5); // 3.5
     thetaMaxVelocity.initDefault(Units.degreesToRadians(360.0));
     thetaMaxVelocitySlow.initDefault(Units.degreesToRadians(90.0));
     thetaMaxAcceleration.initDefault(Units.degreesToRadians(720.0));

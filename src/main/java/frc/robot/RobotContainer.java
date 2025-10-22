@@ -313,7 +313,7 @@ public class RobotContainer {
         "Score",
         Commands.run(() -> m_coralScorer.setCoralPercent(.28), m_coralScorer).withTimeout(0.15));
         
-    NamedCommands.registerCommand( // Coral rollers go brrrr
+    NamedCommands.registerCommand( //This command keeps the robot from scoring unless the elevator is at the correct positition
         "AScore",
         Commands.idle().until(m_elevator.isAtPosition()));
 
@@ -367,7 +367,7 @@ public class RobotContainer {
                 () -> driveR.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
     NamedCommands
         .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
-            "AlignRF",
+            "AlignRF",    //This one uses different values specifically for autos
             fastDriveRC.until(
                 () ->
                     fastDriveRC.withinTolerance(
@@ -384,16 +384,16 @@ public class RobotContainer {
 
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignLC",
+            "AlignLC", //This one uses different values specifically for autos
             driveLC.until(
                 () -> driveLC.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(2.0)))));
 
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignLF",
+            "AlignLF",    //This one uses different values specifically for autos
             fastDriveL.until(
                 () ->
-                    fastDriveRC.withinTolerance(
+                    fastDriveLC.withinTolerance(
                         .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view

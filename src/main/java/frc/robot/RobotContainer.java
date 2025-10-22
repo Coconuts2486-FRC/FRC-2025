@@ -23,7 +23,6 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.Inches;
 import static frc.robot.Constants.Cameras.*;
-
 import choreo.auto.AutoChooser;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
@@ -313,6 +312,10 @@ public class RobotContainer {
     NamedCommands.registerCommand( // Coral rollers go brrrr
         "Score",
         Commands.run(() -> m_coralScorer.setCoralPercent(.28), m_coralScorer).withTimeout(0.15));
+        
+    NamedCommands.registerCommand( // Coral rollers go brrrr
+        "AScore",
+        Commands.idle().until(m_elevator.isAtPosition()));
 
     NamedCommands.registerCommand( // Brings the elevator to the ground.
         "Bottom",
@@ -330,7 +333,11 @@ public class RobotContainer {
 
     DriveToPose driveRC =
         new DriveToPose(
-            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHTCLOSE));
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHTAUTO));
+    
+    DriveToPose driveLC =
+            new DriveToPose(
+                m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFTAUTO));
 
     DriveToPose driveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
@@ -341,7 +348,7 @@ public class RobotContainer {
 
     DriveToPose fastDriveRC =
         new DriveToPose(
-            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHTCLOSE));
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHTAUTO));
 
     DriveToPose fastDriveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
@@ -374,6 +381,12 @@ public class RobotContainer {
             "AlignL",
             driveL.until(
                 () -> driveL.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(2.0)))));
+
+    NamedCommands
+        .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
+            "AlignLC",
+            driveLC.until(
+                () -> driveLC.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(2.0)))));
 
     NamedCommands
         .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
@@ -435,12 +448,10 @@ public class RobotContainer {
         "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
 
     NamedCommands
-        .registerCommand( // Ends once coral is detected so the robot can start moving before fully
-            // intaked
+        .registerCommand( // Ends once coral is detected so the robot can start moving before fully intaked
             "CoralDetect",
             new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
     NamedCommands.registerCommand( // Should tell the robot when the coral is fully intaked
-        // intaked
         "CoralDetected",
         new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == true));
     NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place

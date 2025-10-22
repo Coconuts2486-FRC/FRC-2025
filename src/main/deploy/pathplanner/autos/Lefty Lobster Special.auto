@@ -109,9 +109,9 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
+                                  "type": "named",
                                   "data": {
-                                    "waitTime": 1.2
+                                    "name": "CoralDetected"
                                   }
                                 },
                                 {
@@ -197,7 +197,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignL"
+                              "name": "AlignLC"
                             }
                           },
                           {

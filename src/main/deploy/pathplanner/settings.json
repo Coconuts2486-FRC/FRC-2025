@@ -3,12 +3,11 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
-    "Specialer",
-    "Poofing",
-    "Matrix Station",
-    "Matrix Start",
+    "Algae",
     "Matrix Coral",
-    "Algae"
+    "Matrix Start",
+    "Matrix Station",
+    "Specialer"
   ],
   "autoFolders": [
     "ARL Champs",

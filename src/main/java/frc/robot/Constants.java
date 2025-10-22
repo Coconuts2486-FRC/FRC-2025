@@ -45,6 +45,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.SwerveConstants;
+import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
 import frc.robot.util.RBSIEnum.AutoType;
@@ -184,6 +185,9 @@ public final class Constants {
   /** Elevator Subsystem Constants ***************************************** */
   public static final class ElevatorConstants {
 
+    public ElevatorConstants(Elevator m_elevator, Object object) {
+      //TODO Auto-generated constructor stub
+    }
     // Idle Mode
     public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 
@@ -656,11 +660,13 @@ public final class Constants {
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
         new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-5));
+    public static Translation2d kLeftReefPostAuto =
+        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-2));
     // public static Translation2d kLeftReefPostClose =
     //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
         new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+11.5));
-    public static Translation2d kRightReefPostClose =
+    public static Translation2d kRightReefPostAuto =
         new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+11));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));

@@ -15,7 +15,7 @@ Drive base code built on [Az-RBSI](https://github.com/AZ-First/Az-RBSI) produced
 
 ## Robot Name
 
-We haven't named our 2025 robot yet.
+Leonardo Da Pinchy
 
 ## 2025 Competition Schedule
 

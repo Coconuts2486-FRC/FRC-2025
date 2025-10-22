@@ -45,7 +45,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.SwerveConstants;
-import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
 import frc.robot.util.RBSIEnum.AutoType;
@@ -185,9 +184,6 @@ public final class Constants {
   /** Elevator Subsystem Constants ***************************************** */
   public static final class ElevatorConstants {
 
-    public ElevatorConstants(Elevator m_elevator, Object object) {
-      //TODO Auto-generated constructor stub
-    }
     // Idle Mode
     public static final MotorIdleMode kElevatorIdle = MotorIdleMode.BRAKE; // BRAKE, COAST
 

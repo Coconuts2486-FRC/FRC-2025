@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.692213114754098,
-        "y": 3.0180327868852457
+        "x": 3.866,
+        "y": 5.079
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7208994264070556,
-        "y": 1.954043440972085
+        "x": 3.616857715097165,
+        "y": 5.5141293212982445
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.4624999999999997,
-        "y": 0.8182889344262299
+        "x": 3.518615916192108,
+        "y": 5.683823514755509
       },
       "prevControl": {
-        "x": 1.7050639204777565,
-        "y": 1.083136503168714
+        "x": 3.646268291713103,
+        "y": 5.457772080447778
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EStation"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.65,
+    "maxVelocity": 1.5,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Matrix Station",
+  "folder": "Lamprey Razor",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": false
 }

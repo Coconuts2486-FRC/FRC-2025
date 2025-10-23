@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.692213114754098,
-        "y": 3.0180327868852457
+        "x": 5.257841796874999,
+        "y": 5.052155309606481
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7208994264070556,
-        "y": 1.954043440972085
+        "x": 4.778333600153688,
+        "y": 5.65154055550812
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.4624999999999997,
-        "y": 0.8182889344262299
+        "x": 1.5224385245901637,
+        "y": 7.255686475409835
       },
       "prevControl": {
-        "x": 1.7050639204777565,
-        "y": 1.083136503168714
+        "x": 2.459980611962146,
+        "y": 6.62671274123848
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "EStation"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.65,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 125.00000000000001
   },
   "reversed": false,
-  "folder": "Matrix Station",
+  "folder": "LB and RT",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": false
 }

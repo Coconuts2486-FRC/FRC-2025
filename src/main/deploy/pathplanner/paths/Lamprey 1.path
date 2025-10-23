@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.22858606557377,
-        "y": 2.2388319672131147
+        "x": 3.652,
+        "y": 5.448
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.814799512004161,
-        "y": 2.243911114812721
+        "x": 3.91929587968285,
+        "y": 4.989262918510752
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.7792008196721311,
-        "y": 2.2388319672131147
+        "x": 3.866,
+        "y": 5.079
       },
       "prevControl": {
-        "x": 1.2385925158943116,
-        "y": 2.237605444622983
+        "x": 3.6168280115181397,
+        "y": 5.512010513558439
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 2.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Matrix Start",
+  "folder": "Lamprey Razor",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": false
 }

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7208994264070556,
-        "y": 1.954043440972085
+        "x": 2.5963923657024215,
+        "y": 1.9381119745919726
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 0.8182889344262299
       },
       "prevControl": {
-        "x": 1.7050639204777565,
-        "y": 1.083136503168714
+        "x": 1.7130189443656234,
+        "y": 1.0815269140244235
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 2.65,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -45,7 +45,7 @@
     "rotation": -125.00000000000001
   },
   "reversed": false,
-  "folder": "Matrix Station",
+  "folder": "LB and RT",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -119.99999999999999

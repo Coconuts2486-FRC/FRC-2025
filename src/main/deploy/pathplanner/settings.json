@@ -3,10 +3,11 @@
   "robotLength": 0.876,
   "holonomicMode": true,
   "pathFolders": [
-    "Algae",
+    "LB and RT",
     "Matrix Coral",
     "Matrix Start",
     "Matrix Station",
+    "Lamprey Razor",
     "Specialer"
   ],
   "autoFolders": [

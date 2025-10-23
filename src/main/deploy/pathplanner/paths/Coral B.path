@@ -53,7 +53,7 @@
   "folder": "Matrix Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": false
 }

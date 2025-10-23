@@ -108,7 +108,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignRC"
+                              "name": "AlignRF"
                             }
                           },
                           {
@@ -204,7 +204,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignLC"
+                              "name": "AlignLF"
                             }
                           },
                           {

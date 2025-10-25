@@ -36,7 +36,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignR"
+                  "name": "AlignRC"
                 }
               },
               {
@@ -99,15 +99,47 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "parallel",
                             "data": {
-                              "name": "AlignRF"
+                              "commands": [
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "AlignRC"
+                                  }
+                                },
+                                {
+                                  "type": "sequential",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 1.1
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AScore"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 1.0
+                                  }
+                                },
                                 {
                                   "type": "named",
                                   "data": {
@@ -195,9 +227,35 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "parallel",
                             "data": {
-                              "name": "AlignLC"
+                              "commands": [
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "AlignLC"
+                                  }
+                                },
+                                {
+                                  "type": "sequential",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 1.1
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AScore"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
@@ -207,7 +265,13 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.2
+                                    "waitTime": 1.0
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "CoralDetected"
                                   }
                                 },
                                 {

@@ -52,6 +52,7 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.DriveToPose;
+import frc.robot.commands.DriveToPoseFast;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.LED.LEDPWM;
@@ -344,16 +345,16 @@ public class RobotContainer {
     DriveToPose driveL =
         new DriveToPose(m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFT));
 
-    DriveToPose fastDriveR =
-        new DriveToPose(
-            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHT));
+    DriveToPoseFast fastDriveR =
+        new DriveToPoseFast(
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHTAUTO));
 
     DriveToPose fastDriveRC =
         new DriveToPose(
             m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.RIGHTAUTO));
 
-    DriveToPose fastDriveL =
-        new DriveToPose(
+    DriveToPoseFast fastDriveL =
+        new DriveToPoseFast(
             m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.LEFTAUTO));
 
     DriveToPose algae =
@@ -371,9 +372,9 @@ public class RobotContainer {
     NamedCommands
         .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
             "AlignRF", // This one uses different values specifically for autos
-            fastDriveRC.until(
+            fastDriveR.until(
                 () ->
-                    fastDriveRC.withinTolerance(
+                    fastDriveR.withinTolerance(
                         .0575, new Rotation2d(Units.degreesToRadians(2.0)))));
     NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
         "AlignRC",
@@ -575,31 +576,30 @@ public class RobotContainer {
             new DriveToPose(
                 m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER)));
 
-    // driverController
-    //     .leftTrigger(.1)
-    //     .whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getProcessorPose()));
-    DriveToPose algae =
+    driverController
+        .leftTrigger(.1)
+        .whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getProcessorPose()));
+    DriveToPose algaeFar =
         new DriveToPose(
-            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTER));
-    DriveToPose algae2 =
+            m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTERFAR));
+    DriveToPose algaeClose =
         new DriveToPose(
             m_drivebase, () -> m_reefTarget.getReefFaceCoralPose(ScoringPosition.CENTERCLOSE));
 
-    //When pressed this will drive foward and then back picking up the algae
-    driverController 
+    // When pressed this will drive foward and then back picking up the algae
+    driverController
         .leftTrigger(.1)
         .whileTrue(
-            algae
+            algaeClose
                 .until(
-                    () -> algae.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0))))
-                .andThen(
-                    algae2.until(
-                        () ->
-                            algae2.withinTolerance(
-                                .0575, new Rotation2d(Units.degreesToRadians(3.0)))))
-                .andThen(
                     () ->
-                        algae.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+                        algaeClose.withinTolerance(
+                            .0575, new Rotation2d(Units.degreesToRadians(3.0))))
+                .andThen(
+                    algaeFar.until(
+                        () ->
+                            algaeFar.withinTolerance(
+                                .0575, new Rotation2d(Units.degreesToRadians(3.0))))));
 
     // Drive to BARGE ALGAE scoring position
     driverController

@@ -655,19 +655,21 @@ public final class Constants {
     // Scoring position has the bumpers 3" from the tag.  Bumper-to-center distance is 18", ergo the
     // robot pose is 21" from the tag.
     public static Translation2d kLeftReefPost =
-        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-5));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-2));
     public static Translation2d kLeftReefPostAuto =
-        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-2));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(-2));
     // public static Translation2d kLeftReefPostClose =
     //     new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(-6.75));
     public static Translation2d kRightReefPost =
-        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+11.5));
+        new Translation2d(Units.inchesToMeters(18), Units.inchesToMeters(+10.25));
     public static Translation2d kRightReefPostAuto =
-        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+11));
+        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(+10.25));
     public static Translation2d kAlgaeGrab =
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(0.0));
     public static Translation2d kAlgaeGrabClose =
-        new Translation2d(Units.inchesToMeters(16.75), Units.inchesToMeters(0.0));
+        new Translation2d(Units.inchesToMeters(16), Units.inchesToMeters(0.0));
+    public static Translation2d kAlgaeGrabFar =
+        new Translation2d(Units.inchesToMeters(34), Units.inchesToMeters(0.0));
 
     public static Translation2d kProcessor =
         new Translation2d(Units.inchesToMeters(26.0), Units.inchesToMeters(+6.0));

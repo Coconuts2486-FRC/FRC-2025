@@ -21,7 +21,6 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.Inches;
 import static frc.robot.Constants.Cameras.*;
 
 import choreo.auto.AutoChooser;
@@ -29,7 +28,6 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -47,32 +45,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AprilTagConstants.AprilTagLayoutType;
-import frc.robot.Constants.ClimbConstants;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.DriveToPose;
 import frc.robot.commands.DriveToPoseFast;
-import frc.robot.commands.ElevatorCommand;
-import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.LED.LEDPWM;
 import frc.robot.subsystems.accelerometer.Accelerometer;
-import frc.robot.subsystems.algae_mech.AlgaeMech;
-import frc.robot.subsystems.algae_mech.AlgaeMechIO;
-import frc.robot.subsystems.algae_mech.AlgaeMechIOTalonFX;
-import frc.robot.subsystems.climber.Climb;
-import frc.robot.subsystems.climber.ClimbIO;
-import frc.robot.subsystems.climber.ClimbIOTalonFX;
-import frc.robot.subsystems.coral_mech.CoralScorer;
-import frc.robot.subsystems.coral_mech.CoralScorerIO;
-import frc.robot.subsystems.coral_mech.CoralScorerIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.elevator.Elevator;
-import frc.robot.subsystems.elevator.ElevatorIO;
-import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.IntakeIO;
-import frc.robot.subsystems.intake.IntakeIOTalonFX;
 import frc.robot.subsystems.state_keeper.OtherTargets;
 import frc.robot.subsystems.state_keeper.ReefTarget;
 import frc.robot.subsystems.vision.Vision;
@@ -150,11 +129,11 @@ public class RobotContainer {
   // These are the "Active Subsystems" that the robot controlls
   private final Drive m_drivebase;
 
-  private final Elevator m_elevator;
-  private final CoralScorer m_coralScorer;
-  private final Intake m_intake;
-  private final AlgaeMech m_algaeMech;
-  private final Climb m_climber;
+  //   private final Elevator m_elevator;
+  //   private final CoralScorer m_coralScorer;
+  //   private final Intake m_intake;
+  //   private final AlgaeMech m_algaeMech;
+  //   private final Climb m_climber;
 
   // These are "Virtual Subsystems" that report information but have no motors
   private final Accelerometer m_accel;
@@ -190,11 +169,11 @@ public class RobotContainer {
       case REAL:
         // Real robot, instantiate hardware IO implementations
         m_drivebase = new Drive();
-        m_elevator = new Elevator(new ElevatorIOTalonFX());
-        m_coralScorer = new CoralScorer(new CoralScorerIOTalonFX());
-        m_intake = new Intake(new IntakeIOTalonFX());
-        m_algaeMech = new AlgaeMech(new AlgaeMechIOTalonFX());
-        m_climber = new Climb(new ClimbIOTalonFX());
+        // m_elevator = new Elevator(new ElevatorIOTalonFX());
+        // m_coralScorer = new CoralScorer(new CoralScorerIOTalonFX());
+        // m_intake = new Intake(new IntakeIOTalonFX());
+        // m_algaeMech = new AlgaeMech(new AlgaeMechIOTalonFX());
+        // m_climber = new Climb(new ClimbIOTalonFX());
 
         // Virtual Subsystems
         m_vision =
@@ -223,11 +202,11 @@ public class RobotContainer {
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         m_drivebase = new Drive();
-        m_elevator = new Elevator(new ElevatorIO() {}); // make elevator Io sim
-        m_coralScorer = new CoralScorer(new CoralScorerIO() {});
-        m_intake = new Intake(new IntakeIO() {});
-        m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
-        m_climber = new Climb(new ClimbIO() {});
+        // m_elevator = new Elevator(new ElevatorIO() {}); // make elevator Io sim
+        // m_coralScorer = new CoralScorer(new CoralScorerIO() {});
+        // m_intake = new Intake(new IntakeIO() {});
+        // m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
+        // m_climber = new Climb(new ClimbIO() {});
 
         // Virtual Subsystems
         m_vision =
@@ -249,11 +228,11 @@ public class RobotContainer {
       default:
         // Replayed robot, disable IO implementations
         m_drivebase = new Drive();
-        m_elevator = new Elevator(new ElevatorIO() {});
-        m_coralScorer = new CoralScorer(new CoralScorerIO() {});
-        m_intake = new Intake(new IntakeIO() {});
-        m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
-        m_climber = new Climb(new ClimbIO() {});
+        // m_elevator = new Elevator(new ElevatorIO() {});
+        // m_coralScorer = new CoralScorer(new CoralScorerIO() {});
+        // m_intake = new Intake(new IntakeIO() {});
+        // m_algaeMech = new AlgaeMech(new AlgaeMechIO() {});
+        // m_climber = new Climb(new ClimbIO() {});
 
         // Virtual Subsystems
         m_vision =
@@ -265,70 +244,75 @@ public class RobotContainer {
     m_reefTarget = ReefTarget.getInstance(m_drivebase);
     m_otherTargets = OtherTargets.getInstance(m_drivebase);
     // Named Commands For Pathplanner
-    NamedCommands.registerCommand( // Runs elevator and coral scorer to score coral on L4.
-        "L4",
-        Commands.parallel( // Needs to be canceled with a race group right now, the race group wait
-            // timer is at 1.35 seconds.
-            new ElevatorCommand(
-                () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
-                ElevatorConstants.kAcceleration,
-                ElevatorConstants.kVelocity,
-                m_elevator),
-            Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
-                .withTimeout(0.95)
-                .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.25), m_coralScorer))));
+    // NamedCommands.registerCommand( // Runs elevator and coral scorer to score coral on L4.
+    //     "L4",
+    //     Commands.parallel( // Needs to be canceled with a race group right now, the race group
+    // wait
+    //         // timer is at 1.35 seconds.
+    //         new ElevatorCommand(
+    //             () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
+    //             ElevatorConstants.kAcceleration,
+    //             ElevatorConstants.kVelocity,
+    //             m_elevator),
+    //         Commands.run(() -> m_coralScorer.setCoralPercent(.0), m_coralScorer)
+    //             .withTimeout(0.95)
+    //             .andThen(Commands.run(() -> m_coralScorer.setCoralPercent(.25),
+    // m_coralScorer))));
 
-    NamedCommands
-        .registerCommand( // This just raises the elevator to L4 without automatically scoring
-            "E4",
-            new ElevatorCommand(
-                    () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
-                    ElevatorConstants.kAcceleration.times(
-                        0), // Lowering both of these increases elevator drop speed
-                    ElevatorConstants.kVelocity.times(0.0),
-                    m_elevator)
-                .until(() -> m_coralScorer.getLightStop() == true)
-                .andThen(
-                    new ElevatorCommand(
-                        () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those levels
-                        ElevatorConstants.kAcceleration,
-                        ElevatorConstants.kVelocity,
-                        m_elevator)));
-    NamedCommands
-        .registerCommand( // This just raises the elevator to L3 without automatically scoring
-            "E3",
-            new ElevatorCommand(
-                    () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
-                    ElevatorConstants.kAcceleration.times(
-                        0), // Lowering both of these increases elevator drop speed
-                    ElevatorConstants.kVelocity.times(0.0),
-                    m_elevator)
-                .until(() -> m_coralScorer.getLightStop() == true)
-                .andThen(
-                    new ElevatorCommand(
-                        () -> ElevatorConstants.kL3, // Change this to kL2 or kL3 for those levels
-                        ElevatorConstants.kAcceleration,
-                        ElevatorConstants.kVelocity,
-                        m_elevator)));
+    // NamedCommands
+    //     .registerCommand( // This just raises the elevator to L4 without automatically scoring
+    //         "E4",
+    //         new ElevatorCommand(
+    //                 () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
+    //                 ElevatorConstants.kAcceleration.times(
+    //                     0), // Lowering both of these increases elevator drop speed
+    //                 ElevatorConstants.kVelocity.times(0.0),
+    //                 m_elevator)
+    //             .until(() -> m_coralScorer.getLightStop() == true)
+    //             .andThen(
+    //                 new ElevatorCommand(
+    //                     () -> ElevatorConstants.kL4, // Change this to kL2 or kL3 for those
+    // levels
+    //                     ElevatorConstants.kAcceleration,
+    //                     ElevatorConstants.kVelocity,
+    //                     m_elevator)));
+    // NamedCommands
+    //     .registerCommand( // This just raises the elevator to L3 without automatically scoring
+    //         "E3",
+    //         new ElevatorCommand(
+    //                 () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
+    //                 ElevatorConstants.kAcceleration.times(
+    //                     0), // Lowering both of these increases elevator drop speed
+    //                 ElevatorConstants.kVelocity.times(0.0),
+    //                 m_elevator)
+    //             .until(() -> m_coralScorer.getLightStop() == true)
+    //             .andThen(
+    //                 new ElevatorCommand(
+    //                     () -> ElevatorConstants.kL3, // Change this to kL2 or kL3 for those
+    // levels
+    //                     ElevatorConstants.kAcceleration,
+    //                     ElevatorConstants.kVelocity,
+    //                     m_elevator)));
 
-    NamedCommands.registerCommand( // Coral rollers go brrrr
-        "Score",
-        Commands.run(() -> m_coralScorer.setCoralPercent(.28), m_coralScorer).withTimeout(0.15));
+    // NamedCommands.registerCommand( // Coral rollers go brrrr
+    //     "Score",
+    //     Commands.run(() -> m_coralScorer.setCoralPercent(.28), m_coralScorer).withTimeout(0.15));
 
-    NamedCommands
-        .registerCommand( // This command keeps the robot from scoring unless the elevator is at the
-            // correct positition
-            "AScore", Commands.idle().until(m_elevator.isAtPosition()));
+    // NamedCommands
+    //     .registerCommand( // This command keeps the robot from scoring unless the elevator is at
+    // the
+    //         // correct positition
+    //         "AScore", Commands.idle().until(m_elevator.isAtPosition()));
 
-    NamedCommands.registerCommand( // Brings the elevator to the ground.
-        "Bottom",
-        new ElevatorCommand(
-                () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
-                ElevatorConstants.kAcceleration.div(
-                    2.0), // Lowering both of these increases elevator drop speed
-                ElevatorConstants.kVelocity.div(2.0),
-                m_elevator)
-            .until(m_elevator::getBottomStop));
+    // NamedCommands.registerCommand( // Brings the elevator to the ground.
+    //     "Bottom",
+    //     new ElevatorCommand(
+    //             () -> ElevatorConstants.kElevatorZeroHeight.minus(Inches.of(1)),
+    //             ElevatorConstants.kAcceleration.div(
+    //                 2.0), // Lowering both of these increases elevator drop speed
+    //             ElevatorConstants.kVelocity.div(2.0),
+    //             m_elevator)
+    //         .until(m_elevator::getBottomStop));
 
     DriveToPose driveR =
         new DriveToPose(
@@ -364,103 +348,111 @@ public class RobotContainer {
     DriveToPose station =
         new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose());
 
-    NamedCommands
-        .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
-            "AlignR",
-            driveR.until(
-                () -> driveR.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
-    NamedCommands
-        .registerCommand( // Auto aligns to right coral branchs right from the robots point of view
-            "AlignRF", // This one uses different values specifically for autos
-            fastDriveR.until(
-                () ->
-                    fastDriveR.withinTolerance(
-                        .0575, new Rotation2d(Units.degreesToRadians(2.0)))));
-    NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
-        "AlignRC",
-        driveRC.until(
-            () -> driveRC.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
-    NamedCommands
-        .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignL",
-            driveL.until(
-                () -> driveL.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(2.0)))));
+    // NamedCommands
+    //     .registerCommand( // Auto aligns to right coral branchs right from the robots point of
+    // view
+    //         "AlignR",
+    //         driveR.until(
+    //             () -> driveR.withinTolerance(.0575, new
+    // Rotation2d(Units.degreesToRadians(3.0)))));
+    // NamedCommands
+    //     .registerCommand( // Auto aligns to right coral branchs right from the robots point of
+    // view
+    //         "AlignRF", // This one uses different values specifically for autos
+    //         fastDriveR.until(
+    //             () ->
+    //                 fastDriveR.withinTolerance(
+    //                     .0575, new Rotation2d(Units.degreesToRadians(2.0)))));
+    // NamedCommands.registerCommand( // Same as the one above, but 1.25 inches closer
+    //     "AlignRC",
+    //     driveRC.until(
+    //         () -> driveRC.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+    // NamedCommands
+    //     .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
+    //         "AlignL",
+    //         driveL.until(
+    //             () -> driveL.withinTolerance(.0575, new
+    // Rotation2d(Units.degreesToRadians(2.0)))));
 
-    NamedCommands
-        .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignLC", // This one uses different values specifically for autos
-            driveLC.until(
-                () -> driveLC.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(2.0)))));
+    // NamedCommands
+    //     .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
+    //         "AlignLC", // This one uses different values specifically for autos
+    //         driveLC.until(
+    //             () -> driveLC.withinTolerance(.0575, new
+    // Rotation2d(Units.degreesToRadians(2.0)))));
 
-    NamedCommands
-        .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "AlignLF", // This one uses different values specifically for autos
-            fastDriveL.until(
-                () ->
-                    fastDriveL.withinTolerance(
-                        .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
-    NamedCommands
-        .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
-            "Station", station.until(station::atGoal));
-    NamedCommands.registerCommand( // Auto aligns to the algae in the reef
-        "Algae",
-        algae.until(
-            () -> algae.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
-    NamedCommands.registerCommand( // This raises the elevator to the level of the aglae on the reef
-        // automaticlly based on april tags
-        "deAlgae",
-        Commands.parallel(
-            new ElevatorCommand(
-                m_reefTarget::getElevatorAlgae,
-                ElevatorConstants.kAcceleration,
-                ElevatorConstants.kVelocity,
-                m_elevator),
-            Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
-                .withTimeout(.25)
-                .andThen(
-                    Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
-                        .alongWith(
-                            Commands.runEnd(
-                                () -> m_algaeMech.setPercent(-0.6),
-                                () -> m_algaeMech.setPercent(0)))
-                        .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2))))));
+    // NamedCommands
+    //     .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
+    //         "AlignLF", // This one uses different values specifically for autos
+    //         fastDriveL.until(
+    //             () ->
+    //                 fastDriveL.withinTolerance(
+    //                     .0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+    // NamedCommands
+    //     .registerCommand( // Auto aligns to left coral branchs left from the robots point of view
+    //         "Station", station.until(station::atGoal));
+    // NamedCommands.registerCommand( // Auto aligns to the algae in the reef
+    //     "Algae",
+    //     algae.until(
+    //         () -> algae.withinTolerance(.0575, new Rotation2d(Units.degreesToRadians(3.0)))));
+    // NamedCommands.registerCommand( // This raises the elevator to the level of the aglae on the
+    // reef
+    //     // automaticlly based on april tags
+    //     "deAlgae",
+    //     Commands.parallel(
+    //         new ElevatorCommand(
+    //             m_reefTarget::getElevatorAlgae,
+    //             ElevatorConstants.kAcceleration,
+    //             ElevatorConstants.kVelocity,
+    //             m_elevator),
+    //         Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+    //             .withTimeout(.25)
+    //             .andThen(
+    //                 Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+    //                     .alongWith(
+    //                         Commands.runEnd(
+    //                             () -> m_algaeMech.setPercent(-0.6),
+    //                             () -> m_algaeMech.setPercent(0)))
+    //                     .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2))))));
 
-    NamedCommands.registerCommand( // This is to shoot the algae into the net
-        "shootAlgae",
-        Commands.parallel(
-            new ElevatorCommand(
-                () -> ElevatorConstants.kL4,
-                ElevatorConstants.kAcceleration,
-                ElevatorConstants.kVelocity,
-                m_elevator),
-            Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
-                .withTimeout(.6)
-                .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
+    // NamedCommands.registerCommand( // This is to shoot the algae into the net
+    //     "shootAlgae",
+    //     Commands.parallel(
+    //         new ElevatorCommand(
+    //             () -> ElevatorConstants.kL4,
+    //             ElevatorConstants.kAcceleration,
+    //             ElevatorConstants.kVelocity,
+    //             m_elevator),
+    //         Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
+    //             .withTimeout(.6)
+    //             .andThen(Commands.run(() -> m_algaeMech.setPercent(1)))));
 
-    NamedCommands.registerCommand( // This brings our algae mech back to starting position
-        "resetAlgae",
-        Commands.runOnce(() -> m_algaeMech.setIndexPose(3))
-            .alongWith(Commands.run(() -> m_algaeMech.setPercent(0)))
-            .alongWith(Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)));
+    // NamedCommands.registerCommand( // This brings our algae mech back to starting position
+    //     "resetAlgae",
+    //     Commands.runOnce(() -> m_algaeMech.setIndexPose(3))
+    //         .alongWith(Commands.run(() -> m_algaeMech.setPercent(0)))
+    //         .alongWith(Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)));
 
-    NamedCommands
-        .registerCommand( // Toeknee makes sure our robot doesn't destroy our algae mech when it
-            // comes down. It puts the pivot to algae holding posistion
-            "ToeKnee", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech));
+    // NamedCommands
+    //     .registerCommand( // Toeknee makes sure our robot doesn't destroy our algae mech when it
+    //         // comes down. It puts the pivot to algae holding posistion
+    //         "ToeKnee", Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech));
 
-    NamedCommands.registerCommand( // Auto intake from source to desired position
-        "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
+    // NamedCommands.registerCommand( // Auto intake from source to desired position
+    //     "CoralIntake", (Commands.run(() -> m_coralScorer.automaticIntake(), m_coralScorer)));
 
-    NamedCommands
-        .registerCommand( // Ends once coral is detected so the robot can start moving before fully
-            // intaked
-            "CoralDetect",
-            new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == false));
-    NamedCommands.registerCommand( // Should tell the robot when the coral is fully intaked
-        "CoralDetected",
-        new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == true));
-    NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
-        "Timer", new IntakeCommand(m_intake, 0.9, 0).withTimeout(1));
+    // NamedCommands
+    //     .registerCommand( // Ends once coral is detected so the robot can start moving before
+    // fully
+    //         // intaked
+    //         "CoralDetect",
+    //         new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() ==
+    // false));
+    // NamedCommands.registerCommand( // Should tell the robot when the coral is fully intaked
+    //     "CoralDetected",
+    //     new IntakeCommand(m_intake, 0.9, 0).until(() -> m_coralScorer.getLightStop() == true));
+    // NamedCommands.registerCommand( // Sets a short timer and holds algae mech in place
+    //     "Timer", new IntakeCommand(m_intake, 0.9, 0).withTimeout(1));
 
     // In addition to the initial battery capacity from the Dashbaord, ``PowerMonitoring`` takes all
     // the non-drivebase subsystems for which you wish to have power monitoring; DO NOT include
@@ -468,7 +460,7 @@ public class RobotContainer {
 
     m_power =
         new PowerMonitoring(
-            batteryCapacity, m_elevator, m_coralScorer, m_intake, m_algaeMech, m_climber);
+            batteryCapacity); // , m_elevator, m_coralScorer, m_intake, m_algaeMech, m_climber);
 
     // Set up the SmartDashboard Auto Chooser based on auto type
     switch (Constants.getAutoType()) {
@@ -503,9 +495,9 @@ public class RobotContainer {
     }
 
     // Set up subsystem overrides
-    m_elevator.setOverrides(elevatorDisable);
-    m_intake.setOverrides(intakePivotDisable);
-    m_algaeMech.setOverrides(algaePivotDisable);
+    // m_elevator.setOverrides(elevatorDisable);
+    // m_intake.setOverrides(intakePivotDisable);
+    // m_algaeMech.setOverrides(algaePivotDisable);
     m_vision.setOverrides(visionOdometryDisable);
 
     // Define Auto commands
@@ -606,39 +598,39 @@ public class RobotContainer {
         .a()
         .whileTrue(new DriveToPose(m_drivebase, () -> m_otherTargets.getClosestStationPose()));
 
-    // Driver Right Bumper :>> Intake from the floor
-    driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.2, -0.75));
+    // // Driver Right Bumper :>> Intake from the floor
+    // driverController.rightBumper().whileTrue(new IntakeCommand(m_intake, 0.2, -0.75));
 
-    driverController
-        .rightBumper()
-        .onFalse(new IntakeCommand(m_intake, 0.8, -0.75).withTimeout(0.2));
+    // driverController
+    //     .rightBumper()
+    //     .onFalse(new IntakeCommand(m_intake, 0.8, -0.75).withTimeout(0.2));
 
-    // Driver Left Bumper :>> Score L1
-    driverController
-        .rightTrigger(.1)
-        .whileTrue(
-            Commands.startRun(
-                    () -> m_algaeMech.setIndexPose(1),
-                    () -> m_algaeMech.cyclePositions(),
-                    m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(-0.33))));
+    // // Driver Left Bumper :>> Score L1
+    // driverController
+    //     .rightTrigger(.1)
+    //     .whileTrue(
+    //         Commands.startRun(
+    //                 () -> m_algaeMech.setIndexPose(1),
+    //                 () -> m_algaeMech.cyclePositions(),
+    //                 m_algaeMech)
+    //             .alongWith(Commands.run(() -> m_algaeMech.setPercent(-0.33))));
 
-    // Release Operator Right Bumper :>> Turn off algae rollers
-    driverController
-        .rightTrigger(.1)
-        .onFalse(
-            Commands.startRun(
-                    () -> m_algaeMech.setIndexPose(2),
-                    () -> m_algaeMech.cyclePositions(),
-                    m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
+    // // Release Operator Right Bumper :>> Turn off algae rollers
+    // driverController
+    //     .rightTrigger(.1)
+    //     .onFalse(
+    //         Commands.startRun(
+    //                 () -> m_algaeMech.setIndexPose(2),
+    //                 () -> m_algaeMech.cyclePositions(),
+    //                 m_algaeMech)
+    //             .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
 
-    driverController
-        .leftBumper()
-        .whileTrue(
-            new IntakeCommand(m_intake, 0.65, 0)
-                .withTimeout(0.075)
-                .andThen(new IntakeCommand(m_intake, 0.65, .95)));
+    // driverController
+    //     .leftBumper()
+    //     .whileTrue(
+    //         new IntakeCommand(m_intake, 0.65, 0)
+    //             .withTimeout(0.075)
+    //             .andThen(new IntakeCommand(m_intake, 0.65, .95)));
 
     // Driver B button :>> Drive Robot-Centric
     // driverController
@@ -742,124 +734,124 @@ public class RobotContainer {
     //                     Commands.run(() -> m_coralScorer.setCoralPercent(.33), m_coralScorer)
     //                         .withTimeout(0.35))));
     // Un-Comment to make elevator go up without scoringa/
-    operatorController
-        .rightBumper()
-        .whileTrue(
-            new ElevatorCommand(
-                m_reefTarget::getElevatorHeight, // Send height as supplier
-                ElevatorConstants.kAcceleration,
-                ElevatorConstants.kVelocity,
-                m_elevator));
+    // operatorController
+    //     .rightBumper()
+    //     .whileTrue(
+    //         new ElevatorCommand(
+    //             m_reefTarget::getElevatorHeight, // Send height as supplier
+    //             ElevatorConstants.kAcceleration,
+    //             ElevatorConstants.kVelocity,
+    //             m_elevator));
 
-    operatorController
-        .leftTrigger(0.1)
-        .whileTrue(
-            Commands.parallel(
-                new ElevatorCommand(
-                    () -> ElevatorConstants.kL4,
-                    ElevatorConstants.kAcceleration,
-                    ElevatorConstants.kVelocity,
-                    m_elevator),
-                Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
-                    .withTimeout(.6)
-                    .andThen(Commands.run(() -> m_algaeMech.setPercent(0.95)))));
+    // operatorController
+    //     .leftTrigger(0.1)
+    //     .whileTrue(
+    //         Commands.parallel(
+    //             new ElevatorCommand(
+    //                 () -> ElevatorConstants.kL4,
+    //                 ElevatorConstants.kAcceleration,
+    //                 ElevatorConstants.kVelocity,
+    //                 m_elevator),
+    //             Commands.run(() -> m_algaeMech.pivotShoot(), m_algaeMech)
+    //                 .withTimeout(.6)
+    //                 .andThen(Commands.run(() -> m_algaeMech.setPercent(0.95)))));
 
-    operatorController
-        .leftTrigger(0.1)
-        .onFalse(
-            Commands.runOnce(() -> m_algaeMech.setPercent(0), m_algaeMech)
-                .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(3))));
+    // operatorController
+    //     .leftTrigger(0.1)
+    //     .onFalse(
+    //         Commands.runOnce(() -> m_algaeMech.setPercent(0), m_algaeMech)
+    //             .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(3))));
 
-    operatorController
-        .rightTrigger(.1)
-        .whileTrue(Commands.run(() -> m_coralScorer.setCoralPercent(0.33), m_coralScorer));
+    // operatorController
+    //     .rightTrigger(.1)
+    //     .whileTrue(Commands.run(() -> m_coralScorer.setCoralPercent(0.33), m_coralScorer));
 
-    operatorController
-        .start()
-        .whileTrue(
-            Commands.run(() -> m_climber.rachetToggle(1), m_climber)
-                .withTimeout(.25)
-                .andThen(
-                    Commands.runEnd(
-                        () -> m_climber.twistToPosition(ClimbConstants.startClimb),
-                        () -> m_climber.stop(),
-                        m_climber))
-                .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(1))));
+    // operatorController
+    //     .start()
+    //     .whileTrue(
+    //         Commands.run(() -> m_climber.rachetToggle(1), m_climber)
+    //             .withTimeout(.25)
+    //             .andThen(
+    //                 Commands.runEnd(
+    //                     () -> m_climber.twistToPosition(ClimbConstants.startClimb),
+    //                     () -> m_climber.stop(),
+    //                     m_climber))
+    //             .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(1))));
 
-    operatorController.start().onFalse(new IntakeCommand(m_intake, 0.65, 0));
+    // operatorController.start().onFalse(new IntakeCommand(m_intake, 0.65, 0));
 
-    operatorController
-        .b()
-        .whileTrue(
-            new ElevatorCommand(
-                () -> ElevatorConstants.kL2, // Send height as supplier
-                ElevatorConstants.kAcceleration,
-                ElevatorConstants.kVelocity,
-                m_elevator));
+    // operatorController
+    //     .b()
+    //     .whileTrue(
+    //         new ElevatorCommand(
+    //             () -> ElevatorConstants.kL2, // Send height as supplier
+    //             ElevatorConstants.kAcceleration,
+    //             ElevatorConstants.kVelocity,
+    //             m_elevator));
 
-    operatorController
-        .back()
-        .whileTrue(
-            Commands.runEnd(
-                    () -> m_climber.goUntilPosition(-0.5, ClimbConstants.completeClimb),
-                    () -> m_climber.stop(),
-                    m_climber)
-                .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(-0.5))));
+    // operatorController
+    //     .back()
+    //     .whileTrue(
+    //         Commands.runEnd(
+    //                 () -> m_climber.goUntilPosition(-0.5, ClimbConstants.completeClimb),
+    //                 () -> m_climber.stop(),
+    //                 m_climber)
+    //             .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(-0.5))));
 
-    operatorController
-        .x()
-        .whileTrue(
-            Commands.parallel(
-                new ElevatorCommand(
-                    m_reefTarget::getElevatorAlgae,
-                    ElevatorConstants.kAcceleration,
-                    ElevatorConstants.kVelocity,
-                    m_elevator),
-                Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
-                    .withTimeout(.25)
-                    .andThen(
-                        Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
-                            .alongWith(
-                                Commands.runEnd(
-                                    () -> m_algaeMech.setPercent(-0.6),
-                                    () -> m_algaeMech.setPercent(0)))
-                            .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2)))),
-                DriveCommands.robotRelativeDrive(
-                    m_drivebase,
-                    () -> (driveStickY.value() * 0.75),
-                    () -> 0,
-                    () -> -turnStickX.value())));
+    // operatorController
+    //     .x()
+    //     .whileTrue(
+    //         Commands.parallel(
+    //             new ElevatorCommand(
+    //                 m_reefTarget::getElevatorAlgae,
+    //                 ElevatorConstants.kAcceleration,
+    //                 ElevatorConstants.kVelocity,
+    //                 m_elevator),
+    //             Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+    //                 .withTimeout(.25)
+    //                 .andThen(
+    //                     Commands.run(() -> m_algaeMech.pivotOffReef(), m_algaeMech)
+    //                         .alongWith(
+    //                             Commands.runEnd(
+    //                                 () -> m_algaeMech.setPercent(-0.6),
+    //                                 () -> m_algaeMech.setPercent(0)))
+    //                         .alongWith(Commands.runOnce(() -> m_algaeMech.setIndexPose(2)))),
+    //             DriveCommands.robotRelativeDrive(
+    //                 m_drivebase,
+    //                 () -> (driveStickY.value() * 0.75),
+    //                 () -> 0,
+    //                 () -> -turnStickX.value())));
 
-    operatorController
-        .povUp()
-        .onTrue(Commands.runOnce(() -> m_algaeMech.indexPoseUp(), m_algaeMech));
+    // operatorController
+    //     .povUp()
+    //     .onTrue(Commands.runOnce(() -> m_algaeMech.indexPoseUp(), m_algaeMech));
 
-    operatorController
-        .povDown()
-        .onTrue(Commands.runOnce(() -> m_algaeMech.indexPoseDown(), m_algaeMech));
-    // .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber)));
+    // operatorController
+    //     .povDown()
+    //     .onTrue(Commands.runOnce(() -> m_algaeMech.indexPoseDown(), m_algaeMech));
+    // // .alongWith(Commands.runOnce(() -> m_climber.rachetToggle(0), m_climber)));
 
-    // operatorController.back().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0),
-    // m_climber));
+    // // operatorController.back().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(0),
+    // // m_climber));
 
-    // operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(1),
-    // m_climber));
+    // // operatorController.start().onTrue(Commands.runOnce(() -> m_climber.rachetToggle(1),
+    // // m_climber));
 
-    // Operator Right Bumper :>> Spit out algae ball
-    operatorController
-        .leftBumper()
-        .whileTrue(
-            Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
-                .alongWith(
-                    Commands.runEnd(
-                        () -> m_algaeMech.setPercent(1), () -> m_algaeMech.setIndexPose(3))));
+    // // Operator Right Bumper :>> Spit out algae ball
+    // operatorController
+    //     .leftBumper()
+    //     .whileTrue(
+    //         Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
+    //             .alongWith(
+    //                 Commands.runEnd(
+    //                     () -> m_algaeMech.setPercent(1), () -> m_algaeMech.setIndexPose(3))));
 
-    // Release Operator Right Bumper :>> Turn off algae rollers
-    operatorController
-        .leftBumper()
-        .onFalse(
-            Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
-                .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
+    // // Release Operator Right Bumper :>> Turn off algae rollers
+    // operatorController
+    //     .leftBumper()
+    //     .onFalse(
+    //         Commands.run(() -> m_algaeMech.cyclePositions(), m_algaeMech)
+    //             .alongWith(Commands.run(() -> m_algaeMech.setPercent(0))));
 
     // Operator Y Button :>> Elevator to Lower Algae
     // operatorController
